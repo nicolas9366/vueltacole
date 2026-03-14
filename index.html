@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vuelta Al Cole — Reserva tu Pack sin Colas | Bazar</title>
-    <meta name="description" content="Reserva online tu pack de material escolar y recógelo en tu bazar de confianza en 24h. Sin esperas, sin estrés. Vuelta al Cole más fácil.">
+    <title>Vuelta Al Cole — Reserva tu Pack sin Colas | Zaragoza Bazar</title>
+    <meta name="description"
+        content="Reserva online tu pack de material escolar y recógelo en tu bazar de confianza en 24h. Sin esperas, sin estrés. Vuelta al Cole más fácil.">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -33,12 +34,28 @@
     <!-- Google Fonts: Rubik + Nunito Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700&family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700&family=Rubik:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
     <style>
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Nunito Sans', sans-serif; background-color: #F0F9FF; color: #0C4A6E; }
-        h1, h2, h3, h4, h5 { font-family: 'Rubik', sans-serif; }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background-color: #F0F9FF;
+            color: #0C4A6E;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Rubik', sans-serif;
+        }
 
         .hero-display {
             font-size: clamp(2.6rem, 7vw, 5.5rem);
@@ -48,17 +65,41 @@
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(28px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .fade-in-up { animation: fadeInUp 0.65s ease-out both; }
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.22s; }
-        .delay-3 { animation-delay: 0.34s; }
-        .delay-4 { animation-delay: 0.46s; }
+
+        .fade-in-up {
+            animation: fadeInUp 0.65s ease-out both;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.22s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.34s;
+        }
+
+        .delay-4 {
+            animation-delay: 0.46s;
+        }
 
         @media (prefers-reduced-motion: reduce) {
-            .fade-in-up { animation: none; }
+            .fade-in-up {
+                animation: none;
+            }
         }
 
         /* Countdown segments */
@@ -68,9 +109,10 @@
             padding: 10px 16px;
             min-width: 72px;
             text-align: center;
-            box-shadow: 0 2px 12px rgba(14,165,233,0.12);
+            box-shadow: 0 2px 12px rgba(14, 165, 233, 0.12);
             border: 1px solid #BAE6FD;
         }
+
         .countdown-num {
             font-family: 'Rubik', monospace;
             font-size: 2.4rem;
@@ -78,6 +120,7 @@
             color: #0C4A6E;
             line-height: 1;
         }
+
         .countdown-label {
             font-size: 0.62rem;
             font-weight: 700;
@@ -88,14 +131,37 @@
         }
 
         /* Pack card hover */
-        .pack-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .pack-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(14,165,233,0.15); }
+        .pack-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .pack-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15);
+        }
 
         /* Trust bar icon circle */
-        .trust-icon { background: #E0F2FE; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .trust-icon {
+            background: #E0F2FE;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
 
         /* Step connector line */
-        .step-line { position: absolute; top: 28px; left: 50%; width: 100%; height: 2px; background: linear-gradient(to right, #BAE6FD, #FED7AA); z-index: 0; }
+        .step-line {
+            position: absolute;
+            top: 28px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #BAE6FD, #FED7AA);
+            z-index: 0;
+        }
     </style>
 </head>
 
@@ -105,19 +171,24 @@
          FLOATING NAVBAR
     ═══════════════════════════════ -->
     <header class="fixed top-3 left-3 right-3 z-50">
-        <nav class="max-w-5xl mx-auto bg-white/90 backdrop-blur-md rounded-2xl px-5 py-3 flex justify-between items-center shadow-lg border border-sky-100">
+        <nav
+            class="max-w-5xl mx-auto bg-white/90 backdrop-blur-md rounded-2xl px-5 py-3 flex justify-between items-center shadow-lg border border-sky-100">
             <!-- Logo -->
             <div class="flex items-center gap-2.5">
                 <!-- Pencil icon -->
                 <svg class="w-6 h-6 text-cta" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                 </svg>
                 <span class="text-xl font-heading font-800 text-ink tracking-tight">Bazar</span>
-                <span class="hidden sm:inline-block text-xs font-bold uppercase tracking-wider bg-sky-100 text-primary px-2 py-0.5 rounded-full">Vuelta al Cole</span>
+                <span
+                    class="hidden sm:inline-block text-xs font-bold uppercase tracking-wider bg-sky-100 text-primary px-2 py-0.5 rounded-full">Vuelta
+                    al Cole</span>
             </div>
 
             <!-- CTA -->
-            <a href="#packs" class="bg-cta hover:bg-ctaHover text-white font-heading font-700 text-sm px-4 py-2 rounded-xl cursor-pointer transition-colors duration-200 shadow-sm">
+            <a href="#packs"
+                class="bg-cta hover:bg-ctaHover text-white font-heading font-700 text-sm px-4 py-2 rounded-xl cursor-pointer transition-colors duration-200 shadow-sm">
                 Reservar Pack
             </a>
         </nav>
@@ -128,13 +199,20 @@
     ═══════════════════════════════ -->
     <section class="pt-28 pb-16 px-5 text-center relative overflow-hidden">
         <!-- BG decorative blobs -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-sky-100 rounded-full blur-3xl opacity-50 pointer-events-none -z-0"></div>
+        <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-sky-100 rounded-full blur-3xl opacity-50 pointer-events-none -z-0">
+        </div>
 
         <div class="max-w-3xl mx-auto relative z-10">
 
             <!-- Badge -->
-            <div class="fade-in-up inline-flex items-center gap-2 bg-orange-100 text-cta text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
-                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd"/></svg>
+            <div
+                class="fade-in-up inline-flex items-center gap-2 bg-orange-100 text-cta text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
+                        clip-rule="evenodd" />
+                </svg>
                 Oferta por tiempo limitado
             </div>
 
@@ -172,10 +250,12 @@
 
             <!-- CTAs -->
             <div class="fade-in-up delay-4 flex flex-col sm:flex-row gap-3 justify-center">
-                <a href="#packs" class="bg-cta hover:bg-ctaHover text-white font-heading font-700 text-lg px-8 py-4 rounded-2xl cursor-pointer transition-colors duration-200 shadow-md">
+                <a href="#packs"
+                    class="bg-cta hover:bg-ctaHover text-white font-heading font-700 text-lg px-8 py-4 rounded-2xl cursor-pointer transition-colors duration-200 shadow-md">
                     Ver los Packs
                 </a>
-                <a href="#como-funciona" class="bg-white hover:bg-sky-50 border border-sky-200 text-ink font-heading font-600 text-lg px-8 py-4 rounded-2xl cursor-pointer transition-colors duration-200">
+                <a href="#como-funciona"
+                    class="bg-white hover:bg-sky-50 border border-sky-200 text-ink font-heading font-600 text-lg px-8 py-4 rounded-2xl cursor-pointer transition-colors duration-200">
                     ¿Cómo funciona?
                 </a>
             </div>
@@ -191,8 +271,10 @@
             <div class="flex items-center gap-3">
                 <div class="trust-icon">
                     <!-- Clock icon -->
-                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </div>
                 <div>
@@ -204,8 +286,10 @@
             <div class="flex items-center gap-3">
                 <div class="trust-icon">
                     <!-- Mobile icon -->
-                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 15h3"/>
+                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 15h3" />
                     </svg>
                 </div>
                 <div>
@@ -217,8 +301,10 @@
             <div class="flex items-center gap-3">
                 <div class="trust-icon">
                     <!-- Check-circle icon -->
-                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </div>
                 <div>
@@ -230,8 +316,10 @@
             <div class="flex items-center gap-3">
                 <div class="trust-icon">
                     <!-- Star icon -->
-                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.562.562 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/>
+                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.562.562 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                     </svg>
                 </div>
                 <div>
@@ -254,43 +342,53 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
             <!-- Connector line (desktop only) -->
-            <div class="hidden md:block absolute top-7 left-1/6 right-1/6 h-0.5 bg-gradient-to-r from-sky-200 via-orange-200 to-sky-200 z-0" style="left:16.66%;right:16.66%;"></div>
+            <div class="hidden md:block absolute top-7 left-1/6 right-1/6 h-0.5 bg-gradient-to-r from-sky-200 via-orange-200 to-sky-200 z-0"
+                style="left:16.66%;right:16.66%;"></div>
 
             <!-- Step 1 -->
             <div class="bg-white rounded-3xl p-7 text-center shadow-sm border border-sky-100 relative z-10">
                 <div class="w-14 h-14 bg-cta rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-md">
                     <!-- Shopping bag icon -->
-                    <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"/>
+                    <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" />
                     </svg>
                 </div>
                 <h3 class="text-lg font-heading font-700 text-ink mb-2">Elige tu pack</h3>
-                <p class="text-slate-500 text-sm leading-relaxed">Selecciona el pack ideal para la etapa de tu hij@. Infantil, Primaria o ESO.</p>
+                <p class="text-slate-500 text-sm leading-relaxed">Selecciona el pack ideal para la etapa de tu hij@.
+                    Infantil, Primaria o ESO.</p>
             </div>
 
             <!-- Step 2 -->
             <div class="bg-white rounded-3xl p-7 text-center shadow-sm border border-sky-100 relative z-10">
                 <div class="w-14 h-14 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-md">
                     <!-- Chat bubble icon -->
-                    <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/>
+                    <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
                     </svg>
                 </div>
                 <h3 class="text-lg font-heading font-700 text-ink mb-2">Reserva por WhatsApp</h3>
-                <p class="text-slate-500 text-sm leading-relaxed">Envíanos un mensaje automático y paga 5&euro; de señal vía Bizum. Rápido y seguro.</p>
+                <p class="text-slate-500 text-sm leading-relaxed">Envíanos un mensaje automático y paga 5&euro; de señal
+                    vía Bizum. Rápido y seguro.</p>
             </div>
 
             <!-- Step 3 -->
             <div class="bg-white rounded-3xl p-7 text-center shadow-sm border border-sky-100 relative z-10">
                 <div class="w-14 h-14 bg-cta rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-md">
                     <!-- Map-pin icon -->
-                    <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+                    <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                     </svg>
                 </div>
                 <h3 class="text-lg font-heading font-700 text-ink mb-2">Recoge sin cola</h3>
-                <p class="text-slate-500 text-sm leading-relaxed">Ven a la tienda, paga el resto y llévate tu pack preparado al instante. Sin esperas.</p>
+                <p class="text-slate-500 text-sm leading-relaxed">Ven a la tienda, paga el resto y llévate tu pack
+                    preparado al instante. Sin esperas.</p>
             </div>
         </div>
     </section>
@@ -302,7 +400,8 @@
         <div class="text-center mb-12">
             <p class="text-xs font-bold uppercase tracking-widest text-primary mb-2">Material escolar</p>
             <h2 class="text-3xl md:text-4xl font-heading font-800 text-ink">Elige tu Pack</h2>
-            <p class="text-slate-400 mt-3 text-sm">Todo lo que necesitas para empezar el curso, listo y sin sorpresas.</p>
+            <p class="text-slate-400 mt-3 text-sm">Todo lo que necesitas para empezar el curso, listo y sin sorpresas.
+            </p>
         </div>
         <div id="packs-container" class="grid grid-cols-1 md:grid-cols-3 gap-7">
             <!-- Packs rendered via JS -->
@@ -323,15 +422,33 @@
                 <!-- Testimonial 1 -->
                 <div class="bg-surface rounded-3xl p-6 border border-sky-100">
                     <div class="flex gap-1 mb-3">
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
                     </div>
-                    <p class="text-sm text-slate-600 italic mb-4">"Un año más, lo más fácil del comienzo de curso. Reservé el martes, lo recogí el miércoles. Fantástico."</p>
+                    <p class="text-sm text-slate-600 italic mb-4">"Un año más, lo más fácil del comienzo de curso.
+                        Reservé el martes, lo recogí el miércoles. Fantástico."</p>
                     <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-sky-200 flex items-center justify-center text-ink font-bold text-xs">MR</div>
+                        <div
+                            class="w-8 h-8 rounded-full bg-sky-200 flex items-center justify-center text-ink font-bold text-xs">
+                            MR</div>
                         <div>
                             <p class="text-xs font-bold text-ink">María R.</p>
                             <p class="text-xs text-slate-400">Madre de 2 niños en Primaria</p>
@@ -342,15 +459,33 @@
                 <!-- Testimonial 2 -->
                 <div class="bg-surface rounded-3xl p-6 border border-sky-100">
                     <div class="flex gap-1 mb-3">
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
                     </div>
-                    <p class="text-sm text-slate-600 italic mb-4">"El precio del pack sale más barato que comprando pieza a pieza. Y sin buscar nada. Muy recomendable."</p>
+                    <p class="text-sm text-slate-600 italic mb-4">"El precio del pack sale más barato que comprando
+                        pieza a pieza. Y sin buscar nada. Muy recomendable."</p>
                     <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-orange-200 flex items-center justify-center text-ink font-bold text-xs">JL</div>
+                        <div
+                            class="w-8 h-8 rounded-full bg-orange-200 flex items-center justify-center text-ink font-bold text-xs">
+                            JL</div>
                         <div>
                             <p class="text-xs font-bold text-ink">Juan L.</p>
                             <p class="text-xs text-slate-400">Padre de 3, ESO y Primaria</p>
@@ -361,15 +496,33 @@
                 <!-- Testimonial 3 -->
                 <div class="bg-surface rounded-3xl p-6 border border-sky-100">
                     <div class="flex gap-1 mb-3">
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
                     </div>
-                    <p class="text-sm text-slate-600 italic mb-4">"Llevo 3 años reservando por WhatsApp. El proceso es sencillísimo y el trato siempre genial. 10/10."</p>
+                    <p class="text-sm text-slate-600 italic mb-4">"Llevo 3 años reservando por WhatsApp. El proceso es
+                        sencillísimo y el trato siempre genial. 10/10."</p>
                     <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-sky-100 flex items-center justify-center text-ink font-bold text-xs">AG</div>
+                        <div
+                            class="w-8 h-8 rounded-full bg-sky-100 flex items-center justify-center text-ink font-bold text-xs">
+                            AG</div>
                         <div>
                             <p class="text-xs font-bold text-ink">Ana G.</p>
                             <p class="text-xs text-slate-400">Clienta fiel desde 2022</p>
@@ -388,8 +541,10 @@
             <!-- Brand -->
             <div>
                 <div class="flex items-center gap-2 mb-2">
-                    <svg class="w-5 h-5 text-cta" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/>
+                    <svg class="w-5 h-5 text-cta" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
                     </svg>
                     <span class="text-xl font-heading font-800">Bazar</span>
                 </div>
@@ -399,9 +554,11 @@
             <!-- Contact -->
             <div class="text-center md:text-right">
                 <p class="text-xs uppercase tracking-wider text-sky-300 font-bold mb-2">Contacto WhatsApp</p>
-                <a href="https://wa.me/34624066658" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-xl text-sm font-bold transition-colors duration-200 cursor-pointer">
+                <a href="https://wa.me/34624066658" target="_blank" rel="noopener"
+                    class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-xl text-sm font-bold transition-colors duration-200 cursor-pointer">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
                     </svg>
                     +34 624 066 658
                 </a>
@@ -519,7 +676,7 @@
 
         // ── Tailwind CTA color alias ────────────────────
         // Ensure tailwind knows about bg-cta/hover etc via inline JIT
-        document.querySelectorAll('[class*="bg-cta"]').forEach(() => {});
+        document.querySelectorAll('[class*="bg-cta"]').forEach(() => { });
 
         // ── Countdown Timer ─────────────────────────────
         (function () {
@@ -542,4 +699,5 @@
         })();
     </script>
 </body>
+
 </html>
