@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vuelta Al Cole — 20 Años contigo | Bazar Zaragoza</title>
+    <meta name="description"
+        content="Celebramos 20 años en Zaragoza. Reserva tu pack de material escolar y recógelo en 24h sin colas. Paga 5€ de señal con Bizum.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary:     '#DC2626',   /* Red-600   */
+                        primaryDark: '#B91C1C',   /* Red-700   */
+                        gold:        '#FBBF24',   /* Gold-400  */
+                        goldDark:    '#F59E0B',   /* Gold-500  */
+                        surface:     '#1E293B',   /* Slate-800 */
+                        ink:         '#0F172A',   /* Slate-900 */
+                        light:       '#FEF9EE',   /* Cream     */
+                    },
+                    fontFamily: {
+                        heading: ['Rubik', 'sans-serif'],
+                        body:    ['Nunito Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700&family=Rubik:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background-color: #FEF9EE;
+            color: #0F172A;
+        }
+        h1, h2, h3, h4, h5 { font-family: 'Rubik', sans-serif; }
+
+        /* Hero headline */
+        .hero-display {
+            font-size: clamp(2.8rem, 7vw, 5.8rem);
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+        }
+
+        /* Anniversary badge shimmer */
+        @keyframes shimmer {
+            0%   { background-position: -200% center; }
+            100% { background-position:  200% center; }
+        }
+        .gold-shimmer {
+            background: linear-gradient(90deg, #FBBF24 25%, #FEF3C7 50%, #FBBF24 75%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+        }
+
+        /* Fade-in-up entrance */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to   { opacity: 1; transform: translateY(0);    }
+        }
+        .fade-in-up          { animation: fadeInUp 0.65s ease-out both; }
+        .delay-1             { animation-delay: 0.10s; }
+        .delay-2             { animation-delay: 0.22s; }
+        .delay-3             { animation-delay: 0.34s; }
+        .delay-4             { animation-delay: 0.46s; }
+        @media (prefers-reduced-motion: reduce) {
+            .fade-in-up { animation: none; }
+        }
+
+        /* Countdown */
+        .countdown-seg {
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 10px 16px;
+            min-width: 72px;
+            text-align: center;
+            border: 1px solid rgba(251,191,36,0.3);
+        }
+        .countdown-num {
+            font-family: 'Rubik', monospace;
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #FBBF24;
+            line-height: 1;
+        }
+        .countdown-label {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-top: 4px;
+        }
+
+        /* Pack card */
+        .pack-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .pack-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 24px 48px rgba(220,38,38,0.18);
+        }
+
+        /* Trust icon circles */
+        .trust-icon {
+            background: rgba(220,38,38,0.1);
+            border-radius: 50%;
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Step circles */
+        .step-circle {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-family: 'Rubik', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+        }
+
+        /* Gold divider */
+        .gold-divider {
+            height: 3px;
+            background: linear-gradient(to right, transparent, #FBBF24, transparent);
+            border: none;
+        }
+
+        /* Diagonal hero ribbon */
+        .hero-ribbon {
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-ribbon::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #DC2626 0%, #991B1B 60%, #0F172A 100%);
+            z-index: 0;
+        }
+
+        /* Floating nav */
+        nav { backdrop-filter: blur(12px); }
+    </style>
+</head>
+
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- ══════════════════════════════
+         NAVBAR
+    ══════════════════════════════ -->
+    <header class="fixed top-3 left-3 right-3 z-50">
+        <nav class="max-w-5xl mx-auto bg-ink/90 rounded-2xl px-5 py-3 flex justify-between items-center shadow-xl border border-gold/20">
+            <!-- Logo -->
+            <div class="flex items-center gap-2.5">
+                <!-- 20-year star badge -->
+                <div class="w-8 h-8 bg-gold rounded-full flex items-center justify-center">
+                    <span class="text-ink text-xs font-heading font-900 leading-none">20</span>
+                </div>
+                <span class="text-xl font-heading font-800 text-white tracking-tight">Bazar</span>
+                <span class="hidden sm:inline-block text-xs font-bold uppercase tracking-wider bg-primary/80 text-white px-2 py-0.5 rounded-full">
+                    Aniversario
+                </span>
+            </div>
+            <!-- Nav CTA -->
+            <a href="#packs"
+                class="bg-gold hover:bg-goldDark text-ink font-heading font-700 text-sm px-4 py-2 rounded-xl transition-colors duration-200 shadow-sm cursor-pointer">
+                Reservar Pack
+            </a>
+        </nav>
+    </header>
+
+    <!-- ══════════════════════════════
+         HERO
+    ══════════════════════════════ -->
+    <section class="hero-ribbon pt-28 pb-20 px-5 text-center relative overflow-hidden">
+        <!-- Decorative gold circles -->
+        <div class="absolute top-1/2 left-1/4 w-64 h-64 rounded-full bg-gold/5 blur-2xl pointer-events-none"></div>
+        <div class="absolute top-1/3 right-1/4 w-48 h-48 rounded-full bg-primary/20 blur-2xl pointer-events-none"></div>
+
+        <div class="max-w-3xl mx-auto relative z-10">
+
+            <!-- Anniversary badge -->
+            <div class="fade-in-up inline-flex items-center gap-2 bg-gold/15 border border-gold/30 text-gold text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                20 Años sirviendo a Zaragoza
+            </div>
+
+            <!-- Headline -->
+            <h1 class="hero-display text-white mb-5 fade-in-up delay-1">
+                Material escolar<br>
+                <span class="gold-shimmer">listo en 24h.</span><br>
+                <span class="text-white/80">Sin colas.</span>
+            </h1>
+
+            <p class="text-white/60 text-lg md:text-xl font-body mb-8 fade-in-up delay-2 max-w-xl mx-auto">
+                Reserva tu pack por WhatsApp, paga <strong class="text-gold">5€ de señal con Bizum</strong> 
+                y recógelo en tu bazar de confianza sin esperar.
+            </p>
+
+            <!-- Countdown -->
+            <div class="fade-in-up delay-3 mb-8">
+                <p class="text-xs font-bold uppercase tracking-widest text-white/40 mb-3">La oferta expira en</p>
+                <div class="flex items-start justify-center gap-2">
+                    <div class="countdown-seg">
+                        <div class="countdown-num" id="cd-hours">47</div>
+                        <div class="countdown-label">horas</div>
+                    </div>
+                    <span class="countdown-num text-gold mt-2">:</span>
+                    <div class="countdown-seg">
+                        <div class="countdown-num" id="cd-minutes">59</div>
+                        <div class="countdown-label">min</div>
+                    </div>
+                    <span class="countdown-num text-gold mt-2">:</span>
+                    <div class="countdown-seg">
+                        <div class="countdown-num" id="cd-seconds">59</div>
+                        <div class="countdown-label">seg</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTAs -->
+            <div class="fade-in-up delay-4 flex flex-col sm:flex-row gap-3 justify-center">
+                <a href="#packs"
+                    class="bg-gold hover:bg-goldDark text-ink font-heading font-700 text-lg px-8 py-4 rounded-2xl transition-colors duration-200 shadow-lg cursor-pointer">
+                    Ver los Packs
+                </a>
+                <a href="#como-funciona"
+                    class="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-heading font-600 text-lg px-8 py-4 rounded-2xl transition-colors duration-200 cursor-pointer">
+                    ¿Cómo funciona?
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         TRUST BAR
+    ══════════════════════════════ -->
+    <section class="bg-white border-y border-red-100 py-6 px-5">
+        <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+
+            <div class="flex items-center gap-3">
+                <div class="trust-icon">
+                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-sm font-heading font-700 text-ink">Listo en 24h</p>
+                    <p class="text-xs text-slate-400">Recoge cuando quieras</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <div class="trust-icon">
+                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 15h3"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-sm font-heading font-700 text-ink">Pago con Bizum</p>
+                    <p class="text-xs text-slate-400">Solo 5€ de señal</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <div class="trust-icon">
+                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-sm font-heading font-700 text-ink">Sin colas</p>
+                    <p class="text-xs text-slate-400">Pack listo a tu llegada</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <div class="trust-icon">
+                    <svg class="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-sm font-heading font-700 text-ink">20 años contigo</p>
+                    <p class="text-xs text-slate-400">Tu bazar de confianza</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         ANNIVERSARY BANNER
+    ══════════════════════════════ -->
+    <section class="bg-ink py-12 px-5 text-center">
+        <div class="max-w-3xl mx-auto">
+            <p class="text-xs font-bold uppercase tracking-widest text-gold/70 mb-2">2005 → 2025 · Zaragoza</p>
+            <h2 class="text-3xl md:text-4xl font-heading font-900 text-white mb-3">
+                20 Años de <span class="text-gold">Main Paper</span>
+            </h2>
+            <p class="text-white/50 text-base max-w-lg mx-auto">
+                Dos décadas cuidando el material de los niños de Zaragoza. Este año lo celebramos 
+                con los mejores precios de nuestra historia y recogida sin colas.
+            </p>
+            <hr class="gold-divider mt-8 max-w-xs mx-auto">
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         HOW IT WORKS
+    ══════════════════════════════ -->
+    <section id="como-funciona" class="max-w-4xl mx-auto px-5 py-20">
+        <div class="text-center mb-14">
+            <p class="text-xs font-bold uppercase tracking-widest text-primary mb-2">Proceso</p>
+            <h2 class="text-3xl md:text-4xl font-heading font-800 text-ink">¿Cómo funciona?</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            <!-- Step 1 -->
+            <div class="bg-white rounded-3xl p-7 text-center shadow-sm border border-red-100">
+                <div class="step-circle bg-primary text-white mx-auto mb-5 shadow-lg">1</div>
+                <h3 class="text-lg font-heading font-700 text-ink mb-2">Elige tu pack</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">Selecciona el pack ideal para la etapa de tu hij@. Infantil, Primaria o ESO.</p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="bg-white rounded-3xl p-7 text-center shadow-sm border border-red-100">
+                <div class="step-circle bg-gold text-ink mx-auto mb-5 shadow-lg">2</div>
+                <h3 class="text-lg font-heading font-700 text-ink mb-2">Reserva por WhatsApp</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">Envíanos un mensaje y paga 5€ de señal vía Bizum. Rápido y seguro.</p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="bg-white rounded-3xl p-7 text-center shadow-sm border border-red-100">
+                <div class="step-circle bg-ink text-gold mx-auto mb-5 shadow-lg">3</div>
+                <h3 class="text-lg font-heading font-700 text-ink mb-2">Recoge sin cola</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">Ven a la tienda, paga el resto y llévate tu pack preparado al instante.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         PACKS SECTION
+    ══════════════════════════════ -->
+    <section id="packs" class="max-w-5xl mx-auto px-5 pb-20">
+        <div class="text-center mb-12">
+            <p class="text-xs font-bold uppercase tracking-widest text-primary mb-2">Material escolar</p>
+            <h2 class="text-3xl md:text-4xl font-heading font-800 text-ink">Elige tu Pack</h2>
+            <p class="text-slate-400 mt-3 text-sm">
+                Todo lo que necesitas para empezar el curso, listo y sin sorpresas.
+                <span class="text-gold font-semibold">Edición 20 Aniversario.</span>
+            </p>
+        </div>
+        <div id="packs-container" class="grid grid-cols-1 md:grid-cols-3 gap-7">
+            <!-- Rendered via JS -->
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         PROFIT CALCULATOR ("Bazar Logic")
+    ══════════════════════════════ -->
+    <section class="bg-ink py-16 px-5">
+        <div class="max-w-3xl mx-auto text-center">
+            <p class="text-xs font-bold uppercase tracking-widest text-gold/70 mb-2">¿Merece la pena?</p>
+            <h2 class="text-3xl font-heading font-800 text-white mb-6">La cuenta real.</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
+
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+                    <p class="text-gold font-heading font-900 text-2xl mb-1">≈4€</p>
+                    <p class="text-white/70 text-sm">Ahorro vs. comprar cada artículo suelto en el súper</p>
+                </div>
+
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+                    <p class="text-gold font-heading font-900 text-2xl mb-1">0 min</p>
+                    <p class="text-white/70 text-sm">Tiempo en cola. El pack llega listo con tu nombre</p>
+                </div>
+
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+                    <p class="text-gold font-heading font-900 text-2xl mb-1">5€</p>
+                    <p class="text-white/70 text-sm">Es todo lo que dejas de señal. El resto lo pagas al recoger</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         TESTIMONIALS
+    ══════════════════════════════ -->
+    <section class="bg-white border-t border-red-100 py-20 px-5">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <p class="text-xs font-bold uppercase tracking-widest text-primary mb-2">Familias que confían</p>
+                <h2 class="text-3xl font-heading font-800 text-ink">Lo que dicen los padres</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Testimonial 1 -->
+                <div class="bg-light rounded-3xl p-6 border border-red-50">
+                    <div class="flex gap-1 mb-3">
+                        <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <p class="text-sm text-slate-600 italic mb-4">"Un año más, lo más fácil del comienzo de curso. Reservé el martes, lo recogí el miércoles. Fantástico."</p>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-primary font-bold text-xs">MR</div>
+                        <div>
+                            <p class="text-xs font-bold text-ink">María R.</p>
+                            <p class="text-xs text-slate-400">Madre de 2 niños en Primaria</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-light rounded-3xl p-6 border border-red-50">
+                    <div class="flex gap-1 mb-3">
+                        <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <p class="text-sm text-slate-600 italic mb-4">"El precio del pack sale más barato que comprando pieza a pieza. Y sin buscar nada. Muy recomendable."</p>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-goldDark font-bold text-xs">JL</div>
+                        <div>
+                            <p class="text-xs font-bold text-ink">Juan L.</p>
+                            <p class="text-xs text-slate-400">Padre de 3, ESO y Primaria</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-light rounded-3xl p-6 border border-red-50">
+                    <div class="flex gap-1 mb-3">
+                        <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <p class="text-sm text-slate-600 italic mb-4">"Llevo 3 años reservando por WhatsApp. El proceso es sencillísimo y el trato siempre genial. 10/10."</p>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center text-primary font-bold text-xs">AG</div>
+                        <div>
+                            <p class="text-xs font-bold text-ink">Ana G.</p>
+                            <p class="text-xs text-slate-400">Clienta fiel desde 2022</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         FOOTER
+    ══════════════════════════════ -->
+    <footer class="bg-ink text-white py-12 px-5 mt-auto">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
+
+            <!-- Brand -->
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-8 h-8 bg-gold rounded-full flex items-center justify-center">
+                        <span class="text-ink text-xs font-heading font-900 leading-none">20</span>
+                    </div>
+                    <span class="text-xl font-heading font-800">Bazar · Main Paper</span>
+                </div>
+                <p class="text-white/40 text-sm">20 años al lado de las familias de Zaragoza. 2005–2025.</p>
+            </div>
+
+            <!-- Contact -->
+            <div class="text-center md:text-right">
+                <p class="text-xs uppercase tracking-wider text-gold/60 font-bold mb-2">Contacto WhatsApp</p>
+                <a href="https://wa.me/34624066658" target="_blank" rel="noopener"
+                    class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-xl text-sm font-bold transition-colors duration-200 cursor-pointer">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+                    </svg>
+                    +34 624 066 658
+                </a>
+            </div>
+
+        </div>
+
+        <div class="max-w-4xl mx-auto border-t border-white/10 mt-8 pt-6 text-center">
+            <p class="text-white/30 text-xs">&copy; 2025 Bazar Main Paper · Zaragoza · 20º Aniversario. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- ══════════════════════════════
+         JAVASCRIPT
+    ══════════════════════════════ -->
+    <script>
+        // ── Config ──────────────────────────────────────
+        const WHATSAPP_NUMBER = "34624066658";
+
+        // ── Pack Data ───────────────────────────────────
+        const packs = [
+            {
+                id: 1,
+                name: "Pack Infantil",
+                subtitle: "Miffy Edition · Aniversario",
+                price: 15.90,
+                badge: null,
+                description: "Agenda Día Página · Lápices HB · Set de Colores",
+                headerClass: "from-red-600 to-red-800",
+                accentColor: "#DC2626",
+            },
+            {
+                id: 2,
+                name: "Pack Primaria",
+                subtitle: "Kuromi Edition · Aniversario",
+                price: 19.90,
+                badge: "Más popular",
+                description: "Agenda Semana Vista · Rotuladores MP · Estuche completo",
+                headerClass: "from-yellow-500 to-amber-600",
+                accentColor: "#FBBF24",
+            },
+            {
+                id: 3,
+                name: "Pack ESO",
+                subtitle: "Cervantes Premium · Aniversario",
+                price: 24.90,
+                badge: null,
+                description: "Agenda Tapa Dura 12×17 · Bolígrafos Pilot/BIC · Subrayadores Stabilo",
+                headerClass: "from-slate-700 to-slate-900",
+                accentColor: "#94A3B8",
+            }
+        ];
+
+        // ── Render Packs ────────────────────────────────
+        const container = document.getElementById('packs-container');
+
+        packs.forEach(pack => {
+            const badgeHTML = pack.badge
+                ? `<span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow whitespace-nowrap">⭐ ${pack.badge}</span>`
+                : '';
+
+            const card = document.createElement('div');
+            card.className = 'pack-card relative bg-white rounded-3xl overflow-hidden shadow-sm border border-red-100 flex flex-col cursor-pointer';
+
+            card.innerHTML = `
+                ${badgeHTML}
+                <div class="h-40 bg-gradient-to-br ${pack.headerClass} flex items-center justify-center relative overflow-hidden">
+                    <!-- 20-year watermark -->
+                    <span class="absolute right-4 bottom-2 text-white/10 font-heading font-900" style="font-size:4rem;line-height:1">20</span>
+                    <div class="bg-white/15 rounded-2xl p-5 backdrop-blur-sm">
+                        <svg class="w-12 h-12 text-white opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="mb-3">
+                        <h3 class="text-xl font-heading font-800 text-ink leading-tight">${pack.name}</h3>
+                        <p class="text-sm text-slate-400 font-medium">${pack.subtitle}</p>
+                    </div>
+
+                    <p class="text-3xl font-heading font-900 mb-1" style="color:${pack.accentColor}">${pack.price.toFixed(2)}&euro;</p>
+                    <p class="text-xs text-slate-400 mb-4">+ 5€ señal Bizum al reservar</p>
+
+                    <p class="text-slate-500 text-sm leading-relaxed flex-grow mb-5">
+                        <span class="font-bold text-ink">Incluye: </span>${pack.description}
+                    </p>
+
+                    <button
+                        onclick="reservar('${pack.name} — ${pack.subtitle}', '${pack.price.toFixed(2)}€')"
+                        class="w-full bg-primary hover:bg-primaryDark text-white font-heading font-700 text-base py-3.5 px-4 rounded-2xl flex justify-center items-center gap-2 transition-colors duration-200 shadow-md cursor-pointer"
+                        aria-label="Reservar ${pack.name} por WhatsApp"
+                    >
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+                        </svg>
+                        Reservar por WhatsApp
+                    </button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        // ── WhatsApp Reservation ────────────────────────
+        function reservar(packName, packPrice) {
+            const msg = `¡Hola! Quiero reservar el ${packName} por ${packPrice}. ¿A qué número de Bizum envío los 5€ de señal para que me lo guardéis?`;
+            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
+        // ── Countdown Timer ─────────────────────────────
+        (function () {
+            let h = 47, m = 59, s = 59;
+            const elH = document.getElementById('cd-hours');
+            const elM = document.getElementById('cd-minutes');
+            const elS = document.getElementById('cd-seconds');
+            function pad(n) { return String(n).padStart(2, '0'); }
+            setInterval(() => {
+                s--;
+                if (s < 0) { s = 59; m--; }
+                if (m < 0) { m = 59; h--; }
+                if (h < 0) { h = 0; m = 0; s = 0; }
+                elH.textContent = pad(h);
+                elM.textContent = pad(m);
+                elS.textContent = pad(s);
+            }, 1000);
+        })();
+    </script>
+
+</body>
+</html>

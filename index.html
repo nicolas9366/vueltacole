@@ -1,702 +1,1184 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="zh">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vuelta Al Cole — Reserva tu Pack sin Colas | Zaragoza Bazar</title>
-    <meta name="description"
-        content="Reserva online tu pack de material escolar y recógelo en tu bazar de confianza en 24h. Sin esperas, sin estrés. Vuelta al Cole más fácil.">
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#0EA5E9',
-                        primaryDark: '#0284C7',
-                        cta: '#F97316',
-                        ctaHover: '#EA6C0A',
-                        surface: '#F0F9FF',
-                        ink: '#0C4A6E',
-                    },
-                    fontFamily: {
-                        heading: ['Rubik', 'sans-serif'],
-                        body: ['Nunito Sans', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
-    <!-- Google Fonts: Rubik + Nunito Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700&family=Rubik:wght@400;500;600;700;800;900&display=swap"
+    <title>MainPaper · 返校季 2026 · 回扣折上折 50%！</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Bebas+Neue&display=swap"
         rel="stylesheet">
-
     <style>
-        html {
-            scroll-behavior: smooth;
+        :root {
+            --red: #E8001D;
+            --gold: #F5C518;
+            --dark: #0d0d0d;
+            --card-bg: #1a1a2e;
+            --blue: #0f3460;
+            --accent: #16213e;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'Nunito Sans', sans-serif;
-            background-color: #F0F9FF;
-            color: #0C4A6E;
+            font-family: 'Outfit', sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            overflow-x: hidden;
         }
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5 {
-            font-family: 'Rubik', sans-serif;
+        /* ─── POSTER WRAPPER 改为自适应宽度 ─── */
+        .poster {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            background: var(--dark);
         }
 
-        .hero-display {
-            font-size: clamp(2.6rem, 7vw, 5.5rem);
+        /* ══════════════════════════════════════════
+       SECTION 1 – HERO BANNER
+    ══════════════════════════════════════════ */
+        .hero {
+            position: relative;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px 20px;
+            overflow: hidden;
+            border-bottom: 3px solid var(--red);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('03_产品与场景图/fichero_42191_20250311.png');
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.4) saturate(1.2);
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(232, 0, 29, 0.60) 0%, rgba(13, 13, 13, 0.70) 55%, rgba(245, 197, 24, 0.20) 100%);
+            z-index: 1;
+        }
+
+        .iva-banner {
+            position: absolute;
+            top: 15px;
+            left: -35px;
+            background: var(--red);
+            color: #fff;
+            padding: 5px 40px;
+            transform: rotate(-45deg);
             font-weight: 900;
-            letter-spacing: -0.04em;
-            line-height: 1.05;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(28px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in-up {
-            animation: fadeInUp 0.65s ease-out both;
-        }
-
-        .delay-1 {
-            animation-delay: 0.1s;
-        }
-
-        .delay-2 {
-            animation-delay: 0.22s;
-        }
-
-        .delay-3 {
-            animation-delay: 0.34s;
-        }
-
-        .delay-4 {
-            animation-delay: 0.46s;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .fade-in-up {
-                animation: none;
-            }
-        }
-
-        /* Countdown segments */
-        .countdown-seg {
-            background: white;
-            border-radius: 12px;
-            padding: 10px 16px;
-            min-width: 72px;
-            text-align: center;
-            box-shadow: 0 2px 12px rgba(14, 165, 233, 0.12);
-            border: 1px solid #BAE6FD;
-        }
-
-        .countdown-num {
-            font-family: 'Rubik', monospace;
-            font-size: 2.4rem;
-            font-weight: 800;
-            color: #0C4A6E;
-            line-height: 1;
-        }
-
-        .countdown-label {
-            font-size: 0.62rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
+            font-size: 11px;
             text-transform: uppercase;
-            color: #64748B;
-            margin-top: 4px;
+            letter-spacing: 1px;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            line-height: 1.2;
         }
 
-        /* Pack card hover */
-        .pack-card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        .hero-logos {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .pack-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15);
+        .hero-logos img {
+            height: 40px;
+            object-fit: contain;
         }
 
-        /* Trust bar icon circle */
-        .trust-icon {
-            background: #E0F2FE;
+        .hero-logos .logo-20 {
             border-radius: 50%;
-            width: 44px;
-            height: 44px;
+            box-shadow: 0 0 15px rgba(245, 197, 24, 0.6);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .hero-text {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-eyebrow {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 80px;
+            line-height: 0.9;
+            color: var(--white);
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero-title span {
+            color: var(--red);
+            font-size: 100px;
+            display: block;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), #d69e2e);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 900;
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(245, 197, 24, 0.4);
+            margin-top: 10px;
+        }
+
+        /* --- 新增：家长预订通道按钮样式 --- */
+        .parent-booking-btn {
+            display: inline-block;
+            margin-top: 25px;
+            background: linear-gradient(135deg, #38a169, #276749);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid #48bb78;
+            position: relative;
+            z-index: 5;
+        }
+
+        .parent-booking-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(56, 161, 105, 0.6);
+        }
+
+        .urgency-strip {
+            background: var(--red);
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 2px;
+            animation: pulseBg 2s infinite;
+        }
+
+        @keyframes pulseBg {
+            0% {
+                background: var(--red);
+            }
+
+            50% {
+                background: #b90015;
+            }
+
+            100% {
+                background: var(--red);
+            }
+        }
+
+        /* ══════════════════════════════════════════
+       VOUCHER BAR
+    ══════════════════════════════════════════ */
+        .rapel-bar {
+            background: linear-gradient(90deg, #1a1a2e, #0f3460);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+        }
+
+        .rapel-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        /* ══════════════════════════════════════════
+       SECTIONS
+    ══════════════════════════════════════════ */
+        .section {
+            padding: 25px 20px;
+            position: relative;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .section-num {
+            width: 40px;
+            height: 40px;
+            background: var(--red);
+            color: #fff;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
             flex-shrink: 0;
         }
 
-        /* Step connector line */
-        .step-line {
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 30px;
+            color: var(--white);
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+
+        .section-subtitle {
+            font-size: 13px;
+            color: #a0aec0;
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        .product-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        /* 默认 PC 端列数 */
+        .grid-5 {
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .badge-hot {
             position: absolute;
-            top: 28px;
-            left: 50%;
+            top: -8px;
+            right: -8px;
+            background: var(--red);
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 10px;
+            z-index: 2;
+        }
+
+        .product-card img.thumb {
             width: 100%;
-            height: 2px;
-            background: linear-gradient(to right, #BAE6FD, #FED7AA);
-            z-index: 0;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .ref {
+            font-size: 11px;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .name {
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 10px;
+            color: #e2e8f0;
+            flex-grow: 1;
+        }
+
+        .price-row {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .price-row div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            margin-bottom: 3px;
+        }
+
+        .orig {
+            color: #718096;
+            text-decoration: line-through;
+        }
+
+        .disc {
+            color: #fc8181;
+            font-weight: 700;
+        }
+
+        .net {
+            color: #fff;
+            font-weight: 800;
+            font-size: 13px !important;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+            padding-bottom: 3px;
+            margin-bottom: 4px !important;
+        }
+
+        .iva-pill {
+            background: rgba(255, 255, 255, 0.1);
+            color: #cbd5e0;
+            font-size: 9px !important;
+            padding: 1px 5px;
+            border-radius: 4px;
+        }
+
+        .net-rapel {
+            color: var(--gold);
+            font-weight: 900;
+            font-size: 14px !important;
+            margin-top: 4px;
+            transition: opacity 0.3s;
+        }
+
+        /* ══════════════════════════════════════════
+       PUBLIC BRANDS
+    ══════════════════════════════════════════ */
+        .brand-section {
+            background: linear-gradient(180deg, #111, #0a0a14);
+            padding: 25px 20px;
+        }
+
+        .brand-cols {
+            display: flex;
+            gap: 20px;
+        }
+
+        .brand-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .brand-row {
+            display: flex;
+            background: var(--accent);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .brand-logo-wrap {
+            width: 68px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            flex-shrink: 0;
+        }
+
+        .brand-logo-wrap img {
+            max-width: 100%;
+            max-height: 40px;
+            object-fit: contain;
+        }
+
+        .brand-products {
+            flex: 1;
+            padding: 10px 15px;
+        }
+
+        .brand-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            color: #a0aec0;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 4px;
+        }
+
+        .brand-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            padding: 6px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+        }
+
+        .brand-item:last-child {
+            border-bottom: none;
+        }
+
+        .b-ref {
+            color: #a0aec0;
+            font-family: monospace;
+            margin-right: 6px;
+        }
+
+        .b-net {
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .b-rapel {
+            color: var(--gold);
+            margin-left: 8px;
+            transition: opacity 0.3s;
+        }
+
+        /* ══════════════════════════════════════════
+       PAPEL & FOOTER
+    ══════════════════════════════════════════ */
+        .papel-section {
+            background: linear-gradient(135deg, #0f3460, #1a1a2e);
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            position: relative;
+        }
+
+        .papel-img {
+            width: 200px;
+            filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.6));
+            transform: rotate(-3deg);
+            flex-shrink: 0;
+        }
+
+        .papel-text h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 50px;
+            line-height: 1;
+            margin-bottom: 15px;
+        }
+
+        .papel-specs {
+            font-size: 14px;
+            color: #cbd5e0;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .papel-price-block {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .p-net {
+            font-size: 24px;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.1;
+        }
+
+        .p-rapel {
+            font-size: 16px;
+            color: var(--gold);
+            font-weight: 800;
+            transition: opacity 0.3s;
+        }
+
+        .papel-badge {
+            background: var(--red);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 12px;
+            transform: rotate(5deg);
+            flex-shrink: 0;
+        }
+
+        .footer-cta {
+            background: var(--gold);
+            color: #000;
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        .footer-cta .slogan {
+            font-weight: 900;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .contacts {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            background: rgba(0, 0, 0, 0.05);
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .footer-note {
+            background: #000;
+            color: #4a5568;
+            text-align: center;
+            padding: 15px;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .divider {
+            height: 4px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            margin: 0;
+        }
+
+        /* ══════════════════════════════════════════
+       📱 媒体查询：平板适配 (<= 768px)
+    ══════════════════════════════════════════ */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 60px;
+            }
+
+            .hero-title span {
+                font-size: 75px;
+            }
+
+            .grid-5,
+            .grid-4 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .brand-cols {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .papel-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .papel-img {
+                margin-bottom: 10px;
+            }
+
+            .papel-price-block {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .papel-badge {
+                transform: rotate(0deg);
+                margin-top: 10px;
+            }
+
+            .hero-price {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* ══════════════════════════════════════════
+       📱 媒体查询：手机适配 (<= 480px)
+    ══════════════════════════════════════════ */
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 45px;
+            }
+
+            .hero-title span {
+                font-size: 55px;
+            }
+
+            .hero-logos {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+
+            .iva-banner {
+                top: 10px;
+                left: -40px;
+                font-size: 9px;
+                padding: 3px 40px;
+            }
+
+            .grid-5,
+            .grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .rapel-bar>div {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .rapel-bar button {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+
+            .brand-row {
+                flex-direction: column;
+            }
+
+            .brand-logo-wrap {
+                width: 100%;
+                height: 50px;
+            }
+
+            .b-net {
+                justify-content: space-between;
+                width: 100%;
+                margin-top: 4px;
+            }
+
+            .parent-booking-btn {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
         }
     </style>
 </head>
 
-<body class="antialiased min-h-screen flex flex-col">
+<body>
 
-    <!-- ═══════════════════════════════
-         FLOATING NAVBAR
-    ═══════════════════════════════ -->
-    <header class="fixed top-3 left-3 right-3 z-50">
-        <nav
-            class="max-w-5xl mx-auto bg-white/90 backdrop-blur-md rounded-2xl px-5 py-3 flex justify-between items-center shadow-lg border border-sky-100">
-            <!-- Logo -->
-            <div class="flex items-center gap-2.5">
-                <!-- Pencil icon -->
-                <svg class="w-6 h-6 text-cta" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                </svg>
-                <span class="text-xl font-heading font-800 text-ink tracking-tight">Bazar</span>
+    <div class="poster">
+
+        <div class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-overlay"></div>
+            <div class="iva-banner">含21% IVA<br>税含价格</div>
+
+            <div class="hero-logos">
+                <img class="logo-20" src="02_品牌Logos/main_paper_20 logo.jpeg" alt="MainPaper 20周年">
+            </div>
+
+            <div class="hero-content">
+                <div class="hero-text">
+                    <p class="hero-eyebrow">📚 2026年返校季促销活动</p>
+                    <h1 class="hero-title">
+                        返校季<br>
+                        <span>大促销</span>
+                        2026
+                    </h1>
+                    <div class="hero-badge">
+                        🔥 额外回扣 +50% · 提前付款！
+                    </div>
+
+                    <a href="parents.html" class="parent-booking-btn">
+                        👨‍👩‍👧‍👦 学生家长专属：点击进入「开学季文具预订服务」
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-price"
+                style="position:relative; z-index:5; display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:center; padding:25px 18px 0;">
                 <span
-                    class="hidden sm:inline-block text-xs font-bold uppercase tracking-wider bg-sky-100 text-primary px-2 py-0.5 rounded-full">Vuelta
-                    al Cole</span>
-            </div>
-
-            <!-- CTA -->
-            <a href="#packs"
-                class="bg-cta hover:bg-ctaHover text-white font-heading font-700 text-sm px-4 py-2 rounded-xl cursor-pointer transition-colors duration-200 shadow-sm">
-                Reservar Pack
-            </a>
-        </nav>
-    </header>
-
-    <!-- ═══════════════════════════════
-         HERO SECTION
-    ═══════════════════════════════ -->
-    <section class="pt-28 pb-16 px-5 text-center relative overflow-hidden">
-        <!-- BG decorative blobs -->
-        <div
-            class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-sky-100 rounded-full blur-3xl opacity-50 pointer-events-none -z-0">
-        </div>
-
-        <div class="max-w-3xl mx-auto relative z-10">
-
-            <!-- Badge -->
-            <div
-                class="fade-in-up inline-flex items-center gap-2 bg-orange-100 text-cta text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
-                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
-                        clip-rule="evenodd" />
-                </svg>
-                Oferta por tiempo limitado
-            </div>
-
-            <!-- Headline -->
-            <h1 class="hero-display text-ink mb-5 fade-in-up delay-1">
-                Material escolar<br>
-                <span class="text-primary">listo en 24h.</span><br>
-                Sin colas.
-            </h1>
-
-            <p class="text-slate-500 text-lg md:text-xl font-body mb-8 fade-in-up delay-2 max-w-xl mx-auto">
-                Reserva tu pack por WhatsApp, paga 5&euro; de señal con Bizum y recógelo en tu bazar sin esperar.
-            </p>
-
-            <!-- Countdown -->
-            <div class="fade-in-up delay-3 mb-8">
-                <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">La oferta expira en</p>
-                <div class="flex items-start justify-center gap-2">
-                    <div class="countdown-seg">
-                        <div class="countdown-num" id="cd-hours">47</div>
-                        <div class="countdown-label">horas</div>
-                    </div>
-                    <span class="countdown-num text-ink mt-2">:</span>
-                    <div class="countdown-seg">
-                        <div class="countdown-num" id="cd-minutes">59</div>
-                        <div class="countdown-label">min</div>
-                    </div>
-                    <span class="countdown-num text-ink mt-2">:</span>
-                    <div class="countdown-seg">
-                        <div class="countdown-num" id="cd-seconds">59</div>
-                        <div class="countdown-label">seg</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CTAs -->
-            <div class="fade-in-up delay-4 flex flex-col sm:flex-row gap-3 justify-center">
-                <a href="#packs"
-                    class="bg-cta hover:bg-ctaHover text-white font-heading font-700 text-lg px-8 py-4 rounded-2xl cursor-pointer transition-colors duration-200 shadow-md">
-                    Ver los Packs
-                </a>
-                <a href="#como-funciona"
-                    class="bg-white hover:bg-sky-50 border border-sky-200 text-ink font-heading font-600 text-lg px-8 py-4 rounded-2xl cursor-pointer transition-colors duration-200">
-                    ¿Cómo funciona?
-                </a>
+                    style="font-size:13px; opacity:0.9; margin-right:4px; font-weight:bold; text-shadow:0 2px 4px rgba(0,0,0,0.8);">PB011明星款·限时</span>
+                <span
+                    style="background:linear-gradient(135deg,#e53e3e,#c53030);color:#fff;border-radius:20px;padding:4px 14px;font-weight:700;font-size:13px;box-shadow:0 4px 8px rgba(0,0,0,0.5);">🏷
+                    额外5%折扣</span>
+                <span
+                    style="background:linear-gradient(135deg,#d69e2e,#b7791f);color:#000;border-radius:20px;padding:4px 14px;font-weight:700;font-size:13px;box-shadow:0 4px 8px rgba(0,0,0,0.5);">🎁
+                    买7送1</span>
+                <span
+                    style="background:linear-gradient(135deg,#38a169,#276749);color:#fff;border-radius:20px;padding:4px 14px;font-weight:700;font-size:13px;box-shadow:0 4px 8px rgba(0,0,0,0.5);">💳
+                    返50%代金券🔥</span>
             </div>
         </div>
-    </section>
 
-    <!-- ═══════════════════════════════
-         TRUST BAR
-    ═══════════════════════════════ -->
-    <section class="bg-white border-y border-sky-100 py-6 px-5">
-        <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="urgency-strip">
+            ⚡ 库存有限 · 4月30日前下单 · 8月发货 ⚡
+        </div>
 
-            <div class="flex items-center gap-3">
-                <div class="trust-icon">
-                    <!-- Clock icon -->
-                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+        <div class="rapel-bar" style="flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap; width:100%;">
+                <div class="rapel-label" style="flex:1;min-width:200px">
+                    <strong>💳 即时打折 或是 结账返券</strong><br>
+                    <span style="font-size:12px;opacity:0.8">选择打折将立刻降低净价 或 享受50%代金券返还。</span>
                 </div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+                    <button onclick="setVoucher(0)" id="vBtn0"
+                        style="border-radius:12px;border:2px solid #555;padding:7px 16px;cursor:pointer;font-weight:700;font-size:12px;background:#4a5568;color:#e2e8f0;transition:all 0.2s">🔒
+                        维持原价<br>(获取50%返券)</button>
+                    <button onclick="setVoucher(5)" id="vBtn5"
+                        style="border-radius:12px;border:2px solid #d69e2e;padding:7px 16px;cursor:pointer;font-weight:700;font-size:12px;background:#2d3748;color:#d69e2e;transition:all 0.2s">🗓
+                        7月30日前付款<br><span style="font-size:16px;color:#f6e05e">即时打折 −5%</span></button>
+                    <button onclick="setVoucher(10)" id="vBtn10"
+                        style="border-radius:12px;border:2px solid #e53e3e;padding:7px 16px;cursor:pointer;font-weight:700;font-size:12px;background:#2d3748;color:#fc8181;transition:all 0.2s">⚡
+                        6月30日前付款<br><span style="font-size:16px;color:#fc8181">即时打折 −10%</span></button>
+                </div>
+            </div>
+            <div id="voucherResult"
+                style="display:none;width:100%;text-align:center;padding:8px 16px;background:linear-gradient(135deg,rgba(245,197,24,0.15),rgba(229,62,62,0.1));border-radius:10px;border:1px solid rgba(245,197,24,0.3)">
+            </div>
+        </div>
+
+        <div class="section sec-cuaderno">
+            <div class="section-header">
+                <div class="section-num">1</div>
                 <div>
-                    <p class="text-sm font-heading font-700 text-ink">Listo en 24h</p>
-                    <p class="text-xs text-slate-400">Recoge cuando quieras</p>
+                    <div class="section-title">📓 笔记本 &amp; 本册</div>
+                    <div class="section-subtitle">Cervantes系列 · MainPaper自有品牌 · 所有价格含21% IVA</div>
                 </div>
             </div>
 
-            <div class="flex items-center gap-3">
-                <div class="trust-icon">
-                    <!-- Mobile icon -->
-                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 15h3" />
-                    </svg>
-                </div>
-                <div>
-                    <p class="text-sm font-heading font-700 text-ink">Pago con Bizum</p>
-                    <p class="text-xs text-slate-400">Solo 5€ de señal</p>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-3">
-                <div class="trust-icon">
-                    <!-- Check-circle icon -->
-                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
-                <div>
-                    <p class="text-sm font-heading font-700 text-ink">Sin colas</p>
-                    <p class="text-xs text-slate-400">Pack listo a tu llegada</p>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-3">
-                <div class="trust-icon">
-                    <!-- Star icon -->
-                    <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.562.562 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                    </svg>
-                </div>
-                <div>
-                    <p class="text-sm font-heading font-700 text-ink">20 años contigo</p>
-                    <p class="text-xs text-slate-400">Tu bazar de confianza</p>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════
-         HOW IT WORKS
-    ═══════════════════════════════ -->
-    <section id="como-funciona" class="max-w-4xl mx-auto px-5 py-20">
-        <div class="text-center mb-14">
-            <p class="text-xs font-bold uppercase tracking-widest text-primary mb-2">Proceso</p>
-            <h2 class="text-3xl md:text-4xl font-heading font-800 text-ink">¿Cómo funciona?</h2>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-            <!-- Connector line (desktop only) -->
-            <div class="hidden md:block absolute top-7 left-1/6 right-1/6 h-0.5 bg-gradient-to-r from-sky-200 via-orange-200 to-sky-200 z-0"
-                style="left:16.66%;right:16.66%;"></div>
-
-            <!-- Step 1 -->
-            <div class="bg-white rounded-3xl p-7 text-center shadow-sm border border-sky-100 relative z-10">
-                <div class="w-14 h-14 bg-cta rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-md">
-                    <!-- Shopping bag icon -->
-                    <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" />
-                    </svg>
-                </div>
-                <h3 class="text-lg font-heading font-700 text-ink mb-2">Elige tu pack</h3>
-                <p class="text-slate-500 text-sm leading-relaxed">Selecciona el pack ideal para la etapa de tu hij@.
-                    Infantil, Primaria o ESO.</p>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="bg-white rounded-3xl p-7 text-center shadow-sm border border-sky-100 relative z-10">
-                <div class="w-14 h-14 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-md">
-                    <!-- Chat bubble icon -->
-                    <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
-                    </svg>
-                </div>
-                <h3 class="text-lg font-heading font-700 text-ink mb-2">Reserva por WhatsApp</h3>
-                <p class="text-slate-500 text-sm leading-relaxed">Envíanos un mensaje automático y paga 5&euro; de señal
-                    vía Bizum. Rápido y seguro.</p>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="bg-white rounded-3xl p-7 text-center shadow-sm border border-sky-100 relative z-10">
-                <div class="w-14 h-14 bg-cta rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-md">
-                    <!-- Map-pin icon -->
-                    <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                    </svg>
-                </div>
-                <h3 class="text-lg font-heading font-700 text-ink mb-2">Recoge sin cola</h3>
-                <p class="text-slate-500 text-sm leading-relaxed">Ven a la tienda, paga el resto y llévate tu pack
-                    preparado al instante. Sin esperas.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════
-         PACKS SECTION
-    ═══════════════════════════════ -->
-    <section id="packs" class="max-w-5xl mx-auto px-5 pb-20">
-        <div class="text-center mb-12">
-            <p class="text-xs font-bold uppercase tracking-widest text-primary mb-2">Material escolar</p>
-            <h2 class="text-3xl md:text-4xl font-heading font-800 text-ink">Elige tu Pack</h2>
-            <p class="text-slate-400 mt-3 text-sm">Todo lo que necesitas para empezar el curso, listo y sin sorpresas.
-            </p>
-        </div>
-        <div id="packs-container" class="grid grid-cols-1 md:grid-cols-3 gap-7">
-            <!-- Packs rendered via JS -->
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════
-         TESTIMONIALS
-    ═══════════════════════════════ -->
-    <section class="bg-white border-t border-sky-100 py-20 px-5">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-12">
-                <p class="text-xs font-bold uppercase tracking-widest text-primary mb-2">Familias que confían</p>
-                <h2 class="text-3xl font-heading font-800 text-ink">Lo que dicen los padres</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Testimonial 1 -->
-                <div class="bg-surface rounded-3xl p-6 border border-sky-100">
-                    <div class="flex gap-1 mb-3">
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
+            <div class="product-grid grid-5" style="margin-bottom:12px">
+                <div class="product-card"
+                    style="border-color:rgba(245,197,24,0.4);background:linear-gradient(160deg,#1a1a2e,#0f3460)">
+                    <span class="badge-hot">⭐ 明星款</span>
+                    <img class="thumb" src="MainPaper_Ultra_HD_Final/PB011.webp" alt="PB011">
+                    <div class="ref">PB011</div>
+                    <div class="name">软皮本 Fº 4×4 / 80页 60g</div>
+                    <div class="price-row">
+                        <div class="orig">1,13€</div>
+                        <div class="disc">−19,25%</div>
+                        <div class="net">0,91€</div>
+                        <div class="iva-pill">含IVA 21%</div>
+                        <div class="net-rapel">→ 0,46€ 🔥</div>
                     </div>
-                    <p class="text-sm text-slate-600 italic mb-4">"Un año más, lo más fácil del comienzo de curso.
-                        Reservé el martes, lo recogí el miércoles. Fantástico."</p>
-                    <div class="flex items-center gap-2">
-                        <div
-                            class="w-8 h-8 rounded-full bg-sky-200 flex items-center justify-center text-ink font-bold text-xs">
-                            MR</div>
-                        <div>
-                            <p class="text-xs font-bold text-ink">María R.</p>
-                            <p class="text-xs text-slate-400">Madre de 2 niños en Primaria</p>
+                </div>
+                <div class="product-card">
+                    <img class="thumb" src="MainPaper_Ultra_HD_Final/PB001.webp" alt="PB001">
+                    <div class="ref">PB001</div>
+                    <div class="name">精装硬皮本 Fº 4×4 / 80页 90g</div>
+                    <div class="price-row">
+                        <div class="orig">1,93€</div>
+                        <div class="disc">−19,25%</div>
+                        <div class="net">1,56€</div>
+                        <div class="iva-pill">含IVA 21%</div>
+                        <div class="net-rapel">→ 0,78€ 🔥</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img class="thumb" src="MainPaper_Ultra_HD_Final/PB052.webp" alt="PB052">
+                    <div class="ref">PB052</div>
+                    <div class="name">塑料封面本 Fº 2,5mm / 80页 90g</div>
+                    <div class="price-row">
+                        <div class="orig">1,85€</div>
+                        <div class="disc">−19,25%</div>
+                        <div class="net">1,49€</div>
+                        <div class="iva-pill">含IVA 21%</div>
+                        <div class="net-rapel">→ 0,75€ 🔥</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img class="thumb" src="MainPaper_Ultra_HD_Final/PB053.webp" alt="PB053">
+                    <div class="ref">PB053</div>
+                    <div class="name">塑料封面横线本 Fº / 80页 90g</div>
+                    <div class="price-row">
+                        <div class="orig">1,85€</div>
+                        <div class="disc">−19,25%</div>
+                        <div class="net">1,49€</div>
+                        <div class="iva-pill">含IVA 21%</div>
+                        <div class="net-rapel">→ 0,75€ 🔥</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img class="thumb" src="MainPaper_Ultra_HD_Final/CE008.webp" alt="CE008">
+                    <div class="ref">CE008</div>
+                    <div class="name">PP导引封面本 Fº 2,5mm / 80页 90g</div>
+                    <div class="price-row">
+                        <div class="orig">1,85€</div>
+                        <div class="disc">−19,25%</div>
+                        <div class="net">1,49€</div>
+                        <div class="iva-pill">含IVA 21%</div>
+                        <div class="net-rapel">→ 0,75€ 🔥</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-grid grid-4">
+                <div class="product-card">
+                    <img class="thumb" src="MainPaper_Ultra_HD_Final/CE001-1.webp" alt="CE001">
+                    <div class="ref">CE001-1</div>
+                    <div class="name">活页本 A4 / 80页 100g 5mm</div>
+                    <div class="price-row">
+                        <div class="orig">5,58€</div>
+                        <div class="disc">−19,25%</div>
+                        <div class="net">4,59€</div>
+                        <div class="iva-pill">含IVA 21%</div>
+                        <div class="net-rapel">→ 2,29€ 🔥</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img class="thumb" src="MainPaper_Ultra_HD_Final/PB158.webp" alt="PB158">
+                    <div class="ref">PB158</div>
+                    <div class="name">替换纸 A4 4×4 / 250页 90g</div>
+                    <div class="price-row">
+                        <div class="orig">3,98€</div>
+                        <div class="disc">−19,25%</div>
+                        <div class="net">3,21€</div>
+                        <div class="iva-pill">含IVA 21%</div>
+                        <div class="net-rapel">→ 1,61€ 🔥</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img class="thumb" src="MainPaper_Ultra_HD_Final/PB054.webp" alt="PB054">
+                    <div class="ref">PB054</div>
+                    <div class="name">塑料封面空白本 Fº / 80页 90g</div>
+                    <div class="price-row">
+                        <div class="orig">1,85€</div>
+                        <div class="disc">−19,25%</div>
+                        <div class="net">1,49€</div>
+                        <div class="iva-pill">含IVA 21%</div>
+                        <div class="net-rapel">→ 0,75€ 🔥</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img class="thumb" src="MainPaper_Ultra_HD_Final/PB055.webp" alt="PB055">
+                    <div class="ref">PB055</div>
+                    <div class="name">塑料封面3×3格本 Fº / 80页 90g</div>
+                    <div class="price-row">
+                        <div class="orig">1,85€</div>
+                        <div class="disc">−19,25%</div>
+                        <div class="net">1,49€</div>
+                        <div class="iva-pill">含IVA 21%</div>
+                        <div class="net-rapel">→ 0,75€ 🔥</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="brand-section">
+            <div class="section-header sec-brand">
+                <div class="section-num" style="background:var(--blue);color:white">2</div>
+                <div>
+                    <div class="section-title">🖊 公开品牌 · BIC · PILOT · JOVI 等</div>
+                    <div class="section-subtitle">折扣 −15% + 额外回扣 · 每件净价 · 所有价格含21% IVA</div>
+                </div>
+            </div>
+
+            <div class="brand-cols">
+                <div class="brand-col">
+                    <div class="brand-row">
+                        <div class="brand-logo-wrap"><img src="02_品牌Logos/Bic-logo.jpg" alt="BIC"></div>
+                        <div class="brand-products">
+                            <div class="brand-name">BIC</div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">216BA</span> Cristal蓝色单支</span>
+                                <span class="b-net">0,19€ <span class="b-rapel">→ 0,10€ 🔥</span></span>
+                            </div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">X009516352</span> Cristal 10支蓝色</span>
+                                <span class="b-net">1,75€ <span class="b-rapel">→ 0,88€ 🔥</span></span>
+                            </div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">216902126</span> 4 Colours Shine</span>
+                                <span class="b-net">1,14€ <span class="b-rapel">→ 0,57€ 🔥</span></span>
+                            </div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">216B12</span> Plastidecor蜡笔12支</span>
+                                <span class="b-net">2,56€ <span class="b-rapel">→ 1,28€ 🔥</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="brand-row">
+                        <div class="brand-logo-wrap"><img src="02_品牌Logos/Pilot_pen_co_logo.svg.png" alt="Pilot"></div>
+                        <div class="brand-products">
+                            <div class="brand-name">PILOT</div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">074FRIXAA</span> FriXion蓝色 0,7</span>
+                                <span class="b-net">1,47€ <span class="b-rapel">→ 0,74€ 🔥</span></span>
+                            </div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">074NRFXAA</span> FriXion替换芯蓝色</span>
+                                <span class="b-net">3,69€ <span class="b-rapel">→ 1,84€ 🔥</span></span>
+                            </div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">074G2AA</span> G2走珠蓝色 0,7</span>
+                                <span class="b-net">1,12€ <span class="b-rapel">→ 0,56€ 🔥</span></span>
+                            </div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">074NV5AA</span> V5走珠蓝色</span>
+                                <span class="b-net">1,25€ <span class="b-rapel">→ 0,63€ 🔥</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="brand-row">
+                        <div class="brand-logo-wrap"><img src="02_品牌Logos/logo-staedtler.png" alt="Staedtler"></div>
+                        <div class="brand-products">
+                            <div class="brand-name">STAEDTLER</div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">100NHB</span> Noris HB铅笔（12支）</span>
+                                <span class="b-net">0,31€ <span class="b-rapel">→ 0,15€ 🔥</span></span>
+                            </div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">10052650</span> Mars Plastic橡皮</span>
+                                <span class="b-net">0,72€ <span class="b-rapel">→ 0,36€ 🔥</span></span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Testimonial 2 -->
-                <div class="bg-surface rounded-3xl p-6 border border-sky-100">
-                    <div class="flex gap-1 mb-3">
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                    </div>
-                    <p class="text-sm text-slate-600 italic mb-4">"El precio del pack sale más barato que comprando
-                        pieza a pieza. Y sin buscar nada. Muy recomendable."</p>
-                    <div class="flex items-center gap-2">
-                        <div
-                            class="w-8 h-8 rounded-full bg-orange-200 flex items-center justify-center text-ink font-bold text-xs">
-                            JL</div>
-                        <div>
-                            <p class="text-xs font-bold text-ink">Juan L.</p>
-                            <p class="text-xs text-slate-400">Padre de 3, ESO y Primaria</p>
+                <div class="brand-col">
+                    <div class="brand-row">
+                        <div class="brand-logo-wrap"><img src="02_品牌Logos/logo-jovi.png" alt="JOVI"></div>
+                        <div class="brand-products">
+                            <div class="brand-name">JOVI</div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">701907001</span> 橡皮泥50g ×30</span>
+                                <span class="b-net">0,34€ <span class="b-rapel">→ 0,17€ 🔥</span></span>
+                            </div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">701907101</span> 橡皮泥150g ×15</span>
+                                <span class="b-net">0,89€ <span class="b-rapel">→ 0,44€ 🔥</span></span>
+                            </div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">7019084</span> 陶土250g</span>
+                                <span class="b-net">0,71€ <span class="b-rapel">→ 0,35€ 🔥</span></span>
+                            </div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">7019050201</span> 白色水粉250cc</span>
+                                <span class="b-net">1,86€ <span class="b-rapel">→ 0,93€ 🔥</span></span>
+                            </div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">7019056003</span> 手指画颜料125cc</span>
+                                <span class="b-net">1,29€ <span class="b-rapel">→ 0,64€ 🔥</span></span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Testimonial 3 -->
-                <div class="bg-surface rounded-3xl p-6 border border-sky-100">
-                    <div class="flex gap-1 mb-3">
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg class="w-4 h-4 text-cta fill-cta" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
+                    <div class="brand-row">
+                        <div class="brand-logo-wrap"><img src="02_品牌Logos/edding-Logo.jpg" alt="Edding"></div>
+                        <div class="brand-products">
+                            <div class="brand-name">EDDING</div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">0324001A</span> 400号油性黑色</span>
+                                <span class="b-net">1,55€ <span class="b-rapel">→ 0,77€ 🔥</span></span>
+                            </div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">0325066601A</span> 660号黑板笔黑色</span>
+                                <span class="b-net">0,78€ <span class="b-rapel">→ 0,39€ 🔥</span></span>
+                            </div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">03235062001A</span> 1200号水溶黑色</span>
+                                <span class="b-net">0,49€ <span class="b-rapel">→ 0,24€ 🔥</span></span>
+                            </div>
+                        </div>
                     </div>
-                    <p class="text-sm text-slate-600 italic mb-4">"Llevo 3 años reservando por WhatsApp. El proceso es
-                        sencillísimo y el trato siempre genial. 10/10."</p>
-                    <div class="flex items-center gap-2">
-                        <div
-                            class="w-8 h-8 rounded-full bg-sky-100 flex items-center justify-center text-ink font-bold text-xs">
-                            AG</div>
-                        <div>
-                            <p class="text-xs font-bold text-ink">Ana G.</p>
-                            <p class="text-xs text-slate-400">Clienta fiel desde 2022</p>
+
+                    <div class="brand-row">
+                        <div style="display:flex;flex-direction:column;gap:4px;width:68px">
+                            <div class="brand-logo-wrap" style="height:30px"><img src="02_品牌Logos/milan logo.jpg"
+                                    alt="Milan" style="max-height:22px"></div>
+                            <div class="brand-logo-wrap" style="height:30px"><img src="02_品牌Logos/pritt-logo.png"
+                                    alt="Pritt" style="max-height:22px"></div>
+                        </div>
+                        <div class="brand-products">
+                            <div class="brand-name">MILAN &amp; PRITT</div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">1204703116</span> Compact二合一×16</span>
+                                <span class="b-net">2,05€ <span class="b-rapel">→ 1,03€ 🔥</span></span>
+                            </div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">120CMM430</span> 面包屑橡皮×30</span>
+                                <span class="b-net">0,14€ <span class="b-rapel">→ 0,07€ 🔥</span></span>
+                            </div>
+                            <div class="brand-item">
+                                <span><span class="b-ref">6612089903</span> Pritt固体胶22g（2+1）</span>
+                                <span class="b-net">2,91€ <span class="b-rapel">→ 1,46€ 🔥</span></span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- ═══════════════════════════════
-         FOOTER
-    ═══════════════════════════════ -->
-    <footer class="bg-ink text-white py-12 px-5 mt-auto">
-        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
-            <!-- Brand -->
-            <div>
-                <div class="flex items-center gap-2 mb-2">
-                    <svg class="w-5 h-5 text-cta" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
-                    </svg>
-                    <span class="text-xl font-heading font-800">Bazar</span>
+        <div class="divider"></div>
+
+        <div class="papel-section">
+            <img class="papel-img" src="MainPaper_Ultra_HD_Final/PN331.webp" alt="PN331 白色复印纸">
+            <div class="papel-text">
+                <div class="sec-eyebrow">📄 第3类 · 复印纸</div>
+                <h2>PN331<br>白色复印纸</h2>
+                <div class="papel-specs">
+                    参考编号：PN331 &nbsp;·&nbsp; 高品质用纸<br>
+                    适用于打印、复印及学校日常用途<br>
+                    <strong style="color:var(--gold)">所有价格均含21% IVA增值税</strong>
                 </div>
-                <p class="text-sky-200 text-sm">Tu bazar de confianza. 20 años cerca de ti.</p>
-            </div>
-
-            <!-- Contact -->
-            <div class="text-center md:text-right">
-                <p class="text-xs uppercase tracking-wider text-sky-300 font-bold mb-2">Contacto WhatsApp</p>
-                <a href="https://wa.me/34624066658" target="_blank" rel="noopener"
-                    class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-xl text-sm font-bold transition-colors duration-200 cursor-pointer">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
-                    </svg>
-                    +34 624 066 658
-                </a>
+                <div class="papel-price-block">
+                    <div>
+                        <div class="p-orig">目录价格</div>
+                        <div class="p-disc">−15% 折扣</div>
+                        <div class="p-net">折后净价 (3,60€/包)</div>
+                        <div class="p-rapel">+ 返还50%代金券 🔥</div>
+                    </div>
+                    <div class="papel-badge">✅ 现货可用</div>
+                </div>
             </div>
         </div>
 
-        <div class="max-w-4xl mx-auto border-t border-white/10 mt-8 pt-6 text-center">
-            <p class="text-sky-300 text-xs">&copy; 2026 Vuelta Al Cole · Bazar. Todos los derechos reservados.</p>
+        <div class="footer-cta">
+            <div class="slogan">现已开始9月支票服务，详情联系您的业务员！</div>
+            <div class="contacts">
+                <div class="contact-item"><span class="contact-label">📱 WHATSAPP</span><span class="contact-val">+34
+                        624066658</span></div>
+                <div class="contact-item"><span class="contact-label">💬 微信 WECHAT </span><span
+                        class="contact-val">mp624066658</span></div>
+            </div>
         </div>
-    </footer>
+        <div class="footer-note">
+            * 价格含21% IVA · 回扣按2026价目表计算 · 促销有效期至2026年5月30日
+        </div>
 
-    <!-- ═══════════════════════════════
-         JS LOGIC
-    ═══════════════════════════════ -->
+    </div>
     <script>
-        // ── Config ──────────────────────────────────────
-        const WHATSAPP_NUMBER = "34624066658";
+        document.addEventListener("DOMContentLoaded", function () {
+            // 1. 获取笔记本区基础价格
+            document.querySelectorAll('.net').forEach(el => {
+                let text = el.textContent.trim();
+                let match = text.match(/([\d.,]+)€/);
+                if (match) {
+                    el.dataset.basePrice = parseFloat(match[1].replace(/\./g, '').replace(',', '.'));
+                    el.dataset.origText = text;
+                }
+            });
 
-        // ── Pack Data ───────────────────────────────────
-        const packs = [
-            {
-                id: 1,
-                name: "Pack Infantil",
-                subtitle: "Miffy Edition",
-                price: 15.90,
-                badge: null,
-                description: "Agenda Día Página · Lápices HB · Set de Colores",
-                color: "from-sky-50 to-sky-100",
-                borderColor: "border-sky-200",
-                iconBg: "bg-sky-100",
-                image: null
-            },
-            {
-                id: 2,
-                name: "Pack Primaria",
-                subtitle: "Kuromi Edition",
-                price: 19.90,
-                badge: "Más popular",
-                description: "Agenda Semana Vista · Rotuladores MP · Estuche completo",
-                color: "from-orange-50 to-orange-100",
-                borderColor: "border-orange-200",
-                iconBg: "bg-orange-100",
-                image: null
-            },
-            {
-                id: 3,
-                name: "Pack ESO",
-                subtitle: "Cervantes Premium",
-                price: 24.90,
-                badge: null,
-                description: "Agenda Tapa Dura 12×17 · Bolígrafos Pilot/BIC · Subrayadores Stabilo",
-                color: "from-indigo-50 to-indigo-100",
-                borderColor: "border-indigo-200",
-                iconBg: "bg-indigo-100",
-                image: null
-            }
-        ];
-
-        // ── Render Packs ────────────────────────────────
-        const container = document.getElementById('packs-container');
-
-        packs.forEach(pack => {
-            const badgeHTML = pack.badge
-                ? `<span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-cta text-white text-xs font-bold px-3 py-1 rounded-full shadow whitespace-nowrap">${pack.badge}</span>`
-                : '';
-
-            const card = document.createElement('div');
-            card.className = `pack-card relative bg-white rounded-3xl overflow-hidden shadow-sm border ${pack.borderColor} flex flex-col cursor-pointer`;
-
-            card.innerHTML = `
-                ${badgeHTML}
-                <!-- Pack visual header -->
-                <div class="h-40 bg-gradient-to-br ${pack.color} flex items-center justify-center">
-                    <div class="${pack.iconBg} rounded-2xl p-5">
-                        <svg class="w-12 h-12 text-ink opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9"/>
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="p-6 flex flex-col flex-grow">
-                    <div class="mb-3">
-                        <h3 class="text-xl font-heading font-800 text-ink leading-tight">${pack.name}</h3>
-                        <p class="text-sm text-slate-400 font-medium">${pack.subtitle}</p>
-                    </div>
-
-                    <p class="text-3xl font-heading font-900 text-cta mb-1">${pack.price.toFixed(2)}&euro;</p>
-                    <p class="text-xs text-slate-400 mb-4">+5€ señal Bizum al reservar</p>
-
-                    <p class="text-slate-500 text-sm leading-relaxed flex-grow mb-5">
-                        <span class="font-bold text-ink">Incluye: </span>${pack.description}
-                    </p>
-
-                    <button
-                        onclick="reservar('${pack.name} — ${pack.subtitle}', '${pack.price.toFixed(2)}€')"
-                        class="w-full bg-cta hover:bg-ctaHover text-white font-heading font-700 text-base py-3.5 px-4 rounded-2xl flex justify-center items-center gap-2 transition-colors duration-200 shadow-md cursor-pointer"
-                        aria-label="Reservar ${pack.name} por WhatsApp"
-                    >
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
-                        </svg>
-                        Reservar por WhatsApp
-                    </button>
-                </div>
-            `;
-            container.appendChild(card);
+            // 2. 获取品牌区基础价格
+            document.querySelectorAll('.b-net').forEach(el => {
+                let textNode = el.childNodes[0];
+                let text = textNode.textContent.trim();
+                let match = text.match(/([\d.,]+)€/);
+                if (match) {
+                    el.dataset.basePrice = parseFloat(match[1].replace(/\./g, '').replace(',', '.'));
+                    el.dataset.origText = textNode.nodeValue;
+                }
+            });
         });
 
-        // ── WhatsApp Reservation ────────────────────────
-        function reservar(packName, packPrice) {
-            const msg = `¡Hola! Quiero reservar el ${packName} por ${packPrice}. ¿A qué número de Bizum envío los 5€ de señal para que me lo guardéis?`;
-            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-            window.open(url, '_blank', 'noopener,noreferrer');
+        function setVoucher(pct) {
+            const isDiscountActive = pct > 0;
+
+            // 更新按钮
+            [0, 5, 10].forEach(function (v) {
+                const btn = document.getElementById('vBtn' + v);
+                if (btn) {
+                    btn.style.opacity = (v === pct) ? '1' : '0.5';
+                    btn.style.transform = (v === pct) ? 'scale(1.05)' : 'scale(1)';
+                    btn.style.boxShadow = (v === pct) ? '0 0 12px rgba(245,197,24,0.4)' : 'none';
+                }
+            });
+
+            // 更新提示
+            const result = document.getElementById('voucherResult');
+            if (isDiscountActive) {
+                result.style.display = 'block';
+                result.innerHTML = `<span style="font-size:13px;color:#f6e05e">当前即时打折已激活 · 不再参与50%返券，全场结账净价已直降 </span> <span style="font-size:18px;font-weight:900;color:var(--red)">−${pct}%</span>`;
+            } else {
+                result.style.display = 'none';
+            }
+
+            // 互斥：有打折就不给返券
+            document.querySelectorAll('.net-rapel, .b-rapel, .p-rapel').forEach(el => {
+                el.style.display = isDiscountActive ? 'none' : '';
+            });
+
+            // 更新笔记本价格
+            document.querySelectorAll('.net').forEach(el => {
+                if (el.dataset.basePrice) {
+                    if (isDiscountActive) {
+                        let base = parseFloat(el.dataset.basePrice);
+                        let newPrice = base * (1 - pct / 100);
+                        let formatted = newPrice.toFixed(2).replace('.', ',');
+                        el.innerHTML = formatted + '€ <span class="lbl-discount" style="color:#f6e05e;font-size:0.85em;margin-left:4px;">(折后)</span>';
+                    } else {
+                        el.textContent = el.dataset.origText;
+                    }
+                }
+            });
+
+            // 更新品牌区价格
+            document.querySelectorAll('.b-net').forEach(el => {
+                if (el.dataset.basePrice) {
+                    if (isDiscountActive) {
+                        let base = parseFloat(el.dataset.basePrice);
+                        let newPrice = base * (1 - pct / 100);
+                        let formatted = newPrice.toFixed(2).replace('.', ',');
+
+                        el.childNodes[0].nodeValue = formatted + '€ ';
+                        if (!el.querySelector('.lbl-discount')) {
+                            let lbl = document.createElement('span');
+                            lbl.className = 'lbl-discount';
+                            lbl.style = "color:#f6e05e;font-size:0.85em;margin-left:4px;";
+                            lbl.textContent = "(折后)";
+                            el.insertBefore(lbl, el.querySelector('.b-rapel'));
+                        }
+                    } else {
+                        el.childNodes[0].nodeValue = el.dataset.origText;
+                        let lbl = el.querySelector('.lbl-discount');
+                        if (lbl) lbl.remove();
+                    }
+                }
+            });
         }
-
-        // ── Tailwind CTA color alias ────────────────────
-        // Ensure tailwind knows about bg-cta/hover etc via inline JIT
-        document.querySelectorAll('[class*="bg-cta"]').forEach(() => { });
-
-        // ── Countdown Timer ─────────────────────────────
-        (function () {
-            let h = 47, m = 59, s = 59;
-            const elH = document.getElementById('cd-hours');
-            const elM = document.getElementById('cd-minutes');
-            const elS = document.getElementById('cd-seconds');
-
-            function pad(n) { return String(n).padStart(2, '0'); }
-
-            setInterval(() => {
-                s--;
-                if (s < 0) { s = 59; m--; }
-                if (m < 0) { m = 59; h--; }
-                if (h < 0) { h = 0; m = 0; s = 0; }
-                elH.textContent = pad(h);
-                elM.textContent = pad(m);
-                elS.textContent = pad(s);
-            }, 1000);
-        })();
     </script>
 </body>
 

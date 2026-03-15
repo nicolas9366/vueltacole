@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vuelta Al Cole — 20 Años | Bazar Main Paper Zaragoza</title>
+<meta name="description" content="Celebramos 20 años en Zaragoza. Reserva tu pack de material escolar y recógelo en 24h sin colas. Paga 5€ de señal con Bizum.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#DC2626;--red-dark:#B91C1C;--gold:#FBBF24;--gold-dark:#F59E0B;
+  --ink:#0F172A;--surface:#1E293B;--cream:#FEF9EE;
+  --r:2rem;--font-h:'Rubik',sans-serif;--font-b:'Nunito Sans',sans-serif;
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-b);background:var(--cream);color:var(--ink);min-height:100vh;display:flex;flex-direction:column}
+h1,h2,h3,h4{font-family:var(--font-h)}
+a{text-decoration:none;color:inherit}
+img{max-width:100%}
+
+/* NAV */
+.nav-wrap{position:fixed;top:.75rem;left:.75rem;right:.75rem;z-index:100}
+nav{max-width:960px;margin:auto;background:rgba(15,23,42,.88);backdrop-filter:blur(14px);
+  border:1px solid rgba(251,191,36,.2);border-radius:1.25rem;
+  padding:.75rem 1.25rem;display:flex;justify-content:space-between;align-items:center;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 12px 48px rgba(0,0,0,.6)}
+.nav-logo{display:flex;align-items:center;gap:.625rem}
+.nav-badge{width:2rem;height:2rem;background:var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-h);font-weight:900;font-size:.65rem;color:var(--ink)}
+.nav-name{font-family:var(--font-h);font-weight:800;font-size:1.15rem;color:#fff}
+.nav-pill{display:none;font-size:.65rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;background:rgba(220,38,38,.7);color:#fff;
+  padding:.2rem .6rem;border-radius:99px}
+@media(min-width:480px){.nav-pill{display:inline}}
+.btn-gold{background:var(--gold);color:var(--ink);font-family:var(--font-h);
+  font-weight:700;font-size:.85rem;padding:.55rem 1.1rem;border-radius:.875rem;
+  border:none;cursor:pointer;transition:background .2s,transform .15s}
+.btn-gold:hover{background:var(--gold-dark);transform:translateY(-1px)}
+
+/* HERO */
+.hero{position:relative;min-height:92vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:7rem 1.25rem 4rem;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--red) 0%,#7f1d1d 55%,var(--ink) 100%);z-index:0}
+.hero-orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0}
+.hero-orb.a{width:26rem;height:26rem;background:rgba(251,191,36,.06);
+  top:50%;left:20%;transform:translate(-50%,-50%);filter:blur(48px)}
+.hero-orb.b{width:18rem;height:18rem;background:rgba(220,38,38,.15);
+  top:30%;right:18%;filter:blur(36px)}
+.hero-inner{position:relative;z-index:1;max-width:780px;margin:auto}
+.hero-tag{display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.35);
+  color:var(--gold);font-size:.7rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;padding:.4rem 1rem;border-radius:99px;margin-bottom:1.5rem}
+.hero-tag svg{width:.9rem;height:.9rem;fill:currentColor}
+.hero-h1{font-weight:900;letter-spacing:-.04em;line-height:1.04;
+  font-size:clamp(2.8rem,8vw,5.5rem);color:#fff;margin-bottom:1.25rem}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+.gold-shimmer{background:linear-gradient(90deg,var(--gold) 25%,#fef3c7 50%,var(--gold) 75%);
+  background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;animation:shimmer 3s linear infinite}
+.hero-sub{color:rgba(255,255,255,.6);font-size:clamp(1rem,2.5vw,1.2rem);
+  max-width:560px;margin:0 auto 2rem;line-height:1.65}
+.hero-sub strong{color:var(--gold)}
+
+/* COUNTDOWN */
+.cd-wrap{margin-bottom:2.25rem}
+.cd-label{font-size:.65rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.12em;color:rgba(255,255,255,.4);margin-bottom:.75rem}
+.cd-segs{display:flex;align-items:flex-start;justify-content:center;gap:.5rem}
+.cd-seg{background:rgba(255,255,255,.08);border:1px solid rgba(251,191,36,.25);
+  border-radius:.75rem;padding:.6rem 1rem;min-width:70px;text-align:center}
+.cd-num{font-family:var(--font-h);font-size:2.2rem;font-weight:800;color:var(--gold);line-height:1}
+.cd-unit{font-size:.58rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;color:rgba(255,255,255,.4);margin-top:.25rem}
+.cd-colon{font-family:var(--font-h);font-size:2.2rem;font-weight:800;
+  color:var(--gold);line-height:1;margin-top:.6rem}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center}
+.btn-primary{background:var(--gold);color:var(--ink);font-family:var(--font-h);
+  font-weight:700;font-size:1.05rem;padding:1rem 2.25rem;border-radius:1rem;
+  border:none;cursor:pointer;box-shadow:0 8px 24px rgba(251,191,36,.35);
+  transition:background .2s,transform .15s,box-shadow .2s}
+.btn-primary:hover{background:var(--gold-dark);transform:translateY(-2px);box-shadow:0 12px 32px rgba(251,191,36,.45)}
+.btn-ghost{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  color:#fff;font-family:var(--font-h);font-weight:600;font-size:1.05rem;
+  padding:1rem 2.25rem;border-radius:1rem;cursor:pointer;
+  transition:background .2s,transform .15s}
+.btn-ghost:hover{background:rgba(255,255,255,.18);transform:translateY(-2px)}
+
+/* TRUST BAR */
+.trust{background:#fff;border-top:1px solid #fee2e2;border-bottom:1px solid #fee2e2;
+  padding:1.75rem 1.25rem}
+.trust-grid{max-width:900px;margin:auto;display:grid;
+  grid-template-columns:repeat(2,1fr);gap:1.5rem}
+@media(min-width:640px){.trust-grid{grid-template-columns:repeat(4,1fr)}}
+.trust-item{display:flex;align-items:center;gap:.875rem}
+.trust-icon{width:2.75rem;height:2.75rem;border-radius:50%;
+  background:rgba(220,38,38,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.trust-icon svg{width:1.2rem;height:1.2rem}
+.trust-icon.gold-bg{background:rgba(251,191,36,.15)}
+.ti-label{font-family:var(--font-h);font-weight:700;font-size:.875rem;color:var(--ink)}
+.ti-sub{font-size:.72rem;color:#94a3b8;margin-top:.1rem}
+
+/* ANNIVERSARY */
+.anni{background:var(--ink);padding:3.5rem 1.25rem;text-align:center}
+.anni-inner{max-width:720px;margin:auto}
+.anni-top{font-size:.65rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.12em;color:rgba(251,191,36,.7);margin-bottom:.5rem}
+.anni-h{font-size:clamp(1.75rem,5vw,2.75rem);font-weight:900;color:#fff;margin-bottom:.875rem}
+.anni-h span{color:var(--gold)}
+.anni-p{color:rgba(255,255,255,.5);font-size:.95rem;max-width:540px;margin:0 auto 2rem;line-height:1.7}
+.gold-rule{height:3px;background:linear-gradient(to right,transparent,var(--gold),transparent);
+  border:none;max-width:240px;margin:0 auto}
+
+/* HOW */
+.how{max-width:900px;margin:auto;padding:5rem 1.25rem}
+.sec-eyebrow{font-size:.65rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--red);margin-bottom:.5rem}
+.sec-h{font-size:clamp(1.75rem,4.5vw,2.5rem);font-weight:800;color:var(--ink);margin-bottom:3rem}
+.how-grid{display:grid;grid-template-columns:1fr;gap:1.5rem}
+@media(min-width:640px){.how-grid{grid-template-columns:repeat(3,1fr)}}
+.how-card{background:#fff;border:1px solid #fee2e2;border-radius:1.5rem;
+  padding:2rem;text-align:center;
+  box-shadow:0 4px 16px rgba(0,0,0,.06);
+  transition:transform .25s,box-shadow .25s}
+.how-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(220,38,38,.12)}
+.step-num{width:3.5rem;height:3.5rem;border-radius:50%;display:flex;
+  align-items:center;justify-content:center;margin:0 auto 1.25rem;
+  font-family:var(--font-h);font-size:1.4rem;font-weight:900;
+  box-shadow:0 6px 20px rgba(0,0,0,.15)}
+.step-num.red{background:var(--red);color:#fff}
+.step-num.gold{background:var(--gold);color:var(--ink)}
+.step-num.slate{background:var(--ink);color:var(--gold)}
+.how-title{font-family:var(--font-h);font-weight:700;font-size:1.05rem;
+  color:var(--ink);margin-bottom:.625rem}
+.how-p{font-size:.875rem;color:#64748b;line-height:1.65}
+
+/* PACKS */
+.packs-sec{max-width:1000px;margin:auto;padding:1rem 1.25rem 5rem}
+.packs-sub{color:#94a3b8;margin-top:.75rem;font-size:.875rem}
+.packs-sub span{color:var(--gold);font-weight:600}
+.packs-grid{display:grid;grid-template-columns:1fr;gap:1.75rem;margin-top:3rem}
+@media(min-width:640px){.packs-grid{grid-template-columns:repeat(3,1fr)}}
+
+/* BAZAR LOGIC */
+.logic{background:var(--ink);padding:4.5rem 1.25rem}
+.logic-inner{max-width:900px;margin:auto;text-align:center}
+.logic-h{font-size:clamp(1.75rem,4vw,2.25rem);font-weight:800;color:#fff;margin-bottom:2rem}
+.logic-grid{display:grid;grid-template-columns:1fr;gap:1.25rem;text-align:left}
+@media(min-width:640px){.logic-grid{grid-template-columns:repeat(3,1fr)}}
+.logic-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  border-radius:1.25rem;padding:1.5rem}
+.logic-val{font-family:var(--font-h);font-weight:900;font-size:1.75rem;
+  color:var(--gold);margin-bottom:.375rem}
+.logic-desc{font-size:.85rem;color:rgba(255,255,255,.6);line-height:1.6}
+
+/* TESTIMONIALS */
+.testi{background:#fff;border-top:1px solid #fee2e2;padding:5rem 1.25rem}
+.testi-inner{max-width:900px;margin:auto}
+.testi-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;margin-top:3rem}
+@media(min-width:640px){.testi-grid{grid-template-columns:repeat(3,1fr)}}
+.testi-card{background:var(--cream);border:1px solid #fee2e2;
+  border-radius:1.5rem;padding:1.5rem}
+.stars{display:flex;gap:.2rem;margin-bottom:.875rem}
+.stars svg{width:1rem;height:1rem;fill:var(--gold)}
+.testi-quote{font-size:.875rem;color:#475569;font-style:italic;
+  line-height:1.7;margin-bottom:1rem}
+.testi-author{display:flex;align-items:center;gap:.625rem}
+.avatar{width:2rem;height:2rem;border-radius:50%;display:flex;
+  align-items:center;justify-content:center;font-family:var(--font-h);
+  font-size:.7rem;font-weight:700;flex-shrink:0}
+.av-red{background:#fee2e2;color:var(--red)}
+.av-gold{background:#fef3c7;color:var(--gold-dark)}
+.author-name{font-family:var(--font-h);font-weight:700;font-size:.8rem;color:var(--ink)}
+.author-sub{font-size:.72rem;color:#94a3b8}
+
+/* FOOTER */
+footer{background:var(--ink);color:#fff;padding:3rem 1.25rem;margin-top:auto}
+.footer-inner{max-width:900px;margin:auto;display:flex;
+  flex-direction:column;align-items:center;gap:2rem;text-align:center}
+@media(min-width:640px){.footer-inner{flex-direction:row;justify-content:space-between;text-align:left}}
+.footer-brand{display:flex;align-items:center;gap:.625rem;margin-bottom:.375rem}
+.footer-tagline{font-size:.8rem;color:rgba(255,255,255,.35)}
+.wa-btn{display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
+  color:#fff;font-family:var(--font-h);font-weight:600;font-size:.875rem;
+  padding:.625rem 1.25rem;border-radius:.875rem;
+  transition:background .2s}
+.wa-btn:hover{background:rgba(255,255,255,.2)}
+.wa-btn svg{width:1.1rem;height:1.1rem;fill:currentColor}
+.footer-copy{max-width:900px;margin:1.5rem auto 0;
+  border-top:1px solid rgba(255,255,255,.08);padding-top:1.25rem;
+  text-align:center;font-size:.72rem;color:rgba(255,255,255,.25)}
+
+/* PACK CARD (rendered by JS) */
+.pack-card{background:#fff;border:1px solid #fee2e2;border-radius:1.5rem;
+  overflow:hidden;display:flex;flex-direction:column;position:relative;
+  box-shadow:0 4px 20px rgba(0,0,0,.07);
+  transition:transform .25s,box-shadow .25s}
+.pack-card:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(220,38,38,.15)}
+.pack-header{height:10rem;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.pack-watermark{position:absolute;right:1rem;bottom:.25rem;
+  font-family:var(--font-h);font-size:4.5rem;font-weight:900;
+  color:rgba(255,255,255,.08);line-height:1;pointer-events:none}
+.pack-icon-wrap{background:rgba(255,255,255,.15);border-radius:1rem;
+  padding:1.1rem;backdrop-filter:blur(4px)}
+.pack-icon-wrap svg{display:block}
+.pack-body{padding:1.5rem;display:flex;flex-direction:column;flex:1}
+.pack-name{font-family:var(--font-h);font-weight:800;font-size:1.2rem;color:var(--ink);line-height:1.2}
+.pack-subtitle{font-size:.8rem;color:#94a3b8;font-weight:500;margin-top:.2rem;margin-bottom:.875rem}
+.pack-price-row{}
+.pack-price{font-family:var(--font-h);font-weight:900;font-size:1.9rem}
+.pack-deposit{font-size:.72rem;color:#94a3b8;margin-bottom:.875rem}
+.pack-desc{font-size:.85rem;color:#64748b;line-height:1.65;flex:1;margin-bottom:1.25rem}
+.pack-desc strong{color:var(--ink)}
+.btn-reserve{width:100%;background:var(--red);color:#fff;font-family:var(--font-h);
+  font-weight:700;font-size:.95rem;padding:.875rem 1rem;border-radius:.875rem;
+  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  transition:background .2s,transform .15s}
+.btn-reserve:hover{background:var(--red-dark);transform:translateY(-1px)}
+.btn-reserve svg{width:1.15rem;height:1.15rem;fill:currentColor;flex-shrink:0}
+.pack-badge{position:absolute;top:-1rem;left:50%;transform:translateX(-50%);
+  background:var(--red);color:#fff;font-size:.72rem;font-weight:700;
+  padding:.3rem .875rem;border-radius:99px;box-shadow:0 4px 12px rgba(220,38,38,.4);
+  white-space:nowrap}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:400px){.hero-ctas{flex-direction:column;align-items:stretch}.btn-primary,.btn-ghost{text-align:center}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav-wrap">
+<nav id="main-nav">
+  <div class="nav-logo">
+    <div class="nav-badge">20</div>
+    <span class="nav-name">Bazar</span>
+    <span class="nav-pill">Aniversario</span>
+  </div>
+  <a href="#packs" class="btn-gold">Reservar Pack</a>
+</nav>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-orb a"></div>
+  <div class="hero-orb b"></div>
+  <div class="hero-inner">
+    <div class="hero-tag">
+      <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+      20 Años sirviendo a Zaragoza
+    </div>
+    <h1 class="hero-h1">Material escolar<br><span class="gold-shimmer">listo en 24h.</span><br><span style="color:rgba(255,255,255,.75)">Sin colas.</span></h1>
+    <p class="hero-sub">Reserva tu pack por WhatsApp, paga <strong>5&euro; de señal con Bizum</strong> y recógelo en tu bazar de confianza sin esperar.</p>
+    <div class="cd-wrap">
+      <p class="cd-label">La oferta expira en</p>
+      <div class="cd-segs">
+        <div class="cd-seg"><div class="cd-num" id="cd-h">47</div><div class="cd-unit">horas</div></div>
+        <span class="cd-colon">:</span>
+        <div class="cd-seg"><div class="cd-num" id="cd-m">59</div><div class="cd-unit">min</div></div>
+        <span class="cd-colon">:</span>
+        <div class="cd-seg"><div class="cd-num" id="cd-s">59</div><div class="cd-unit">seg</div></div>
+      </div>
+    </div>
+    <div class="hero-ctas">
+      <a href="#packs" class="btn-primary">Ver los Packs</a>
+      <a href="#como-funciona" class="btn-ghost">¿Cómo funciona?</a>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<section class="trust">
+  <div class="trust-grid">
+    <div class="trust-item reveal">
+      <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+      <div><div class="ti-label">Listo en 24h</div><div class="ti-sub">Recoge cuando quieras</div></div>
+    </div>
+    <div class="trust-item reveal">
+      <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 15h3"/></svg></div>
+      <div><div class="ti-label">Pago con Bizum</div><div class="ti-sub">Solo 5&euro; de señal</div></div>
+    </div>
+    <div class="trust-item reveal">
+      <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+      <div><div class="ti-label">Sin colas</div><div class="ti-sub">Pack listo a tu llegada</div></div>
+    </div>
+    <div class="trust-item reveal">
+      <div class="trust-icon gold-bg"><svg viewBox="0 0 20 20" fill="#FBBF24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+      <div><div class="ti-label">20 años contigo</div><div class="ti-sub">Tu bazar de confianza</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ANNIVERSARY BANNER -->
+<section class="anni">
+  <div class="anni-inner reveal">
+    <p class="anni-top">2005 &rarr; 2025 &middot; Zaragoza</p>
+    <h2 class="anni-h">20 Años de <span>Main Paper</span></h2>
+    <p class="anni-p">Dos décadas cuidando el material de los niños de Zaragoza. Este año lo celebramos con los mejores precios de nuestra historia y recogida sin colas.</p>
+    <hr class="gold-rule">
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="como-funciona" class="how">
+  <div style="text-align:center">
+    <p class="sec-eyebrow">Proceso</p>
+    <h2 class="sec-h">¿Cómo funciona?</h2>
+  </div>
+  <div class="how-grid">
+    <div class="how-card reveal">
+      <div class="step-num red">1</div>
+      <div class="how-title">Elige tu pack</div>
+      <p class="how-p">Selecciona el pack ideal para la etapa de tu hij@. Infantil, Primaria o ESO.</p>
+    </div>
+    <div class="how-card reveal">
+      <div class="step-num gold">2</div>
+      <div class="how-title">Reserva por WhatsApp</div>
+      <p class="how-p">Envíanos un mensaje y paga 5&euro; de señal vía Bizum. Rápido y seguro.</p>
+    </div>
+    <div class="how-card reveal">
+      <div class="step-num slate">3</div>
+      <div class="how-title">Recoge sin cola</div>
+      <p class="how-p">Ven a la tienda, paga el resto y llévate tu pack preparado al instante.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PACKS -->
+<section id="packs" class="packs-sec">
+  <div style="text-align:center">
+    <p class="sec-eyebrow">Material escolar</p>
+    <h2 class="sec-h" style="margin-bottom:.5rem">Elige tu Pack</h2>
+    <p class="packs-sub">Todo lo que necesitas para empezar el curso, listo y sin sorpresas. <span>Edición 20 Aniversario.</span></p>
+  </div>
+  <div class="packs-grid" id="packs-container"></div>
+</section>
+
+<!-- BAZAR LOGIC / PROFIT CALCULATOR -->
+<section class="logic">
+  <div class="logic-inner">
+    <p class="sec-eyebrow" style="color:rgba(251,191,36,.7)">¿Merece la pena?</p>
+    <h2 class="logic-h">La cuenta real.</h2>
+    <div class="logic-grid">
+      <div class="logic-card reveal"><div class="logic-val">&asymp;4&euro;</div><div class="logic-desc">Ahorro vs. comprar cada artículo suelto en el súper</div></div>
+      <div class="logic-card reveal"><div class="logic-val">0 min</div><div class="logic-desc">Tiempo en cola. El pack llega listo con tu nombre</div></div>
+      <div class="logic-card reveal"><div class="logic-val">5&euro;</div><div class="logic-desc">Es todo lo que dejas de señal. El resto lo pagas al recoger</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi">
+  <div class="testi-inner">
+    <div style="text-align:center">
+      <p class="sec-eyebrow">Familias que confían</p>
+      <h2 class="sec-h">Lo que dicen los padres</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="stars">
+          <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="testi-quote">"Un año más, lo más fácil del comienzo de curso. Reservé el martes, lo recogí el miércoles. Fantástico."</p>
+        <div class="testi-author"><div class="avatar av-red">MR</div><div><div class="author-name">María R.</div><div class="author-sub">Madre de 2 niños en Primaria</div></div></div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">
+          <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="testi-quote">"El precio del pack sale más barato que comprando pieza a pieza. Y sin buscar nada. Muy recomendable."</p>
+        <div class="testi-author"><div class="avatar av-gold">JL</div><div><div class="author-name">Juan L.</div><div class="author-sub">Padre de 3, ESO y Primaria</div></div></div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">
+          <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="testi-quote">"Llevo 3 años reservando por WhatsApp. El proceso es sencillísimo y el trato siempre genial. 10/10."</p>
+        <div class="testi-author"><div class="avatar av-red">AG</div><div><div class="author-name">Ana G.</div><div class="author-sub">Clienta fiel desde 2022</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">
+        <div class="nav-badge">20</div>
+        <span style="font-family:var(--font-h);font-weight:800;font-size:1.1rem">Bazar &middot; Main Paper</span>
+      </div>
+      <p class="footer-tagline">20 a&ntilde;os al lado de las familias de Zaragoza. 2005&ndash;2025.</p>
+    </div>
+    <div style="text-align:center">
+      <p style="font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(251,191,36,.6);font-weight:700;margin-bottom:.625rem">Contacto WhatsApp</p>
+      <a href="https://wa.me/34624066658" target="_blank" rel="noopener" class="wa-btn">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        +34 624 066 658
+      </a>
+    </div>
+  </div>
+  <p class="footer-copy">&copy; 2025 Bazar Main Paper &middot; Zaragoza &middot; 20&ordm; Aniversario. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+const WA = "34624066658";
+const PACKS = [
+  {id:1,name:"Pack Infantil",subtitle:"Miffy Edition · Aniversario",price:15.90,badge:null,
+   desc:"Agenda Día Página · Lápices HB · Set de Colores",
+   grad:"linear-gradient(135deg,#DC2626 0%,#991B1B 100%)",accent:"#DC2626"},
+  {id:2,name:"Pack Primaria",subtitle:"Kuromi Edition · Aniversario",price:19.90,badge:"⭐ Más popular",
+   desc:"Agenda Semana Vista · Rotuladores MP · Estuche completo",
+   grad:"linear-gradient(135deg,#F59E0B 0%,#D97706 100%)",accent:"#FBBF24"},
+  {id:3,name:"Pack ESO",subtitle:"Cervantes Premium · Aniversario",price:24.90,badge:null,
+   desc:"Agenda Tapa Dura 12×17 · Bolígrafos Pilot/BIC · Subrayadores Stabilo",
+   grad:"linear-gradient(135deg,#334155 0%,#0F172A 100%)",accent:"#94A3B8"}
+];
+const ICON=`<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" opacity=".8"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9"/></svg>`;
+const cont=document.getElementById("packs-container");
+PACKS.forEach(p=>{
+  const card=document.createElement("div");
+  card.className="pack-card reveal";
+  card.innerHTML=`
+    ${p.badge?`<div class="pack-badge">${p.badge}</div>`:""}
+    <div class="pack-header" style="background:${p.grad}">
+      <div class="pack-watermark">20</div>
+      <div class="pack-icon-wrap">${ICON}</div>
+    </div>
+    <div class="pack-body">
+      <div class="pack-name">${p.name}</div>
+      <div class="pack-subtitle">${p.subtitle}</div>
+      <div class="pack-price" style="color:${p.accent}">${p.price.toFixed(2)}&euro;</div>
+      <div class="pack-deposit">+ 5&euro; señal Bizum al reservar</div>
+      <div class="pack-desc"><strong>Incluye: </strong>${p.desc}</div>
+      <button class="btn-reserve" onclick="reservar('${p.name} — ${p.subtitle}','${p.price.toFixed(2)}€')">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        Reservar por WhatsApp
+      </button>
+    </div>`;
+  cont.appendChild(card);
+});
+function reservar(n,p){
+  const m=`¡Hola! Quiero reservar el ${n} por ${p}. ¿A qué número de Bizum envío los 5€ de señal?`;
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(m)}`,"_blank","noopener,noreferrer");
+}
+// Countdown
+(function(){
+  const KEY="bazar_cd_end";
+  const SECS=48*3600;
+  let end=+sessionStorage.getItem(KEY);
+  if(!end||end<Date.now()){end=Date.now()+SECS*1000;sessionStorage.setItem(KEY,end);}
+  const H=document.getElementById("cd-h"),M=document.getElementById("cd-m"),S=document.getElementById("cd-s");
+  function pad(n){return String(n).padStart(2,"0")}
+  function tick(){
+    const rem=Math.max(0,Math.floor((end-Date.now())/1000));
+    H.textContent=pad(Math.floor(rem/3600));
+    M.textContent=pad(Math.floor(rem%3600/60));
+    S.textContent=pad(rem%60);
+  }
+  tick();setInterval(tick,1000);
+})();
+// Nav scroll
+window.addEventListener("scroll",()=>{
+  document.getElementById("main-nav").classList.toggle("scrolled",window.scrollY>40);
+},{passive:true});
+// Reveal
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target);}});
+},{threshold:.15});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

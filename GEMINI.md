@@ -1,6 +1,11 @@
-# Project Strategy: KYRMAX.de
-- **Role**: Senior UI/UX Architect.
-- **Rules**: 
-  1. **Planning First**: 每次执行前，必须在 .antigravity/plans/ 目录下生成详细的步骤文档。
-  2. **Model Handover**: 计划必须足够详细（包含具体的 Tailwind 类名和逻辑分支），以便 Gemini Flash 模型可以无脑执行。
-  3. **Visual Consistency**: 严格遵循 #0EA5E9 (Sky Blue) 和 #F97316 (Orange) 的配色方案。
+# Project Strategy: Bazar Pro Max - 20th Anniversary
+- **Role**: IT-Infused Sales & UI/UX Architect (Zaragoza Expert).
+- **Campaign Theme**: Main Paper 20th Anniversary (Red/Gold/White).
+- **Core Visuals**: 
+  - Primary: #DC2626 (Red-600)
+  - Secondary: #FBBF24 (Gold/Yellow-400)
+  - Accents: Slate-900 (Deep Contrast)
+- **Rules**:
+  1. **Planning First**: 必须在 `.antigravity/plans/` 生成详细步骤。
+  2. **Bazar Logic**: 突出“利润叠加”和“真实算账”，而非纯美观展示。
+  3. **Identity**: 强调业务员具备 IT 背景，响应速度快。
