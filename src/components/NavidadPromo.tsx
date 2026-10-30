@@ -174,13 +174,24 @@ export const NavidadPromo: React.FC<NavidadPromoProps> = ({ lang, onNavigateHome
             <div className="lg:col-span-5 flex justify-center">
               <div className="w-full max-w-[360px] aspect-[9/16] bg-black rounded-3xl border-4 border-[#f8d878] overflow-hidden shadow-2xl relative">
                 {videoPlatform === 'gdrive' && (
-                  <iframe
-                    src={CLOUD_MEDIA_CONFIG.videoChannels.gdriveVideoEmbedUrl}
-                    className="w-full h-full border-0"
-                    allow="autoplay; encrypted-media"
-                    allowFullScreen
-                    title="Main Paper 2026 Navidad Guided Video"
-                  />
+                  <div className="w-full h-full relative bg-black flex flex-col">
+                    <video
+                      src={CLOUD_MEDIA_CONFIG.cloudStreamMp4Url}
+                      poster={CLOUD_MEDIA_CONFIG.cloudPosterUrl}
+                      controls
+                      playsInline
+                      preload="metadata"
+                      className="w-full h-full object-contain bg-black"
+                    />
+                    <a
+                      href={CLOUD_MEDIA_CONFIG.videoChannels.gdriveVideoDirectUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="absolute top-2 right-2 bg-black/75 hover:bg-black text-[#f8d878] text-[10px] font-bold px-2.5 py-1 rounded-full border border-[#f8d878]/50 backdrop-blur-sm"
+                    >
+                      ☁️ Google Drive 原片 ↗
+                    </a>
+                  </div>
                 )}
                 {videoPlatform !== 'gdrive' && (
                   <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-gradient-to-b from-[#1a1a2e] to-[#0f3460]">

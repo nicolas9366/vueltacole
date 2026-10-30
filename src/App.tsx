@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { Home } from './components/Home';
 import { NavidadPromo } from './components/NavidadPromo';
-import { MapApp } from './components/MapApp';
-import { Redemption } from './components/Redemption';
 import { CONFIG_I18N, Lang } from './data/christmas2026DB';
+
+const MapApp = lazy(() => import('./components/MapApp').then((m) => ({ default: m.MapApp })));
+const Redemption = lazy(() =>
+  import('./components/Redemption').then((m) => ({ default: m.Redemption }))
+);
 
 type ViewMode = 'home' | 'navidad' | 'map' | 'canje';
 
@@ -16,20 +19,31 @@ export const App: React.FC = () => {
     return 'zh'; // Default to zh for B2B Chinese bazaar owners in Spain, with 1-click ES toggle
   });
 
-  const [view, setView] = useState<ViewMode>('home');
+  const [view, setView] = useState<ViewMode>(() => {
+    if (typeof window !== 'undefined' && (window as any).__INITIAL_PAGE__ === 'navidad') {
+      return 'navidad';
+    }
+    return 'home';
+  });
   const [canjeToken, setCanjeToken] = useState<string>('');
 
   useEffect(() => {
     const syncRouteFromUrl = () => {
       const params = new URLSearchParams(window.location.search);
       const hash = window.location.hash.toLowerCase();
+      const pathname = window.location.pathname.toLowerCase();
       const token = params.get('canje');
       const page = params.get('page')?.toLowerCase();
 
       if (token) {
         setCanjeToken(token);
         setView('canje');
-      } else if (page === 'navidad' || hash.includes('navidad')) {
+      } else if (
+        page === 'navidad' ||
+        hash.includes('navidad') ||
+        pathname.endsWith('navidad.html') ||
+        (window as any).__INITIAL_PAGE__ === 'navidad'
+      ) {
         setView('navidad');
       } else if (page === 'map' || hash.includes('map')) {
         setView('map');
@@ -164,12 +178,30 @@ export const App: React.FC = () => {
         {view === 'navidad' && (
           <NavidadPromo lang={lang} onNavigateHome={() => navigateTo('home')} />
         )}
-        {view === 'map' && <MapApp onNavigateHome={() => navigateTo('home')} />}
+        {view === 'map' && (
+          <Suspense
+            fallback={
+              <div className="min-h-[60vh] flex items-center justify-center bg-[#0f172a] text-[#f8d878] font-black text-xl">
+                🗺️ Cargando Mapa Interactivo Main Paper...
+              </div>
+            }
+          >
+            <MapApp onNavigateHome={() => navigateTo('home')} />
+          </Suspense>
+        )}
         {view === 'canje' && (
-          <Redemption
-            initialToken={canjeToken || 'CP-SMN3BYY1HKUN'}
-            onClose={() => navigateTo('home')}
-          />
+          <Suspense
+            fallback={
+              <div className="min-h-[60vh] flex items-center justify-center bg-[#0f172a] text-[#f8d878] font-black text-xl">
+                🎁 Cargando Sistema de Canje...
+              </div>
+            }
+          >
+            <Redemption
+              initialToken={canjeToken || 'CP-SMN3BYY1HKUN'}
+              onClose={() => navigateTo('home')}
+            />
+          </Suspense>
         )}
       </main>
     </div>

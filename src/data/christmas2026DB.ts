@@ -21,11 +21,39 @@ export interface ChristmasProduct {
  * - Photos are hosted on Google Drive (Folder ID: 198GTrTbINQmfsb1MKaXFuW7v2YrfbPnN)
  * - Videos are hosted on YouTube / TikTok / Instagram Reels / Google Drive Cloud Stream
  */
+export const GDRIVE_ID_TO_CODE: Record<string, string> = {
+  '1tClD4IXk3B0sT_qmFCwGw1FCw85RElyj': 'EXM26-48',
+  '1z44ID6fpVRkKIarhTrT4YiAMeC7MBaVl': 'CH40027',
+  '1JCHdl-UOTpLcjTBw0Qgd1QFZBvacSerW': 'CH40055',
+  '13y0nF9nwbeb39hfeMuu67KoxWo4_dMHW': 'CH57039-1',
+  '1QTYm3YkgzxM-K39pW630IDgAcDLPlXD-': 'CH57052-1',
+  '1YQp4c-aA5Q27FlOwmOp1CdBej4cL-Hmt': 'CH40042',
+  '1J_o5-tloV549zEgjq3pMC-8VKVqMDecD': 'CH40008',
+  '10cpEOHhHFY7we75CLaCmSW-axZN8d4yN': 'CH40058',
+  '1O_59fDh5T3hzxUUuLVmjDT7Cog1PJrXG': 'CH23016',
+  '1CEnQF5ntuKswVB8mz67AkrYdkmgRRNAX': 'CH40013-1',
+  '1kurdsBtProIMGBw5rYPcXZgtCjXJ7FDM': 'CH40013-2',
+  '16to_hQKS1Eb-2KX7IfUmOabJIhRFlGeN': 'CH40013-3',
+  '1ACCC3QpLwCbILej-jJvaO4qzHFWXkcC8': 'CH40028',
+  '1zdtstz6H9Q9esYS_7kVsXV6qOODsZAVT': 'CH40014',
+  '1xOrkcAR6kICGejrLJip0hQn7KPfumIhX': 'CH40054',
+  '1iJeut7UW0jvpJruZiviQKR5RdJyAnHph': 'CH40040-1',
+  '18t5KvKx7L6tN7UiB9PMZaThk3oE89cSF': 'CH40023',
+  '1Yob_W2xGso2dRL9DWfoAeMfoRlgXEFxM': 'CH40022',
+  '1XSVdIAcR912KHPc91B0wdpt-zce0KZV4': 'CH40044',
+  '1J8680lQ7ECYuu_SroSJVgtKiwfAvSPa9': 'CH40015-3',
+  '1fEu1-FeZ0NG3IDBdbt1eCNwl50dKjvee': 'CH40015-2',
+  '1YwUrp5QaG_VQQcZKaYZhUzvbRGD2vQvW': 'poster_2026',
+};
+
 export const CLOUD_MEDIA_CONFIG = {
   gdriveFolderId: '198GTrTbINQmfsb1MKaXFuW7v2YrfbPnN',
   gdriveFolderUrl: 'https://drive.google.com/drive/folders/198GTrTbINQmfsb1MKaXFuW7v2YrfbPnN',
   posterGdriveId: '1YwUrp5QaG_VQQcZKaYZhUzvbRGD2vQvW',
   fullVideoGdriveId: '1lni1UweWy6NJ2cwFVwIgEN4YlLPMB1RC',
+  cloudCdnBase: 'https://cdn.jsdelivr.net/gh/nicolas9366/vueltacole@cloud-assets/navidad2026',
+  cloudPosterUrl: 'https://cdn.jsdelivr.net/gh/nicolas9366/vueltacole@cloud-assets/navidad2026/poster_2026.webp',
+  cloudStreamMp4Url: 'https://raw.githubusercontent.com/nicolas9366/vueltacole/cloud-assets/navidad2026/MainPaper_Navidad2026_NoSub.mp4',
   videoChannels: {
     activePlatform: 'gdrive' as 'youtube' | 'tiktok' | 'instagram' | 'gdrive',
     gdriveVideoEmbedUrl: 'https://drive.google.com/file/d/1lni1UweWy6NJ2cwFVwIgEN4YlLPMB1RC/preview',
@@ -37,12 +65,16 @@ export const CLOUD_MEDIA_CONFIG = {
   },
 };
 
-export function getGdriveImageUrl(fileId: string, width = 1200): string {
-  return `https://lh3.googleusercontent.com/d/${fileId}=w${width}`;
+export function getGdriveImageUrl(fileId: string, _width = 1200): string {
+  const code = GDRIVE_ID_TO_CODE[fileId];
+  if (code) {
+    return `${CLOUD_MEDIA_CONFIG.cloudCdnBase}/${code}.webp`;
+  }
+  return `https://lh3.googleusercontent.com/d/${fileId}=w${_width}`;
 }
 
 export function getGdriveFallbackUrl(fileId: string, width = 1000): string {
-  return `https://drive.google.com/thumbnail?id=${fileId}&sz=w${width}`;
+  return `https://lh3.googleusercontent.com/d/${fileId}=w${width}`;
 }
 
 export const CHRISTMAS_PRODUCTS: ChristmasProduct[] = [
