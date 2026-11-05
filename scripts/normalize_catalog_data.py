@@ -469,10 +469,10 @@ def main():
             writer.writerow([
                 '条码 (EAN)', '货号/型号 (Ref)', '西语品名', '中文品名', 
                 '一级大类 (Departamento)', '二级细分 (Categoría)', 
-                '进货单价 (€)', '建议零售价 PVP 2.8x (€)',
+                '进货单价 (€)', '官方建议零售价 (PVP €)',
                 '小包装数量 (Packet)', '小包整包金额 (€)', 
                 '外箱装箱量 (Box)', '整箱总金额 (€)', 
-                '新品 (New)', '热销爆款 (Hot)', 'PowerBI TOP200', '历史销量 (件)', '历史销售额 (€)', '促销状态', '2K高清实拍图链接'
+                '新品 (New)', '热销爆款 (Hot)', '畅销榜TOP200', '历史销量 (件)', '历史销售额 (€)', '促销状态', '2K高清实拍图链接'
             ])
             for p in clean_with_price:
                 pvp = round(p['price'] * 2.8, 2)
@@ -495,7 +495,7 @@ def main():
                 '条码 (EAN)', '货号/型号 (Ref)', '西语品名', '中文品名', 
                 '一级大类 (Departamento)', '二级细分 (Categoría)', 
                 '小包装数量 (Packet)', '外箱装箱量 (Box)', 
-                '新品 (New)', '热销爆款 (Hot)', 'PowerBI TOP200', '2K高清实拍图链接'
+                '新品 (New)', '热销爆款 (Hot)', '畅销榜TOP200', '2K高清实拍图链接'
             ])
             for p in clean_no_price:
                 writer.writerow([

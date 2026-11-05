@@ -349,7 +349,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
     text += `━━━━━━━━━━━━━━━━━━━━━\n`;
     text += `📦 Total Artículos: ${totalItemsCount} uds\n`;
     if (!isShowroom) {
-      text += `💰 *TOTAL ESTIMADO (PVP 2.8x): ${formatEuro(totalCartPVP)}*\n`;
+      text += `💰 *TOTAL ESTIMADO (PVP): ${formatEuro(totalCartPVP)}*\n`;
     }
     text += `\n*Nota:* Generado automáticamente desde vueltacole.com`;
 
@@ -387,11 +387,11 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             <p className="text-sm md:text-base text-yellow-100 font-medium max-w-2xl mt-1">
               {mode === 'store'
                 ? lang === 'zh'
-                  ? '🛒 零售商超模式已激活：终端指导零售价 (PVP = 批发底价 × 2.8)，支持一键加入购物车并微信/WhatsApp报单！'
-                  : '🛒 Modo Tienda Retail activo: PVP oficial (Coste Mayorista × 2.8). Añade a tu cesta y envía tu pedido por WhatsApp.'
+                  ? '🛒 官方零售商城：展示官方建议零售价 (PVP)，支持一键挑选加购并生成采购订货单！'
+                  : '🛒 Tienda Oficial: Precios de venta al público recomendados (PVP). Añade a tu cesta y tramita tu pedido fácilmente.'
                 : lang === 'zh'
-                  ? '🏛️ 学校/家长展厅模式已激活：完全隐藏任何进货与销售价格，适合直接向学校、教师及家长展示选品与编制采购单！'
-                  : '🏛️ Modo Showroom escolar activo: Precios 100% ocultos. Diseñado para colegios, AMPAs y profesores.'}
+                  ? '🏛️ 官方样品展厅：画册全景展示，不显示价格，专为学校机构、家委会及大宗选品定制！'
+                  : '🏛️ Showroom de Catálogo: Exposición oficial de producto sin precios visibles, ideal para colegios y AMPAs.'}
             </p>
           </div>
 
@@ -406,7 +406,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               }`}
             >
               <span className="text-lg">🛒</span>
-              <span>{lang === 'zh' ? '零售商城 (PVP 2.8x)' : 'Modo Tienda (PVP 2.8x)'}</span>
+              <span>{lang === 'zh' ? '零售商城 (PVP)' : 'Modo Tienda (PVP)'}</span>
             </button>
 
             <button
@@ -418,7 +418,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               }`}
             >
               <span className="text-lg">🏛️</span>
-              <span>{lang === 'zh' ? '展示厅 (无价格模式)' : 'Modo Showroom (Sin Precios)'}</span>
+              <span>{lang === 'zh' ? '样品展厅' : 'Modo Showroom'}</span>
             </button>
           </div>
         </div>
@@ -430,11 +430,11 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
         <span>
           {mode === 'store'
             ? lang === 'zh'
-              ? '【特别提示】价格为建议零售价 (PVP 2.8x)。整箱批发进货及特批大宗优惠请联系客户经理。'
-              : '【PVP OFICIAL】Precios calculados a factor retail 2.8x. Para compras al por mayor por caja completa consultar descuentos.'
+              ? '【官方建议零售价】本店标价均为建议零售价 (PVP)。如需整箱批发进货及大宗采购合作，请直接联系业务经理。'
+              : '【PVP RECOMENDADO】Precios oficiales recomendados al público. Para compras al por mayor y grandes cuentas, consultar tarifas especiales.'
             : lang === 'zh'
-              ? '【展厅模式】已隐藏所有价格标签。您可以导出《学校文具清单》或通过 WhatsApp 发送意向备忘录。'
-              : '【SHOWROOM ESCOLAR】Precios no visibles. Ideal para confeccionar listas de material escolar con centros educativos.'}
+              ? '【展厅模式】已开启无标价陈列。支持挑选并导出意向文具清单，方便与采购团队、学校及家长沟通。'
+              : '【SHOWROOM OFICIAL】Catálogo de exposición sin precios. Selecciona productos para confeccionar y exportar tu lista escolar.'}
         </span>
         {onNavigateToNavidad && (
           <button
@@ -486,13 +486,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               className="w-full md:w-auto px-4 py-3 rounded-xl border-3 border-[#222] font-black text-sm bg-white shadow-[2px_2px_0px_#222] focus:outline-none"
             >
               <option value="sales">
-                {lang === 'zh' ? '🔥 畅销榜首 (结合 PowerBI 真实销量)' : '🔥 Más Vendidos (Histórico PowerBI)'}
+                {lang === 'zh' ? '🔥 权威畅销榜首' : '🔥 Los Más Vendidos'}
               </option>
               <option value="sku">
-                {lang === 'zh' ? '🔢 官方目录顺序 (按货号 SKU)' : '🔢 Catálogo Oficial (Por Ref. / SKU)'}
+                {lang === 'zh' ? '🔢 官方货号目录' : '🔢 Catálogo Oficial (Ref. SKU)'}
               </option>
               <option value="featured">
-                {lang === 'zh' ? '⭐ 推荐精选 (热销爆款优先)' : '⭐ Recomendados (Top Ventas)'}
+                {lang === 'zh' ? '⭐ 精选热推' : '⭐ Destacados'}
               </option>
               {mode === 'store' && (
                 <>
@@ -702,7 +702,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               }`}
             >
               <span>🏆</span>
-              <span>{lang === 'zh' ? 'TOP 200 爆款榜' : 'Top 200 Ventas'}</span>
+              <span>{lang === 'zh' ? 'TOP 200 畅销榜' : 'Top 200 Ventas'}</span>
             </button>
             <button
               onClick={() => setQuickFilter('ishot')}
@@ -1071,7 +1071,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   <h2 className="font-black text-lg text-[#222]">
                     {mode === 'store'
                       ? lang === 'zh'
-                        ? '订货清单 (PVP 2.8x)'
+                        ? '我的采购清单 (PVP)'
                         : 'Carrito de Compra (PVP)'
                       : lang === 'zh'
                         ? '学校文具选品清单'
@@ -1232,7 +1232,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   </span>
                   {selectedProduct.isTop200 && (
                     <span className="bg-[#e52521] text-white text-xs font-black px-2.5 py-1 rounded-md border border-[#222]">
-                      🔥 PowerBI 畅销 TOP 200
+                      🔥 官方权威畅销 TOP 200
                     </span>
                   )}
                   <span className="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-0.5 rounded">
