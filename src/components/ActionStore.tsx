@@ -6,6 +6,11 @@ export interface ProductItem {
   usercode: string;
   namees: string;
   namecn: string;
+  masterId: string;
+  deptEs: string;
+  deptZh: string;
+  subEs: string;
+  subZh: string;
   category: string;
   topid: string;
   subid: string;
@@ -34,19 +39,19 @@ interface ActionStoreProps {
 
 const PVP_MULTIPLIER = 2.8;
 
-// Department grouping by topid
-const DEPARTMENTS = [
-  { id: 'all', labelEs: '⭐ Todo el Catálogo', labelZh: '⭐ 全部商品', icon: '⭐' },
-  { id: '016', labelEs: '✏️ Escritura & Dibujo', labelZh: '✏️ 书写与绘图', icon: '✏️' },
-  { id: '010', labelEs: '📓 Agendas & Cuadernos', labelZh: '📓 记事本与日历', icon: '📓' },
-  { id: '053', labelEs: '🎨 Bellas Artes', labelZh: '🎨 美术画材', icon: '🎨' },
-  { id: '055', labelEs: '✂️ Manualidades & DIY', labelZh: '✂️ 手工与益智', icon: '✂️' },
-  { id: '051', labelEs: '📁 Oficina & Archivo', labelZh: '📁 办公与文件管理', icon: '📁' },
-  { id: '059', labelEs: '🎀 Sanrio & Licencias', labelZh: '🎀 三丽鸥与IP系列', icon: '🎀' },
-  { id: '042', labelEs: '🎒 Mochilas & Estuches', labelZh: '🎒 箱包与笔袋', icon: '🎒' },
-  { id: '004', labelEs: '🎄 Navidad & Fiestas', labelZh: '🎄 圣诞与节庆', icon: '🎄' },
-  { id: '061', labelEs: '📦 Expositores & Muebles', labelZh: '📦 展架与陈列', icon: '📦' },
-  { id: '057', labelEs: '🏷️ Primeras Marcas', labelZh: '🏷️ 品牌合作货品', icon: '🏷️' },
+// 10 Master Industry Departments covering 100% of 6,109 products cleanly
+export const MASTER_DEPARTMENTS = [
+  { id: 'all', labelEs: '⭐ Todo el Catálogo', labelZh: '⭐ 全部商品 (6.109)', icon: '⭐' },
+  { id: '01', labelEs: '✏️ Escritura y Corrección', labelZh: '✏️ 书写与修正', icon: '✏️' },
+  { id: '02', labelEs: '📓 Cuadernos, Agendas y Papel', labelZh: '📓 本册、日历与纸品', icon: '📓' },
+  { id: '03', labelEs: '🎨 Bellas Artes y Pintura', labelZh: '🎨 美术画材与颜料', icon: '🎨' },
+  { id: '04', labelEs: '✂️ Manualidades y Adhesivos', labelZh: '✂️ 手工、胶粘与刀剪', icon: '✂️' },
+  { id: '05', labelEs: '📁 Carpetas y Archivo', labelZh: '📁 文件收纳与装订', icon: '📁' },
+  { id: '06', labelEs: '💼 Oficina y Comercio', labelZh: '💼 办公设备与生活', icon: '💼' },
+  { id: '07', labelEs: '🎒 Mochilas y Estuches', labelZh: '🎒 箱包与笔袋', icon: '🎒' },
+  { id: '08', labelEs: '🏷️ Primeras Marcas (Bic, Milan...)', labelZh: '🏷️ 国际合作名牌', icon: '🏷️' },
+  { id: '09', labelEs: '🎀 Sanrio, Licencias y Regalo', labelZh: '🎀 三丽鸥、IP与贺卡', icon: '🎀' },
+  { id: '10', labelEs: '📦 Expositores y Muebles', labelZh: '📦 展架与陈列物料', icon: '📦' },
 ];
 
 export const ActionStore: React.FC<ActionStoreProps> = ({
@@ -125,16 +130,20 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
     );
   };
 
-  // Extract available subcategories for selected department
+  // Dynamically extract clean subcategories for the selected master department
   const subCategories = useMemo(() => {
     if (selectedDept === 'all') return [];
-    const set = new Set<string>();
+    const map = new Map<string, { key: string; labelEs: string; labelZh: string; count: number }>();
     products.forEach((p) => {
-      if (p.topid === selectedDept && p.category) {
-        set.add(p.category);
+      if (p.masterId === selectedDept && p.subEs) {
+        const key = p.subEs;
+        if (!map.has(key)) {
+          map.set(key, { key, labelEs: p.subEs, labelZh: p.subZh, count: 0 });
+        }
+        map.get(key)!.count += 1;
       }
     });
-    return Array.from(set).sort();
+    return Array.from(map.values()).sort((a, b) => b.count - a.count);
   }, [products, selectedDept]);
 
   // Reset page when filters change
@@ -152,14 +161,14 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
   const filteredProducts = useMemo(() => {
     let result = products;
 
-    // Department filter
+    // Master department filter
     if (selectedDept !== 'all') {
-      result = result.filter((p) => p.topid === selectedDept);
+      result = result.filter((p) => p.masterId === selectedDept);
     }
 
-    // Subcategory filter
+    // Granular subcategory filter
     if (selectedSubCategory !== 'all') {
-      result = result.filter((p) => p.category === selectedSubCategory);
+      result = result.filter((p) => p.subEs === selectedSubCategory);
     }
 
     // Quick filter (hot, new, promo)
@@ -171,7 +180,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
       result = result.filter((p) => p.ispromote);
     }
 
-    // Search query filter (matches code, usercode, spanish name, chinese name)
+    // Search query filter (matches code, usercode, spanish name, chinese name, department, subcategory)
     const q = searchQuery.trim().toLowerCase();
     if (q) {
       result = result.filter((p) => {
@@ -179,13 +188,19 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
         const usercode = (p.usercode || '').toLowerCase();
         const namees = (p.namees || '').toLowerCase();
         const namecn = (p.namecn || '').toLowerCase();
-        const cat = (p.category || '').toLowerCase();
+        const deptEs = (p.deptEs || '').toLowerCase();
+        const deptZh = (p.deptZh || '').toLowerCase();
+        const subEs = (p.subEs || '').toLowerCase();
+        const subZh = (p.subZh || '').toLowerCase();
         return (
           code.includes(q) ||
           usercode.includes(q) ||
           namees.includes(q) ||
           namecn.includes(q) ||
-          cat.includes(q)
+          deptEs.includes(q) ||
+          deptZh.includes(q) ||
+          subEs.includes(q) ||
+          subZh.includes(q)
         );
       });
     }
@@ -407,7 +422,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={
                 lang === 'zh'
-                  ? '输入条形码(EAN)、型号货号(如MP000-162)、西语/中文品名搜索 6,109 款商品...'
+                  ? '输入条码、型号(如MP000-162)、品名(中西文)、大类(如书写/美术)搜索 6,109 款商品...'
                   : 'Buscar por código EAN, referencia (ej. MP000-162), nombre en español o chino...'
               }
               className="w-full pl-12 pr-10 py-3.5 rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] text-sm md:text-base font-bold bg-white text-[#222] focus:outline-none focus:ring-4 focus:ring-[#5c94fc]"
@@ -451,16 +466,16 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           </div>
         </div>
 
-        {/* Department Carousel / Pills */}
+        {/* 10 MASTER DEPARTMENTS CAROUSEL */}
         <div className="mb-4 overflow-x-auto pb-2 scrollbar-none">
           <div className="flex items-center gap-2 min-w-max">
-            {DEPARTMENTS.map((dept) => {
+            {MASTER_DEPARTMENTS.map((dept) => {
               const active = selectedDept === dept.id;
               return (
                 <button
                   key={dept.id}
                   onClick={() => handleSelectDept(dept.id)}
-                  className={`px-4 py-2 rounded-xl font-black text-xs md:text-sm border-3 border-[#222] transition-all flex items-center gap-1.5 ${
+                  className={`px-4 py-2.5 rounded-xl font-black text-xs md:text-sm border-3 border-[#222] transition-all flex items-center gap-1.5 ${
                     active
                       ? 'bg-[#e52521] text-white shadow-[3px_3px_0px_#222] -translate-y-0.5'
                       : 'bg-white text-gray-700 hover:bg-yellow-50 shadow-[2px_2px_0px_#222]'
@@ -474,37 +489,52 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           </div>
         </div>
 
-        {/* Subcategories (if selected department has them) */}
+        {/* CLEAN SUBCATEGORIES FOR SELECTED MASTER DEPARTMENT */}
         {subCategories.length > 0 && (
           <div className="mb-4 bg-white p-3 rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222]">
-            <div className="text-xs font-black text-gray-500 mb-2 flex items-center gap-1">
-              <span>📂</span>
-              <span>{lang === 'zh' ? '细分类目筛选:' : 'Subcategorías:'}</span>
+            <div className="text-xs font-black text-gray-500 mb-2 flex items-center justify-between">
+              <div className="flex items-center gap-1">
+                <span>📂</span>
+                <span>{lang === 'zh' ? '二级精准细分类目:' : 'Subcategorías específicas:'}</span>
+              </div>
+              <span className="text-[11px] text-gray-400">
+                {subCategories.length} {lang === 'zh' ? '个子分类' : 'secciones'}
+              </span>
             </div>
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setSelectedSubCategory('all')}
-                className={`px-3 py-1 rounded-lg text-xs font-bold border-2 border-[#222] ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] transition-all ${
                   selectedSubCategory === 'all'
-                    ? 'bg-[#5c94fc] text-white'
+                    ? 'bg-[#5c94fc] text-white shadow-[2px_2px_0px_#222]'
                     : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
                 }`}
               >
-                {lang === 'zh' ? '全部细分' : 'Todas'}
+                {lang === 'zh' ? '全部子类' : 'Todas'}
               </button>
-              {subCategories.map((sub) => (
-                <button
-                  key={sub}
-                  onClick={() => setSelectedSubCategory(sub)}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold border-2 border-[#222] ${
-                    selectedSubCategory === sub
-                      ? 'bg-[#5c94fc] text-white'
-                      : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-                  }`}
-                >
-                  {sub}
-                </button>
-              ))}
+              {subCategories.map((sub) => {
+                const isSelected = selectedSubCategory === sub.key;
+                return (
+                  <button
+                    key={sub.key}
+                    onClick={() => setSelectedSubCategory(sub.key)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold border-2 border-[#222] transition-all flex items-center gap-1.5 ${
+                      isSelected
+                        ? 'bg-[#5c94fc] text-white shadow-[2px_2px_0px_#222]'
+                        : 'bg-gray-50 hover:bg-amber-100/70 text-gray-700'
+                    }`}
+                  >
+                    <span>{lang === 'zh' ? sub.labelZh : sub.labelEs}</span>
+                    <span
+                      className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                        isSelected ? 'bg-white/30 text-white' : 'bg-gray-200 text-gray-600'
+                      }`}
+                    >
+                      {sub.count}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
@@ -570,7 +600,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             </div>
             <p className="text-sm text-gray-500 font-medium">
               {lang === 'zh'
-                ? '采用 2K 超高清实拍原图与零冗余加载技术，稍候片刻即刻就绪！'
+                ? '采用 2K 超高清实拍原图与规范化分类架构，稍候片刻即刻就绪！'
                 : 'Optimizando imágenes Ultra HD 2K y catálogo interactivo...'}
             </p>
           </div>
@@ -651,13 +681,12 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                       loading="lazy"
                       className="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-300"
                       onError={(e) => {
-                        // Fallback image if freeX fails
                         (e.target as HTMLElement).style.opacity = '0.5';
                       }}
                     />
                     <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <span className="bg-[#222] text-white text-xs font-bold px-2.5 py-1 rounded-lg shadow-md">
-                        🔍 {lang === 'zh' ? '点击看高清大图' : 'Ver 2K'}
+                        🔍 {lang === 'zh' ? '点击看 2K 原图' : 'Ver 2K'}
                       </span>
                     </div>
                   </div>
@@ -665,12 +694,12 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   {/* Product Details */}
                   <div className="p-3 md:p-4 flex-1 flex flex-col justify-between">
                     <div>
-                      {/* Ref & EAN Barcode */}
-                      <div className="flex items-center justify-between text-[11px] font-bold text-gray-500 mb-1">
-                        <span className="font-mono bg-gray-100 px-1.5 py-0.5 rounded border border-gray-300">
-                          {p.usercode || 'S/REF'}
+                      {/* Department / Category Pill */}
+                      <div className="flex items-center justify-between text-[10px] font-bold text-gray-500 mb-1.5">
+                        <span className="font-mono bg-amber-50 text-amber-800 px-1.5 py-0.5 rounded border border-amber-200 truncate max-w-[140px]">
+                          {lang === 'zh' ? p.subZh : p.subEs}
                         </span>
-                        <span className="font-mono text-[10px] text-gray-400">{p.code}</span>
+                        <span className="font-mono text-gray-400">{p.usercode || p.code}</span>
                       </div>
 
                       {/* Spanish Title */}
@@ -1061,9 +1090,17 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 <div className="grid grid-cols-2 gap-2 bg-yellow-50/60 p-3 rounded-xl border-2 border-yellow-200 text-xs">
                   <div>
                     <span className="text-gray-500 block">Departamento:</span>
-                    <span className="font-bold">{selectedProduct.category || 'General'}</span>
+                    <span className="font-bold">
+                      {lang === 'zh' ? selectedProduct.deptZh : selectedProduct.deptEs}
+                    </span>
                   </div>
                   <div>
+                    <span className="text-gray-500 block">Categoría:</span>
+                    <span className="font-bold">
+                      {lang === 'zh' ? selectedProduct.subZh : selectedProduct.subEs}
+                    </span>
+                  </div>
+                  <div className="col-span-2">
                     <span className="text-gray-500 block">Embalaje estándar:</span>
                     <span className="font-bold">
                       {selectedProduct.packet} uds/paquete · {selectedProduct.box} uds/caja
