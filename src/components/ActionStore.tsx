@@ -42,7 +42,7 @@ const PVP_MULTIPLIER = 2.8;
 // 11 Official Master Catalog Departments covering 100% of 6,109 products cleanly
 // Strictly aligned with CAT_AGENDAS-Y-CALENDARIOS_2027_web.pdf & CATALOGO-GENERAL-2026_ESP_web-MP.pdf
 export const MASTER_DEPARTMENTS = [
-  { id: 'all', labelEs: '⭐ Todo el Catálogo', labelZh: '⭐ 全部商品 (6.109)', icon: '⭐' },
+  { id: 'all', labelEs: '⭐ Todo el Catálogo', labelZh: '⭐ 全部商品', icon: '⭐' },
   { id: '01', labelEs: '📅 Agendas y Calendarios 2027', labelZh: '📅 年历与日历 (2027专刊)', icon: '📅' },
   { id: '02', labelEs: '✏️ Escritura y Corrección', labelZh: '✏️ 书写与修正用品', icon: '✏️' },
   { id: '03', labelEs: '📎 Sobremesa y Oficina', labelZh: '📎 桌面与办公用品', icon: '📎' },
@@ -358,7 +358,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 {lang === 'zh' ? '✨ 2026 官方全系商品' : '✨ Catálogo Oficial 2026'}
               </span>
               <span className="bg-[#5c94fc] text-white text-xs font-black px-2.5 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222]">
-                6.109 {lang === 'zh' ? '款现货' : 'Refs'}
+                {lang === 'zh' ? '全系现货' : 'Catálogo Completo'}
               </span>
             </div>
             <h1 className="text-2xl md:text-4xl font-black tracking-tight text-white drop-shadow-[2px_2px_0px_#222]">
@@ -442,7 +442,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={
                 lang === 'zh'
-                  ? '输入条码、型号(如MP000-162)、品名(中西文)、大类(如书写/美术)搜索 6,109 款商品...'
+                  ? '输入条码、型号(如MP000-162)、品名(中西文)、大类(如书写/美术)搜索商品...'
                   : 'Buscar por código EAN, referencia (ej. MP000-162), nombre en español o chino...'
               }
               className="w-full pl-12 pr-10 py-3.5 rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] text-sm md:text-base font-bold bg-white text-[#222] focus:outline-none focus:ring-4 focus:ring-[#5c94fc]"
@@ -619,7 +619,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           <div className="min-h-[400px] flex flex-col items-center justify-center p-8 bg-white rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222]">
             <div className="text-6xl animate-bounce mb-4">🍄</div>
             <div className="text-2xl font-black text-[#e52521] mb-2">
-              {lang === 'zh' ? '正在装载 6,109 款官方商品...' : 'Cargando Catálogo Completo (6.109 Refs)...'}
+              {lang === 'zh' ? '正在装载官方商品目录...' : 'Cargando Catálogo Oficial...'}
             </div>
             <p className="text-sm text-gray-500 font-medium">
               {lang === 'zh'
@@ -802,7 +802,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                           {/* Showroom / Museum Mode (Zero Price) */}
                           <div className="mb-2 bg-[#5c94fc]/10 p-1.5 rounded-lg border border-[#5c94fc]/30 text-center">
                             <span className="text-[11px] font-black text-[#5c94fc] block">
-                              🏛️ {lang === 'zh' ? '展厅陈列 · 价格保密' : 'Muestra Escolar / Catálogo'}
+                              🏛️ {lang === 'zh' ? '产品展示厅' : 'Exposición de Catálogo'}
                             </span>
                           </div>
 
@@ -1156,7 +1156,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 ) : (
                   <div className="bg-[#5c94fc]/15 p-4 rounded-2xl border-3 border-[#5c94fc] text-center">
                     <span className="text-sm font-black text-[#5c94fc]">
-                      🏛️ MODO SHOWROOM ESCOLAR: Precios ocultos para alumnos y centros.
+                      🏛️ {lang === 'zh' ? '产品展示厅 · 官方精选样品' : 'MODO SHOWROOM: Catálogo oficial de muestras'}
                     </span>
                   </div>
                 )}

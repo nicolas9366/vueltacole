@@ -44,7 +44,7 @@ const shopHtml = compiledHtml
   .replace('<head>', '<head>\n  <script>window.__INITIAL_PAGE__="tienda";</script>')
   .replace(
     '<title>Main Paper · Vuelta al Cole 2026 · Canje de Billete Dorado</title>',
-    '<title>Main Paper · Tienda & Showroom (6.109 Refs)</title>'
+    '<title>Main Paper · Tienda & Showroom</title>'
   );
 fs.writeFileSync(shopHtmlPath, shopHtml, 'utf8');
 

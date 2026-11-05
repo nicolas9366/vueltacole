@@ -146,7 +146,7 @@ export const App: React.FC = () => {
                   className="px-3.5 py-2 rounded-xl font-black text-xs md:text-sm border-2 transition-all flex items-center gap-1.5 bg-[#f8d878] text-[#222] border-[#222] shadow-[2px_2px_0px_#e52521]"
                 >
                   <span>🏪</span>
-                  <span>{lang === 'zh' ? '全系商城 (6,109款)' : 'Tienda & Catálogo (6.109)'}</span>
+                  <span>{lang === 'zh' ? '全系商城' : 'Tienda & Catálogo'}</span>
                 </button>
                 <a
                   href="https://vueltacole.com"
@@ -251,7 +251,7 @@ export const App: React.FC = () => {
           <Suspense
             fallback={
               <div className="min-h-[60vh] flex items-center justify-center bg-[#fcf8f2] text-[#e52521] font-black text-xl">
-                🍄 Cargando Tienda & Catálogo Completo (6.109 Refs)...
+                🍄 Cargando Tienda & Catálogo Oficial...
               </div>
             }
           >
