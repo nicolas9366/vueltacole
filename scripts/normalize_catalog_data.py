@@ -303,19 +303,8 @@ def classify_product(p):
     return m_id, d_es, d_zh, sub_es, sub_zh
 
 def load_powerbi_metrics():
-    top200_path = '/Users/dengyu/Documents/trabajo/powerbi 数据/top 200.xlsx'
     sales_path = '/Users/dengyu/Documents/trabajo/powerbi 数据/2022-2026 .xlsx'
     
-    top200_codes = set()
-    if os.path.exists(top200_path):
-        wb_top = openpyxl.load_workbook(top200_path, data_only=True)
-        for row in wb_top.active.iter_rows(values_only=True):
-            if row and row[0]:
-                code = str(row[0]).split('|')[0].strip().upper()
-                top200_codes.add(code)
-                top200_codes.add(re.sub(r'[\s\-]', '', code))
-        print(f"📊 已从 PowerBI top 200.xlsx 读取 {len(top200_codes)} 条爆款货号")
-
     sales_dict = {}
     if os.path.exists(sales_path):
         wb_sales = openpyxl.load_workbook(sales_path, data_only=True, read_only=True)
@@ -333,14 +322,14 @@ def load_powerbi_metrics():
                         sales_dict[k] = {'ventas': ventas, 'units': articulos, 'invoices': facturas}
         print(f"📊 已从 PowerBI 2022-2026.xlsx 读取 {len(sales_dict)} 条商品真实销量/销售额记录")
 
-    return top200_codes, sales_dict
+    return sales_dict
 
 def powerbi_sort_key(p):
     # Department 01 (2027 Agendas & Calendars) is pre-order/brand new, so keep in sequential SKU order
     if p['masterId'] == '01':
         return (0, 0, natural_sort_key(p['usercode'] or p['code']))
     
-    # Best sellers (Top 200 and high revenue) come first!
+    # Best sellers (Top 500 and Top 1000) come first!
     rev = p.get('salesRevenue', 0)
     units = p.get('salesUnits', 0)
     if rev > 0:
@@ -356,7 +345,7 @@ def main():
     root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     source_json = os.path.join(root_dir, 'public/data/catalog.json')
 
-    top200_codes, sales_dict = load_powerbi_metrics()
+    sales_dict = load_powerbi_metrics()
 
     with open(source_json, 'r', encoding='utf-8') as f:
         data = json.load(f)
@@ -381,7 +370,6 @@ def main():
         sales_rev = round(info['ventas'], 2)
         sales_units = info['units']
         sales_inv = info['invoices']
-        is_top200 = bool(uc in top200_codes or c in top200_codes or clean_uc in top200_codes or clean_c in top200_codes or sales_rev >= 5000)
 
         clean_item = {
             "id": str(p.get('id', '')),
@@ -401,9 +389,8 @@ def main():
             "box": int(p.get('box', 1)),
             "stock": p.get('stock', 1),
             "isnew": bool(p.get('isnew', False)),
-            "ishot": bool(is_top200 or p.get('ishot', False)),
+            "ishot": bool(p.get('ishot', False)),
             "ispromote": bool(p.get('ispromote', False)),
-            "isTop200": is_top200,
             "salesRevenue": sales_rev,
             "salesUnits": sales_units,
             "salesInvoices": sales_inv,
@@ -421,20 +408,32 @@ def main():
         clean_no_price.append(clean_item)
 
     # Compute salesRank across all items that had sales
+    # Top 500: 年度畅销榜
+    # Top 1000: 推荐精选优选商品
     with_sales = [p for p in clean_with_price if p['salesRevenue'] > 0]
     with_sales.sort(key=lambda x: (x['salesRevenue'], x['salesUnits']), reverse=True)
     for rank, p in enumerate(with_sales, start=1):
         p['salesRank'] = rank
+        p['isTop500'] = (rank <= 500)
+        p['isTop1000'] = (rank <= 1000)
+        p['ishot'] = (rank <= 500)
     for p in clean_with_price:
         if 'salesRank' not in p:
             p['salesRank'] = 99999
+            p['isTop500'] = False
+            p['isTop1000'] = False
 
     for p_no, p_with in zip(clean_no_price, clean_with_price):
         p_no['salesRank'] = p_with['salesRank']
+        p_no['isTop500'] = p_with['isTop500']
+        p_no['isTop1000'] = p_with['isTop1000']
+        p_no['ishot'] = p_with['ishot']
 
     print("🔄 正在结合 PowerBI 真实销量数据进行全网畅销榜权重排序...")
     clean_with_price.sort(key=powerbi_sort_key)
     clean_no_price.sort(key=powerbi_sort_key)
+
+    print(f"✅ 处理完毕！共规范化并排序 {len(clean_with_price)} 款商品 (年度畅销Top500: 500款, 推荐精选Top1000: 1000款)。")
 
     print(f"✅ 处理完毕！共规范化并排序 {len(clean_with_price)} 款商品。")
 
@@ -472,7 +471,7 @@ def main():
                 '进货单价 (€)', '官方建议零售价 (PVP €)',
                 '小包装数量 (Packet)', '小包整包金额 (€)', 
                 '外箱装箱量 (Box)', '整箱总金额 (€)', 
-                '新品 (New)', '热销爆款 (Hot)', '畅销榜TOP200', '历史销量 (件)', '历史销售额 (€)', '促销状态', '2K高清实拍图链接'
+                '新品 (New)', '年度畅销前500', '推荐精选前1000', '历史销量 (件)', '历史销售额 (€)', '促销状态', '2K高清实拍图链接'
             ])
             for p in clean_with_price:
                 pvp = round(p['price'] * 2.8, 2)
@@ -482,8 +481,9 @@ def main():
                     p['price'], pvp,
                     p['packet'], p['packetPrice'],
                     p['box'], p['boxPrice'],
-                    '是' if p['isnew'] else '否', '是' if p['ishot'] else '否',
-                    'TOP200' if p['isTop200'] else '',
+                    '是' if p['isnew'] else '否',
+                    'Top 500' if p['isTop500'] else '',
+                    'Top 1000' if p['isTop1000'] else '',
                     p.get('salesUnits', 0), p.get('salesRevenue', 0),
                     '促销' if p['ispromote'] else '正常',
                     p['imageUrl']
@@ -495,15 +495,16 @@ def main():
                 '条码 (EAN)', '货号/型号 (Ref)', '西语品名', '中文品名', 
                 '一级大类 (Departamento)', '二级细分 (Categoría)', 
                 '小包装数量 (Packet)', '外箱装箱量 (Box)', 
-                '新品 (New)', '热销爆款 (Hot)', '畅销榜TOP200', '2K高清实拍图链接'
+                '新品 (New)', '年度畅销前500', '推荐精选前1000', '2K高清实拍图链接'
             ])
             for p in clean_no_price:
                 writer.writerow([
                     p['code'], p['usercode'], p['namees'], p['namecn'],
                     f"{p['deptZh']} ({p['deptEs']})", f"{p['subZh']} ({p['subEs']})",
                     p['packet'], p['box'],
-                    '是' if p['isnew'] else '否', '是' if p['ishot'] else '否',
-                    'TOP200' if p['isTop200'] else '',
+                    '是' if p['isnew'] else '否',
+                    'Top 500' if p['isTop500'] else '',
+                    'Top 1000' if p['isTop1000'] else '',
                     p['imageUrl']
                 ])
 

@@ -20,7 +20,8 @@ export interface ProductItem {
   isnew: boolean;
   ishot: boolean;
   ispromote: boolean;
-  isTop200?: boolean;
+  isTop500?: boolean;
+  isTop1000?: boolean;
   salesRevenue?: number;
   salesUnits?: number;
   salesInvoices?: number;
@@ -61,12 +62,195 @@ export const MASTER_DEPARTMENTS = [
   { id: '11', labelEs: 'Expositores y PLV', labelZh: '展架与陈列物料', icon: '📦' },
 ];
 
+export interface AIIntent {
+  id: string;
+  chipZh: string;
+  chipEs: string;
+  triggers: string[];
+  filterFn: (p: ProductItem) => boolean;
+  bannerZh: string;
+  bannerEs: string;
+}
+
+export const AI_INTENTS: AIIntent[] = [
+  {
+    id: 'paint',
+    chipZh: '🎨 我想画画',
+    chipEs: '🎨 Quiero pintar',
+    triggers: [
+      '我想画画', '画画', '绘画', '画水彩', '素描', '丙烯', '油画', '水彩', 
+      '画笔', '涂鸦', '速写', '学画画', 'pintar', 'dibujar', 'dibujo', 'acuarela', 'acrilica', 'acrilico', 'oleo', 'arte'
+    ],
+    filterFn: (p) => {
+      const ne = (p.namees || '').toUpperCase();
+      const nc = (p.namecn || '');
+      return (
+        p.masterId === '08' ||
+        ne.includes('PINCEL') ||
+        ne.includes('ACRILIC') ||
+        ne.includes('ACUAREL') ||
+        ne.includes('LIENZO') ||
+        ne.includes('SKETCH') ||
+        ne.includes('DIBUJO') ||
+        nc.includes('画笔') ||
+        nc.includes('颜料') ||
+        nc.includes('油画')
+      );
+    },
+    bannerZh: '🎨 AI 意图识别【我想画画】：已为您智能检索 Artix 专业丙烯/油画/水彩颜料、专业排刷画笔、画框画板与速写画册！',
+    bannerEs: '🎨 Intención detectada 【Quiero pintar / dibujar】: Selección de Bellas Artes Artix, pinturas, pinceles, lienzos y blocs.'
+  },
+  {
+    id: 'diary',
+    chipZh: '📖 我想写日记',
+    chipEs: '📖 Escribir diario',
+    triggers: [
+      '我想写日记', '写日记', '日记', '手账', '手帐', '日记本', '记事本', 
+      '秘密日记', '做计划', '日程', 'escribir un diario', 'diario', 'planner', 'agenda bonita'
+    ],
+    filterFn: (p) => {
+      const ne = (p.namees || '').toUpperCase();
+      const sz = p.subZh || '';
+      return (
+        ne.includes('DIARIO') ||
+        ne.includes('CANDADO') ||
+        ne.includes('SECRETO') ||
+        sz.includes('插画创意手账本') ||
+        sz.includes('精装商务笔记本') ||
+        sz.includes('时尚经典年历') ||
+        sz.includes('高档塞万提斯年历') ||
+        sz.includes('追梦女孩') ||
+        sz.includes('三丽鸥')
+      );
+    },
+    bannerZh: '📖 AI 意图识别【我想写日记】：已为您推荐带锁密码日记本、创意插画硬皮手账本、闪光手账中性笔与精美年历！',
+    bannerEs: '📖 Intención detectada 【Quiero escribir un diario】: Diarios con candado secreto, libretas decoradas y bolígrafos gel.'
+  },
+  {
+    id: 'craft',
+    chipZh: '✂️ 我想做手工',
+    chipEs: '✂️ Manualidades',
+    triggers: [
+      '我想做一个手工', '我想做手工', '做手工', '手工', '手工作业', '儿童手工', 
+      '折纸', '剪纸', '卡纸', 'diy', 'hacer manualidades', 'manualidades', 'craft', 'bricolaje'
+    ],
+    filterFn: (p) => {
+      const ne = (p.namees || '').toUpperCase();
+      const sz = p.subZh || '';
+      return (
+        p.masterId === '07' ||
+        ne.includes('PLASTILINA') ||
+        ne.includes('JOVI') ||
+        ne.includes('GOMA EVA') ||
+        ne.includes('FIELTRO') ||
+        sz.includes('手工纸') ||
+        sz.includes('手工耗材')
+      );
+    },
+    bannerZh: '✂️ AI 意图识别【我想做手工】：已为您匹配 EVA 海绵纸、彩色卡纸、手工毛毡布、安全儿童剪刀、无毒胶棒与彩泥！',
+    bannerEs: '✂️ Intención detectada 【Hacer manualidades】: Goma EVA, cartulinas de colores, fieltro, pegamentos y herramientas.'
+  },
+  {
+    id: 'school',
+    chipZh: '🎒 开学备货清单',
+    chipEs: '🎒 Vuelta al Cole',
+    triggers: [
+      '开学', '学生文具', '开学备货', '开学清单', '书包', '文具盒', '笔袋', 
+      '包书皮', '买文具', 'vuelta al cole', 'material escolar', 'mochila'
+    ],
+    filterFn: (p) => {
+      const ne = (p.namees || '').toUpperCase();
+      const sz = p.subZh || '';
+      return (
+        p.masterId === '06' ||
+        sz.includes('自粘包书皮') ||
+        sz.includes('橡皮擦与卷笔刀') ||
+        sz.includes('格式与横线学生本') ||
+        sz.includes('软皮线圈练习本') ||
+        ne.includes('MOCHILA') ||
+        ne.includes('ESTUCHE') ||
+        ne.includes('FORRO')
+      );
+    },
+    bannerZh: '🎒 AI 意图识别【开学备货清单】：已为您推荐减负书包、大容量笔袋、自粘包书皮、米兰精品橡皮与标准练习本！',
+    bannerEs: '🎒 Intención detectada 【Vuelta al Cole】: Mochilas, estuches, forros para libros, gomas Milan y libretas escolares.'
+  },
+  {
+    id: 'office',
+    chipZh: '📁 办公室文件整理',
+    chipEs: '📁 Oficina y Archivo',
+    triggers: [
+      '办公室整理', '整理文件', '文件收纳', '文件归档', '资料收纳', '资料册', 
+      '办公用品', 'organizar oficina', 'archivar', 'clasificar documentos'
+    ],
+    filterFn: (p) => {
+      const sz = p.subZh || '';
+      return (
+        p.masterId === '04' ||
+        p.masterId === '03' ||
+        sz.includes('透明插页资料册') ||
+        sz.includes('四孔活页') ||
+        sz.includes('风琴包') ||
+        sz.includes('档案归档')
+      );
+    },
+    bannerZh: '📁 AI 意图识别【办公室文件整理】：已为您匹配多孔活页资料册、风琴扩展夹、归档文件盒、强力订书机与票夹！',
+    bannerEs: '📁 Intención detectada 【Organizar Oficina】: Carpetas de anillas, fundas multitaladro, cajas de archivo y sobremesa.'
+  },
+  {
+    id: 'caligrafia',
+    chipZh: '✒️ 练字与书法',
+    chipEs: '✒️ Caligrafía',
+    triggers: [
+      '我想练字', '练字', '书法', '练字帖', '字帖', '写好字', '钢笔', 
+      'caligrafia', 'practicar caligrafia', 'rubio'
+    ],
+    filterFn: (p) => {
+      const ne = (p.namees || '').toUpperCase();
+      const sz = p.subZh || '';
+      return (
+        ne.includes('RUBIO') ||
+        ne.includes('CALIGRAF') ||
+        ne.includes('PLUMA') ||
+        sz.includes('鲁比奥') ||
+        sz.includes('钢笔')
+      );
+    },
+    bannerZh: '✒️ AI 意图识别【书法与练字】：已为您挑选西班牙 Rubio 官方描红练习册、精装钢笔与高密度顺滑书写纸！',
+    bannerEs: '✒️ Intención detectada 【Caligrafía y Escritura】: Cuadernos de caligrafía Rubio, plumas estilográficas y recambios.'
+  },
+  {
+    id: 'gift',
+    chipZh: '🎀 三丽鸥与送礼',
+    chipEs: '🎀 Sanrio y Regalos',
+    triggers: [
+      '送礼', '儿童礼物', '生日礼物', '三丽鸥', '库洛米', '美乐蒂', '女孩喜欢', 
+      '卡通文具', 'regalo', 'sanrio', 'kuromi'
+    ],
+    filterFn: (p) => {
+      const ne = (p.namees || '').toUpperCase();
+      const sz = p.subZh || '';
+      return (
+        p.masterId === '10' ||
+        ne.includes('SANRIO') ||
+        ne.includes('KUROMI') ||
+        ne.includes('HELLO KITTY') ||
+        sz.includes('三丽鸥') ||
+        sz.includes('贺卡') ||
+        sz.includes('追梦女孩')
+      );
+    },
+    bannerZh: '🎀 AI 意图识别【三丽鸥与精美送礼】：已为您检索正版三丽鸥授权文具、Kuromi 主题礼盒、追梦女孩与节庆贺卡！',
+    bannerEs: '🎀 Intención detectada 【Sanrio y Regalos】: Licencias oficiales Sanrio, Kuromi, sets de regalo y tarjetas.'
+  }
+];
+
 export const ActionStore: React.FC<ActionStoreProps> = ({
   lang,
   onNavigateHome,
   onNavigateToNavidad,
 }) => {
-  // Dual-mode: 'store' (PVP 2.8x with cart) vs 'showroom' (zero prices for schools/parents)
+  // Dual-mode: 'store' (PVP with cart) vs 'showroom' (zero prices for schools/parents)
   const [mode, setMode] = useState<'store' | 'showroom'>('store');
 
   // Catalog data & loading state
@@ -78,9 +262,20 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedDept, setSelectedDept] = useState<string>('all');
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>('all');
-  const [quickFilter, setQuickFilter] = useState<'all' | 'top200' | 'ishot' | 'isnew' | 'ispromote'>('all');
+  const [quickFilter, setQuickFilter] = useState<'all' | 'top500' | 'top1000' | 'isnew' | 'ispromote'>('all');
   // Default sort order is real PowerBI sales ranking (or SKU for 2027 agendas)
   const [sortBy, setSortBy] = useState<'sales' | 'sku' | 'featured' | 'priceAsc' | 'priceDesc' | 'name' | 'newest'>('sales');
+
+  // Detect active AI Intent if searchQuery matches any trigger phrase
+  const activeAIIntent = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return null;
+    return (
+      AI_INTENTS.find((intent) =>
+        intent.triggers.some((trigger) => q.includes(trigger.toLowerCase()) || trigger.toLowerCase().includes(q))
+      ) || null
+    );
+  }, [searchQuery]);
 
   // Pagination (36 products per page)
   const [page, setPage] = useState<number>(1);
@@ -179,40 +374,44 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
       result = result.filter((p) => p.subEs === selectedSubCategory);
     }
 
-    // Quick filter (top200, hot, new, promo)
-    if (quickFilter === 'top200') {
-      result = result.filter((p) => p.isTop200);
-    } else if (quickFilter === 'ishot') {
-      result = result.filter((p) => p.ishot || p.isTop200);
+    // Quick filter (top500, top1000, new, promo)
+    if (quickFilter === 'top500') {
+      result = result.filter((p) => p.isTop500);
+    } else if (quickFilter === 'top1000') {
+      result = result.filter((p) => p.isTop1000);
     } else if (quickFilter === 'isnew') {
       result = result.filter((p) => p.isnew);
     } else if (quickFilter === 'ispromote') {
       result = result.filter((p) => p.ispromote);
     }
 
-    // Search query filter (matches code, usercode, spanish name, chinese name, department, subcategory)
-    const q = searchQuery.trim().toLowerCase();
-    if (q) {
-      result = result.filter((p) => {
-        const code = (p.code || '').toLowerCase();
-        const usercode = (p.usercode || '').toLowerCase();
-        const namees = (p.namees || '').toLowerCase();
-        const namecn = (p.namecn || '').toLowerCase();
-        const deptEs = (p.deptEs || '').toLowerCase();
-        const deptZh = (p.deptZh || '').toLowerCase();
-        const subEs = (p.subEs || '').toLowerCase();
-        const subZh = (p.subZh || '').toLowerCase();
-        return (
-          code.includes(q) ||
-          usercode.includes(q) ||
-          namees.includes(q) ||
-          namecn.includes(q) ||
-          deptEs.includes(q) ||
-          deptZh.includes(q) ||
-          subEs.includes(q) ||
-          subZh.includes(q)
-        );
-      });
+    // AI Intent Search or standard query filter
+    if (activeAIIntent) {
+      result = result.filter(activeAIIntent.filterFn);
+    } else {
+      const q = searchQuery.trim().toLowerCase();
+      if (q) {
+        result = result.filter((p) => {
+          const code = (p.code || '').toLowerCase();
+          const usercode = (p.usercode || '').toLowerCase();
+          const namees = (p.namees || '').toLowerCase();
+          const namecn = (p.namecn || '').toLowerCase();
+          const deptEs = (p.deptEs || '').toLowerCase();
+          const deptZh = (p.deptZh || '').toLowerCase();
+          const subEs = (p.subEs || '').toLowerCase();
+          const subZh = (p.subZh || '').toLowerCase();
+          return (
+            code.includes(q) ||
+            usercode.includes(q) ||
+            namees.includes(q) ||
+            namecn.includes(q) ||
+            deptEs.includes(q) ||
+            deptZh.includes(q) ||
+            subEs.includes(q) ||
+            subZh.includes(q)
+          );
+        });
+      }
     }
 
     // Natural alphanumeric sorting helper
@@ -232,6 +431,17 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
         const unitDiff = (b.salesUnits || 0) - (a.salesUnits || 0);
         if (unitDiff !== 0) return unitDiff;
         return naturalCompare(a.usercode || a.code || '', b.usercode || b.code || '');
+      }
+      if (sortBy === 'featured') {
+        // 'featured' = Top 1000 selection first, then sales revenue
+        const aScore = (a.isTop1000 ? 5 : 0) + (a.isnew ? 2 : 0) + (a.ispromote ? 1 : 0);
+        const bScore = (b.isTop1000 ? 5 : 0) + (b.isnew ? 2 : 0) + (b.ispromote ? 1 : 0);
+        if (bScore !== aScore) return bScore - aScore;
+        const revDiff = (b.salesRevenue || 0) - (a.salesRevenue || 0);
+        if (revDiff !== 0) return revDiff;
+        const uA = a.usercode || a.code || '';
+        const uB = b.usercode || b.code || '';
+        return naturalCompare(uA, uB);
       }
       if (sortBy === 'sku') {
         const uA = a.usercode || a.code || '';
@@ -254,15 +464,9 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
         const uB = b.usercode || b.code || '';
         return naturalCompare(uA, uB);
       }
-      // 'featured' (fallback to SKU order when score is tied)
-      const aScore = (a.isTop200 ? 5 : 0) + (a.ishot ? 3 : 0) + (a.isnew ? 2 : 0) + (a.ispromote ? 1 : 0);
-      const bScore = (b.isTop200 ? 5 : 0) + (b.ishot ? 3 : 0) + (b.isnew ? 2 : 0) + (b.ispromote ? 1 : 0);
-      if (bScore !== aScore) return bScore - aScore;
-      const uA = a.usercode || a.code || '';
-      const uB = b.usercode || b.code || '';
-      return naturalCompare(uA, uB);
+      return naturalCompare(a.usercode || a.code || '', b.usercode || b.code || '');
     });
-  }, [products, selectedDept, selectedSubCategory, quickFilter, searchQuery, sortBy]);
+  }, [products, selectedDept, selectedSubCategory, quickFilter, searchQuery, sortBy, activeAIIntent]);
 
   // Paginated items
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE) || 1;
@@ -387,8 +591,8 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             <p className="text-sm md:text-base text-yellow-100 font-medium max-w-2xl mt-1">
               {mode === 'store'
                 ? lang === 'zh'
-                  ? '🛒 官方零售商城：展示官方建议零售价 (PVP)，支持一键挑选加购并生成采购订货单！'
-                  : '🛒 Tienda Oficial: Precios de venta al público recomendados (PVP). Añade a tu cesta y tramita tu pedido fácilmente.'
+                  ? '🛒 支持一键挑选加购并快速生成采购订货单！'
+                  : '🛒 Añade a tu cesta y tramita tu selección o pedido cómodamente.'
                 : lang === 'zh'
                   ? '🏛️ 官方样品展厅：画册全景展示，不显示价格，专为学校机构、家委会及大宗选品定制！'
                   : '🏛️ Showroom de Catálogo: Exposición oficial de producto sin precios visibles, ideal para colegios y AMPAs.'}
@@ -449,7 +653,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
       {/* 3. MAIN CONTROLS: SEARCH, DEPARTMENTS & QUICK FILTERS */}
       <div className="max-w-7xl mx-auto px-4 pt-6" ref={topGridRef}>
         {/* Search bar & quick statistics */}
-        <div className="flex flex-col md:flex-row items-center gap-3 mb-4">
+        <div className="flex flex-col md:flex-row items-center gap-3 mb-2">
           <div className="relative flex-1 w-full">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-gray-500">
               🔍
@@ -460,8 +664,8 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={
                 lang === 'zh'
-                  ? '输入条码、型号(如MP000-162)、品名(中西文)、大类(如书写/美术)搜索商品...'
-                  : 'Buscar por código EAN, referencia (ej. MP000-162), nombre en español o chino...'
+                  ? '✨ 试着输入自然场景：“我想画画”、“我想写日记”、“做手工”，或输入型号/条码...'
+                  : '✨ Búsquedas naturales: "quiero pintar", "hacer un diario", o ref/código...'
               }
               className="w-full pl-12 pr-10 py-3.5 rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] text-sm md:text-base font-bold bg-white text-[#222] focus:outline-none focus:ring-4 focus:ring-[#5c94fc]"
             />
@@ -486,21 +690,21 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               className="w-full md:w-auto px-4 py-3 rounded-xl border-3 border-[#222] font-black text-sm bg-white shadow-[2px_2px_0px_#222] focus:outline-none"
             >
               <option value="sales">
-                {lang === 'zh' ? '🔥 权威畅销榜首' : '🔥 Los Más Vendidos'}
-              </option>
-              <option value="sku">
-                {lang === 'zh' ? '🔢 官方货号目录' : '🔢 Catálogo Oficial (Ref. SKU)'}
+                {lang === 'zh' ? '🔥 权威畅销榜首 (前500)' : '🔥 Los Más Vendidos (Top 500)'}
               </option>
               <option value="featured">
-                {lang === 'zh' ? '⭐ 精选热推' : '⭐ Destacados'}
+                {lang === 'zh' ? '⭐ 推荐精选 (前1000优选)' : '⭐ Selección Destacada (Top 1000)'}
+              </option>
+              <option value="sku">
+                {lang === 'zh' ? '🔢 官方货号目录 (按SKU自然序)' : '🔢 Catálogo Oficial (Ref. SKU)'}
               </option>
               {mode === 'store' && (
                 <>
                   <option value="priceAsc">
-                    {lang === 'zh' ? '🪙 零售价: 低到高' : '🪙 Precio: Menor a Mayor'}
+                    {lang === 'zh' ? '🪙 建议零售价: 低到高' : '🪙 Precio: Menor a Mayor'}
                   </option>
                   <option value="priceDesc">
-                    {lang === 'zh' ? '💎 零售价: 高到低' : '💎 Precio: Mayor a Menor'}
+                    {lang === 'zh' ? '💎 建议零售价: 高到低' : '💎 Precio: Mayor a Menor'}
                   </option>
                 </>
               )}
@@ -509,6 +713,65 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             </select>
           </div>
         </div>
+
+        {/* AI Natural Intent Prompts */}
+        <div className="flex flex-wrap items-center gap-1.5 mb-3 px-1">
+          <span className="text-[11px] font-black text-purple-700 flex items-center gap-1 mr-1">
+            <span>✨</span>
+            <span>{lang === 'zh' ? 'AI 场景灵感:' : 'Inspiración IA:'}</span>
+          </span>
+          {AI_INTENTS.map((intent) => {
+            const isCurrentActive = activeAIIntent?.id === intent.id;
+            return (
+              <button
+                key={intent.id}
+                onClick={() => {
+                  if (isCurrentActive) {
+                    setSearchQuery('');
+                  } else {
+                    setSearchQuery(intent.triggers[0]);
+                  }
+                }}
+                className={`px-2.5 py-1 rounded-xl text-xs font-black border-2 border-[#222] transition-all flex items-center gap-1 active:translate-y-0.5 ${
+                  isCurrentActive
+                    ? 'bg-purple-600 text-white shadow-[2px_2px_0px_#222] -translate-y-0.5'
+                    : 'bg-purple-50 hover:bg-purple-100 text-purple-900 shadow-[1px_1px_0px_#222]'
+                }`}
+              >
+                <span>{lang === 'zh' ? intent.chipZh : intent.chipEs}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* AI Intent Active Banner */}
+        {activeAIIntent && (
+          <div className="mb-4 p-3.5 bg-gradient-to-r from-purple-100 via-pink-100 to-amber-100 rounded-2xl border-3 border-purple-500 shadow-[3px_3px_0px_#222] flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-in fade-in duration-300">
+            <div className="flex items-start sm:items-center gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-purple-600 text-white text-lg flex items-center justify-center shrink-0 shadow-[1px_1px_0px_#222]">
+                ✨
+              </div>
+              <div>
+                <div className="text-xs font-black text-purple-950 flex items-center gap-1.5">
+                  <span className="bg-purple-200 text-purple-900 text-[10px] px-2 py-0.5 rounded-full font-black border border-purple-300">
+                    AI 智能场景识别已生效
+                  </span>
+                  <span>{lang === 'zh' ? '已自动为您推荐全套关联商品：' : 'Resultados sugeridos por IA:'}</span>
+                </div>
+                <p className="text-xs font-bold text-gray-800 mt-0.5">
+                  {lang === 'zh' ? activeAIIntent.bannerZh : activeAIIntent.bannerEs}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => setSearchQuery('')}
+              className="self-end sm:self-center px-3 py-1.5 bg-white hover:bg-gray-100 text-purple-900 text-xs font-black rounded-xl border-2 border-purple-400 shadow-[1px_1px_0px_#222] transition-all flex items-center gap-1 shrink-0"
+            >
+              <span>✕</span>
+              <span>{lang === 'zh' ? '退出 AI 场景' : 'Limpiar'}</span>
+            </button>
+          </div>
+        )}
 
         {/* 12 MASTER DEPARTMENTS RESPONSIVE GRID (Zero horizontal scroll on desktop/tablet!) */}
         <div className="mb-4 bg-white/80 p-3.5 rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] backdrop-blur-xs">
@@ -696,22 +959,22 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               {lang === 'zh' ? '全部' : 'Todos'}
             </button>
             <button
-              onClick={() => setQuickFilter('top200')}
+              onClick={() => setQuickFilter('top500')}
               className={`px-3 py-1 rounded-lg text-xs font-black border-2 border-[#222] flex items-center gap-1 ${
-                quickFilter === 'top200' ? 'bg-[#e52521] text-white shadow-[1px_1px_0px_#222]' : 'bg-white text-[#e52521]'
+                quickFilter === 'top500' ? 'bg-[#e52521] text-white shadow-[1px_1px_0px_#222]' : 'bg-white text-[#e52521]'
               }`}
             >
               <span>🏆</span>
-              <span>{lang === 'zh' ? 'TOP 200 畅销榜' : 'Top 200 Ventas'}</span>
+              <span>{lang === 'zh' ? '年度畅销榜 (前500)' : 'Top 500 Ventas'}</span>
             </button>
             <button
-              onClick={() => setQuickFilter('ishot')}
+              onClick={() => setQuickFilter('top1000')}
               className={`px-3 py-1 rounded-lg text-xs font-black border-2 border-[#222] flex items-center gap-1 ${
-                quickFilter === 'ishot' ? 'bg-[#e52521] text-white' : 'bg-white text-[#e52521]'
+                quickFilter === 'top1000' ? 'bg-amber-500 text-white shadow-[1px_1px_0px_#222]' : 'bg-white text-amber-700'
               }`}
             >
-              <span>🔥</span>
-              <span>{lang === 'zh' ? '热销' : 'Destacados'}</span>
+              <span>⭐</span>
+              <span>{lang === 'zh' ? '推荐精选 (前1000)' : 'Top 1000 Selección'}</span>
             </button>
             <button
               onClick={() => setQuickFilter('isnew')}
@@ -797,13 +1060,17 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 >
                   {/* Floating Badges (HOT, NEW, PROMO) */}
                   <div className="absolute top-2 left-2 z-10 flex flex-col gap-1">
-                    {p.isTop200 ? (
+                    {p.isTop500 ? (
                       <span className="bg-[#e52521] text-white text-[10px] md:text-xs font-black px-2 py-0.5 rounded-full border-2 border-[#222] shadow-[1px_1px_0px_#222] animate-pulse">
-                        🔥 TOP 200
+                        🔥 {lang === 'zh' ? '年度畅销' : 'Top 500'}
+                      </span>
+                    ) : p.isTop1000 ? (
+                      <span className="bg-amber-500 text-white text-[10px] md:text-xs font-black px-2 py-0.5 rounded-full border-2 border-[#222] shadow-[1px_1px_0px_#222]">
+                        ⭐ {lang === 'zh' ? '推荐精选' : 'Top 1000'}
                       </span>
                     ) : p.ishot ? (
                       <span className="bg-[#e52521] text-white text-[10px] md:text-xs font-black px-2 py-0.5 rounded-full border-2 border-[#222] shadow-[1px_1px_0px_#222]">
-                        🔥 TOP
+                        🔥 HOT
                       </span>
                     ) : null}
                     {p.isnew && (
@@ -1230,11 +1497,15 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   <span className="bg-gray-100 text-gray-700 text-xs font-mono px-2.5 py-1 rounded-md border border-gray-300">
                     EAN: {selectedProduct.code}
                   </span>
-                  {selectedProduct.isTop200 && (
+                  {selectedProduct.isTop500 ? (
                     <span className="bg-[#e52521] text-white text-xs font-black px-2.5 py-1 rounded-md border border-[#222]">
-                      🔥 官方权威畅销 TOP 200
+                      🔥 {lang === 'zh' ? '年度权威畅销榜 (Top 500)' : 'Top 500 Más Vendidos'}
                     </span>
-                  )}
+                  ) : selectedProduct.isTop1000 ? (
+                    <span className="bg-amber-500 text-white text-xs font-black px-2.5 py-1 rounded-md border border-[#222]">
+                      ⭐ {lang === 'zh' ? '官方优选推荐 (Top 1000)' : 'Top 1000 Selección'}
+                    </span>
+                  ) : null}
                   <span className="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-0.5 rounded">
                     ✓ Stock Disponible
                   </span>
