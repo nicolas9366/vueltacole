@@ -42,18 +42,18 @@ const PVP_MULTIPLIER = 2.8;
 // 11 Official Master Catalog Departments covering 100% of 6,109 products cleanly
 // Strictly aligned with CAT_AGENDAS-Y-CALENDARIOS_2027_web.pdf & CATALOGO-GENERAL-2026_ESP_web-MP.pdf
 export const MASTER_DEPARTMENTS = [
-  { id: 'all', labelEs: '⭐ Todo el Catálogo', labelZh: '⭐ 全部商品', icon: '⭐' },
-  { id: '01', labelEs: '📅 Agendas y Calendarios 2027', labelZh: '📅 年历与日历 (2027专刊)', icon: '📅' },
-  { id: '02', labelEs: '✏️ Escritura y Corrección', labelZh: '✏️ 书写与修正用品', icon: '✏️' },
-  { id: '03', labelEs: '📎 Sobremesa y Oficina', labelZh: '📎 桌面与办公用品', icon: '📎' },
-  { id: '04', labelEs: '📁 Archivo y Clasificación', labelZh: '📁 文件归档与分类', icon: '📁' },
-  { id: '05', labelEs: '📓 Cuadernos y Manipulado', labelZh: '📓 本册与纸品 (Manipulado)', icon: '📓' },
-  { id: '06', labelEs: '🎒 Mochilas y Escolar', labelZh: '🎒 箱包与学生用品', icon: '🎒' },
-  { id: '07', labelEs: '✂️ Manualidades y Adhesivos', labelZh: '✂️ 手工与胶粘用品', icon: '✂️' },
-  { id: '08', labelEs: '🎨 Bellas Artes (Artix)', labelZh: '🎨 美术画材 (Artix)', icon: '🎨' },
-  { id: '09', labelEs: '🏷️ Primeras Marcas', labelZh: '🏷️ 国际合作名牌', icon: '🏷️' },
-  { id: '10', labelEs: '🎀 Sanrio, Licencias y Regalo', labelZh: '🎀 三丽鸥、IP与贺卡', icon: '🎀' },
-  { id: '11', labelEs: '📦 Expositores y PLV', labelZh: '📦 展架与陈列物料', icon: '📦' },
+  { id: 'all', labelEs: 'Todo el Catálogo', labelZh: '全部商品', icon: '⭐' },
+  { id: '09', labelEs: 'Primeras Marcas (Bic, Milan...)', labelZh: '国际合作名牌 (Bic, Milan...)', icon: '🏷️' },
+  { id: '01', labelEs: 'Agendas y Calendarios 2027', labelZh: '年历与日历 (2027专刊)', icon: '📅' },
+  { id: '02', labelEs: 'Escritura y Corrección', labelZh: '书写与修正用品', icon: '✏️' },
+  { id: '03', labelEs: 'Sobremesa y Oficina', labelZh: '桌面与办公用品', icon: '📎' },
+  { id: '04', labelEs: 'Archivo y Clasificación', labelZh: '文件归档与分类', icon: '📁' },
+  { id: '05', labelEs: 'Cuadernos y Manipulado', labelZh: '本册与纸品 (Manipulado)', icon: '📓' },
+  { id: '06', labelEs: 'Mochilas y Escolar', labelZh: '箱包与学生用品', icon: '🎒' },
+  { id: '07', labelEs: 'Manualidades y Adhesivos', labelZh: '手工与胶粘用品', icon: '✂️' },
+  { id: '08', labelEs: 'Bellas Artes (Artix)', labelZh: '美术画材 (Artix)', icon: '🎨' },
+  { id: '10', labelEs: 'Sanrio, Licencias y Regalo', labelZh: '三丽鸥、IP与贺卡', icon: '🎀' },
+  { id: '11', labelEs: 'Expositores y PLV', labelZh: '展架与陈列物料', icon: '📦' },
 ];
 
 export const ActionStore: React.FC<ActionStoreProps> = ({
@@ -489,39 +489,125 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           </div>
         </div>
 
-        {/* 11 MASTER DEPARTMENTS CAROUSEL */}
-        <div className="mb-4 overflow-x-auto pb-2 scrollbar-none">
-          <div className="flex items-center gap-2 min-w-max">
+        {/* 12 MASTER DEPARTMENTS RESPONSIVE GRID (Zero horizontal scroll on desktop/tablet!) */}
+        <div className="mb-4 bg-white/80 p-3.5 rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] backdrop-blur-xs">
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5 px-0.5">
+            <div className="flex items-center gap-2">
+              <span className="text-xs md:text-sm font-black text-gray-800">
+                {lang === 'zh' ? '📑 官方全系分类导航' : '📑 Categorías Principales'}
+              </span>
+              <span className="text-[11px] text-gray-500 font-bold hidden sm:inline">
+                {lang === 'zh' ? '(11 大行业分类 · 直观全景平铺)' : '(11 departamentos oficiales)'}
+              </span>
+            </div>
+
+            {/* Direct Brand Fast Pass Button */}
+            <button
+              onClick={() => {
+                handleSelectDept('09');
+                setSelectedSubCategory('all');
+              }}
+              className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] transition-all flex items-center gap-1.5 active:translate-y-0.5 ${
+                selectedDept === '09'
+                  ? 'bg-[#e52521] text-white shadow-[2px_2px_0px_#222]'
+                  : 'bg-amber-300 hover:bg-amber-400 text-gray-950 shadow-[2px_2px_0px_#222]'
+              }`}
+            >
+              <span>🏷️</span>
+              <span>{lang === 'zh' ? '⭐ 国际名牌专区 (Bic · Milan · Pilot)' : '⭐ Marcas Oficiales (Bic · Milan)'}</span>
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
             {MASTER_DEPARTMENTS.map((dept) => {
               const active = selectedDept === dept.id;
+              const isBrandDept = dept.id === '09';
               return (
                 <button
                   key={dept.id}
                   onClick={() => handleSelectDept(dept.id)}
-                  className={`px-4 py-2.5 rounded-xl font-black text-xs md:text-sm border-3 border-[#222] transition-all flex items-center gap-1.5 ${
+                  className={`p-2.5 rounded-xl font-black text-xs border-2 md:border-3 border-[#222] transition-all flex items-center gap-2 text-left justify-start ${
                     active
                       ? 'bg-[#e52521] text-white shadow-[3px_3px_0px_#222] -translate-y-0.5'
+                      : isBrandDept
+                      ? 'bg-amber-100 hover:bg-amber-200 text-gray-950 shadow-[2px_2px_0px_#222] ring-2 ring-amber-400'
                       : 'bg-white text-gray-700 hover:bg-yellow-50 shadow-[2px_2px_0px_#222]'
                   }`}
                 >
-                  <span>{dept.icon}</span>
-                  <span>{lang === 'zh' ? dept.labelZh : dept.labelEs}</span>
+                  <span className="text-base shrink-0">{dept.icon}</span>
+                  <span className="leading-tight line-clamp-2">
+                    {lang === 'zh' ? dept.labelZh : dept.labelEs}
+                  </span>
                 </button>
               );
             })}
           </div>
         </div>
 
+        {/* POPULAR BRANDS QUICK BAR WHEN IN 'ALL' VIEW */}
+        {selectedDept === 'all' && (
+          <div className="mb-4 bg-amber-50/90 p-2.5 rounded-2xl border-2 border-amber-300 shadow-[2px_2px_0px_#222] flex flex-wrap items-center gap-2">
+            <span className="text-xs font-black text-amber-900 flex items-center gap-1 mr-1">
+              <span>🏷️</span>
+              <span>{lang === 'zh' ? '名牌直达:' : 'Marcas:'}</span>
+            </span>
+            {[
+              { nameZh: 'Bic 比克', nameEs: 'Bic', subKey: 'Bic (Cristal y Plastidecor)' },
+              { nameZh: 'Pilot 百乐', nameEs: 'Pilot', subKey: 'Pilot (Frixion y Bolígrafos G2)' },
+              { nameZh: 'Milan 米兰', nameEs: 'Milan', subKey: 'Milan (Gomas y Sacapuntas)' },
+              { nameZh: 'Stabilo 思笔乐', nameEs: 'Stabilo', subKey: 'Stabilo (Point 88 y Subrayadores)' },
+              { nameZh: 'Edding 艾丁', nameEs: 'Edding', subKey: 'Edding (Marcadores Industriales)' },
+              { nameZh: 'Jovi 彩泥', nameEs: 'Jovi', subKey: 'Jovi (Plastilina y Modelado)' },
+              { nameZh: 'Faber-Castell 辉柏嘉', nameEs: 'Faber-Castell', subKey: 'Faber-Castell (Subrayadores y Dibujo)' },
+              { nameZh: 'Rubio 字帖', nameEs: 'Rubio', subKey: 'Rubio (Cuadernos de Caligrafía)' },
+              { nameZh: 'Oxford 牛津', nameEs: 'Oxford', subKey: 'Oxford (Cuadernos Europeanbook)' },
+              { nameZh: 'Staedtler 施德楼', nameEs: 'Staedtler', subKey: 'Staedtler (Lápices Noris y Dibujo)' },
+              { nameZh: 'Pritt 百特', nameEs: 'Pritt', subKey: 'Pritt (Pegamentos y Adhesivos)' },
+              { nameZh: 'Uni-Ball / Posca', nameEs: 'Uni-Ball', subKey: 'Uni-Ball y Posca' },
+            ].map((b) => (
+              <button
+                key={b.subKey}
+                onClick={() => {
+                  setSelectedDept('09');
+                  setSelectedSubCategory(b.subKey);
+                }}
+                className="px-2.5 py-1 rounded-lg text-xs font-black bg-white hover:bg-amber-200 text-gray-900 border border-amber-400 shadow-[1px_1px_0px_#222] transition-all active:translate-y-0.5"
+              >
+                {lang === 'zh' ? b.nameZh : b.nameEs}
+              </button>
+            ))}
+          </div>
+        )}
+
         {/* CLEAN SUBCATEGORIES FOR SELECTED MASTER DEPARTMENT */}
         {subCategories.length > 0 && (
-          <div className="mb-4 bg-white p-3 rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222]">
-            <div className="text-xs font-black text-gray-500 mb-2 flex items-center justify-between">
-              <div className="flex items-center gap-1">
-                <span>📂</span>
-                <span>{lang === 'zh' ? '二级精准细分类目:' : 'Subcategorías específicas:'}</span>
+          <div
+            className={`mb-4 p-3.5 rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] ${
+              selectedDept === '09' ? 'bg-amber-50/90 border-amber-950' : 'bg-white'
+            }`}
+          >
+            <div className="text-xs font-black text-gray-600 mb-2.5 flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <span>{selectedDept === '09' ? '🏷️' : '📂'}</span>
+                <span className="text-sm font-black text-gray-800">
+                  {selectedDept === '09'
+                    ? lang === 'zh'
+                      ? '国际大牌专区 (点击品牌直接筛选):'
+                      : 'Marcas Internacionales Oficiales:'
+                    : lang === 'zh'
+                    ? '二级细分类目筛选:'
+                    : 'Subcategorías específicas:'}
+                </span>
               </div>
-              <span className="text-[11px] text-gray-400">
-                {subCategories.length} {lang === 'zh' ? '个子分类' : 'secciones'}
+              <span className="text-[11px] text-gray-500 font-bold">
+                {subCategories.length}{' '}
+                {selectedDept === '09'
+                  ? lang === 'zh'
+                    ? '个合作品牌'
+                    : 'marcas'
+                  : lang === 'zh'
+                  ? '个细分子类'
+                  : 'secciones'}
               </span>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -529,11 +615,19 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 onClick={() => setSelectedSubCategory('all')}
                 className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] transition-all ${
                   selectedSubCategory === 'all'
-                    ? 'bg-[#5c94fc] text-white shadow-[2px_2px_0px_#222]'
+                    ? selectedDept === '09'
+                      ? 'bg-amber-500 text-white shadow-[2px_2px_0px_#222]'
+                      : 'bg-[#5c94fc] text-white shadow-[2px_2px_0px_#222]'
                     : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
                 }`}
               >
-                {lang === 'zh' ? '全部子类' : 'Todas'}
+                {selectedDept === '09'
+                  ? lang === 'zh'
+                    ? '全部名牌 (561款)'
+                    : 'Todas las Marcas'
+                  : lang === 'zh'
+                  ? '全部子类'
+                  : 'Todas'}
               </button>
               {subCategories.map((sub) => {
                 const isSelected = selectedSubCategory === sub.key;
@@ -543,13 +637,17 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     onClick={() => setSelectedSubCategory(sub.key)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold border-2 border-[#222] transition-all flex items-center gap-1.5 ${
                       isSelected
-                        ? 'bg-[#5c94fc] text-white shadow-[2px_2px_0px_#222]'
-                        : 'bg-gray-50 hover:bg-amber-100/70 text-gray-700'
+                        ? selectedDept === '09'
+                          ? 'bg-amber-500 text-white shadow-[2px_2px_0px_#222] -translate-y-0.5'
+                          : 'bg-[#5c94fc] text-white shadow-[2px_2px_0px_#222] -translate-y-0.5'
+                        : selectedDept === '09'
+                        ? 'bg-white hover:bg-amber-100 text-gray-900 shadow-[1px_1px_0px_#222]'
+                        : 'bg-white hover:bg-blue-50 text-gray-700 shadow-[1px_1px_0px_#222]'
                     }`}
                   >
                     <span>{lang === 'zh' ? sub.labelZh : sub.labelEs}</span>
                     <span
-                      className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                      className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
                         isSelected ? 'bg-white/30 text-white' : 'bg-gray-200 text-gray-600'
                       }`}
                     >
