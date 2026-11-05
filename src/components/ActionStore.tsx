@@ -51,7 +51,7 @@ export const MASTER_DEPARTMENTS = [
   { id: 'all', labelEs: 'Todo el Catálogo', labelZh: '全部商品', icon: '⭐' },
   { id: '09', labelEs: 'Primeras Marcas (Bic, Milan...)', labelZh: '国际合作名牌 (Bic, Milan...)', icon: '🏷️' },
   { id: '01', labelEs: 'Agendas y Calendarios 2027', labelZh: '年历与日历 (2027专刊)', icon: '📅' },
-  { id: '02', labelEs: 'Escritura y Corrección', labelZh: '书写与修正用品', icon: '✏️' },
+  { id: '02', labelEs: 'Escritura', labelZh: '书写用品', icon: '✏️' },
   { id: '03', labelEs: 'Sobremesa y Oficina', labelZh: '桌面与办公用品', icon: '📎' },
   { id: '04', labelEs: 'Archivo y Clasificación', labelZh: '文件归档与分类', icon: '📁' },
   { id: '05', labelEs: 'Cuadernos y Manipulado', labelZh: '本册与纸品 (Manipulado)', icon: '📓' },
@@ -263,8 +263,8 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
   const [selectedDept, setSelectedDept] = useState<string>('all');
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>('all');
   const [quickFilter, setQuickFilter] = useState<'all' | 'top500' | 'top1000' | 'isnew' | 'ispromote'>('all');
-  // Default sort order is real PowerBI sales ranking (or SKU for 2027 agendas)
-  const [sortBy, setSortBy] = useState<'sales' | 'sku' | 'featured' | 'priceAsc' | 'priceDesc' | 'name' | 'newest'>('sales');
+  // Default sort order is official SKU catalog order
+  const [sortBy, setSortBy] = useState<'sku' | 'sales' | 'featured' | 'priceAsc' | 'priceDesc' | 'name' | 'newest'>('sku');
 
   // Detect active AI Intent if searchQuery matches any trigger phrase
   const activeAIIntent = useMemo(() => {
@@ -419,8 +419,18 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
       return (strA || '').localeCompare(strB || '', undefined, { numeric: true, sensitivity: 'base' });
     };
 
+    const isAIOrBestseller = Boolean(activeAIIntent || quickFilter === 'top500' || quickFilter === 'top1000');
+
     // Sorting
     return result.slice().sort((a, b) => {
+      // 1. If AI scenario search or Bestseller category filter is active, sort strictly by SKU naturally
+      if (isAIOrBestseller) {
+        if (sortBy === 'priceAsc') return (a.price || 0) - (b.price || 0);
+        if (sortBy === 'priceDesc') return (b.price || 0) - (a.price || 0);
+        if (sortBy === 'name') return naturalCompare(a.namees, b.namees);
+        return naturalCompare(a.usercode || a.code || '', b.usercode || b.code || '');
+      }
+
       if (sortBy === 'sales') {
         // Special case: Dept 01 (Agendas 2027) are preorder / upcoming, sort by sequential SKU
         if (a.masterId === '01' && b.masterId === '01') {
@@ -696,14 +706,14 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               onChange={(e) => setSortBy(e.target.value as any)}
               className="w-full md:w-auto px-4 py-3 rounded-xl border-3 border-[#222] font-black text-sm bg-white shadow-[2px_2px_0px_#222] focus:outline-none"
             >
+              <option value="sku">
+                {lang === 'zh' ? '🔢 官方货号目录 (按SKU自然序)' : '🔢 Catálogo Oficial (Ref. SKU)'}
+              </option>
               <option value="sales">
                 {lang === 'zh' ? '🔥 权威畅销榜首' : '🔥 Los Más Vendidos'}
               </option>
               <option value="featured">
                 {lang === 'zh' ? '⭐ 推荐精选' : '⭐ Selección Destacada'}
-              </option>
-              <option value="sku">
-                {lang === 'zh' ? '🔢 官方货号目录 (按SKU自然序)' : '🔢 Catálogo Oficial (Ref. SKU)'}
               </option>
               {mode === 'store' && (
                 <>
@@ -737,6 +747,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     setSearchQuery('');
                   } else {
                     setSearchQuery(intent.triggers[0]);
+                    setSortBy('sku');
                   }
                 }}
                 className={`px-2.5 py-1 rounded-xl text-xs font-black border-2 border-[#222] transition-all flex items-center gap-1 active:translate-y-0.5 ${
@@ -966,7 +977,10 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               {lang === 'zh' ? '全部' : 'Todos'}
             </button>
             <button
-              onClick={() => setQuickFilter('top500')}
+              onClick={() => {
+                setQuickFilter('top500');
+                setSortBy('sku');
+              }}
               className={`px-3 py-1 rounded-lg text-xs font-black border-2 border-[#222] flex items-center gap-1 ${
                 quickFilter === 'top500' ? 'bg-[#e52521] text-white shadow-[1px_1px_0px_#222]' : 'bg-white text-[#e52521]'
               }`}
@@ -975,7 +989,10 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               <span>{lang === 'zh' ? '年度畅销榜' : 'Los Más Vendidos'}</span>
             </button>
             <button
-              onClick={() => setQuickFilter('top1000')}
+              onClick={() => {
+                setQuickFilter('top1000');
+                setSortBy('sku');
+              }}
               className={`px-3 py-1 rounded-lg text-xs font-black border-2 border-[#222] flex items-center gap-1 ${
                 quickFilter === 'top1000' ? 'bg-amber-500 text-white shadow-[1px_1px_0px_#222]' : 'bg-white text-amber-700'
               }`}

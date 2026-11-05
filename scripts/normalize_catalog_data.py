@@ -21,7 +21,7 @@ import openpyxl
 # Master Department definitions
 MASTER_DEPT_INFO = {
     '01': ('01', '📅 Agendas y Calendarios 2027', '📅 年历与日历 (2027专刊)'),
-    '02': ('02', '✏️ Escritura y Corrección', '✏️ 书写与修正用品'),
+    '02': ('02', '✏️ Escritura', '✏️ 书写用品'),
     '03': ('03', '📎 Sobremesa y Oficina', '📎 桌面与办公用品'),
     '04': ('04', '📁 Archivo y Clasificación', '📁 文件归档与分类'),
     '05': ('05', '📓 Cuadernos y Manipulado', '📓 本册与纸品 (Manipulado)'),
@@ -271,10 +271,10 @@ def classify_product(p):
     sub_es = sub_tuple[0] if sub_tuple else 'Varios'
     sub_zh = sub_tuple[1] if sub_tuple else '综合商品'
 
-    # Master department assignment
-    if tid in ['016', '022', '025']:
+    # Master department assignment (Pure Writing in 02, Correction and Desk tools in 03)
+    if tid in ['016']:
         m_id, d_es, d_zh = MASTER_DEPT_INFO['02']
-    elif tid in ['031', '034', '037']:
+    elif tid in ['022', '025', '031', '034', '037']:
         m_id, d_es, d_zh = MASTER_DEPT_INFO['03']
     elif tid in ['051']:
         m_id, d_es, d_zh = MASTER_DEPT_INFO['04']
@@ -426,9 +426,9 @@ def main():
         p_no['isTop1000'] = p_with['isTop1000']
         p_no['ishot'] = p_with['ishot']
 
-    print("🔄 正在结合 PowerBI 真实销量数据进行全网畅销榜权重排序...")
-    clean_with_price.sort(key=powerbi_sort_key)
-    clean_no_price.sort(key=powerbi_sort_key)
+    print("🔄 正在按照 SKU 官方货号进行全库自然顺序排序...")
+    clean_with_price.sort(key=lambda x: natural_sort_key(x['usercode'] or x['code']))
+    clean_no_price.sort(key=lambda x: natural_sort_key(x['usercode'] or x['code']))
 
     print(f"✅ 处理完毕！共规范化并排序 {len(clean_with_price)} 款商品 (年度畅销Top500: 500款, 推荐精选Top1000: 1000款)。")
 
