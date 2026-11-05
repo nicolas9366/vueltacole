@@ -20,6 +20,11 @@ export interface ProductItem {
   isnew: boolean;
   ishot: boolean;
   ispromote: boolean;
+  isTop200?: boolean;
+  salesRevenue?: number;
+  salesUnits?: number;
+  salesInvoices?: number;
+  salesRank?: number;
   imageUrl: string;
   price: number; // Wholesale base price
   packetPrice: number;
@@ -73,9 +78,9 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedDept, setSelectedDept] = useState<string>('all');
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>('all');
-  const [quickFilter, setQuickFilter] = useState<'all' | 'ishot' | 'isnew' | 'ispromote'>('all');
-  // Default sort order is SKU / Reference natural sort (Catálogo Oficial)
-  const [sortBy, setSortBy] = useState<'sku' | 'featured' | 'priceAsc' | 'priceDesc' | 'name' | 'newest'>('sku');
+  const [quickFilter, setQuickFilter] = useState<'all' | 'top200' | 'ishot' | 'isnew' | 'ispromote'>('all');
+  // Default sort order is real PowerBI sales ranking (or SKU for 2027 agendas)
+  const [sortBy, setSortBy] = useState<'sales' | 'sku' | 'featured' | 'priceAsc' | 'priceDesc' | 'name' | 'newest'>('sales');
 
   // Pagination (36 products per page)
   const [page, setPage] = useState<number>(1);
@@ -174,9 +179,11 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
       result = result.filter((p) => p.subEs === selectedSubCategory);
     }
 
-    // Quick filter (hot, new, promo)
-    if (quickFilter === 'ishot') {
-      result = result.filter((p) => p.ishot);
+    // Quick filter (top200, hot, new, promo)
+    if (quickFilter === 'top200') {
+      result = result.filter((p) => p.isTop200);
+    } else if (quickFilter === 'ishot') {
+      result = result.filter((p) => p.ishot || p.isTop200);
     } else if (quickFilter === 'isnew') {
       result = result.filter((p) => p.isnew);
     } else if (quickFilter === 'ispromote') {
@@ -215,6 +222,17 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
 
     // Sorting
     return result.slice().sort((a, b) => {
+      if (sortBy === 'sales') {
+        // Special case: Dept 01 (Agendas 2027) are preorder / upcoming, sort by sequential SKU
+        if (a.masterId === '01' && b.masterId === '01') {
+          return naturalCompare(a.usercode || a.code || '', b.usercode || b.code || '');
+        }
+        const revDiff = (b.salesRevenue || 0) - (a.salesRevenue || 0);
+        if (revDiff !== 0) return revDiff;
+        const unitDiff = (b.salesUnits || 0) - (a.salesUnits || 0);
+        if (unitDiff !== 0) return unitDiff;
+        return naturalCompare(a.usercode || a.code || '', b.usercode || b.code || '');
+      }
       if (sortBy === 'sku') {
         const uA = a.usercode || a.code || '';
         const uB = b.usercode || b.code || '';
@@ -237,8 +255,8 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
         return naturalCompare(uA, uB);
       }
       // 'featured' (fallback to SKU order when score is tied)
-      const aScore = (a.ishot ? 3 : 0) + (a.isnew ? 2 : 0) + (a.ispromote ? 1 : 0);
-      const bScore = (b.ishot ? 3 : 0) + (b.isnew ? 2 : 0) + (b.ispromote ? 1 : 0);
+      const aScore = (a.isTop200 ? 5 : 0) + (a.ishot ? 3 : 0) + (a.isnew ? 2 : 0) + (a.ispromote ? 1 : 0);
+      const bScore = (b.isTop200 ? 5 : 0) + (b.ishot ? 3 : 0) + (b.isnew ? 2 : 0) + (b.ispromote ? 1 : 0);
       if (bScore !== aScore) return bScore - aScore;
       const uA = a.usercode || a.code || '';
       const uB = b.usercode || b.code || '';
@@ -467,6 +485,9 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               onChange={(e) => setSortBy(e.target.value as any)}
               className="w-full md:w-auto px-4 py-3 rounded-xl border-3 border-[#222] font-black text-sm bg-white shadow-[2px_2px_0px_#222] focus:outline-none"
             >
+              <option value="sales">
+                {lang === 'zh' ? '🔥 畅销榜首 (结合 PowerBI 真实销量)' : '🔥 Más Vendidos (Histórico PowerBI)'}
+              </option>
               <option value="sku">
                 {lang === 'zh' ? '🔢 官方目录顺序 (按货号 SKU)' : '🔢 Catálogo Oficial (Por Ref. / SKU)'}
               </option>
@@ -483,7 +504,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   </option>
                 </>
               )}
-              <option value="newest">{lang === 'zh' ? '🆕 2026 新品先看' : '🆕 Nuevos lanzamientos'}</option>
+              <option value="newest">{lang === 'zh' ? '🆕 2026/27 新品先看' : '🆕 Novedades'}</option>
               <option value="name">{lang === 'zh' ? '🔤 西语字母 A - Z' : '🔤 Nombre A - Z'}</option>
             </select>
           </div>
@@ -623,8 +644,8 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               >
                 {selectedDept === '09'
                   ? lang === 'zh'
-                    ? '全部名牌 (561款)'
-                    : 'Todas las Marcas'
+                    ? '全部名牌 (522款)'
+                    : 'Todas las Marcas (522)'
                   : lang === 'zh'
                   ? '全部子类'
                   : 'Todas'}
@@ -675,13 +696,22 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               {lang === 'zh' ? '全部' : 'Todos'}
             </button>
             <button
+              onClick={() => setQuickFilter('top200')}
+              className={`px-3 py-1 rounded-lg text-xs font-black border-2 border-[#222] flex items-center gap-1 ${
+                quickFilter === 'top200' ? 'bg-[#e52521] text-white shadow-[1px_1px_0px_#222]' : 'bg-white text-[#e52521]'
+              }`}
+            >
+              <span>🏆</span>
+              <span>{lang === 'zh' ? 'TOP 200 爆款榜' : 'Top 200 Ventas'}</span>
+            </button>
+            <button
               onClick={() => setQuickFilter('ishot')}
               className={`px-3 py-1 rounded-lg text-xs font-black border-2 border-[#222] flex items-center gap-1 ${
                 quickFilter === 'ishot' ? 'bg-[#e52521] text-white' : 'bg-white text-[#e52521]'
               }`}
             >
               <span>🔥</span>
-              <span>{lang === 'zh' ? '爆款' : 'Top Ventas'}</span>
+              <span>{lang === 'zh' ? '热销' : 'Destacados'}</span>
             </button>
             <button
               onClick={() => setQuickFilter('isnew')}
@@ -767,14 +797,18 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 >
                   {/* Floating Badges (HOT, NEW, PROMO) */}
                   <div className="absolute top-2 left-2 z-10 flex flex-col gap-1">
-                    {p.ishot && (
+                    {p.isTop200 ? (
+                      <span className="bg-[#e52521] text-white text-[10px] md:text-xs font-black px-2 py-0.5 rounded-full border-2 border-[#222] shadow-[1px_1px_0px_#222] animate-pulse">
+                        🔥 TOP 200
+                      </span>
+                    ) : p.ishot ? (
                       <span className="bg-[#e52521] text-white text-[10px] md:text-xs font-black px-2 py-0.5 rounded-full border-2 border-[#222] shadow-[1px_1px_0px_#222]">
                         🔥 TOP
                       </span>
-                    )}
+                    ) : null}
                     {p.isnew && (
                       <span className="bg-[#5c94fc] text-white text-[10px] md:text-xs font-black px-2 py-0.5 rounded-full border-2 border-[#222] shadow-[1px_1px_0px_#222]">
-                        ✨ 2026
+                        ✨ 2026/27
                       </span>
                     )}
                     {p.ispromote && (
@@ -1196,6 +1230,11 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   <span className="bg-gray-100 text-gray-700 text-xs font-mono px-2.5 py-1 rounded-md border border-gray-300">
                     EAN: {selectedProduct.code}
                   </span>
+                  {selectedProduct.isTop200 && (
+                    <span className="bg-[#e52521] text-white text-xs font-black px-2.5 py-1 rounded-md border border-[#222]">
+                      🔥 PowerBI 畅销 TOP 200
+                    </span>
+                  )}
                   <span className="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-0.5 rounded">
                     ✓ Stock Disponible
                   </span>
