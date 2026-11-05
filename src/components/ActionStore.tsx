@@ -426,19 +426,26 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
         if (a.masterId === '01' && b.masterId === '01') {
           return naturalCompare(a.usercode || a.code || '', b.usercode || b.code || '');
         }
-        const revDiff = (b.salesRevenue || 0) - (a.salesRevenue || 0);
-        if (revDiff !== 0) return revDiff;
+        // Primary sort: Nº Facturas (purchase frequency / actual invoices count)
+        const invDiff = (b.salesInvoices || 0) - (a.salesInvoices || 0);
+        if (invDiff !== 0) return invDiff;
+        // Secondary sort: Units sold
         const unitDiff = (b.salesUnits || 0) - (a.salesUnits || 0);
         if (unitDiff !== 0) return unitDiff;
+        // Tertiary sort: Sales revenue
+        const revDiff = (b.salesRevenue || 0) - (a.salesRevenue || 0);
+        if (revDiff !== 0) return revDiff;
         return naturalCompare(a.usercode || a.code || '', b.usercode || b.code || '');
       }
       if (sortBy === 'featured') {
-        // 'featured' = Top 1000 selection first, then sales revenue
+        // Recommended selection first, then tie-break by Nº Facturas (purchase frequency)
         const aScore = (a.isTop1000 ? 5 : 0) + (a.isnew ? 2 : 0) + (a.ispromote ? 1 : 0);
         const bScore = (b.isTop1000 ? 5 : 0) + (b.isnew ? 2 : 0) + (b.ispromote ? 1 : 0);
         if (bScore !== aScore) return bScore - aScore;
-        const revDiff = (b.salesRevenue || 0) - (a.salesRevenue || 0);
-        if (revDiff !== 0) return revDiff;
+        const invDiff = (b.salesInvoices || 0) - (a.salesInvoices || 0);
+        if (invDiff !== 0) return invDiff;
+        const unitDiff = (b.salesUnits || 0) - (a.salesUnits || 0);
+        if (unitDiff !== 0) return unitDiff;
         const uA = a.usercode || a.code || '';
         const uB = b.usercode || b.code || '';
         return naturalCompare(uA, uB);
@@ -690,10 +697,10 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               className="w-full md:w-auto px-4 py-3 rounded-xl border-3 border-[#222] font-black text-sm bg-white shadow-[2px_2px_0px_#222] focus:outline-none"
             >
               <option value="sales">
-                {lang === 'zh' ? '🔥 权威畅销榜首 (前500)' : '🔥 Los Más Vendidos (Top 500)'}
+                {lang === 'zh' ? '🔥 权威畅销榜首' : '🔥 Los Más Vendidos'}
               </option>
               <option value="featured">
-                {lang === 'zh' ? '⭐ 推荐精选 (前1000优选)' : '⭐ Selección Destacada (Top 1000)'}
+                {lang === 'zh' ? '⭐ 推荐精选' : '⭐ Selección Destacada'}
               </option>
               <option value="sku">
                 {lang === 'zh' ? '🔢 官方货号目录 (按SKU自然序)' : '🔢 Catálogo Oficial (Ref. SKU)'}
@@ -965,7 +972,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               }`}
             >
               <span>🏆</span>
-              <span>{lang === 'zh' ? '年度畅销榜 (前500)' : 'Top 500 Ventas'}</span>
+              <span>{lang === 'zh' ? '年度畅销榜' : 'Los Más Vendidos'}</span>
             </button>
             <button
               onClick={() => setQuickFilter('top1000')}
@@ -974,7 +981,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               }`}
             >
               <span>⭐</span>
-              <span>{lang === 'zh' ? '推荐精选 (前1000)' : 'Top 1000 Selección'}</span>
+              <span>{lang === 'zh' ? '推荐精选' : 'Selección Destacada'}</span>
             </button>
             <button
               onClick={() => setQuickFilter('isnew')}
@@ -1062,11 +1069,11 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   <div className="absolute top-2 left-2 z-10 flex flex-col gap-1">
                     {p.isTop500 ? (
                       <span className="bg-[#e52521] text-white text-[10px] md:text-xs font-black px-2 py-0.5 rounded-full border-2 border-[#222] shadow-[1px_1px_0px_#222] animate-pulse">
-                        🔥 {lang === 'zh' ? '年度畅销' : 'Top 500'}
+                        🔥 {lang === 'zh' ? '年度畅销' : 'Más Vendido'}
                       </span>
                     ) : p.isTop1000 ? (
                       <span className="bg-amber-500 text-white text-[10px] md:text-xs font-black px-2 py-0.5 rounded-full border-2 border-[#222] shadow-[1px_1px_0px_#222]">
-                        ⭐ {lang === 'zh' ? '推荐精选' : 'Top 1000'}
+                        ⭐ {lang === 'zh' ? '推荐精选' : 'Destacado'}
                       </span>
                     ) : p.ishot ? (
                       <span className="bg-[#e52521] text-white text-[10px] md:text-xs font-black px-2 py-0.5 rounded-full border-2 border-[#222] shadow-[1px_1px_0px_#222]">
@@ -1499,11 +1506,11 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   </span>
                   {selectedProduct.isTop500 ? (
                     <span className="bg-[#e52521] text-white text-xs font-black px-2.5 py-1 rounded-md border border-[#222]">
-                      🔥 {lang === 'zh' ? '年度权威畅销榜 (Top 500)' : 'Top 500 Más Vendidos'}
+                      🔥 {lang === 'zh' ? '年度权威畅销' : 'Superventas Oficial'}
                     </span>
                   ) : selectedProduct.isTop1000 ? (
                     <span className="bg-amber-500 text-white text-xs font-black px-2.5 py-1 rounded-md border border-[#222]">
-                      ⭐ {lang === 'zh' ? '官方优选推荐 (Top 1000)' : 'Top 1000 Selección'}
+                      ⭐ {lang === 'zh' ? '官方推荐精选' : 'Selección Oficial'}
                     </span>
                   ) : null}
                   <span className="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-0.5 rounded">

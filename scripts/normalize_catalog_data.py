@@ -318,28 +318,25 @@ def load_powerbi_metrics():
                 
                 clean = re.sub(r'[\s\-]', '', code_part)
                 for k in [code_part, clean]:
-                    if k not in sales_dict or ventas > sales_dict[k]['ventas']:
+                    if k not in sales_dict or facturas > sales_dict[k]['invoices']:
                         sales_dict[k] = {'ventas': ventas, 'units': articulos, 'invoices': facturas}
-        print(f"📊 已从 PowerBI 2022-2026.xlsx 读取 {len(sales_dict)} 条商品真实销量/销售额记录")
+        print(f"📊 已从 PowerBI 2022-2026.xlsx 读取 {len(sales_dict)} 条商品真实销量/发票记录 (以 Nº Facturas 排序)")
 
     return sales_dict
 
 def powerbi_sort_key(p):
-    # Department 01 (2027 Agendas & Calendars) is pre-order/brand new, so keep in sequential SKU order
-    if p['masterId'] == '01':
-        return (0, 0, natural_sort_key(p['usercode'] or p['code']))
-    
-    # Best sellers (Top 500 and Top 1000) come first!
-    rev = p.get('salesRevenue', 0)
+    # Pure bestsellers by Nº Facturas (number of customer purchases / transactions)
+    invoices = p.get('salesInvoices', 0)
     units = p.get('salesUnits', 0)
-    if rev > 0:
-        return (1, -rev, -units)
+    rev = p.get('salesRevenue', 0)
+    if invoices > 0:
+        return (0, -invoices, -units, -rev, natural_sort_key(p['usercode'] or p['code']))
     
-    # Pre-orders or 2026 new items
-    if p.get('isnew'):
-        return (2, 0, natural_sort_key(p['usercode'] or p['code']))
+    # Pre-orders or 2026/2027 new items (e.g. Agendas)
+    if p.get('isnew') or p.get('masterId') == '01':
+        return (1, 0, 0, 0, natural_sort_key(p['usercode'] or p['code']))
     
-    return (3, 0, natural_sort_key(p['usercode'] or p['code']))
+    return (2, 0, 0, 0, natural_sort_key(p['usercode'] or p['code']))
 
 def main():
     root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -407,11 +404,11 @@ def main():
         clean_with_price.append(clean_with)
         clean_no_price.append(clean_item)
 
-    # Compute salesRank across all items that had sales
+    # Compute salesRank across all items that had sales based on Nº Facturas (purchase frequency / transactions)
     # Top 500: 年度畅销榜
     # Top 1000: 推荐精选优选商品
-    with_sales = [p for p in clean_with_price if p['salesRevenue'] > 0]
-    with_sales.sort(key=lambda x: (x['salesRevenue'], x['salesUnits']), reverse=True)
+    with_sales = [p for p in clean_with_price if p['salesInvoices'] > 0]
+    with_sales.sort(key=lambda x: (x['salesInvoices'], x['salesUnits'], x['salesRevenue']), reverse=True)
     for rank, p in enumerate(with_sales, start=1):
         p['salesRank'] = rank
         p['isTop500'] = (rank <= 500)
