@@ -39,19 +39,21 @@ interface ActionStoreProps {
 
 const PVP_MULTIPLIER = 2.8;
 
-// 10 Master Industry Departments covering 100% of 6,109 products cleanly
+// 11 Official Master Catalog Departments covering 100% of 6,109 products cleanly
+// Strictly aligned with CAT_AGENDAS-Y-CALENDARIOS_2027_web.pdf & CATALOGO-GENERAL-2026_ESP_web-MP.pdf
 export const MASTER_DEPARTMENTS = [
   { id: 'all', labelEs: '⭐ Todo el Catálogo', labelZh: '⭐ 全部商品 (6.109)', icon: '⭐' },
-  { id: '01', labelEs: '✏️ Escritura y Corrección', labelZh: '✏️ 书写与修正', icon: '✏️' },
-  { id: '02', labelEs: '📓 Cuadernos, Agendas y Papel', labelZh: '📓 本册、日历与纸品', icon: '📓' },
-  { id: '03', labelEs: '🎨 Bellas Artes y Pintura', labelZh: '🎨 美术画材与颜料', icon: '🎨' },
-  { id: '04', labelEs: '✂️ Manualidades y Adhesivos', labelZh: '✂️ 手工、胶粘与刀剪', icon: '✂️' },
-  { id: '05', labelEs: '📁 Carpetas y Archivo', labelZh: '📁 文件收纳与装订', icon: '📁' },
-  { id: '06', labelEs: '💼 Oficina y Comercio', labelZh: '💼 办公设备与生活', icon: '💼' },
-  { id: '07', labelEs: '🎒 Mochilas y Estuches', labelZh: '🎒 箱包与笔袋', icon: '🎒' },
-  { id: '08', labelEs: '🏷️ Primeras Marcas (Bic, Milan...)', labelZh: '🏷️ 国际合作名牌', icon: '🏷️' },
-  { id: '09', labelEs: '🎀 Sanrio, Licencias y Regalo', labelZh: '🎀 三丽鸥、IP与贺卡', icon: '🎀' },
-  { id: '10', labelEs: '📦 Expositores y Muebles', labelZh: '📦 展架与陈列物料', icon: '📦' },
+  { id: '01', labelEs: '📅 Agendas y Calendarios 2027', labelZh: '📅 年历与日历 (2027专刊)', icon: '📅' },
+  { id: '02', labelEs: '✏️ Escritura y Corrección', labelZh: '✏️ 书写与修正用品', icon: '✏️' },
+  { id: '03', labelEs: '📎 Sobremesa y Oficina', labelZh: '📎 桌面与办公用品', icon: '📎' },
+  { id: '04', labelEs: '📁 Archivo y Clasificación', labelZh: '📁 文件归档与分类', icon: '📁' },
+  { id: '05', labelEs: '📓 Cuadernos y Manipulado', labelZh: '📓 本册与纸品 (Manipulado)', icon: '📓' },
+  { id: '06', labelEs: '🎒 Mochilas y Escolar', labelZh: '🎒 箱包与学生用品', icon: '🎒' },
+  { id: '07', labelEs: '✂️ Manualidades y Adhesivos', labelZh: '✂️ 手工与胶粘用品', icon: '✂️' },
+  { id: '08', labelEs: '🎨 Bellas Artes (Artix)', labelZh: '🎨 美术画材 (Artix)', icon: '🎨' },
+  { id: '09', labelEs: '🏷️ Primeras Marcas', labelZh: '🏷️ 国际合作名牌', icon: '🏷️' },
+  { id: '10', labelEs: '🎀 Sanrio, Licencias y Regalo', labelZh: '🎀 三丽鸥、IP与贺卡', icon: '🎀' },
+  { id: '11', labelEs: '📦 Expositores y PLV', labelZh: '📦 展架与陈列物料', icon: '📦' },
 ];
 
 export const ActionStore: React.FC<ActionStoreProps> = ({
@@ -72,7 +74,8 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
   const [selectedDept, setSelectedDept] = useState<string>('all');
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>('all');
   const [quickFilter, setQuickFilter] = useState<'all' | 'ishot' | 'isnew' | 'ispromote'>('all');
-  const [sortBy, setSortBy] = useState<'featured' | 'priceAsc' | 'priceDesc' | 'name' | 'newest'>('featured');
+  // Default sort order is SKU / Reference natural sort (Catálogo Oficial)
+  const [sortBy, setSortBy] = useState<'sku' | 'featured' | 'priceAsc' | 'priceDesc' | 'name' | 'newest'>('sku');
 
   // Pagination (36 products per page)
   const [page, setPage] = useState<number>(1);
@@ -205,8 +208,18 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
       });
     }
 
+    // Natural alphanumeric sorting helper
+    const naturalCompare = (strA: string, strB: string) => {
+      return (strA || '').localeCompare(strB || '', undefined, { numeric: true, sensitivity: 'base' });
+    };
+
     // Sorting
     return result.slice().sort((a, b) => {
+      if (sortBy === 'sku') {
+        const uA = a.usercode || a.code || '';
+        const uB = b.usercode || b.code || '';
+        return naturalCompare(uA, uB);
+      }
       if (sortBy === 'priceAsc') {
         return (a.price || 0) - (b.price || 0);
       }
@@ -214,15 +227,22 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
         return (b.price || 0) - (a.price || 0);
       }
       if (sortBy === 'name') {
-        return (a.namees || '').localeCompare(b.namees || '');
+        return naturalCompare(a.namees, b.namees);
       }
       if (sortBy === 'newest') {
-        return (b.isnew ? 1 : 0) - (a.isnew ? 1 : 0);
+        const newDiff = (b.isnew ? 1 : 0) - (a.isnew ? 1 : 0);
+        if (newDiff !== 0) return newDiff;
+        const uA = a.usercode || a.code || '';
+        const uB = b.usercode || b.code || '';
+        return naturalCompare(uA, uB);
       }
-      // 'featured'
+      // 'featured' (fallback to SKU order when score is tied)
       const aScore = (a.ishot ? 3 : 0) + (a.isnew ? 2 : 0) + (a.ispromote ? 1 : 0);
       const bScore = (b.ishot ? 3 : 0) + (b.isnew ? 2 : 0) + (b.ispromote ? 1 : 0);
-      return bScore - aScore;
+      if (bScore !== aScore) return bScore - aScore;
+      const uA = a.usercode || a.code || '';
+      const uB = b.usercode || b.code || '';
+      return naturalCompare(uA, uB);
     });
   }, [products, selectedDept, selectedSubCategory, quickFilter, searchQuery, sortBy]);
 
@@ -447,8 +467,11 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               onChange={(e) => setSortBy(e.target.value as any)}
               className="w-full md:w-auto px-4 py-3 rounded-xl border-3 border-[#222] font-black text-sm bg-white shadow-[2px_2px_0px_#222] focus:outline-none"
             >
+              <option value="sku">
+                {lang === 'zh' ? '🔢 官方目录顺序 (按货号 SKU)' : '🔢 Catálogo Oficial (Por Ref. / SKU)'}
+              </option>
               <option value="featured">
-                {lang === 'zh' ? '⭐ 推荐精选 (热销优先)' : '⭐ Recomendados (Top Ventas)'}
+                {lang === 'zh' ? '⭐ 推荐精选 (热销爆款优先)' : '⭐ Recomendados (Top Ventas)'}
               </option>
               {mode === 'store' && (
                 <>
@@ -466,7 +489,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           </div>
         </div>
 
-        {/* 10 MASTER DEPARTMENTS CAROUSEL */}
+        {/* 11 MASTER DEPARTMENTS CAROUSEL */}
         <div className="mb-4 overflow-x-auto pb-2 scrollbar-none">
           <div className="flex items-center gap-2 min-w-max">
             {MASTER_DEPARTMENTS.map((dept) => {
