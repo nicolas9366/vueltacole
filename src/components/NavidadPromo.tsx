@@ -184,7 +184,7 @@ export const NavidadPromo: React.FC<NavidadPromoProps> = ({ lang, onNavigateHome
                       className="w-full h-full object-contain bg-black"
                     />
                     <a
-                      href={CLOUD_MEDIA_CONFIG.videoChannels.gdriveVideoDirectUrl}
+                      href={CLOUD_MEDIA_CONFIG.videoChannels.gdriveVideoFolderUrl}
                       target="_blank"
                       rel="noreferrer"
                       className="absolute top-2 right-2 bg-black/75 hover:bg-black text-[#f8d878] text-[10px] font-bold px-2.5 py-1 rounded-full border border-[#f8d878]/50 backdrop-blur-sm"

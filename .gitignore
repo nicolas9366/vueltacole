@@ -9,3 +9,5 @@ wecom_server/
 *.csv
 *.mp4
 *.zip
+*.tsbuildinfo
+logs/
