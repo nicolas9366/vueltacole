@@ -250,6 +250,7 @@ export const App: React.FC = () => {
         {view === 'home' && (
           <Home
             lang={lang}
+            onNavigateToTienda={() => navigateTo('tienda')}
             onNavigateToMap={() => navigateTo('map')}
             onNavigateToNavidad={() => navigateTo('navidad')}
             onNavigateToCanje={() => navigateTo('canje')}

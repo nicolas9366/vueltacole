@@ -1,504 +1,618 @@
-import React, { useState, useRef } from 'react';
-import { MOCK_SCHOOLS, School } from '../data/schoolsDB';
-import {
-  CHRISTMAS_PRODUCTS,
-  CLOUD_MEDIA_CONFIG,
-  CONFIG_I18N,
-  Lang,
-  getGdriveFallbackUrl,
-  getGdriveImageUrl,
-} from '../data/christmas2026DB';
+import React, { useState } from 'react';
+import { Lang } from '../data/christmas2026DB';
 
-interface HomeProps {
+export interface HomeProps {
   lang: Lang;
-  onNavigateToMap: () => void;
-  onNavigateToNavidad: () => void;
-  onNavigateToCanje: () => void;
+  onNavigateToTienda: () => void;
+  onNavigateToMap?: () => void;
+  onNavigateToNavidad?: () => void;
+  onNavigateToCanje?: () => void;
 }
 
-export function Home({
+export const Home: React.FC<HomeProps> = ({
   lang,
+  onNavigateToTienda,
   onNavigateToMap,
   onNavigateToNavidad,
   onNavigateToCanje,
-}: HomeProps) {
-  const t = CONFIG_I18N[lang];
-  const [schoolInput, setSchoolInput] = useState('');
-  const [gradeInput, setGradeInput] = useState('1º Primaria');
-  const [postalInput, setPostalInput] = useState('');
-  const [orderAmount, setOrderAmount] = useState<number>(2000);
+}) => {
+  // Contact info
+  const WHATSAPP_NUMBER = '604229098';
+  const WHATSAPP_LINK = 'https://wa.me/34604229098';
+  const EMAIL_ADDRESS = 'info@kyrmax.com';
 
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [filteredSchools, setFilteredSchools] = useState<School[]>([]);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  // Form State
+  const [formData, setFormData] = useState({
+    shopName: '',
+    contactName: '',
+    city: '',
+    phone: '',
+    email: '',
+    businessType: 'bazar', // bazar | papeleria | colegio | distribuidor
+    message: '',
+  });
 
-  const handleSchoolInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSchoolInput(value);
-    if (value.trim().length > 0) {
-      const filtered = MOCK_SCHOOLS.filter(
-        (s) =>
-          s.name.toLowerCase().includes(value.toLowerCase()) ||
-          s.city.toLowerCase().includes(value.toLowerCase())
-      );
-      setFilteredSchools(filtered);
-      setShowSuggestions(true);
-    } else {
-      setShowSuggestions(false);
-    }
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
-  // ROI Calculation Logic (REBUILD_SOP §4: €2,000 order -> €3,100+ total value)
-  const cashbackValue = Math.round(orderAmount * 0.42);
-  const magneticPacks = Math.floor(orderAmount / 50);
-  const calendarGiftsValue = magneticPacks * 12 + 35; // Magnetic calendar packs + 20th Anniv Calendar
-  const totalReturnValue = orderAmount + cashbackValue + calendarGiftsValue;
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const typeLabel =
+      formData.businessType === 'bazar'
+        ? '百货零售 / Bazar'
+        : formData.businessType === 'papeleria'
+        ? '文具书店 / Papelería'
+        : formData.businessType === 'colegio'
+        ? '学校机构 / Colegio'
+        : '大宗分销 / Distribuidor';
 
-  const stitchCards = [
-    {
-      id: 'navidad-2026',
-      tag: lang === 'zh' ? '🔥 最新上线 · 子页面专场' : '🔥 NUEVO · SUBPÁGINA ESPECIAL',
-      title:
-        lang === 'zh'
-          ? '2026 圣诞季 & 日历全景大促'
-          : 'Campaña Navidad y Calendarios 2026',
-      highlight: '0.1€ - 0.3€ / -15% DTO',
-      desc:
-        lang === 'zh'
-          ? '散装贺卡0.1€起冰点抄底（限占50%·不退货）+ 21款新品原图高清推镜导购 + 京味双主播大片！'
-          : 'Tarjetas a granel desde 0,10€ + 21 novedades con zoom HD en Google Drive CDN.',
-      bg: 'from-[#b91c1c] to-[#14532d]',
-      cta: lang === 'zh' ? '进入圣诞产品子页面 →' : 'Abrir Subpágina Navidad →',
-      action: onNavigateToNavidad,
-    },
-    {
-      id: 'regalos-calendario',
-      tag: lang === 'zh' ? '🎁 多重买赠叠加' : '🎁 REGALOS ACUMULABLES',
-      title:
-        lang === 'zh'
-          ? '磁吸日历 & 20周年日历狂送'
-          : 'Calendarios Magnéticos y 20º Aniv. GRATIS',
-      highlight: '+50€ / +10€ FREE',
-      desc:
-        lang === 'zh'
-          ? '圣诞满50€送1包磁吸日历 · 日历满10€送1包磁吸日历 · 下单即送20周年精美日历 · 学生日历1-1.5€抄底！'
-          : 'Por cada 50€ en Navidad o 10€ en Agendas, llévate 1 pack de calendario magnético gratis.',
-      bg: 'from-[#1e3a8a] to-[#0f172a]',
-      cta: lang === 'zh' ? '查看活动详情 →' : 'Ver Promoción →',
-      action: onNavigateToNavidad,
-    },
-    {
-      id: 'vuelta-al-cole',
-      tag: lang === 'zh' ? '🎒 26届返校季主会场' : '🎒 26ª CAMPAÑA ESCOLAR',
-      title:
-        lang === 'zh'
-          ? '返校季全线 +6+5% 折上折 & 地图找店'
-          : 'Vuelta al Cole +6+5% DTO & Mapa Interactivo',
-      highlight: '50% CASHBACK',
-      desc:
-        lang === 'zh'
-          ? '连接全西班牙学校书单与附近文具店（Bazar），AI智能匹配周边学校必买清单。'
-          : 'Mapa interactivo de colegios y bazares con listas escolares verificadas.',
-      bg: 'from-[#b45309] to-[#78350f]',
-      cta: lang === 'zh' ? '打开返校季地图 →' : 'Abrir Mapa Escolar →',
-      action: onNavigateToMap,
-    },
-    {
-      id: 'billete-dorado',
-      tag: lang === 'zh' ? '🎫 线下门店引流核销' : '🎫 SORTEO EN TIENDA',
-      title:
-        lang === 'zh'
-          ? '金票抽奖 (Billete Dorado) 扫码核销'
-          : 'Sistema de Canje Billete Dorado',
-      highlight: '2€ / 5€ CUPÓN',
-      desc:
-        lang === 'zh'
-          ? '消费者刮出金票二维码，合作文具店手机扫码3秒完成核销抵扣，锁死门店客流！'
-          : 'Validación instantánea por QR para comercios asociados Main Paper.',
-      bg: 'from-[#6d28d9] to-[#311068]',
-      cta: lang === 'zh' ? '进入商家核销台 →' : 'Validar Cupón →',
-      action: onNavigateToCanje,
-    },
-  ];
+    let msg = `🤝 *【Main Paper 2026 招商入驻合作申请】*\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `🏪 店铺/公司: ${formData.shopName || '未填写'}\n`;
+    msg += `👤 负责人: ${formData.contactName || '未填写'}\n`;
+    msg += `📍 所在城市: ${formData.city || '未填写'}\n`;
+    msg += `📞 联络电话: ${formData.phone || '未填写'}\n`;
+    msg += `✉️ 电子邮箱: ${formData.email || '未填写'}\n`;
+    msg += `📦 意向类型: ${typeLabel}\n`;
+    if (formData.message) {
+      msg += `💬 留言备注: ${formData.message}\n`;
+    }
+    msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `来自 vueltacole.com 招商官网登记`;
+
+    const encoded = encodeURIComponent(msg);
+    window.open(`${WHATSAPP_LINK}?text=${encoded}`, '_blank');
+    setFormSubmitted(true);
+  };
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white font-['Fredoka',sans-serif] pb-20 overflow-x-hidden">
-      {/* 1. HERO SECTION (20th Anniversary Red & Gold + Mario Board-Game Style) */}
-      <section className="relative bg-gradient-to-br from-[#dc2626] via-[#991b1b] to-[#0f172a] border-b-4 border-[#222] py-12 md:py-16 px-4">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-7 space-y-5">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#f8d878] text-[#222] font-black rounded-full border-3 border-[#222] shadow-[3px_3px_0px_#222] text-xs md:text-sm">
-              <span>⭐</span>
-              <span>{t.heroBadge}</span>
+    <div className="min-h-screen bg-[#fcf8f2] text-[#222] font-['Fredoka',sans-serif] pb-20">
+      {/* 1. TOP HERO BANNER */}
+      <section className="bg-[#e52521] border-b-6 border-[#222] text-white px-4 py-12 md:py-16 relative overflow-hidden shadow-xl">
+        {/* Mario-style floating elements */}
+        <div className="absolute top-2 left-6 text-yellow-300 text-3xl animate-bounce">★</div>
+        <div className="absolute top-8 right-12 text-white/15 text-9xl font-black select-none pointer-events-none">
+          ★
+        </div>
+        <div className="absolute bottom-2 right-1/4 text-white/10 text-8xl font-black select-none pointer-events-none">
+          ?
+        </div>
+
+        <div className="max-w-6xl mx-auto relative z-10 text-center">
+          {/* Top Pill Badges */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
+            <span className="bg-[#f8d878] text-[#222] text-xs md:text-sm font-black px-4 py-1.5 rounded-full border-3 border-[#222] shadow-[3px_3px_0px_#222] uppercase tracking-wider">
+              {lang === 'zh'
+                ? '🚀 2026 官方招商入驻计划 · 西班牙全境招募'
+                : '🚀 Plan Oficial de Expansión y Puntos de Venta 2026'}
+            </span>
+            <span className="bg-[#5c94fc] text-white text-xs md:text-sm font-black px-3.5 py-1.5 rounded-full border-3 border-[#222] shadow-[3px_3px_0px_#222]">
+              {lang === 'zh' ? '大厂直供 · 现货直发' : 'Directo de Fábrica'}
+            </span>
+          </div>
+
+          {/* Main Title */}
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white drop-shadow-[4px_4px_0px_#222] mb-4 leading-tight">
+            {lang === 'zh'
+              ? 'MAIN PAPER 欧洲文具大厂'
+              : 'MAIN PAPER · FABRICANTE LÍDER'}
+            <br />
+            <span className="text-[#f8d878]">
+              {lang === 'zh' ? '全西班牙品牌招商加盟' : 'PROGRAMA DE DISTRIBUIDORES 2026'}
+            </span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-base sm:text-xl text-yellow-100 font-bold max-w-3xl mx-auto mb-8 leading-relaxed">
+            {lang === 'zh'
+              ? '诚邀全西班牙百货零售店、文具书店、超市卖场及跨境商户携手入驻！6,000+ 现货SKU源头直供、超高毛利空间、阶梯采购返点、免费品牌陈列展架与本地48小时闪电配送。'
+              : 'Únete a la red oficial de distribución Main Paper en España. Más de 6.000 referencias en stock continuo, precios directos de fábrica, alta rentabilidad y entrega rápida en 48 horas.'}
+          </p>
+
+          {/* Fast Contact Callout Box */}
+          <div className="max-w-2xl mx-auto bg-white p-4 md:p-6 rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] text-[#222] mb-8">
+            <div className="text-xs md:text-sm font-black text-gray-600 uppercase mb-2">
+              {lang === 'zh' ? '⚡ 官方招商绿色对接通道' : '⚡ Canales Directos de Contratación'}
             </div>
-
-            <h1 className="text-4xl md:text-6xl font-black text-white leading-tight whitespace-pre-line drop-shadow-[0_4px_0_#222]">
-              {t.heroTitle}
-            </h1>
-
-            <p className="text-base md:text-lg text-yellow-100 font-medium leading-relaxed max-w-2xl">
-              {t.heroDesc}
-            </p>
-
-            <div className="flex flex-wrap gap-4 pt-2">
-              <button
-                onClick={onNavigateToNavidad}
-                className="px-6 py-4 bg-[#f8d878] text-[#222] font-black text-base md:text-lg rounded-2xl border-4 border-[#222] shadow-[5px_5px_0px_#222] hover:translate-y-1 hover:shadow-[2px_2px_0px_#222] transition-all"
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href={`${WHATSAPP_LINK}?text=${encodeURIComponent(
+                  lang === 'zh'
+                    ? '您好，我想咨询 Main Paper 2026 招商加盟入驻合作！'
+                    : 'Hola, me gustaría recibir información sobre la distribución de Main Paper.'
+                )}`}
+                target="_blank"
+                rel="noreferrer"
+                className="w-full sm:w-auto px-6 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-base flex items-center justify-center gap-2 active:translate-y-0.5 cursor-pointer"
               >
-                {t.ctaNavidad}
-              </button>
-              <button
-                onClick={onNavigateToMap}
-                className="px-6 py-4 bg-[#5c94fc] text-white font-black text-base md:text-lg rounded-2xl border-4 border-[#222] shadow-[5px_5px_0px_#222] hover:translate-y-1 hover:shadow-[2px_2px_0px_#222] transition-all"
+                <span className="text-xl">📱</span>
+                <span>WhatsApp: {WHATSAPP_NUMBER}</span>
+              </a>
+
+              <a
+                href={`mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent(
+                  'Consulta Cooperación Main Paper 2026'
+                )}`}
+                className="w-full sm:w-auto px-6 py-3.5 bg-[#5c94fc] hover:bg-blue-600 text-white rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-base flex items-center justify-center gap-2 active:translate-y-0.5 cursor-pointer"
               >
-                {t.ctaMap}
-              </button>
-              <button
-                onClick={onNavigateToCanje}
-                className="px-5 py-4 bg-white/15 backdrop-blur-md text-white font-black text-sm md:text-base rounded-2xl border-3 border-[#f8d878] hover:bg-white/25 transition-all"
-              >
-                {t.ctaCanje}
-              </button>
+                <span className="text-xl">✉️</span>
+                <span>{EMAIL_ADDRESS}</span>
+              </a>
             </div>
           </div>
 
-          {/* Right Hero Card: Featured Christmas 2026 Subpage Preview (from Google Drive CDN) */}
-          <div className="lg:col-span-5">
-            <div
-              onClick={onNavigateToNavidad}
-              className="cursor-pointer bg-[#14532d] border-4 border-[#f8d878] rounded-[2.5rem] p-5 shadow-[8px_8px_0px_#222] hover:-translate-y-1 transition-transform"
+          {/* Primary Action Buttons */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <button
+              onClick={onNavigateToTienda}
+              className="px-6 py-3.5 bg-[#f8d878] hover:bg-yellow-400 text-[#222] rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] font-black text-base md:text-lg flex items-center gap-2 active:translate-y-0.5 cursor-pointer"
             >
-              <div className="flex items-center justify-between mb-3">
-                <span className="px-3 py-1 bg-[#e52521] text-white font-black text-xs rounded-full border-2 border-[#222]">
-                  {lang === 'zh' ? '🎄 圣诞子页面热推' : '🎄 SUBPÁGINA NAVIDAD'}
-                </span>
-                <span className="text-xs font-black text-[#f8d878]">
-                  10.27 — 11.30 · -15% OFF
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2.5 bg-white p-3 rounded-2xl border-3 border-[#222] mb-4">
-                {CHRISTMAS_PRODUCTS.slice(0, 4).map((prod) => (
-                  <div
-                    key={prod.id}
-                    className="border border-gray-200 rounded-xl p-1.5 flex flex-col items-center"
-                  >
-                    <img
-                      src={getGdriveImageUrl(prod.gdriveIds[0], 400)}
-                      onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src = getGdriveFallbackUrl(
-                          prod.gdriveIds[0],
-                          400
-                        );
-                      }}
-                      alt={prod.code}
-                      className="h-20 object-contain"
-                      loading="lazy"
-                    />
-                    <span className="text-[11px] font-black text-[#222] mt-1">
-                      {prod.code} · <span className="text-[#e52521]">{prod.price}</span>
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="bg-[#1e1414] border-2 border-[#f8d878] rounded-xl p-3 text-xs space-y-1 mb-3">
-                <div className="font-black text-[#fde047]">
-                  ★ {lang === 'zh' ? '散装贺卡 0.1€ / 0.2€ / 0.3€ (不退货·限50%)' : 'Tarjetas a granel: 0,10€ / 0,20€ / 0,30€'}
-                </div>
-                <div className="text-gray-200">
-                  ★ {lang === 'zh' ? '圣诞满50€ / 日历满10€ 赠1包磁吸日历 + 送20周年日历' : 'Calendarios magnéticos y 20º Aniversario GRATIS'}
-                </div>
-              </div>
-
-              <div className="w-full py-3 bg-[#e52521] text-white font-black text-center rounded-xl border-3 border-[#222] shadow-[3px_3px_0px_#222]">
+              <span>🛒</span>
+              <span>
                 {lang === 'zh'
-                  ? '点击进入 21款圣诞新品高清推镜子页面 →'
-                  : 'Entrar al Catálogo Navidad 2026 →'}
-              </div>
-            </div>
+                  ? '直接进入官方零售全景商城'
+                  : 'Explorar Catálogo & Tienda'}
+              </span>
+            </button>
+
+            {onNavigateToNavidad && (
+              <button
+                onClick={onNavigateToNavidad}
+                className="px-5 py-3.5 bg-[#14532d] hover:bg-emerald-800 text-[#f8d878] rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] font-black text-base flex items-center gap-2 active:translate-y-0.5 cursor-pointer"
+              >
+                <span>🎄</span>
+                <span>{lang === 'zh' ? '2026 圣诞与日历大促' : 'Campaña Navidad'}</span>
+              </button>
+            )}
+
+            {onNavigateToMap && (
+              <button
+                onClick={onNavigateToMap}
+                className="px-5 py-3.5 bg-white hover:bg-gray-100 text-[#222] rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] font-black text-base flex items-center gap-2 active:translate-y-0.5 cursor-pointer"
+              >
+                <span>🎒</span>
+                <span>{lang === 'zh' ? '返校季周边学校地图' : 'Mapa Escolar'}</span>
+              </button>
+            )}
           </div>
         </div>
       </section>
 
-      <div className="max-w-6xl mx-auto px-4 mt-12 space-y-14">
-        {/* 2. STITCH MODULE CARDS (REBUILD_SOP §2: Horizontal / Grid Stitch Cards) */}
-        <section>
-          <div className="mb-6">
-            <h2 className="text-3xl font-black text-[#f8d878]">{t.stitchTitle}</h2>
-            <p className="text-sm text-gray-300 mt-1">{t.stitchSub}</p>
+      {/* 2. CORE PERFORMANCE METRICS */}
+      <section className="max-w-6xl mx-auto px-4 -mt-8 relative z-20">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+          {[
+            {
+              num: '6,000+',
+              labelZh: '现货产品 SKU',
+              labelEs: 'Referencias en Stock',
+              icon: '📦',
+              color: 'bg-white',
+            },
+            {
+              num: '48h',
+              labelZh: '本地极速直发',
+              labelEs: 'Envío Peninsular Rápido',
+              icon: '🚚',
+              color: 'bg-white',
+            },
+            {
+              num: '100%',
+              labelZh: '厂家底价保障',
+              labelEs: 'Precios de Fábrica',
+              icon: '💰',
+              color: 'bg-white',
+            },
+            {
+              num: '500+',
+              labelZh: 'Bic/Milan等名牌合作',
+              labelEs: 'Grandes Marcas Oficiales',
+              icon: '⭐',
+              color: 'bg-white',
+            },
+          ].map((m, i) => (
+            <div
+              key={i}
+              className={`${m.color} p-4 rounded-3xl border-4 border-[#222] shadow-[5px_5px_0px_#222] text-center flex flex-col items-center justify-center`}
+            >
+              <div className="text-3xl mb-1">{m.icon}</div>
+              <div className="text-2xl md:text-3xl font-black text-[#e52521] tracking-tight">
+                {m.num}
+              </div>
+              <div className="text-xs md:text-sm font-black text-gray-700 mt-0.5">
+                {lang === 'zh' ? m.labelZh : m.labelEs}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 3. SIX CORE COMPETITIVE ADVANTAGES */}
+      <section className="max-w-6xl mx-auto px-4 pt-16">
+        <div className="text-center mb-10">
+          <span className="bg-[#f8d878] text-[#222] text-xs font-black px-3.5 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase">
+            {lang === 'zh' ? '⭐ 合作价值 · 六大赋能' : '⭐ Ventajas Competitivas'}
+          </span>
+          <h2 className="text-2xl md:text-4xl font-black text-[#222] mt-2 drop-shadow-[2px_2px_0px_#f8d878]">
+            {lang === 'zh'
+              ? '为什么选择与 MAIN PAPER 携手合作？'
+              : '¿Por Qué Asociarte con Main Paper?'}
+          </h2>
+          <p className="text-sm md:text-base text-gray-600 font-bold max-w-2xl mx-auto mt-1">
+            {lang === 'zh'
+              ? '二十年专注欧洲文具产业链，提供从一手货源、陈列展架到系统订货的全链路支持'
+              : 'Líder en suministro integral para bazares, papelerías y comercios minoristas.'}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            {
+              icon: '🏭',
+              titleZh: '大厂源头直供 · 超高毛利',
+              titleEs: 'Directo de Fábrica',
+              descZh:
+                '砍掉中间多层批发加价，享受第一手出厂批发底价，终端指导建议售价 (PVP) 带来极具竞争力的利润空间。',
+              descEs:
+                'Sin intermediarios. Máxima rentabilidad y PVP oficial recomendado para competir con solidez en el mercado.',
+              tag: '100% Directo',
+            },
+            {
+              icon: '📦',
+              titleZh: '6,000+ 现货 SKU 全品类覆盖',
+              titleEs: '+6.000 Referencias',
+              descZh:
+                '涵盖书写用品、办公桌面、文件收纳、本册纸品、Artix 美术画材、正版三丽鸥 IP 与 BeBasic 超值特惠系列。',
+              descEs:
+                'Desde material escolar y de oficina hasta bellas artes Artix, licencias Sanrio y la línea económica BeBasic.',
+              tag: 'Catálogo Total',
+            },
+            {
+              icon: '🚚',
+              titleZh: '西班牙本土大仓 · 48H 极速到店',
+              titleEs: 'Logística Local 48H',
+              descZh:
+                '马德里与西班牙本土大型物流仓储基地，长期保持充沛常备库存，大批量采购与日常补货极速发货。',
+              descEs:
+                'Almacenes centrales en España con stock garantizado para reposiciones ágiles y sin esperas.',
+              tag: 'Stock Real',
+            },
+            {
+              icon: '🏷️',
+              titleZh: '国际一线知名名牌授权同仓',
+              titleEs: 'Primeras Marcas',
+              descZh:
+                '联合供应 Bic、Milan、Pilot、Stabilo、Edding、Jovi、Faber-Castell 等大牌，让您的门店商品结构一应俱全。',
+              descEs:
+                'Distribución de marcas líderes mundiales en el mismo pedido: Bic, Milan, Pilot, Stabilo y más.',
+              tag: 'Top Brands',
+            },
+            {
+              icon: '🎁',
+              titleZh: '免费专业陈列展架与宣传物料',
+              titleEs: 'PLV y Expositores Gratis',
+              descZh:
+                '符合订货标准的合作商户免费赠送官方优质金属陈列展架、门头 POP 海报、宣传画册与展示样品。',
+              descEs:
+                'Mobiliario comercial, expositores de suelo y sobremesa, catálogos impresos y material promocional incluido.',
+              tag: 'Soporte PLV',
+            },
+            {
+              icon: '💻',
+              titleZh: '数智化订货 · 支持导出 Excel',
+              titleEs: 'Plataforma Digital',
+              descZh:
+                '支持在线自主加购、一键导出带 SKU、EAN 条码与包数的订货 Excel 表格，或通过 WhatsApp 秒发正式报单。',
+              descEs:
+                'Cesta digital ágil, exportación de pedidos a Excel con SKU y EAN, y tramitación instantánea vía WhatsApp.',
+              tag: 'Excel & Web',
+            },
+          ].map((card, idx) => (
+            <div
+              key={idx}
+              className="bg-white p-6 rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] flex flex-col justify-between hover:-translate-y-1 transition-transform"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-4xl">{card.icon}</span>
+                  <span className="bg-yellow-100 text-[#222] text-[11px] font-black px-2.5 py-1 rounded-lg border-2 border-[#222]">
+                    {card.tag}
+                  </span>
+                </div>
+                <h3 className="text-xl font-black text-[#222] mb-2">
+                  {lang === 'zh' ? card.titleZh : card.titleEs}
+                </h3>
+                <p className="text-xs md:text-sm text-gray-600 font-bold leading-relaxed">
+                  {lang === 'zh' ? card.descZh : card.descEs}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 4. FOUR PARTNERSHIP MODELS */}
+      <section className="max-w-6xl mx-auto px-4 pt-16">
+        <div className="bg-[#5c94fc] p-6 md:p-10 rounded-3xl border-4 border-[#222] shadow-[8px_8px_0px_#222] text-white">
+          <div className="text-center mb-8">
+            <span className="bg-[#f8d878] text-[#222] text-xs font-black px-3.5 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase">
+              {lang === 'zh' ? '🤝 合作模式' : '🤝 Modalidades'}
+            </span>
+            <h2 className="text-2xl md:text-4xl font-black mt-2 drop-shadow-[2px_2px_0px_#222]">
+              {lang === 'zh'
+                ? '多元灵活的合作入驻方式'
+                : 'Modalidades de Asociación Flexibles'}
+            </h2>
+            <p className="text-sm md:text-base text-blue-100 font-bold max-w-xl mx-auto mt-1">
+              {lang === 'zh'
+                ? '无论您是社区百货小店还是区域大型连锁，均有量身定制的订货政策'
+                : 'Soluciones a medida para cada tipo de comercio y volumen.'}
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {stitchCards.map((c) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              {
+                icon: '🏪',
+                titleZh: '百货零售 / Bazar',
+                titleEs: 'Bazar y Comercio',
+                descZh: '专架直配，精选热销高周转单品，门槛亲民，资金周转快。',
+                descEs: 'Expositores dedicados con alta rotación y reposición rápida.',
+              },
+              {
+                icon: '📚',
+                titleZh: '文具书店专柜',
+                titleEs: 'Papelería / Librería',
+                descZh: '全系列官方正品专柜，2027 年历日历首发专供，学生开学文具齐备。',
+                descEs: 'Gama completa escolar, agendas 2027 y licencias destacadas.',
+              },
+              {
+                icon: '🏫',
+                titleZh: '学校 / 家委会集采',
+                titleEs: 'Colegios y AMPAs',
+                descZh: '提供官方样品展厅模式（无标价），大宗学期订货享专属团购折扣。',
+                descEs: 'Catálogo de muestras para seleccionar listas escolares oficiales.',
+              },
+              {
+                icon: '🌐',
+                titleZh: '区域分销与大宗客户',
+                titleEs: 'Distribuidores y Cuentas',
+                descZh: '专属区域支持，阶梯量贩采购返点，专职大客户经理一对一跟进。',
+                descEs: 'Tarifas por volumen, rapeles de compra y asesoría personalizada.',
+              },
+            ].map((item, idx) => (
               <div
-                key={c.id}
-                onClick={c.action}
-                className={`cursor-pointer bg-gradient-to-br ${c.bg} border-4 border-[#f8d878] rounded-[2.2rem] p-6 shadow-[6px_6px_0px_#222] flex flex-col justify-between hover:-translate-y-1.5 transition-transform`}
+                key={idx}
+                className="bg-white p-5 rounded-2xl border-3 border-[#222] shadow-[4px_4px_0px_#222] text-[#222]"
               >
-                <div>
-                  <span className="inline-block px-3 py-1 bg-black/40 text-[#f8d878] font-bold text-xs rounded-full border border-[#f8d878]/50 mb-3">
-                    {c.tag}
-                  </span>
-                  <h3 className="text-2xl font-black text-white leading-snug mb-2">
-                    {c.title}
-                  </h3>
-                  <div className="text-3xl font-black text-[#fde047] my-3 drop-shadow">
-                    {c.highlight}
-                  </div>
-                  <p className="text-xs text-gray-200 leading-relaxed mb-6">{c.desc}</p>
+                <div className="text-3xl mb-2">{item.icon}</div>
+                <div className="text-lg font-black mb-1">
+                  {lang === 'zh' ? item.titleZh : item.titleEs}
                 </div>
-                <button className="w-full py-3 bg-[#f8d878] text-[#222] font-black text-sm rounded-xl border-3 border-[#222] shadow-[3px_3px_0px_#222]">
-                  {c.cta}
-                </button>
+                <div className="text-xs text-gray-600 font-bold leading-relaxed">
+                  {lang === 'zh' ? item.descZh : item.descEs}
+                </div>
               </div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* 3. B2B ROI CALCULATOR TABLE (REBUILD_SOP §4: €2000 Order -> €3100+ Value) */}
-        <section className="bg-slate-800/90 backdrop-blur-md border-4 border-[#f8d878] rounded-[2.5rem] p-6 md:p-10 shadow-[8px_8px_0px_#222]">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-            <div>
-              <h2 className="text-2xl md:text-3xl font-black text-[#f8d878]">
-                {t.roiTitle}
-              </h2>
-              <p className="text-sm text-gray-300 mt-1">{t.roiSub}</p>
-            </div>
-            <div className="flex gap-2">
-              {[1000, 2000, 3500, 5000].map((amt) => (
-                <button
-                  key={amt}
-                  onClick={() => setOrderAmount(amt)}
-                  className={`px-4 py-2 rounded-xl font-black text-sm border-2 border-[#222] ${
-                    orderAmount === amt
-                      ? 'bg-[#e52521] text-white shadow-[3px_3px_0px_#222]'
-                      : 'bg-slate-700 text-gray-200 hover:bg-slate-600'
-                  }`}
-                >
-                  €{amt}
-                </button>
-              ))}
-            </div>
+      {/* 5. FAST INQUIRY REGISTRATION FORM */}
+      <section className="max-w-4xl mx-auto px-4 pt-16">
+        <div className="bg-white p-6 md:p-10 rounded-3xl border-4 border-[#222] shadow-[8px_8px_0px_#222]">
+          <div className="text-center mb-6">
+            <span className="bg-[#f8d878] text-[#222] text-xs font-black px-3.5 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase">
+              {lang === 'zh' ? '📝 在线登记' : '📝 Formulario Rápido'}
+            </span>
+            <h2 className="text-2xl md:text-3xl font-black text-[#222] mt-2">
+              {lang === 'zh' ? '提交合作意向 · 专属招商经理 1 对 1 对接' : 'Solicitar Información de Distribución'}
+            </h2>
+            <p className="text-xs md:text-sm text-gray-500 font-bold mt-1">
+              {lang === 'zh'
+                ? '填写基本信息后将自动拉起 WhatsApp 招商专线，或直接联系 604229098'
+                : 'Rellena el formulario y te contactaremos en menos de 24 horas laborables.'}
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="bg-slate-900 border-3 border-slate-600 rounded-2xl p-5">
-              <div className="text-xs text-gray-400 font-bold mb-1">{t.roiOrderLabel}</div>
-              <div className="text-3xl font-black text-white">€{orderAmount}</div>
-              <div className="text-xs text-emerald-400 mt-2">
-                {lang === 'zh' ? '含圣诞新品 -15% 折后批发价' : 'Incluye -15% DTO en Novedades'}
-              </div>
-            </div>
-
-            <div className="bg-slate-900 border-3 border-[#e52521] rounded-2xl p-5">
-              <div className="text-xs text-gray-400 font-bold mb-1">{t.roiRebateLabel}</div>
-              <div className="text-3xl font-black text-[#f87171]">+€{cashbackValue}</div>
-              <div className="text-xs text-gray-300 mt-2">
+          {formSubmitted && (
+            <div className="mb-6 p-4 bg-emerald-100 border-3 border-emerald-500 rounded-2xl text-emerald-900 font-black text-center flex items-center justify-center gap-2">
+              <span>✅</span>
+              <span>
                 {lang === 'zh'
-                  ? '0.1€贺卡零售3倍毛利 + 促销返利'
-                  : 'Margen tarjetas 0,10€ + Cashback'}
-              </div>
-            </div>
-
-            <div className="bg-slate-900 border-3 border-[#5c94fc] rounded-2xl p-5">
-              <div className="text-xs text-gray-400 font-bold mb-1">{t.roiGiftLabel}</div>
-              <div className="text-3xl font-black text-[#60a5fa]">
-                +€{calendarGiftsValue}
-              </div>
-              <div className="text-xs text-gray-300 mt-2">
-                {lang === 'zh'
-                  ? `含 ${magneticPacks} 包免费磁吸日历 + 20周年日历`
-                  : `${magneticPacks} packs Calendario Magnético + 20º Aniv.`}
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-[#b91c1c] to-[#d97706] border-3 border-[#f8d878] rounded-2xl p-5 shadow-lg">
-              <div className="text-xs text-yellow-100 font-bold mb-1">{t.roiTotalLabel}</div>
-              <div className="text-4xl font-black text-[#fde047]">
-                €{totalReturnValue}+
-              </div>
-              <div className="text-xs text-white font-bold mt-2">
-                ROI: +{Math.round(((totalReturnValue - orderAmount) / orderAmount) * 100)}%{' '}
-                {lang === 'zh' ? '综合增值' : 'Valor Añadido'}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 4. DUAL PORTALS: PARA FAMILIAS & PARA TIENDAS (VUELTA AL COLE MAP ENTRY) */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Portal Familias */}
-          <div className="bg-white text-[#222] border-4 border-[#222] rounded-[2rem] shadow-[8px_8px_0px_#222] overflow-hidden flex flex-col">
-            <div className="bg-[#5c94fc] text-white p-5 border-b-4 border-[#222] flex items-center justify-between">
-              <h2 className="text-2xl font-black flex items-center gap-2">
-                <span className="text-3xl">🎓</span>{' '}
-                {lang === 'zh' ? '家长通道 (Para Familias)' : 'Para Familias'}
-              </h2>
-              <span className="px-3 py-1 bg-white/20 rounded-full text-xs font-bold">
-                Vuelta al Cole
+                  ? '已为您整理好申请信息并打开 WhatsApp！如未弹出，请直接添加 WhatsApp: 604229098'
+                  : '¡Solicitud preparada! Puedes enviarla directamente por WhatsApp al 604229098.'}
               </span>
             </div>
+          )}
 
-            <div className="p-6 flex-1 flex flex-col gap-5">
-              <p className="font-bold text-gray-700">
-                {lang === 'zh'
-                  ? '查找您孩子所在学校的官方文具清单，并在地图上定位最近的合作文具店。'
-                  : 'Encuentra tu lista escolar y descubre el bazar más cercano para comprarla.'}
-              </p>
-
-              <div className="space-y-3">
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xl">🔍</span>
-                  <input
-                    type="text"
-                    value={schoolInput}
-                    onChange={handleSchoolInputChange}
-                    placeholder={
-                      lang === 'zh'
-                        ? '输入学校名称或城市 (如 Zaragoza)...'
-                        : 'Nombre de tu colegio o ciudad...'
-                    }
-                    className="w-full pl-10 pr-4 py-3 border-3 border-[#222] rounded-xl font-semibold focus:outline-none focus:ring-4 focus:ring-[#5c94fc]/30"
-                  />
-                  {showSuggestions && filteredSchools.length > 0 && (
-                    <ul className="absolute z-50 w-full mt-2 bg-white border-4 border-[#222] rounded-xl shadow-xl max-h-48 overflow-y-auto">
-                      {filteredSchools.map((school) => (
-                        <li
-                          key={school.id}
-                          onClick={() => {
-                            setSchoolInput(school.name);
-                            setShowSuggestions(false);
-                          }}
-                          className="px-4 py-3 hover:bg-blue-50 cursor-pointer border-b border-gray-100"
-                        >
-                          <div className="font-bold text-gray-800">{school.name}</div>
-                          <div className="text-xs text-gray-500">
-                            {school.address}, {school.city}
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-
-                <select
-                  value={gradeInput}
-                  onChange={(e) => setGradeInput(e.target.value)}
-                  className="w-full px-4 py-3 border-3 border-[#222] rounded-xl font-semibold text-gray-700 bg-gray-50"
-                >
-                  <option>Infantil</option>
-                  <option>1º Primaria</option>
-                  <option>2º Primaria</option>
-                  <option>3º Primaria</option>
-                  <option>4º Primaria</option>
-                  <option>5º Primaria</option>
-                  <option>6º Primaria</option>
-                </select>
-              </div>
-
-              <div
-                onClick={() => fileInputRef.current?.click()}
-                className="border-3 border-dashed border-[#f8d878] rounded-xl p-4 flex flex-col items-center justify-center bg-yellow-50 text-center cursor-pointer hover:bg-yellow-100"
-              >
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={(e) =>
-                    e.target.files?.[0] && setUploadedFile(e.target.files[0])
-                  }
-                  className="hidden"
-                  accept=".pdf,.png,.jpg,.jpeg,.xlsx,.xls"
-                />
-                <span className="text-3xl mb-1">📁</span>
-                {uploadedFile ? (
-                  <span className="font-black text-[#5c94fc] text-sm">
-                    {uploadedFile.name}
-                  </span>
-                ) : (
-                  <span className="font-bold text-gray-600 text-sm">
-                    {lang === 'zh'
-                      ? '上传学校书单 (PDF / 照片 / Excel)'
-                      : 'Sube tu lista escolar (PDF, Foto o Excel)'}
-                  </span>
-                )}
-              </div>
-
-              <button
-                onClick={onNavigateToMap}
-                className="mt-auto w-full bg-[#f8d878] text-[#222] font-black text-lg py-3.5 rounded-xl border-4 border-[#222] shadow-[4px_4px_0px_#222] hover:translate-y-0.5 transition-all"
-              >
-                {lang === 'zh' ? '生成清单并查看附近门店 ▶' : '¡Generar mi lista! ▶'}
-              </button>
-            </div>
-          </div>
-
-          {/* Portal Tiendas / B2B */}
-          <div className="bg-white text-[#222] border-4 border-[#222] rounded-[2rem] shadow-[8px_8px_0px_#222] overflow-hidden flex flex-col">
-            <div className="bg-[#e52521] text-white p-5 border-b-4 border-[#222] flex items-center justify-between">
-              <h2 className="text-2xl font-black flex items-center gap-2">
-                <span className="text-3xl">🏪</span>{' '}
-                {lang === 'zh' ? '商家B2B通道 (Para Tiendas)' : 'Para Tiendas / Bazar'}
-              </h2>
-              <span className="px-3 py-1 bg-white/20 rounded-full text-xs font-bold">
-                B2B Stock & Navidad
-              </span>
-            </div>
-
-            <div className="p-6 flex-1 flex flex-col gap-5">
-              <p className="font-bold text-gray-700">
-                {lang === 'zh'
-                  ? '一键查看周边学校热销返校季书单，或直接进入2026圣诞季21款爆品与0.1€贺卡订货专场。'
-                  : 'Prepara tu stock escolar y navideño con las referencias de mayor rotación de Main Paper.'}
-              </p>
-
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xl">📍</span>
+          <form onSubmit={handleFormSubmit} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-black text-gray-700 mb-1">
+                  {lang === 'zh' ? '店铺 / 公司名称 *' : 'Nombre de Tienda / Empresa *'}
+                </label>
                 <input
                   type="text"
-                  value={postalInput}
-                  onChange={(e) => setPostalInput(e.target.value)}
-                  placeholder={
-                    lang === 'zh'
-                      ? '输入店铺邮编或城市...'
-                      : 'Tu código postal o ciudad...'
-                  }
-                  className="w-full pl-10 pr-4 py-3 border-3 border-[#222] rounded-xl font-semibold focus:outline-none focus:ring-4 focus:ring-[#e52521]/30"
+                  required
+                  name="shopName"
+                  value={formData.shopName}
+                  onChange={handleInputChange}
+                  placeholder={lang === 'zh' ? '例如: 马德里文具百货' : 'Ej: Bazar Centro'}
+                  className="w-full px-3.5 py-2.5 rounded-xl border-3 border-[#222] text-sm font-bold bg-[#fcf8f2] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
                 />
               </div>
 
-              <div className="bg-red-50 p-4 rounded-xl border-2 border-[#e52521] text-sm text-gray-700 space-y-1">
-                <div className="font-black text-[#e52521]">
-                  🚀 {lang === 'zh' ? 'B2B 专属数字化赋能' : 'Ventaja B2B Main Paper'}
-                </div>
-                <p>
-                  {lang === 'zh'
-                    ? '云端图片直连 Google Drive (Folder ID: ' +
-                      CLOUD_MEDIA_CONFIG.gdriveFolderId.slice(0, 8) +
-                      '...)，支持随时在手机端放大查看每款圣诞新品箱规与细节。'
-                    : 'Catálogo conectado en tiempo real con Google Drive CDN y vídeos guiados en la nube.'}
-                </p>
-              </div>
-
-              <div className="mt-auto grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <button
-                  onClick={onNavigateToNavidad}
-                  className="w-full bg-[#14532d] text-[#f8d878] font-black text-base py-3.5 rounded-xl border-4 border-[#222] shadow-[4px_4px_0px_#222] hover:translate-y-0.5 transition-all"
-                >
-                  🎄 {lang === 'zh' ? '圣诞21款爆品子页' : 'Especial Navidad'}
-                </button>
-                <button
-                  onClick={onNavigateToMap}
-                  className="w-full bg-[#e52521] text-white font-black text-base py-3.5 rounded-xl border-4 border-[#222] shadow-[4px_4px_0px_#222] hover:translate-y-0.5 transition-all"
-                >
-                  📍 {lang === 'zh' ? '查看周边学校地图' : 'Ver Mapa Colegios'}
-                </button>
+              <div>
+                <label className="block text-xs font-black text-gray-700 mb-1">
+                  {lang === 'zh' ? '负责人姓名 *' : 'Persona de Contacto *'}
+                </label>
+                <input
+                  type="text"
+                  required
+                  name="contactName"
+                  value={formData.contactName}
+                  onChange={handleInputChange}
+                  placeholder={lang === 'zh' ? '例如: 张先生 / Carlos' : 'Ej: Carlos García'}
+                  className="w-full px-3.5 py-2.5 rounded-xl border-3 border-[#222] text-sm font-bold bg-[#fcf8f2] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
+                />
               </div>
             </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-xs font-black text-gray-700 mb-1">
+                  {lang === 'zh' ? '所在城市 / 省份 *' : 'Ciudad / Provincia *'}
+                </label>
+                <input
+                  type="text"
+                  required
+                  name="city"
+                  value={formData.city}
+                  onChange={handleInputChange}
+                  placeholder="Madrid, Barcelona..."
+                  className="w-full px-3.5 py-2.5 rounded-xl border-3 border-[#222] text-sm font-bold bg-[#fcf8f2] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-black text-gray-700 mb-1">
+                  {lang === 'zh' ? 'WhatsApp / 联络电话 *' : 'WhatsApp / Teléfono *'}
+                </label>
+                <input
+                  type="text"
+                  required
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  placeholder="+34 600..."
+                  className="w-full px-3.5 py-2.5 rounded-xl border-3 border-[#222] text-sm font-bold bg-[#fcf8f2] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-black text-gray-700 mb-1">
+                  {lang === 'zh' ? '电子邮箱' : 'Email'}
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="ejemplo@correo.com"
+                  className="w-full px-3.5 py-2.5 rounded-xl border-3 border-[#222] text-sm font-bold bg-[#fcf8f2] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-black text-gray-700 mb-1">
+                {lang === 'zh' ? '您的主营业务类型' : 'Tipo de Comercio / Actividad'}
+              </label>
+              <select
+                name="businessType"
+                value={formData.businessType}
+                onChange={handleInputChange}
+                className="w-full px-3.5 py-2.5 rounded-xl border-3 border-[#222] text-sm font-bold bg-[#fcf8f2] focus:bg-white focus:outline-none"
+              >
+                <option value="bazar">{lang === 'zh' ? '百货零售店 / Bazar' : 'Bazar / Comercio General'}</option>
+                <option value="papeleria">{lang === 'zh' ? '专业文具与书店 / Papelería y Librería' : 'Papelería y Librería'}</option>
+                <option value="colegio">{lang === 'zh' ? '学校 / 家委会 / 培训机构' : 'Colegio / AMPA / Academia'}</option>
+                <option value="distribuidor">{lang === 'zh' ? '区域分销 / 批发连锁' : 'Distribuidor Mayorista'}</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-black text-gray-700 mb-1">
+                {lang === 'zh' ? '意向需求或留言' : 'Mensaje / Observaciones'}
+              </label>
+              <textarea
+                name="message"
+                rows={3}
+                value={formData.message}
+                onChange={handleInputChange}
+                placeholder={
+                  lang === 'zh'
+                    ? '例如：希望了解展架配送政策、批发起订金额与畅销文具清单...'
+                    : 'Ej: Solicitar catálogo en PDF y condiciones de primer pedido.'
+                }
+                className="w-full px-3.5 py-2.5 rounded-xl border-3 border-[#222] text-sm font-bold bg-[#fcf8f2] focus:bg-white focus:outline-none"
+              />
+            </div>
+
+            <div className="pt-2 flex flex-col sm:flex-row gap-3">
+              <button
+                type="submit"
+                className="flex-1 py-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] font-black text-base md:text-lg flex items-center justify-center gap-2 active:translate-y-0.5 cursor-pointer"
+              >
+                <span>📱</span>
+                <span>
+                  {lang === 'zh'
+                    ? '一键通过 WhatsApp 提交招商申请 (604229098)'
+                    : 'Enviar Solicitud por WhatsApp (604229098)'}
+                </span>
+              </button>
+
+              <a
+                href={`mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent(
+                  `Solicitud de Distribución - ${formData.shopName || 'Comercio'}`
+                )}&body=${encodeURIComponent(
+                  `Tienda: ${formData.shopName}\nContacto: ${formData.contactName}\nCiudad: ${formData.city}\nTel/WhatsApp: ${formData.phone}\nTipo: ${formData.businessType}\nMensaje: ${formData.message}`
+                )}`}
+                className="px-6 py-4 bg-[#5c94fc] hover:bg-blue-600 text-white rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] font-black text-sm md:text-base flex items-center justify-center gap-2 active:translate-y-0.5 cursor-pointer"
+              >
+                <span>✉️</span>
+                <span>{lang === 'zh' ? '邮件直投' : 'Por Email'}</span>
+              </a>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      {/* 6. BOTTOM CONTACT & ADDRESS FOOTER */}
+      <footer className="max-w-6xl mx-auto px-4 pt-16 text-center">
+        <div className="bg-[#f8d878] p-6 md:p-8 rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] text-[#222] flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="text-left">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-2xl">🏛️</span>
+              <span className="font-black text-xl">MAIN PAPER S.L.</span>
+            </div>
+            <p className="text-xs md:text-sm font-bold text-gray-800">
+              {lang === 'zh'
+                ? '欧洲核心文具供应商 · 专业赋能每一家零售伙伴'
+                : 'Distribución y fabricación de material escolar, oficina y bellas artes en España.'}
+            </p>
           </div>
-        </section>
-      </div>
+
+          <div className="flex flex-wrap items-center gap-4 text-xs md:text-sm font-black">
+            <a
+              href={WHATSAPP_LINK}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-1.5 bg-white px-3.5 py-2 rounded-xl border-2 border-[#222] shadow-[2px_2px_0px_#222] hover:bg-emerald-50"
+            >
+              <span>📱</span>
+              <span>WhatsApp: {WHATSAPP_NUMBER}</span>
+            </a>
+
+            <a
+              href={`mailto:${EMAIL_ADDRESS}`}
+              className="flex items-center gap-1.5 bg-white px-3.5 py-2 rounded-xl border-2 border-[#222] shadow-[2px_2px_0px_#222] hover:bg-blue-50"
+            >
+              <span>✉️</span>
+              <span>{EMAIL_ADDRESS}</span>
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
-}
+};

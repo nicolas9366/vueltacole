@@ -363,7 +363,7 @@ export const CHRISTMAS_PRODUCTS: ChristmasProduct[] = [
 export const CONFIG_I18N = {
   zh: {
     brandSub: '20周年庆典 · 西班牙文具与节日百货领军品牌',
-    navHome: '🏠 活动总览主页',
+    navHome: '🤝 品牌招商入驻',
     navNavidad: '🎄 2026圣诞大促子页 (NEW)',
     navMap: '🗺️ 返校季地图找店',
     navCanje: '🎫 金票扫码核销',
@@ -416,7 +416,7 @@ export const CONFIG_I18N = {
   },
   es: {
     brandSub: '20º Aniversario · Líder en Papelería y Campañas Estacionales en España',
-    navHome: '🏠 Inicio & Campañas',
+    navHome: '🤝 Distribuidores & Puntos de Venta',
     navNavidad: '🎄 Especial Navidad 2026 (NUEVO)',
     navMap: '🗺️ Mapa Vuelta al Cole',
     navCanje: '🎫 Canje Billete Dorado',

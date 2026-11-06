@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
+import * as XLSX from 'xlsx';
 
 export interface ProductItem {
   id: string;
@@ -51,7 +52,7 @@ export const TEST_ACCOUNT = {
   password: 'test..',
   email: 'madyu001@gmail.com',
   companyName: 'Main Paper VIP 商户',
-  phone: '+34 688 000 000',
+  phone: '+34 604 229 098',
   role: 'vip' as const,
 };
 
@@ -769,7 +770,96 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
     text += `\n*Nota:* Generado automáticamente desde vueltacole.com`;
 
     const encoded = encodeURIComponent(text);
-    window.open(`https://wa.me/34688000000?text=${encoded}`, '_blank');
+    window.open(`https://wa.me/34604229098?text=${encoded}`, '_blank');
+  };
+
+  // Export Cart to Excel (.xlsx) including SKU, EAN, and Packages count (包数)
+  const exportCartToExcel = () => {
+    if (cart.length === 0) {
+      alert(lang === 'zh' ? '购物车为空，请先挑选并加入商品！' : 'La cesta está vacía.');
+      return;
+    }
+
+    const data = cart.map((item, index) => {
+      const pvp = calculatePVP(item.product.price);
+      return {
+        '序号': index + 1,
+        'SKU (货号)': item.product.usercode || item.product.code,
+        'EAN (条形码)': item.product.code,
+        '包数 (采购数量)': item.quantity,
+        '每包规格 (支/本/件)': item.product.packet,
+        '总件数': item.quantity * item.product.packet,
+        '商品名称 (西语)': item.product.namees,
+        '商品名称 (中文)': item.product.namecn || '',
+        '一级大类': item.product.deptZh || item.product.deptEs || '',
+        '二级细分类': item.product.subZh || item.product.subEs || '',
+        '官方指导价 PVP (€)': pvp > 0 ? Number(pvp.toFixed(2)) : '',
+        '总价估算 PVP (€)': pvp > 0 ? Number((pvp * item.quantity).toFixed(2)) : '',
+      };
+    });
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+
+    // Set column widths for clean readability
+    worksheet['!cols'] = [
+      { wch: 6 },
+      { wch: 16 },
+      { wch: 18 },
+      { wch: 16 },
+      { wch: 20 },
+      { wch: 10 },
+      { wch: 40 },
+      { wch: 30 },
+      { wch: 22 },
+      { wch: 22 },
+      { wch: 18 },
+      { wch: 18 },
+    ];
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, '采购订货单');
+
+    const dateStr = new Date().toISOString().slice(0, 10);
+    const fileName = `MainPaper_Pedido_${dateStr}.xlsx`;
+    XLSX.writeFile(workbook, fileName);
+  };
+
+  // Export Current Filtered Catalog to Excel
+  const exportCatalogToExcel = () => {
+    if (filteredProducts.length === 0) return;
+    const data = filteredProducts.map((p, index) => ({
+      '序号': index + 1,
+      'SKU (货号)': p.usercode || p.code,
+      'EAN (条形码)': p.code,
+      '商品名称 (西语)': p.namees,
+      '商品名称 (中文)': p.namecn || '',
+      '一级大类': p.deptZh || p.deptEs,
+      '二级细分类': p.subZh || p.subEs,
+      '包装规格': `${p.packet} 支/包 · ${p.box} 支/箱`,
+      '每包支数': p.packet,
+      '每箱支数': p.box,
+      '官方建议价 PVP (€)': p.price > 0 ? Number(calculatePVP(p.price).toFixed(2)) : '',
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    worksheet['!cols'] = [
+      { wch: 6 },
+      { wch: 16 },
+      { wch: 18 },
+      { wch: 38 },
+      { wch: 30 },
+      { wch: 20 },
+      { wch: 22 },
+      { wch: 20 },
+      { wch: 10 },
+      { wch: 10 },
+      { wch: 16 },
+    ];
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, '商品目录清单');
+    const dateStr = new Date().toISOString().slice(0, 10);
+    XLSX.writeFile(workbook, `MainPaper_Catalogo_${dateStr}.xlsx`);
   };
 
   return (
@@ -1265,10 +1355,20 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             </button>
           </div>
 
-          <div className="text-xs md:text-sm font-black text-[#222] bg-white px-3 py-1 rounded-xl border-2 border-[#222]">
-            {lang === 'zh'
-              ? `找到 ${filteredProducts.length} 款符合条件的商品 (第 ${page}/${totalPages} 页)`
-              : `Mostrando ${filteredProducts.length} productos (Pág. ${page}/${totalPages})`}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={exportCatalogToExcel}
+              title={lang === 'zh' ? '导出当前筛选商品为 Excel 表格' : 'Exportar lista actual a Excel'}
+              className="px-2.5 py-1 bg-emerald-100 hover:bg-emerald-200 text-emerald-950 border-2 border-[#222] rounded-xl text-xs font-black shadow-[1px_1px_0px_#222] flex items-center gap-1 transition-all active:translate-y-0.5 cursor-pointer"
+            >
+              <span>📥</span>
+              <span>{lang === 'zh' ? '导出 Excel' : 'Excel'}</span>
+            </button>
+            <div className="text-xs md:text-sm font-black text-[#222] bg-white px-3 py-1 rounded-xl border-2 border-[#222]">
+              {lang === 'zh'
+                ? `找到 ${filteredProducts.length} 款符合条件的商品 (第 ${page}/${totalPages} 页)`
+                : `Mostrando ${filteredProducts.length} productos (Pág. ${page}/${totalPages})`}
+            </div>
           </div>
         </div>
       </div>
@@ -1482,15 +1582,15 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                                 : 'bg-[#5c94fc] text-white hover:bg-blue-600'
                             }`}
                           >
-                            <span>{isAdded ? '✓' : '📋'}</span>
+                            <span>{isAdded ? '✓' : '🛒'}</span>
                             <span>
                               {isAdded
                                 ? lang === 'zh'
-                                  ? '已存入清单!'
-                                  : '¡En Lista!'
+                                  ? '已加入购物车!'
+                                  : '¡En Carrito!'
                                 : lang === 'zh'
-                                  ? '加入学校备忘单'
-                                  : 'Añadir a Lista'}
+                                  ? '加入购物车'
+                                  : 'Añadir al Carrito'}
                             </span>
                           </button>
                         </div>
@@ -1571,16 +1671,10 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               mode === 'store' ? 'bg-[#f8d878] text-[#222]' : 'bg-[#5c94fc] text-white'
             }`}
           >
-            <span className="text-2xl">{mode === 'store' ? '🛒' : '📋'}</span>
+            <span className="text-2xl">🛒</span>
             <div className="text-left">
               <div className="text-xs uppercase font-extrabold opacity-80 leading-none">
-                {mode === 'store'
-                  ? lang === 'zh'
-                    ? '已选商品'
-                    : 'Mi Carrito'
-                  : lang === 'zh'
-                    ? '学校备忘单'
-                    : 'Lista Escolar'}
+                {lang === 'zh' ? '已选购物车' : 'Mi Carrito'}
               </div>
               <div className="text-sm md:text-base font-black">
                 {totalItemsCount} {lang === 'zh' ? '件商品' : 'items'}
@@ -1602,16 +1696,10 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               }`}
             >
               <div className="flex items-center gap-2">
-                <span className="text-2xl">{mode === 'store' ? '🛒' : '📋'}</span>
+                <span className="text-2xl">🛒</span>
                 <div>
                   <h2 className="font-black text-lg text-[#222]">
-                    {mode === 'store'
-                      ? lang === 'zh'
-                        ? '我的采购清单 (PVP)'
-                        : 'Carrito de Compra (PVP)'
-                      : lang === 'zh'
-                        ? '学校文具选品清单'
-                        : 'Lista Escolar / Muestras'}
+                    {lang === 'zh' ? '我的采购购物车' : 'Mi Carrito de Compra'}
                   </h2>
                   <span className="text-xs font-bold text-gray-700">
                     {cart.length} {lang === 'zh' ? '款不同货品' : 'referencias'} · {totalItemsCount}{' '}
@@ -1699,17 +1787,30 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               {/* Direct WhatsApp Order Button */}
               <button
                 onClick={generateWhatsAppOrder}
-                className="w-full py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-sm md:text-base flex items-center justify-center gap-2 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+                className="w-full py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-sm md:text-base flex items-center justify-center gap-2 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
               >
                 <span className="text-lg">📱</span>
                 <span>
                   {mode === 'store'
                     ? lang === 'zh'
-                      ? '通过 WhatsApp 发送报单'
+                      ? '通过 WhatsApp 发送报单 (604229098)'
                       : 'Enviar Pedido por WhatsApp'
                     : lang === 'zh'
-                      ? '导出清单至 WhatsApp'
+                      ? '导出清单至 WhatsApp (604229098)'
                       : 'Enviar Lista por WhatsApp'}
+                </span>
+              </button>
+
+              {/* Direct Excel (.xlsx) Export Button */}
+              <button
+                onClick={exportCartToExcel}
+                className="w-full py-3 bg-[#5c94fc] hover:bg-blue-600 text-white rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-sm md:text-base flex items-center justify-center gap-2 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
+              >
+                <span className="text-lg">📊</span>
+                <span>
+                  {lang === 'zh'
+                    ? '导出订货 Excel 表 (含 SKU、EAN、包数)'
+                    : 'Exportar Pedido a Excel (SKU, EAN, Paquetes)'}
                 </span>
               </button>
 
@@ -1852,15 +1953,15 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                         : 'bg-[#5c94fc] text-white hover:bg-blue-600'
                     }`}
                   >
-                    <span>{mode === 'store' ? '🛒' : '📋'}</span>
+                    <span>🛒</span>
                     <span>
                       {mode === 'store'
                         ? lang === 'zh'
                           ? '立即选购并查看采购车'
                           : 'Añadir al Carrito'
                         : lang === 'zh'
-                          ? '存入学校采购清单'
-                          : 'Añadir a Lista Escolar'}
+                          ? '加入购物车'
+                          : 'Añadir al Carrito'}
                     </span>
                   </button>
                 </div>
