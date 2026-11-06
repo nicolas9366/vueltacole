@@ -82,40 +82,7 @@ export const NavidadPromo: React.FC<NavidadPromoProps> = ({ lang, onNavigateHome
       </section>
 
       <div className="max-w-6xl mx-auto px-4 mt-8 space-y-10">
-        {/* 2. FLASH GREETING CARD PROMO (0.1€ / 0.2€ / 0.3€) */}
-        <section className="bg-[#1e1414] border-4 border-[#f8d878] rounded-[2rem] p-6 md:p-8 shadow-[6px_6px_0px_#222]">
-          <div className="inline-block bg-[#e52521] text-white font-black px-4 py-1.5 rounded-xl border-2 border-[#f8d878] text-sm md:text-base mb-4">
-            {t.flashTitle}
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
-            {[
-              { label: t.tier1, now: '0.1€', old: '0.327€', tag: '-69%' },
-              { label: t.tier2, now: '0.2€', old: '0.492€', tag: '-59%' },
-              { label: t.tier3, now: '0.3€', old: '0.658€', tag: '-54%' },
-            ].map((tier, idx) => (
-              <div
-                key={idx}
-                className="bg-[#2c1a18] border-3 border-[#f8d878] rounded-2xl p-5 flex items-center justify-between shadow-[4px_4px_0px_#111]"
-              >
-                <div>
-                  <div className="text-xs text-[#f8d878] font-bold mb-1">{tier.label}</div>
-                  <div className="text-sm text-gray-400 line-through">{tier.old}</div>
-                </div>
-                <div className="text-right">
-                  <span className="text-4xl md:text-5xl font-black text-[#fde047]">{tier.now}</span>
-                  <span className="ml-2 px-2 py-0.5 bg-[#e52521] text-white text-xs font-black rounded-md">
-                    {tier.tag}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="bg-[#e52521] text-[#fff8dc] font-black text-center py-3 px-4 rounded-xl border-2 border-[#222] text-sm md:text-base">
-            {t.flashWarning}
-          </div>
-        </section>
-
-        {/* 3. FIVE MAJOR PERKS BENTO BAR */}
+        {/* 2. FIVE MAJOR PERKS BENTO BAR */}
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {t.perks.map((perk, idx) => {
             const bgColors = [
@@ -339,7 +306,7 @@ export const NavidadPromo: React.FC<NavidadPromoProps> = ({ lang, onNavigateHome
                         {prod.code}
                       </span>
                       <span className="px-2.5 py-1 bg-[#e52521] text-white font-black text-xs rounded-lg">
-                        NEW {prod.discount}
+                        {lang === 'zh' ? '圣诞精选' : 'Especial Navidad'}
                       </span>
                     </div>
 
@@ -397,12 +364,14 @@ export const NavidadPromo: React.FC<NavidadPromoProps> = ({ lang, onNavigateHome
                   </div>
                 </div>
 
-                {/* Price & Pack/Box Spec Footer */}
-                <div className="px-5 pb-5 pt-2 flex items-center justify-between border-t border-emerald-800/80">
+                {/* Pack/Box Spec & Stock Footer (NO PRICES) */}
+                <div className="px-5 pb-5 pt-3 flex items-center justify-between border-t border-emerald-800/80">
                   <div>
-                    <div className="text-3xl font-black text-[#fde047]">{prod.price}</div>
-                    <div className="text-xs text-gray-300">
-                      {lang === 'zh' ? `原价: ${prod.origPrice}` : `Antes: ${prod.origPrice}`}
+                    <span className="inline-block px-2.5 py-1 bg-[#0c261a] text-emerald-300 font-bold text-xs rounded-lg border border-emerald-700">
+                      Ref: {prod.code}
+                    </span>
+                    <div className="text-[11px] text-gray-300 mt-1">
+                      {lang === 'zh' ? '样品专区 · 现货直发' : 'Exposición · Stock'}
                     </div>
                   </div>
                   <div className="text-right">
@@ -525,10 +494,12 @@ export const NavidadPromo: React.FC<NavidadPromoProps> = ({ lang, onNavigateHome
             </div>
 
             <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-sm">
-              <div className="font-black text-[#fde047] text-xl">
-                {activeProduct.price}{' '}
+              <div className="font-black text-[#f8d878] text-base flex items-center gap-2">
+                <span className="px-2.5 py-1 bg-emerald-950 text-emerald-300 font-mono text-xs rounded-lg border border-emerald-700">
+                  Ref: {activeProduct.code}
+                </span>
                 <span className="text-xs text-gray-300 font-normal">
-                  ({activeProduct.spec})
+                  {activeProduct.spec} · Stock: {activeProduct.stock} uds
                 </span>
               </div>
               <div className="text-xs text-emerald-200">

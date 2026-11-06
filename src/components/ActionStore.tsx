@@ -68,17 +68,17 @@ const PVP_MULTIPLIER = 2.8;
 // Strictly aligned with official catalogs & verified subcategories
 export const MASTER_DEPARTMENTS = [
   { id: 'all', labelEs: 'Todo el Catálogo', labelZh: '全部商品', icon: '⭐' },
-  { id: '09', labelEs: 'Primeras Marcas (Bic, Milan...)', labelZh: '国际合作名牌 (Bic, Milan...)', icon: '🏷️' },
-  { id: '12', labelEs: 'Línea BeBasic (Ahorro)', labelZh: 'BeBasic 超值基础系列', icon: '⚡' },
-  { id: '01', labelEs: 'Agendas y Calendarios 2027', labelZh: '年历与日历 (2027专刊)', icon: '📅' },
+  { id: '09', labelEs: 'Primeras Marcas', labelZh: '国际知名品牌', icon: '🏷️' },
+  { id: '12', labelEs: 'Línea BeBasic', labelZh: 'BeBasic 超值系列', icon: '⚡' },
+  { id: '01', labelEs: 'Agendas y Calendarios', labelZh: '年历与日历', icon: '📅' },
   { id: '02', labelEs: 'Escritura', labelZh: '书写用品', icon: '✏️' },
   { id: '03', labelEs: 'Sobremesa, Corrección y Oficina', labelZh: '桌面办公与修正工具', icon: '📎' },
   { id: '04', labelEs: 'Archivo y Clasificación', labelZh: '文件归档与分类', icon: '📁' },
-  { id: '05', labelEs: 'Cuadernos y Manipulado', labelZh: '本册与纸品 (Manipulado)', icon: '📓' },
+  { id: '05', labelEs: 'Cuadernos y Papel', labelZh: '本册与纸品', icon: '📓' },
   { id: '06', labelEs: 'Mochilas y Escolar', labelZh: '箱包与学生用品', icon: '🎒' },
   { id: '07', labelEs: 'Manualidades y Adhesivos', labelZh: '手工与胶粘用品', icon: '✂️' },
-  { id: '08', labelEs: 'Bellas Artes (Artix)', labelZh: '美术画材 (Artix)', icon: '🎨' },
-  { id: '10', labelEs: 'Sanrio, Licencias y Regalo', labelZh: '三丽鸥、IP与贺卡', icon: '🎀' },
+  { id: '08', labelEs: 'Bellas Artes', labelZh: '美术画材', icon: '🎨' },
+  { id: '10', labelEs: 'Sanrio y Licencias', labelZh: '三丽鸥与IP周边', icon: '🎀' },
   { id: '11', labelEs: 'Expositores y PLV', labelZh: '展架与陈列物料', icon: '📦' },
 ];
 
@@ -117,8 +117,8 @@ export const AI_INTENTS: AIIntent[] = [
         nc.includes('油画')
       );
     },
-    bannerZh: '🎨 AI 意图识别【我想画画】：已为您智能检索 Artix 专业丙烯/油画/水彩颜料、专业排刷画笔、画框画板与速写画册！',
-    bannerEs: '🎨 Intención detectada 【Quiero pintar / dibujar】: Selección de Bellas Artes Artix, pinturas, pinceles, lienzos y blocs.'
+    bannerZh: '🎨 场景精选：Artix 专业丙烯/油画/水彩颜料、排刷画笔、画框画板与速写画册',
+    bannerEs: '🎨 Selección recomendada: Bellas Artes Artix, pinturas, pinceles, lienzos y blocs.'
   },
   {
     id: 'diary',
@@ -143,8 +143,8 @@ export const AI_INTENTS: AIIntent[] = [
         sz.includes('三丽鸥')
       );
     },
-    bannerZh: '📖 AI 意图识别【我想写日记】：已为您推荐带锁密码日记本、创意插画硬皮手账本、闪光手账中性笔与精美年历！',
-    bannerEs: '📖 Intención detectada 【Quiero escribir un diario】: Diarios con candado secreto, libretas decoradas y bolígrafos gel.'
+    bannerZh: '📖 场景精选：带锁密码日记本、创意插画硬皮手账本、闪光中性笔与精美年历',
+    bannerEs: '📖 Selección recomendada: Diarios con candado secreto, libretas decoradas y bolígrafos gel.'
   },
   {
     id: 'craft',
@@ -167,8 +167,8 @@ export const AI_INTENTS: AIIntent[] = [
         sz.includes('手工耗材')
       );
     },
-    bannerZh: '✂️ AI 意图识别【我想做手工】：已为您匹配 EVA 海绵纸、彩色卡纸、手工毛毡布、安全儿童剪刀、无毒胶棒与彩泥！',
-    bannerEs: '✂️ Intención detectada 【Hacer manualidades】: Goma EVA, cartulinas de colores, fieltro, pegamentos y herramientas.'
+    bannerZh: '✂️ 场景精选：EVA 海绵纸、彩色卡纸、手工毛毡布、安全剪刀、胶棒与彩泥',
+    bannerEs: '✂️ Selección recomendada: Goma EVA, cartulinas de colores, fieltro, pegamentos y herramientas.'
   },
   {
     id: 'school',
@@ -192,8 +192,8 @@ export const AI_INTENTS: AIIntent[] = [
         ne.includes('FORRO')
       );
     },
-    bannerZh: '🎒 AI 意图识别【开学备货清单】：已为您推荐减负书包、大容量笔袋、自粘包书皮、米兰精品橡皮与标准练习本！',
-    bannerEs: '🎒 Intención detectada 【Vuelta al Cole】: Mochilas, estuches, forros para libros, gomas Milan y libretas escolares.'
+    bannerZh: '🎒 场景精选：减负书包、大容量笔袋、自粘包书皮、米兰精品橡皮与标准练习本',
+    bannerEs: '🎒 Selección recomendada: Mochilas, estuches, forros para libros, gomas Milan y libretas escolares.'
   },
   {
     id: 'office',
@@ -214,8 +214,8 @@ export const AI_INTENTS: AIIntent[] = [
         sz.includes('档案归档')
       );
     },
-    bannerZh: '📁 AI 意图识别【办公室文件整理】：已为您匹配多孔活页资料册、风琴扩展夹、归档文件盒、强力订书机与票夹！',
-    bannerEs: '📁 Intención detectada 【Organizar Oficina】: Carpetas de anillas, fundas multitaladro, cajas de archivo y sobremesa.'
+    bannerZh: '📁 场景精选：多孔活页资料册、风琴扩展夹、归档文件盒、强力订书机与票夹',
+    bannerEs: '📁 Selección recomendada: Carpetas de anillas, fundas multitaladro, cajas de archivo y sobremesa.'
   },
   {
     id: 'caligrafia',
@@ -236,8 +236,8 @@ export const AI_INTENTS: AIIntent[] = [
         sz.includes('钢笔')
       );
     },
-    bannerZh: '✒️ AI 意图识别【书法与练字】：已为您挑选西班牙 Rubio 官方描红练习册、精装钢笔与高密度顺滑书写纸！',
-    bannerEs: '✒️ Intención detectada 【Caligrafía y Escritura】: Cuadernos de caligrafía Rubio, plumas estilográficas y recambios.'
+    bannerZh: '✒️ 场景精选：Rubio 官方描红练习册、精装钢笔与高密度顺滑书写纸',
+    bannerEs: '✒️ Selección recomendada: Cuadernos de caligrafía Rubio, plumas estilográficas y recambios.'
   },
   {
     id: 'gift',
@@ -260,8 +260,8 @@ export const AI_INTENTS: AIIntent[] = [
         sz.includes('追梦女孩')
       );
     },
-    bannerZh: '🎀 AI 意图识别【三丽鸥与精美送礼】：已为您检索正版三丽鸥授权文具、Kuromi 主题礼盒、追梦女孩与节庆贺卡！',
-    bannerEs: '🎀 Intención detectada 【Sanrio y Regalos】: Licencias oficiales Sanrio, Kuromi, sets de regalo y tarjetas.'
+    bannerZh: '🎀 场景精选：正版三丽鸥授权文具、Kuromi 主题礼盒、追梦女孩与节庆贺卡',
+    bannerEs: '🎀 Selección recomendada: Licencias oficiales Sanrio, Kuromi, sets de regalo y tarjetas.'
   }
 ];
 
@@ -451,15 +451,9 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
 
     setAuthError(
       lang === 'zh'
-        ? '账号或密码不正确（测试账号: test / 密码: test..）'
-        : 'Credenciales incorrectas (Usuario prueba: test / pass: test..)'
+        ? '账号或密码不正确'
+        : 'Credenciales incorrectas'
     );
-  };
-
-  const handleQuickFillTest = () => {
-    setLoginIdentifier(TEST_ACCOUNT.username);
-    setLoginPassword(TEST_ACCOUNT.password);
-    setAuthError(null);
   };
 
   const handleRegister = (e: React.FormEvent) => {
@@ -790,12 +784,12 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
     if (cart.length === 0) return;
     const isShowroom = mode === 'showroom';
     let text = isShowroom
-      ? `📋 *LISTA DE CONSULTA / EXPOSICIÓN ESCOLAR (VUELTA AL COLE 2026)*\n`
-      : `🛒 *PEDIDO TIENDA VUELTA AL COLE (MAIN PAPER 2026)*\n`;
+      ? `📋 *LISTA DE CONSULTA Y MUESTRAS*\n`
+      : `🛒 *PEDIDO DE PAPELERÍA*\n`;
 
     text += `📅 Fecha: ${new Date().toLocaleDateString('es-ES')}\n`;
     if (currentUser) {
-      text += `👤 *Cliente:* ${currentUser.companyName || currentUser.username} (${currentUser.email})\n`;
+      text += `👤 *Cliente:* ${currentUser.companyName || currentUser.username} · ${currentUser.email}\n`;
       if (currentUser.phone) {
         text += `📞 *Teléfono:* ${currentUser.phone}\n`;
       }
@@ -816,7 +810,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
     text += `━━━━━━━━━━━━━━━━━━━━━\n`;
     text += `📦 Total Artículos: ${totalItemsCount} uds\n`;
     if (!isShowroom) {
-      text += `💰 *TOTAL ESTIMADO (PVP): ${formatEuro(totalCartPVP)}*\n`;
+      text += `💰 *TOTAL ESTIMADO: ${formatEuro(totalCartPVP)}*\n`;
     }
     text += `\n*Nota:* Generado automáticamente desde vueltacole.com`;
 
@@ -836,99 +830,50 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
       const pvp = calculatePVP(item.product.price);
       const row: Record<string, any> = {
         '序号': index + 1,
-        'SKU (货号)': item.product.usercode || item.product.code,
-        'EAN (条形码)': item.product.code,
-        '包数 (采购/预定数量)': item.quantity,
-        '每包规格 (支/本/件)': item.product.packet,
+        'SKU': item.product.usercode || item.product.code,
+        'EAN': item.product.code,
+        '包数': item.quantity,
+        '每包数量': item.product.packet,
         '总件数': item.quantity * item.product.packet,
-        '箱规 (支/箱)': item.product.box,
-        '商品名称 (西语)': item.product.namees,
-        '商品名称 (中文)': item.product.namecn || '',
-        '一级大类': item.product.deptZh || item.product.deptEs || '',
-        '二级细分类': item.product.subZh || item.product.subEs || '',
+        '箱规': item.product.box,
+        '商品名称': item.product.namees,
+        '中文名称': item.product.namecn || '',
+        '分类': item.product.deptZh || item.product.deptEs || '',
+        '细分类': item.product.subZh || item.product.subEs || '',
       };
       if (!isShowroom) {
-        row['参考零售价 (€)'] = pvp > 0 ? Number(pvp.toFixed(2)) : '';
-        row['总价预估 (€)'] = pvp > 0 ? Number((pvp * item.quantity).toFixed(2)) : '';
+        row['单价'] = pvp > 0 ? Number(pvp.toFixed(2)) : '';
+        row['小计'] = pvp > 0 ? Number((pvp * item.quantity).toFixed(2)) : '';
       }
       return row;
     });
 
     const worksheet = XLSX.utils.json_to_sheet(data);
 
-    // Set column widths for clean readability
     worksheet['!cols'] = [
       { wch: 6 },
       { wch: 16 },
       { wch: 18 },
-      { wch: 22 },
-      { wch: 20 },
-      { wch: 10 },
-      { wch: 14 },
-      { wch: 40 },
-      { wch: 30 },
-      { wch: 22 },
-      { wch: 22 },
-      { wch: 16 },
-      { wch: 16 },
-    ];
-
-    const workbook = XLSX.utils.book_new();
-    const sheetTitle = isShowroom ? '样品预定意向单' : '采购订货单';
-    XLSX.utils.book_append_sheet(workbook, worksheet, sheetTitle);
-
-    const dateStr = new Date().toISOString().slice(0, 10);
-    const fileName = isShowroom
-      ? `MainPaper_Reserva_${dateStr}.xlsx`
-      : `MainPaper_Pedido_${dateStr}.xlsx`;
-    XLSX.writeFile(workbook, fileName);
-  };
-
-  // Export Current Filtered Catalog to Excel
-  const exportCatalogToExcel = () => {
-    if (filteredProducts.length === 0) return;
-    const isShowroom = mode === 'showroom';
-    const data = filteredProducts.map((p, index) => {
-      const row: Record<string, any> = {
-        '序号': index + 1,
-        'SKU (货号)': p.usercode || p.code,
-        'EAN (条形码)': p.code,
-        '商品名称 (西语)': p.namees,
-        '商品名称 (中文)': p.namecn || '',
-        '一级大类': p.deptZh || p.deptEs,
-        '二级细分类': p.subZh || p.subEs,
-        '包装规格': `${p.packet} 支/包 · ${p.box} 支/箱`,
-        '每包支数': p.packet,
-        '每箱支数': p.box,
-      };
-      if (!isShowroom && currentUser) {
-        row['参考零售价 (€)'] = p.price > 0 ? Number(calculatePVP(p.price).toFixed(2)) : '';
-      }
-      return row;
-    });
-
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    worksheet['!cols'] = [
-      { wch: 6 },
-      { wch: 16 },
-      { wch: 18 },
+      { wch: 12 },
+      { wch: 12 },
+      { wch: 12 },
+      { wch: 12 },
       { wch: 38 },
-      { wch: 30 },
+      { wch: 28 },
       { wch: 20 },
-      { wch: 22 },
       { wch: 20 },
-      { wch: 10 },
-      { wch: 10 },
-      { wch: 16 },
+      { wch: 14 },
+      { wch: 14 },
     ];
 
     const workbook = XLSX.utils.book_new();
-    const sheetTitle = isShowroom ? '样品展厅目录' : '商品目录清单';
+    const sheetTitle = isShowroom ? '预定清单' : '订货清单';
     XLSX.utils.book_append_sheet(workbook, worksheet, sheetTitle);
+
     const dateStr = new Date().toISOString().slice(0, 10);
     const fileName = isShowroom
-      ? `MainPaper_Catalogo_Muestras_${dateStr}.xlsx`
-      : `MainPaper_Catalogo_${dateStr}.xlsx`;
+      ? `Reserva_${dateStr}.xlsx`
+      : `Pedido_${dateStr}.xlsx`;
     XLSX.writeFile(workbook, fileName);
   };
 
@@ -1030,33 +975,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
         </div>
       </div>
 
-      {/* 2. NOTICE BAR */}
-      <div className="bg-[#f8d878] border-b-4 border-[#222] px-4 py-2.5 text-xs md:text-sm font-bold text-[#222] text-center flex items-center justify-center gap-3">
-        <span>⚡</span>
-        <span>
-          {mode === 'store'
-            ? currentUser
-              ? lang === 'zh'
-                ? '【订货商城已登录】商业批发与建议零售价已解锁，支持一键加购并直接生成采购报单。'
-                : '【Catálogo Comercial】Sesión iniciada. Precios y pedidos habilitados.'
-              : lang === 'zh'
-                ? '【订货商城】请登录商户账号查看价格与高清细节图（测试账号: test / test..）。'
-                : '【Catálogo Comercial】Inicia sesión para consultar precios y tramitar pedidos.'
-            : lang === 'zh'
-              ? '【样品展厅模式】已开启无标价陈列，支持挑选商品并导出预定清单，专供客户商务谈判使用。'
-              : '【Sala de Muestras】Catálogo de exposición sin precios, ideal para selección y negociación.'}
-        </span>
-        {onNavigateToNavidad && (
-          <button
-            onClick={onNavigateToNavidad}
-            className="ml-2 underline text-[#e52521] hover:text-black font-black hidden sm:inline"
-          >
-            {lang === 'zh' ? '👉 前往圣诞爆品专区' : '👉 Ir a Campaña Navidad'}
-          </button>
-        )}
-      </div>
-
-      {/* 3. MAIN CONTROLS: SEARCH, DEPARTMENTS & QUICK FILTERS */}
+      {/* 2. MAIN CONTROLS: SEARCH, DEPARTMENTS & QUICK FILTERS */}
       <div className="max-w-7xl mx-auto px-4 pt-6" ref={topGridRef}>
         {/* Search bar & quick statistics */}
         <div className="flex flex-col md:flex-row items-center gap-3 mb-2">
@@ -1096,26 +1015,26 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               className="w-full md:w-auto px-4 py-3 rounded-xl border-3 border-[#222] font-black text-sm bg-white shadow-[2px_2px_0px_#222] focus:outline-none"
             >
               <option value="sku">
-                {lang === 'zh' ? '🔢 官方货号目录 (按SKU自然序)' : '🔢 Catálogo Oficial (Ref. SKU)'}
+                {lang === 'zh' ? '🔢 官方货号' : '🔢 Referencia SKU'}
               </option>
               <option value="sales">
-                {lang === 'zh' ? '🔥 畅销排行 (按购买频次 / Nº Facturas)' : '🔥 Más Vendidos (Por Nº Facturas)'}
+                {lang === 'zh' ? '🔥 畅销排行' : '🔥 Más Vendidos'}
               </option>
               <option value="featured">
-                {lang === 'zh' ? '⭐ 推荐精选 (综合优选)' : '⭐ Selección Destacada'}
+                {lang === 'zh' ? '⭐ 推荐精选' : '⭐ Destacados'}
               </option>
               {mode === 'store' && currentUser && (
                 <>
                   <option value="priceAsc">
-                    {lang === 'zh' ? '🪙 单价: 低到高' : '🪙 Precio: Menor a Mayor'}
+                    {lang === 'zh' ? '🪙 价格低到高' : '🪙 Precio menor a mayor'}
                   </option>
                   <option value="priceDesc">
-                    {lang === 'zh' ? '💎 单价: 高到低' : '💎 Precio: Mayor a Menor'}
+                    {lang === 'zh' ? '💎 价格高到低' : '💎 Precio mayor a menor'}
                   </option>
                 </>
               )}
-              <option value="newest">{lang === 'zh' ? '🆕 2026/27 新品先看' : '🆕 Novedades'}</option>
-              <option value="name">{lang === 'zh' ? '🔤 西语字母 A - Z' : '🔤 Nombre A - Z'}</option>
+              <option value="newest">{lang === 'zh' ? '🆕 新品' : '🆕 Novedades'}</option>
+              <option value="name">{lang === 'zh' ? '🔤 字母顺序' : '🔤 Nombre'}</option>
             </select>
           </div>
         </div>
@@ -1185,10 +1104,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5 px-0.5">
             <div className="flex items-center gap-2">
               <span className="text-xs md:text-sm font-black text-gray-800">
-                {lang === 'zh' ? '📑 官方全系分类导航' : '📑 Categorías Principales'}
-              </span>
-              <span className="text-[11px] text-gray-500 font-bold hidden sm:inline">
-                {lang === 'zh' ? '(全系核心大类 · 直观平铺无横向滚动)' : '(Catálogo oficial completo)'}
+                {lang === 'zh' ? '📑 全部分类' : '📑 Todas las Categorías'}
               </span>
             </div>
 
@@ -1206,7 +1122,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 }`}
               >
                 <span>🏷️</span>
-                <span>{lang === 'zh' ? '⭐ 国际名牌专区 (Bic · Milan · Pilot)' : '⭐ Marcas Oficiales (Bic · Milan)'}</span>
+                <span>{lang === 'zh' ? '⭐ 国际品牌' : '⭐ Primeras Marcas'}</span>
               </button>
 
               <button
@@ -1221,7 +1137,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 }`}
               >
                 <span>⚡</span>
-                <span>{lang === 'zh' ? '⚡ BeBasic 超值特惠专区' : '⚡ Línea BeBasic (Ahorro)'}</span>
+                <span>{lang === 'zh' ? '⚡ BeBasic 系列' : '⚡ Línea BeBasic'}</span>
               </button>
             </div>
           </div>
@@ -1263,17 +1179,17 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               <span>{lang === 'zh' ? '名牌直达:' : 'Marcas:'}</span>
             </span>
             {[
-              { nameZh: 'Bic 比克', nameEs: 'Bic', subKey: 'Bic (Cristal y Plastidecor)' },
-              { nameZh: 'Pilot 百乐', nameEs: 'Pilot', subKey: 'Pilot (Frixion y Bolígrafos G2)' },
-              { nameZh: 'Milan 米兰', nameEs: 'Milan', subKey: 'Milan (Gomas y Sacapuntas)' },
-              { nameZh: 'Stabilo 思笔乐', nameEs: 'Stabilo', subKey: 'Stabilo (Point 88 y Subrayadores)' },
-              { nameZh: 'Edding 艾丁', nameEs: 'Edding', subKey: 'Edding (Marcadores Industriales)' },
-              { nameZh: 'Jovi 彩泥', nameEs: 'Jovi', subKey: 'Jovi (Plastilina y Modelado)' },
-              { nameZh: 'Faber-Castell 辉柏嘉', nameEs: 'Faber-Castell', subKey: 'Faber-Castell (Subrayadores y Dibujo)' },
-              { nameZh: 'Rubio 字帖', nameEs: 'Rubio', subKey: 'Rubio (Cuadernos de Caligrafía)' },
-              { nameZh: 'Oxford 牛津', nameEs: 'Oxford', subKey: 'Oxford (Cuadernos Europeanbook)' },
-              { nameZh: 'Staedtler 施德楼', nameEs: 'Staedtler', subKey: 'Staedtler (Lápices Noris y Dibujo)' },
-              { nameZh: 'Pritt 百特', nameEs: 'Pritt', subKey: 'Pritt (Pegamentos y Adhesivos)' },
+              { nameZh: 'Bic 比克', nameEs: 'Bic', subKey: 'Bic' },
+              { nameZh: 'Pilot 百乐', nameEs: 'Pilot', subKey: 'Pilot' },
+              { nameZh: 'Milan 米兰', nameEs: 'Milan', subKey: 'Milan' },
+              { nameZh: 'Stabilo 思笔乐', nameEs: 'Stabilo', subKey: 'Stabilo' },
+              { nameZh: 'Edding 艾丁', nameEs: 'Edding', subKey: 'Edding' },
+              { nameZh: 'Jovi 彩泥', nameEs: 'Jovi', subKey: 'Jovi' },
+              { nameZh: 'Faber-Castell 辉柏嘉', nameEs: 'Faber-Castell', subKey: 'Faber-Castell' },
+              { nameZh: 'Rubio 字帖', nameEs: 'Rubio', subKey: 'Rubio' },
+              { nameZh: 'Oxford 牛津', nameEs: 'Oxford', subKey: 'Oxford' },
+              { nameZh: 'Staedtler 施德楼', nameEs: 'Staedtler', subKey: 'Staedtler' },
+              { nameZh: 'Pritt 百特', nameEs: 'Pritt', subKey: 'Pritt' },
               { nameZh: 'Uni-Ball / Posca', nameEs: 'Uni-Ball', subKey: 'Uni-Ball y Posca' },
             ].map((b) => (
               <button
@@ -1303,7 +1219,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 <span className="text-sm font-black text-gray-800">
                   {selectedDept === '09'
                     ? lang === 'zh'
-                      ? '国际大牌专区 (点击品牌直接筛选):'
+                      ? '国际大牌专区：'
                       : 'Marcas Internacionales Oficiales:'
                     : lang === 'zh'
                     ? '二级细分类目筛选:'
@@ -1334,8 +1250,8 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               >
                 {selectedDept === '09'
                   ? lang === 'zh'
-                    ? '全部名牌 (522款)'
-                    : 'Todas las Marcas (522)'
+                    ? '全部名牌'
+                    : 'Todas las Marcas'
                   : lang === 'zh'
                   ? '全部子类'
                   : 'Todas'}
@@ -1430,18 +1346,10 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           </div>
 
           <div className="flex items-center gap-2">
-            <button
-              onClick={exportCatalogToExcel}
-              title={lang === 'zh' ? '导出当前筛选商品为 Excel 表格' : 'Exportar lista actual a Excel'}
-              className="px-2.5 py-1 bg-emerald-100 hover:bg-emerald-200 text-emerald-950 border-2 border-[#222] rounded-xl text-xs font-black shadow-[1px_1px_0px_#222] flex items-center gap-1 transition-all active:translate-y-0.5 cursor-pointer"
-            >
-              <span>📥</span>
-              <span>{lang === 'zh' ? '导出 Excel' : 'Excel'}</span>
-            </button>
-            <div className="text-xs md:text-sm font-black text-[#222] bg-white px-3 py-1 rounded-xl border-2 border-[#222]">
+            <div className="text-xs md:text-sm font-black text-[#222] bg-white px-3 py-1.5 rounded-xl border-2 border-[#222]">
               {lang === 'zh'
-                ? `找到 ${filteredProducts.length} 款符合条件的商品 (第 ${page}/${totalPages} 页)`
-                : `Mostrando ${filteredProducts.length} productos (Pág. ${page}/${totalPages})`}
+                ? `共 ${filteredProducts.length} 款商品 · 第 ${page}/${totalPages} 页`
+                : `${filteredProducts.length} productos · Pág. ${page}/${totalPages}`}
             </div>
           </div>
         </div>
@@ -1591,19 +1499,6 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                         <span>📦 Paq: {p.packet}u</span>
                         <span>Caja: {p.box}u</span>
                       </div>
-
-                      {/* PowerBI Invoices Frequency (Nº Facturas) */}
-                      {Boolean(p.salesInvoices && p.salesInvoices > 0) && (
-                        <div className="flex items-center justify-between text-[10px] font-bold text-gray-600 bg-emerald-50/70 border border-emerald-200/80 px-2 py-0.5 rounded-md mb-2">
-                          <span className="flex items-center gap-1 text-emerald-700">
-                            <span>🧾</span>
-                            <span>{lang === 'zh' ? '开票频次:' : 'Nº Facturas:'}</span>
-                          </span>
-                          <span className="font-mono text-emerald-900 font-extrabold">
-                            {p.salesInvoices} {lang === 'zh' ? '次' : 'fac'}
-                          </span>
-                        </div>
-                      )}
                     </div>
 
                     {/* Price & Action Area */}
@@ -1615,7 +1510,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                             <div className="flex items-baseline justify-between mb-2">
                               <div>
                                 <span className="text-[10px] font-bold text-gray-400 block leading-none">
-                                  {lang === 'zh' ? '建议零售价' : 'PVP RECOMENDADO'}
+                                  {lang === 'zh' ? '建议零售价' : 'PRECIO RECOMENDADO'}
                                 </span>
                                 <div className="flex items-center gap-1">
                                   <span className="text-base md:text-xl font-black text-[#e52521]">
@@ -1626,7 +1521,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                               {hasValidPrice && p.packet > 1 && (
                                 <div className="text-right">
                                   <span className="text-[9px] text-gray-400 block">
-                                    Paq ({p.packet}u)
+                                    Paq. {p.packet}u
                                   </span>
                                   <span className="text-xs font-bold text-gray-700">
                                     {formatEuro(pvp * p.packet)}
@@ -1661,7 +1556,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                             {/* Locked Price for Non-Logged-in Guest */}
                             <div className="mb-2 bg-amber-50 p-1.5 rounded-lg border border-amber-200 text-center">
                               <span className="text-[10px] md:text-[11px] font-bold text-amber-900 block leading-tight">
-                                🔒 {lang === 'zh' ? '价格保护中 (商户可见)' : 'Precios para clientes'}
+                                🔒 {lang === 'zh' ? '登录查看价格' : 'Inicia sesión'}
                               </span>
                             </div>
 
@@ -1679,7 +1574,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                           {/* Showroom / Museum Mode (Zero Price) */}
                           <div className="mb-2 bg-[#5c94fc]/10 p-1.5 rounded-lg border border-[#5c94fc]/30 text-center">
                             <span className="text-[11px] font-black text-[#5c94fc] block">
-                              🏛️ {lang === 'zh' ? '样品展品 · 意向洽谈' : 'Muestra para Reserva'}
+                              🏛️ {lang === 'zh' ? '样品展品' : 'Muestra'}
                             </span>
                           </div>
 
@@ -1859,10 +1754,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                       </div>
                       {mode === 'store' && (
                         <div className="text-xs font-black text-[#e52521] mt-0.5">
-                          {formatEuro(pvp)}{' '}
-                          <span className="text-[10px] text-gray-400 font-normal">
-                            (Total: {formatEuro(pvp * item.quantity)})
-                          </span>
+                          {formatEuro(pvp)} × {item.quantity} = {formatEuro(pvp * item.quantity)}
                         </div>
                       )}
 
@@ -1900,7 +1792,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             <div className="p-4 bg-gray-100 border-t-4 border-[#222] space-y-3">
               {mode === 'store' && (
                 <div className="flex items-center justify-between text-base font-black text-[#222]">
-                  <span>{lang === 'zh' ? '总计估价 (PVP):' : 'Total Estimado (PVP):'}</span>
+                  <span>{lang === 'zh' ? '总计预估:' : 'Total Estimado:'}</span>
                   <span className="text-xl text-[#e52521]">{formatEuro(totalCartPVP)}</span>
                 </div>
               )}
@@ -1914,43 +1806,34 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 <span>
                   {mode === 'store'
                     ? lang === 'zh'
-                      ? '通过 WhatsApp 发送报单 (604229098)'
+                      ? '通过 WhatsApp 发送订货单'
                       : 'Enviar Pedido por WhatsApp'
                     : lang === 'zh'
-                      ? '导出清单至 WhatsApp (604229098)'
-                      : 'Enviar Lista por WhatsApp'}
+                      ? '通过 WhatsApp 咨询样品清单'
+                      : 'Consultar Lista por WhatsApp'}
                 </span>
               </button>
 
-              {/* Direct Excel (.xlsx) Export Button */}
-              <button
-                onClick={exportCartToExcel}
-                className="w-full py-3 bg-[#5c94fc] hover:bg-blue-600 text-white rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-sm md:text-base flex items-center justify-center gap-2 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
-              >
-                <span className="text-lg">📊</span>
-                <span>
-                  {mode === 'store'
-                    ? lang === 'zh'
-                      ? '导出订货 Excel 表 (含 SKU、EAN、包数)'
-                      : 'Exportar Pedido a Excel (SKU, EAN, Paquetes)'
-                    : lang === 'zh'
-                      ? '导出样品预定 Excel (无价格，供谈判)'
-                      : 'Exportar Reserva a Excel (Sin Precios)'}
-                </span>
-              </button>
-
-              <div className="flex gap-2">
+              <div className="flex items-center gap-2">
                 <button
                   onClick={clearCart}
-                  className="flex-1 py-2 bg-white text-gray-700 hover:bg-gray-200 rounded-xl border-2 border-gray-400 text-xs font-bold"
+                  className="py-2 px-3 bg-white text-gray-600 hover:text-red-600 rounded-xl border-2 border-gray-300 text-xs font-bold"
                 >
-                  {lang === 'zh' ? '清空清单' : 'Vaciar'}
+                  {lang === 'zh' ? '清空' : 'Vaciar'}
                 </button>
                 <button
                   onClick={() => setIsCartOpen(false)}
                   className="flex-1 py-2 bg-white text-[#222] hover:bg-gray-200 rounded-xl border-2 border-[#222] text-xs font-black"
                 >
                   {lang === 'zh' ? '继续选品' : 'Seguir mirando'}
+                </button>
+                <button
+                  onClick={exportCartToExcel}
+                  title="后台导出"
+                  className="py-2 px-3 bg-white text-gray-400 hover:text-gray-700 rounded-xl border border-gray-300 text-xs font-mono flex items-center justify-center gap-1 cursor-pointer transition-colors"
+                >
+                  <span>📊</span>
+                  <span>{lang === 'zh' ? '后台导出' : 'Excel'}</span>
                 </button>
               </div>
             </div>
@@ -1984,7 +1867,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 />
                 <WatermarkOverlay isHD={true} />
                 <span className="absolute bottom-2 right-2 bg-black/75 text-white text-[10px] font-bold px-2.5 py-1 rounded-md border border-white/20 z-20">
-                  2K Ultra HD (2048px)
+                  2K Ultra HD
                 </span>
               </div>
 
@@ -2018,19 +1901,6 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   <p className="text-sm text-gray-500 font-bold">{selectedProduct.namecn}</p>
                 )}
 
-                {/* PowerBI Invoices Frequency (Nº Facturas) */}
-                {Boolean(selectedProduct.salesInvoices && selectedProduct.salesInvoices > 0) && (
-                  <div className="bg-emerald-50 border border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-bold text-emerald-900 flex items-center justify-between">
-                    <span className="flex items-center gap-1.5">
-                      <span>🧾</span>
-                      <span>{lang === 'zh' ? '实销成交发票数 (Nº Facturas):' : 'Facturas emitidas:'}</span>
-                    </span>
-                    <span className="font-mono text-sm font-black text-emerald-950">
-                      {selectedProduct.salesInvoices} {lang === 'zh' ? '张发票' : 'facturas'}
-                    </span>
-                  </div>
-                )}
-
                 <div className="grid grid-cols-2 gap-2 bg-yellow-50/60 p-3 rounded-xl border-2 border-yellow-200 text-xs">
                   <div>
                     <span className="text-gray-500 block">Departamento:</span>
@@ -2058,7 +1928,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     <div className="bg-[#f8d878] p-4 rounded-2xl border-3 border-[#222] flex items-center justify-between">
                       <div>
                         <span className="text-xs font-black text-gray-700 block">
-                          PVP VENTA AL PÚBLICO RECOMENDADO
+                          {lang === 'zh' ? '建议零售价' : 'PRECIO RECOMENDADO'}
                         </span>
                         <div className="text-2xl font-black text-[#e52521]">
                           {selectedProduct.price > 0
@@ -2068,7 +1938,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                       </div>
                       {selectedProduct.price > 0 && selectedProduct.packet > 1 && (
                         <div className="text-right text-xs">
-                          <span className="text-gray-600 block">Por paquete completo:</span>
+                          <span className="text-gray-600 block">{lang === 'zh' ? '整包参考价:' : 'Por paquete:'}</span>
                           <span className="font-black text-sm">
                             {formatEuro(calculatePVP(selectedProduct.price) * selectedProduct.packet)}
                           </span>
@@ -2079,10 +1949,10 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     <div className="bg-amber-50 p-4 rounded-2xl border-3 border-[#222] flex flex-col sm:flex-row items-center justify-between gap-3">
                       <div>
                         <span className="text-sm font-black text-amber-900 block">
-                          🔒 {lang === 'zh' ? '价格保护中 (商户可见)' : 'Precios protegidos'}
+                          🔒 {lang === 'zh' ? '登录查看价格' : 'Inicia sesión para ver precios'}
                         </span>
                         <span className="text-xs text-gray-600 block mt-0.5">
-                          {lang === 'zh' ? '登录商户账号后可解锁零售指导价并加入采购车' : 'Accede para ver tarifas y formalizar pedidos.'}
+                          {lang === 'zh' ? '登录后可查看指导价格并加入采购清单' : 'Inicia sesión para ver precios y formalizar pedidos.'}
                         </span>
                       </div>
                       <button
@@ -2096,10 +1966,10 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 ) : (
                   <div className="bg-[#5c94fc]/15 p-4 rounded-2xl border-3 border-[#5c94fc] text-center">
                     <span className="text-sm font-black text-[#5c94fc] block">
-                      🏛️ {lang === 'zh' ? '产品展示厅 · 官方精选样品 (无标价模式)' : 'MODO SHOWROOM: Sin precios'}
+                      🏛️ {lang === 'zh' ? '样品展厅' : 'Sala de Muestras'}
                     </span>
                     <span className="text-xs text-gray-600 block mt-0.5">
-                      {lang === 'zh' ? '已隐去商品价格，方便直接向客户沟通谈判并制定样品预定单' : 'Diseñado para reservar muestras sin precios para negociación comercial.'}
+                      {lang === 'zh' ? '样品展示，支持添加至预定清单' : 'Exposición para selección y reserva de muestras.'}
                     </span>
                   </div>
                 )}
@@ -2224,47 +2094,29 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
 
               {authTab === 'login' ? (
                 <div>
-                  {/* Quick Fill Test Account Banner */}
-                  <div className="mb-4 bg-yellow-50 p-3 rounded-2xl border-2 border-[#222] shadow-[2px_2px_0px_#222] flex items-center justify-between gap-2">
-                    <div className="text-[11px] font-bold text-gray-700">
-                      <div className="font-black text-[#222]">
-                        {lang === 'zh' ? '⚡ 体验/演示测试账号:' : '⚡ Cuenta Oficial de Prueba:'}
-                      </div>
-                      <div>账号: <code className="bg-yellow-200 px-1 rounded font-mono font-bold">test</code> · 密码: <code className="bg-yellow-200 px-1 rounded font-mono font-bold">test..</code></div>
-                      <div className="text-[10px] text-gray-500">邮箱: madyu001@gmail.com</div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={handleQuickFillTest}
-                      className="px-2.5 py-1.5 bg-[#f8d878] hover:bg-yellow-400 text-[#222] rounded-xl border-2 border-[#222] text-xs font-black shrink-0 shadow-[1px_1px_0px_#222] active:translate-y-0.5 cursor-pointer"
-                    >
-                      {lang === 'zh' ? '一键填入' : 'Rellenar'}
-                    </button>
-                  </div>
-
                   <form onSubmit={handleLogin} className="space-y-4">
                     <div>
                       <label className="block text-xs font-black text-gray-700 mb-1">
-                        {lang === 'zh' ? '用户名 或 注册邮箱' : 'Usuario o Email'}
+                        {lang === 'zh' ? '用户名或邮箱' : 'Usuario o email'}
                       </label>
                       <input
                         type="text"
                         value={loginIdentifier}
                         onChange={(e) => setLoginIdentifier(e.target.value)}
-                        placeholder="test 或 madyu001@gmail.com"
+                        placeholder={lang === 'zh' ? '请输入用户名或邮箱' : 'Usuario o email'}
                         className="w-full px-3.5 py-2.5 rounded-xl border-3 border-[#222] text-sm font-bold bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
                       />
                     </div>
 
                     <div>
                       <label className="block text-xs font-black text-gray-700 mb-1">
-                        {lang === 'zh' ? '登录密码' : 'Contraseña'}
+                        {lang === 'zh' ? '密码' : 'Contraseña'}
                       </label>
                       <input
                         type="password"
                         value={loginPassword}
                         onChange={(e) => setLoginPassword(e.target.value)}
-                        placeholder="test.."
+                        placeholder="••••••••"
                         className="w-full px-3.5 py-2.5 rounded-xl border-3 border-[#222] text-sm font-bold bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
                       />
                     </div>

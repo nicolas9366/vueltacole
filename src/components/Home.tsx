@@ -90,32 +90,32 @@ export const Home: React.FC<HomeProps> = ({
           <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
             <span className="bg-[#f8d878] text-[#222] text-xs md:text-sm font-black px-4 py-1.5 rounded-full border-3 border-[#222] shadow-[3px_3px_0px_#222] uppercase tracking-wider">
               {lang === 'zh'
-                ? '🚀 西班牙文具贸易 · 批发供货与零售精选供应链'
-                : '🚀 Comercio y Distribución Mayorista de Papelería en España'}
+                ? '⭐ 文具精选零售 · 大客户集采服务'
+                : '⭐ Papelería Comercial & Suministro para Grandes Cuentas'}
             </span>
             <span className="bg-[#5c94fc] text-white text-xs md:text-sm font-black px-3.5 py-1.5 rounded-full border-3 border-[#222] shadow-[3px_3px_0px_#222]">
-              {lang === 'zh' ? '一手源头渠道 · 本地现货直发' : 'Stock Permanente · Envíos 48H'}
+              {lang === 'zh' ? '现货选品 · 专业采购对接' : 'Catálogo Extenso & Atención Directa'}
             </span>
           </div>
 
           {/* Main Title */}
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white drop-shadow-[4px_4px_0px_#222] mb-4 leading-tight">
             {lang === 'zh'
-              ? '文具贸易与批发供应链服务'
-              : 'DISTRIBUCIÓN Y SUMINISTRO MAYORISTA DE PAPELERÍA'}
+              ? '文具精选商城 & 大客户采购'
+              : 'PAPELERÍA COMERCIAL & GRANDES CUENTAS'}
             <br />
             <span className="text-[#f8d878]">
               {lang === 'zh'
-                ? '专注百货零售 · 书店专柜 · 批量采购'
-                : 'Tu Socio Comercial para Bazares, Papelerías y Colegios'}
+                ? '全品类现货文具 · 机构大宗定制采购'
+                : 'Catálogo de Productos & Suministro Institucional'}
             </span>
           </h1>
 
           {/* Subtitle */}
           <p className="text-base sm:text-xl text-yellow-100 font-bold max-w-3xl mx-auto mb-8 leading-relaxed">
             {lang === 'zh'
-              ? '深耕西班牙文具贸易与批发市场，为您精选 6,000+ 现货文具 SKU，涵盖学生书写、办公桌面、收纳文件、本册纸品、美术画材与各大主流文具品牌一手货源。为百货零售店 (Bazar)、专业文具书店 (Papelería)、学校机构 (Colegios/AMPAs) 提供具有高度竞争力的批发价格、展架陈列支持、小额混批与 48 小时本地直发服务。'
-              : 'Especialistas en comercio y distribución de material escolar, oficina y papelería comercial en España. Suministro integral con más de 6.000 referencias en stock, precios competitivos sin intermediarios innecesarios y atención comercial directa para tu negocio.'}
+              ? '精选数千款现货文具产品，涵盖学生书写、办公桌面、收纳文件、本册纸品、美术画材与各大主流文具品牌。支持自主零售选品选购，并为学校机构、企业单位及大客户提供专业大宗采购对接服务。'
+              : 'Amplia selección de material escolar, oficina, archivo, bellas artes y primeras marcas en stock. Atención comercial directa tanto para compras minoristas como para grandes pedidos y suministros institucionales.'}
           </p>
 
           {/* Fast Contact Callout Box */}
@@ -204,17 +204,17 @@ export const Home: React.FC<HomeProps> = ({
               color: 'bg-white',
             },
             {
-              num: '48h',
-              labelZh: '西班牙本土极速直发',
-              labelEs: 'Envío Peninsular Ágil',
-              icon: '🚚',
+              num: '全系现货',
+              labelZh: '品类齐全常备库存',
+              labelEs: 'Stock Permanente',
+              icon: '📦',
               color: 'bg-white',
             },
             {
-              num: '100%',
-              labelZh: '一手批发底价保障',
-              labelEs: 'Tarifas Mayoristas Competitivas',
-              icon: '💰',
+              num: '专业对接',
+              labelZh: '大客户采购专属服务',
+              labelEs: 'Grandes Cuentas & Institucional',
+              icon: '🤝',
               color: 'bg-white',
             },
             {
@@ -245,31 +245,31 @@ export const Home: React.FC<HomeProps> = ({
       <section className="max-w-6xl mx-auto px-4 pt-16">
         <div className="text-center mb-10">
           <span className="bg-[#f8d878] text-[#222] text-xs font-black px-3.5 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase">
-            {lang === 'zh' ? '⭐ 业务赋能 · 六大核心优势' : '⭐ Ventajas de Nuestro Servicio'}
+            {lang === 'zh' ? '⭐ 核心优势与服务' : '⭐ Ventajas y Servicios'}
           </span>
           <h2 className="text-2xl md:text-4xl font-black text-[#222] mt-2 drop-shadow-[2px_2px_0px_#f8d878]">
             {lang === 'zh'
-              ? '为什么选择我们的文具贸易与批发供应链？'
-              : '¿Por Qué Trabajar con Nosotros en Suministro de Papelería?'}
+              ? '专业文具选品与大客户采购支持'
+              : 'Suministro Profesional de Papelería y Grandes Cuentas'}
           </h2>
           <p className="text-sm md:text-base text-gray-600 font-bold max-w-2xl mx-auto mt-1">
             {lang === 'zh'
-              ? '专注西班牙本地零售与批发市场，为您打通从一手货源、选品建议到数字化订货的每一个环节'
-              : 'Suministro integral para bazares, papelerías, colegios y comercios minoristas con atención comercial cercana.'}
+              ? '专注自主文具零售选品与机构大客户采购，为您提供丰富齐全的现货文具与贴心服务'
+              : 'Suministro integral para proyectos educativos, compras institucionales y venta comercial con atención dedicada.'}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             {
-              icon: '🏭',
-              titleZh: '一手贸易源头 · 充足利润空间',
-              titleEs: 'Precios Mayoristas Directos',
+              icon: '🏛️',
+              titleZh: '大客户与机构大宗采购',
+              titleEs: 'Suministro para Grandes Cuentas',
               descZh:
-                '剔除多层不必要中间加价环节，直接为您提供源头批发底价，为百货和文具零售商预留极具竞争力的销售毛利空间。',
+                '为学校、教育机构、企业办公等大客户提供专属集采对接，支持根据需求制定批量采购方案与样品质检。',
               descEs:
-                'Sin intermediarios innecesarios. Precios competitivos para que tu comercio obtenga un margen saludable y sostenible.',
-              tag: '100% Directo',
+                'Atención especializada para colegios, academias y empresas que requieren compras consolidadas y presupuestos a medida.',
+              tag: '大宗采购',
             },
             {
               icon: '📦',
@@ -279,47 +279,47 @@ export const Home: React.FC<HomeProps> = ({
                 '涵盖学生书写用具、办公桌面、收纳文件夹、本册纸品、Artix 美术画材、正版热门 IP 与高性价比基础系列，一站式购齐。',
               descEs:
                 'Material escolar, artículos de oficina, archivo, cuadernos, bellas artes y líneas de alta rotación.',
-              tag: 'Catálogo Total',
+              tag: '现货全系',
             },
             {
-              icon: '🚚',
-              titleZh: '西班牙本地大仓 · 48H 闪电到店',
-              titleEs: 'Logística Peninsular 48H',
+              icon: '🏪',
+              titleZh: '自主精选零售选品',
+              titleEs: 'Catálogo Minorista Seleccionado',
               descZh:
-                '马德里本地大型仓储常备现货，小批量多频次灵活补货，不积压流动资金，紧急断货迅速送达。',
+                '直观清晰的在线选品商城与样品展厅，随时随地挑选最新文具产品，快速加入选购清单。',
               descEs:
-                'Almacenes en España con stock disponible continuo para reposiciones ágiles y sin tiempos de espera prolongados.',
-              tag: 'Stock Real',
+                'Exposición digital cómoda y visual para descubrir novedades y formalizar tu selección de productos de forma sencilla.',
+              tag: '精选零售',
             },
             {
               icon: '🏷️',
-              titleZh: '主流品牌与高性价比梯队',
+              titleZh: '主流品牌与品质保障',
               titleEs: 'Gama Multimarca y Marcas Líderes',
               descZh:
-                '联合供应 Bic、Milan、Pilot、Stabilo、Edding、Main Paper 等各大品牌，满足不同消费客群的差异化需求。',
+                '联合供应 Bic、Milan、Pilot、Stabilo、Edding、Main Paper 等各大知名品牌，满足多样化使用与教学需求。',
               descEs:
                 'Disponibilidad de marcas reconocidas del mercado escolar y de oficina en un único pedido consolidado.',
-              tag: 'Top Brands',
+              tag: '知名品牌',
             },
             {
               icon: '🎁',
-              titleZh: '陈列展架支持与动销物料',
+              titleZh: '展架支持与样品陈列',
               titleEs: 'Expositores y Soporte Comercial',
               descZh:
-                '符合订货标准的合作商户免费提供优质金属落地展架、台面展架、门头 POP 海报与当季宣传画册，助力店面动销。',
+                '提供配套产品陈列展架、分类物料与宣传画册，全方位满足店面及机构展示需求。',
               descEs:
                 'Mobiliario comercial, expositores de suelo y sobremesa, catálogos impresos y material promocional para tu punto de venta.',
-              tag: 'Soporte PLV',
+              tag: '展示支持',
             },
             {
               icon: '💻',
-              titleZh: '高效数智化系统 · 一键导出 Excel',
-              titleEs: 'Gestión Digital Ágil y Excel',
+              titleZh: '便捷数字化清单管理',
+              titleEs: 'Gestión Digital Cómoda',
               descZh:
-                '支持线上自主加购、一键导出带 SKU、EAN 条码与包数的标准 Excel 订货表格，或通过 WhatsApp 秒发正式报单。',
+                '支持在线自主挑选加购、清单核对，并通过 WhatsApp 快速发送报单，沟通高效顺畅。',
               descEs:
-                'Cesta digital rápida, exportación de listas a Excel con SKU y EAN, y tramitación instantánea vía WhatsApp.',
-              tag: 'Excel & Web',
+                'Selecciona cómodamente tus productos, revisa tu selección y tramita tus consultas directamente por WhatsApp.',
+              tag: '便捷选购',
             },
           ].map((card, idx) => (
             <div
@@ -359,40 +359,40 @@ export const Home: React.FC<HomeProps> = ({
             </h2>
             <p className="text-sm md:text-base text-blue-100 font-bold max-w-xl mx-auto mt-1">
               {lang === 'zh'
-                ? '无论您是社区百货零售、专业文具书店还是学校机构集采，均有量身定制的供货方案'
-                : 'Soluciones a medida para cada tipo de comercio, volumen de compra y proyecto.'}
+                ? '支持自主选品零售选购，并为各类大客户提供定制化集采服务'
+                : 'Soluciones adaptadas para compras minoristas y suministros de gran volumen.'}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               {
-                icon: '🏪',
-                titleZh: '百货零售 / Bazar',
-                titleEs: 'Bazar y Comercio',
-                descZh: '专架直配，精选高频动销热门文具，小额混批，资金周转快。',
-                descEs: 'Expositores dedicados con alta rotación y reposición rápida.',
-              },
-              {
-                icon: '📚',
-                titleZh: '文具书店专柜',
-                titleEs: 'Papelería / Librería',
-                descZh: '全套开学季文具、2027 年历日历首发、品质正品专柜支持。',
-                descEs: 'Gama completa escolar, agendas 2027 y marcas destacadas.',
+                icon: '🏛️',
+                titleZh: '大客户大宗集采',
+                titleEs: 'Grandes Cuentas & Empresas',
+                descZh: '专为大型企事业单位提供按需选品与大宗订货方案，业务经理全程对接。',
+                descEs: 'Suministro consolidado para empresas y entidades con asesoría directa.',
               },
               {
                 icon: '🏫',
-                titleZh: '学校 / 家委会集采',
-                titleEs: 'Colegios y AMPAs',
-                descZh: '提供专属样品展厅模式（无标价），大宗学期订货享专属团购折扣与清单导出。',
-                descEs: 'Catálogo de muestras para seleccionar listas escolares sin precios.',
+                titleZh: '学校与教育机构',
+                titleEs: 'Colegios y Academias',
+                descZh: '提供学期常用文具、教学画材、倒数日历与活动物资选品支持。',
+                descEs: 'Material escolar, manualidades y artículos didácticos para centros educativos.',
               },
               {
-                icon: '🌐',
-                titleZh: '区域分销与大宗客户',
-                titleEs: 'Distribuidores Mayoristas',
-                descZh: '专属区域支持，阶梯量贩采购返点，专职业务代表一对一全程跟进。',
-                descEs: 'Tarifas por volumen, rapeles de compra y asesoría comercial dedicada.',
+                icon: '🏪',
+                titleZh: '自主零售精品选购',
+                titleEs: 'Selección Minorista',
+                descZh: '精选高频实用文具现货，分类直观清晰，支持在线挑选与快速报单。',
+                descEs: 'Catálogo de papelería seleccionada con tramitación ágil de pedidos.',
+              },
+              {
+                icon: '🎁',
+                titleZh: '节庆与开学专场',
+                titleEs: 'Campañas Especiales',
+                descZh: '返校季全套文具、圣诞季礼品贺卡与 2027 年历日历现货直供。',
+                descEs: 'Campañas de vuelta al cole, Navidad y calendarios con stock garantizado.',
               },
             ].map((item, idx) => (
               <div
@@ -531,10 +531,10 @@ export const Home: React.FC<HomeProps> = ({
                 onChange={handleInputChange}
                 className="w-full px-3.5 py-2.5 rounded-xl border-3 border-[#222] text-sm font-bold bg-[#fcf8f2] focus:bg-white focus:outline-none"
               >
-                <option value="bazar">{lang === 'zh' ? '百货零售店 / Bazar' : 'Bazar / Comercio General'}</option>
-                <option value="papeleria">{lang === 'zh' ? '专业文具与书店 / Papelería y Librería' : 'Papelería y Librería'}</option>
-                <option value="colegio">{lang === 'zh' ? '学校 / 家委会 / 培训机构' : 'Colegio / AMPA / Academia'}</option>
-                <option value="distribuidor">{lang === 'zh' ? '区域分销 / 批发连锁' : 'Distribuidor Mayorista'}</option>
+                <option value="corporativo">{lang === 'zh' ? '企事业单位 / 大客户大宗采购' : 'Empresa / Compra Corporativa'}</option>
+                <option value="colegio">{lang === 'zh' ? '学校 / 家委会 / 教育培训' : 'Colegio / AMPA / Centro Educativo'}</option>
+                <option value="comercio">{lang === 'zh' ? '文具零售 / 精品店' : 'Comercio / Papelería'}</option>
+                <option value="otro">{lang === 'zh' ? '其他采购咨询' : 'Otros'}</option>
               </select>
             </div>
 
@@ -564,8 +564,8 @@ export const Home: React.FC<HomeProps> = ({
                 <span>📱</span>
                 <span>
                   {lang === 'zh'
-                    ? '一键通过 WhatsApp 提交咨询 (604229098)'
-                    : 'Enviar Consulta por WhatsApp (604229098)'}
+                    ? '一键通过 WhatsApp 提交咨询'
+                    : 'Enviar Consulta por WhatsApp'}
                 </span>
               </button>
 
@@ -591,12 +591,12 @@ export const Home: React.FC<HomeProps> = ({
           <div className="text-left">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-2xl">📦</span>
-              <span className="font-black text-xl">KYRMAX · 文具贸易与批发供应链</span>
+              <span className="font-black text-xl">KYRMAX · 文具精选与大客户采购服务</span>
             </div>
             <p className="text-xs md:text-sm font-bold text-gray-800">
               {lang === 'zh'
-                ? '专注西班牙本土百货零售供货、专业文具批发与学校机构集采 · 业务经理 1 对 1 服务'
-                : 'Suministro y distribución mayorista de material escolar, oficina y papelería comercial en España.'}
+                ? '专注自主文具零售选品与学校机构大客户集采 · 专属客服 1 对 1 服务'
+                : 'Catálogo de papelería seleccionada y suministro institucional en España.'}
             </p>
           </div>
 
