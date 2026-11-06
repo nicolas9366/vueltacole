@@ -1077,7 +1077,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   }}
                   className="w-full appearance-none pl-3 pr-7 py-2.5 rounded-xl border-3 border-[#222] bg-amber-50 text-[#222] font-black text-xs shadow-[2px_2px_0px_#222] focus:outline-none focus:ring-2 focus:ring-amber-400 truncate"
                 >
-                  <option value="all">🏷️ {lang === 'zh' ? '名牌直达 (全部)' : 'Marcas (Todas)'}</option>
+                  <option value="all">🏷️ {lang === 'zh' ? '品牌精选直达' : 'Todas las Marcas'}</option>
                   <option value="Bic">Bic 比克</option>
                   <option value="Pilot">Pilot 百乐</option>
                   <option value="Milan">Milan 米兰</option>
@@ -1103,13 +1103,11 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   className="w-full appearance-none pl-3 pr-7 py-2.5 rounded-xl border-3 border-[#222] bg-white text-[#222] font-black text-xs shadow-[2px_2px_0px_#222] focus:outline-none focus:ring-2 focus:ring-[#5c94fc] truncate"
                 >
                   <option value="all">
-                    📂 {lang === 'zh'
-                      ? `全部子类 (${subCategories.reduce((acc, s) => acc + s.count, 0)})`
-                      : `Todas (${subCategories.reduce((acc, s) => acc + s.count, 0)})`}
+                    📂 {lang === 'zh' ? '全部细分类目' : 'Todas las Subcategorías'}
                   </option>
                   {subCategories.map((sub) => (
                     <option key={sub.key} value={sub.key}>
-                      {lang === 'zh' ? sub.labelZh : sub.labelEs} ({sub.count})
+                      {lang === 'zh' ? sub.labelZh : sub.labelEs}
                     </option>
                   ))}
                 </select>

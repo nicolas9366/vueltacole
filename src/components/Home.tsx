@@ -53,7 +53,7 @@ export const Home: React.FC<HomeProps> = ({
         ? '学校机构 / Colegio'
         : '大宗分销 / Distribuidor';
 
-    let msg = `🤝 *【文具贸易与批发业务合作咨询】*\n`;
+    let msg = `🤝 *文具贸易与批发业务合作咨询*\n`;
     msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
     msg += `🏪 店铺/公司: ${formData.shopName || '未填写'}\n`;
     msg += `👤 负责人: ${formData.contactName || '未填写'}\n`;
