@@ -37,6 +37,24 @@ export interface CartItem {
   quantity: number;
 }
 
+export interface AuthUser {
+  username: string;
+  email: string;
+  role: 'vip' | 'retailer' | 'school' | 'customer';
+  companyName?: string;
+  phone?: string;
+  loginAt: string;
+}
+
+export const TEST_ACCOUNT = {
+  username: 'test',
+  password: 'test..',
+  email: 'madyu001@gmail.com',
+  companyName: 'Main Paper VIP 商户',
+  phone: '+34 688 000 000',
+  role: 'vip' as const,
+};
+
 interface ActionStoreProps {
   lang: 'zh' | 'es';
   onNavigateHome: () => void;
@@ -45,14 +63,15 @@ interface ActionStoreProps {
 
 const PVP_MULTIPLIER = 2.8;
 
-// 11 Official Master Catalog Departments covering 100% of 6,109 products cleanly
-// Strictly aligned with CAT_AGENDAS-Y-CALENDARIOS_2027_web.pdf & CATALOGO-GENERAL-2026_ESP_web-MP.pdf
+// 12 Official Master Catalog Departments covering 100% of products cleanly
+// Strictly aligned with official catalogs & verified subcategories
 export const MASTER_DEPARTMENTS = [
   { id: 'all', labelEs: 'Todo el Catálogo', labelZh: '全部商品', icon: '⭐' },
   { id: '09', labelEs: 'Primeras Marcas (Bic, Milan...)', labelZh: '国际合作名牌 (Bic, Milan...)', icon: '🏷️' },
+  { id: '12', labelEs: 'Línea BeBasic (Ahorro)', labelZh: 'BeBasic 超值基础系列', icon: '⚡' },
   { id: '01', labelEs: 'Agendas y Calendarios 2027', labelZh: '年历与日历 (2027专刊)', icon: '📅' },
   { id: '02', labelEs: 'Escritura', labelZh: '书写用品', icon: '✏️' },
-  { id: '03', labelEs: 'Sobremesa y Oficina', labelZh: '桌面与办公用品', icon: '📎' },
+  { id: '03', labelEs: 'Sobremesa, Corrección y Oficina', labelZh: '桌面办公与修正工具', icon: '📎' },
   { id: '04', labelEs: 'Archivo y Clasificación', labelZh: '文件归档与分类', icon: '📁' },
   { id: '05', labelEs: 'Cuadernos y Manipulado', labelZh: '本册与纸品 (Manipulado)', icon: '📓' },
   { id: '06', labelEs: 'Mochilas y Escolar', labelZh: '箱包与学生用品', icon: '🎒' },
@@ -288,6 +307,174 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
   const [addedAnimationId, setAddedAnimationId] = useState<string | null>(null);
 
   const topGridRef = useRef<HTMLDivElement>(null);
+
+  // User Authentication State
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>(() => {
+    try {
+      const saved = localStorage.getItem('vueltacole_logged_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
+  const [authTab, setAuthTab] = useState<'login' | 'register'>('login');
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [authSuccess, setAuthSuccess] = useState<string | null>(null);
+
+  // Auth Inputs
+  const [loginIdentifier, setLoginIdentifier] = useState<string>('');
+  const [loginPassword, setLoginPassword] = useState<string>('');
+
+  const [regUsername, setRegUsername] = useState<string>('');
+  const [regEmail, setRegEmail] = useState<string>('');
+  const [regPassword, setRegPassword] = useState<string>('');
+  const [regConfirmPassword, setRegConfirmPassword] = useState<string>('');
+  const [regCompany, setRegCompany] = useState<string>('');
+  const [regPhone, setRegPhone] = useState<string>('');
+
+  const handleLogin = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    setAuthError(null);
+
+    const id = loginIdentifier.trim().toLowerCase();
+    const pwd = loginPassword.trim();
+
+    if (!id || !pwd) {
+      setAuthError(lang === 'zh' ? '请输入用户名或邮箱及密码' : 'Introduce usuario/email y contraseña');
+      return;
+    }
+
+    // Official test account: test / test.. / madyu001@gmail.com
+    const isTestMatch =
+      (id === TEST_ACCOUNT.username.toLowerCase() || id === TEST_ACCOUNT.email.toLowerCase()) &&
+      pwd === TEST_ACCOUNT.password;
+
+    if (isTestMatch) {
+      const user: AuthUser = {
+        username: TEST_ACCOUNT.username,
+        email: TEST_ACCOUNT.email,
+        role: TEST_ACCOUNT.role,
+        companyName: TEST_ACCOUNT.companyName,
+        phone: TEST_ACCOUNT.phone,
+        loginAt: new Date().toISOString(),
+      };
+      setCurrentUser(user);
+      localStorage.setItem('vueltacole_logged_user', JSON.stringify(user));
+      setAuthSuccess(lang === 'zh' ? '欢迎回来，VIP 商户！' : '¡Bienvenido de nuevo!');
+      setTimeout(() => {
+        setIsAuthModalOpen(false);
+        setAuthSuccess(null);
+      }, 700);
+      return;
+    }
+
+    // Check custom registered users
+    try {
+      const savedAccounts: any[] = JSON.parse(localStorage.getItem('vueltacole_registered_users') || '[]');
+      const found = savedAccounts.find(
+        (u) => (u.username.toLowerCase() === id || u.email.toLowerCase() === id) && u.password === pwd
+      );
+      if (found) {
+        const user: AuthUser = {
+          username: found.username,
+          email: found.email,
+          role: 'retailer',
+          companyName: found.companyName || found.username,
+          phone: found.phone,
+          loginAt: new Date().toISOString(),
+        };
+        setCurrentUser(user);
+        localStorage.setItem('vueltacole_logged_user', JSON.stringify(user));
+        setAuthSuccess(lang === 'zh' ? `欢迎，${user.username}！` : `¡Bienvenido, ${user.username}!`);
+        setTimeout(() => {
+          setIsAuthModalOpen(false);
+          setAuthSuccess(null);
+        }, 700);
+        return;
+      }
+    } catch {
+      // ignore
+    }
+
+    setAuthError(
+      lang === 'zh'
+        ? '账号或密码不正确（测试账号: test / 密码: test..）'
+        : 'Credenciales incorrectas (Usuario prueba: test / pass: test..)'
+    );
+  };
+
+  const handleQuickFillTest = () => {
+    setLoginIdentifier(TEST_ACCOUNT.username);
+    setLoginPassword(TEST_ACCOUNT.password);
+    setAuthError(null);
+  };
+
+  const handleRegister = (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError(null);
+
+    if (!regUsername.trim() || !regEmail.trim() || !regPassword) {
+      setAuthError(lang === 'zh' ? '请填写完整的用户名、邮箱和密码' : 'Completa todos los campos obligatorios');
+      return;
+    }
+    if (regPassword !== regConfirmPassword) {
+      setAuthError(lang === 'zh' ? '两次输入的密码不一致' : 'Las contraseñas no coinciden');
+      return;
+    }
+    if (!regEmail.includes('@')) {
+      setAuthError(lang === 'zh' ? '请输入有效的邮箱地址' : 'Introduce un email válido');
+      return;
+    }
+
+    const newUser = {
+      username: regUsername.trim(),
+      email: regEmail.trim(),
+      password: regPassword,
+      companyName: regCompany.trim() || regUsername.trim(),
+      phone: regPhone.trim(),
+      createdAt: new Date().toISOString(),
+    };
+
+    try {
+      const savedAccounts: any[] = JSON.parse(localStorage.getItem('vueltacole_registered_users') || '[]');
+      if (
+        savedAccounts.some(
+          (u) =>
+            u.username.toLowerCase() === newUser.username.toLowerCase() ||
+            u.email.toLowerCase() === newUser.email.toLowerCase()
+        )
+      ) {
+        setAuthError(lang === 'zh' ? '该用户名或邮箱已被注册' : 'El usuario o email ya está registrado');
+        return;
+      }
+      savedAccounts.push(newUser);
+      localStorage.setItem('vueltacole_registered_users', JSON.stringify(savedAccounts));
+    } catch {
+      // ignore
+    }
+
+    const user: AuthUser = {
+      username: newUser.username,
+      email: newUser.email,
+      role: 'retailer',
+      companyName: newUser.companyName,
+      phone: newUser.phone,
+      loginAt: new Date().toISOString(),
+    };
+    setCurrentUser(user);
+    localStorage.setItem('vueltacole_logged_user', JSON.stringify(user));
+    setAuthSuccess(lang === 'zh' ? '注册成功并已自动登录！' : '¡Registro completado con éxito!');
+    setTimeout(() => {
+      setIsAuthModalOpen(false);
+      setAuthSuccess(null);
+    }, 800);
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    localStorage.removeItem('vueltacole_logged_user');
+  };
 
   // Load catalog.json asynchronously from public/data/
   useEffect(() => {
@@ -555,6 +742,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
       : `🛒 *PEDIDO TIENDA VUELTA AL COLE (MAIN PAPER 2026)*\n`;
 
     text += `📅 Fecha: ${new Date().toLocaleDateString('es-ES')}\n`;
+    if (currentUser) {
+      text += `👤 *Cliente:* ${currentUser.companyName || currentUser.username} (${currentUser.email})\n`;
+      if (currentUser.phone) {
+        text += `📞 *Teléfono:* ${currentUser.phone}\n`;
+      }
+      text += `⭐ *Cuenta:* VIP Registrado\n`;
+    }
     text += `━━━━━━━━━━━━━━━━━━━━━\n`;
 
     cart.forEach((item, index) => {
@@ -616,31 +810,62 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             </p>
           </div>
 
-          {/* DUAL MODE SWITCHER (Action Store vs Showroom) */}
-          <div className="bg-[#fff] p-2 rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
-            <button
-              onClick={() => setMode('store')}
-              className={`w-full sm:w-auto px-4 py-2.5 rounded-xl font-black text-sm md:text-base border-3 border-[#222] transition-all flex items-center justify-center gap-2 ${
-                mode === 'store'
-                  ? 'bg-[#f8d878] text-[#222] shadow-[3px_3px_0px_#222] scale-105'
-                  : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
-              }`}
-            >
-              <span className="text-lg">🛒</span>
-              <span>{lang === 'zh' ? '零售商城 (PVP)' : 'Modo Tienda (PVP)'}</span>
-            </button>
+          {/* USER AUTH & DUAL MODE SWITCHER */}
+          <div className="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
+            {currentUser ? (
+              <div className="bg-white px-3 py-2 rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] flex items-center gap-2 text-xs font-black w-full sm:w-auto justify-between sm:justify-start">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-gray-900 truncate max-w-[120px]">
+                    👤 {currentUser.username}
+                  </span>
+                  <span className="bg-[#f8d878] text-[#222] px-1.5 py-0.5 rounded text-[10px] border border-[#222]">
+                    {lang === 'zh' ? 'VIP商户' : 'VIP'}
+                  </span>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="text-[#e52521] hover:underline font-black text-xs ml-2 cursor-pointer"
+                >
+                  {lang === 'zh' ? '退出' : 'Salir'}
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => setIsAuthModalOpen(true)}
+                className="w-full sm:w-auto px-4 py-2.5 bg-white hover:bg-yellow-100 text-[#222] rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] text-xs md:text-sm font-black flex items-center justify-center gap-1.5 transition-all active:translate-y-0.5 cursor-pointer"
+              >
+                <span>🔑</span>
+                <span>{lang === 'zh' ? '商户登录 / 注册' : 'Acceder / Registro'}</span>
+              </button>
+            )}
 
-            <button
-              onClick={() => setMode('showroom')}
-              className={`w-full sm:w-auto px-4 py-2.5 rounded-xl font-black text-sm md:text-base border-3 border-[#222] transition-all flex items-center justify-center gap-2 ${
-                mode === 'showroom'
-                  ? 'bg-[#5c94fc] text-white shadow-[3px_3px_0px_#222] scale-105'
-                  : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
-              }`}
-            >
-              <span className="text-lg">🏛️</span>
-              <span>{lang === 'zh' ? '样品展厅' : 'Modo Showroom'}</span>
-            </button>
+            {/* DUAL MODE SWITCHER (Action Store vs Showroom) */}
+            <div className="bg-[#fff] p-2 rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
+              <button
+                onClick={() => setMode('store')}
+                className={`w-full sm:w-auto px-4 py-2.5 rounded-xl font-black text-sm md:text-base border-3 border-[#222] transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                  mode === 'store'
+                    ? 'bg-[#f8d878] text-[#222] shadow-[3px_3px_0px_#222] scale-105'
+                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                }`}
+              >
+                <span className="text-lg">🛒</span>
+                <span>{lang === 'zh' ? '零售商城 (PVP)' : 'Modo Tienda (PVP)'}</span>
+              </button>
+
+              <button
+                onClick={() => setMode('showroom')}
+                className={`w-full sm:w-auto px-4 py-2.5 rounded-xl font-black text-sm md:text-base border-3 border-[#222] transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                  mode === 'showroom'
+                    ? 'bg-[#5c94fc] text-white shadow-[3px_3px_0px_#222] scale-105'
+                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                }`}
+              >
+                <span className="text-lg">🏛️</span>
+                <span>{lang === 'zh' ? '样品展厅' : 'Modo Showroom'}</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -799,40 +1024,60 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 {lang === 'zh' ? '📑 官方全系分类导航' : '📑 Categorías Principales'}
               </span>
               <span className="text-[11px] text-gray-500 font-bold hidden sm:inline">
-                {lang === 'zh' ? '(11 大行业分类 · 直观全景平铺)' : '(11 departamentos oficiales)'}
+                {lang === 'zh' ? '(全系核心大类 · 直观平铺无横向滚动)' : '(Catálogo oficial completo)'}
               </span>
             </div>
 
-            {/* Direct Brand Fast Pass Button */}
-            <button
-              onClick={() => {
-                handleSelectDept('09');
-                setSelectedSubCategory('all');
-              }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] transition-all flex items-center gap-1.5 active:translate-y-0.5 ${
-                selectedDept === '09'
-                  ? 'bg-[#e52521] text-white shadow-[2px_2px_0px_#222]'
-                  : 'bg-amber-300 hover:bg-amber-400 text-gray-950 shadow-[2px_2px_0px_#222]'
-              }`}
-            >
-              <span>🏷️</span>
-              <span>{lang === 'zh' ? '⭐ 国际名牌专区 (Bic · Milan · Pilot)' : '⭐ Marcas Oficiales (Bic · Milan)'}</span>
-            </button>
+            {/* Direct Brand & BeBasic Fast Pass Buttons */}
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                onClick={() => {
+                  handleSelectDept('09');
+                  setSelectedSubCategory('all');
+                }}
+                className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] transition-all flex items-center gap-1.5 active:translate-y-0.5 cursor-pointer ${
+                  selectedDept === '09'
+                    ? 'bg-[#e52521] text-white shadow-[2px_2px_0px_#222]'
+                    : 'bg-amber-300 hover:bg-amber-400 text-gray-950 shadow-[2px_2px_0px_#222]'
+                }`}
+              >
+                <span>🏷️</span>
+                <span>{lang === 'zh' ? '⭐ 国际名牌专区 (Bic · Milan · Pilot)' : '⭐ Marcas Oficiales (Bic · Milan)'}</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  handleSelectDept('12');
+                  setSelectedSubCategory('all');
+                }}
+                className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] transition-all flex items-center gap-1.5 active:translate-y-0.5 cursor-pointer ${
+                  selectedDept === '12'
+                    ? 'bg-[#e52521] text-white shadow-[2px_2px_0px_#222]'
+                    : 'bg-emerald-300 hover:bg-emerald-400 text-gray-950 shadow-[2px_2px_0px_#222]'
+                }`}
+              >
+                <span>⚡</span>
+                <span>{lang === 'zh' ? '⚡ BeBasic 超值特惠专区' : '⚡ Línea BeBasic (Ahorro)'}</span>
+              </button>
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-2">
             {MASTER_DEPARTMENTS.map((dept) => {
               const active = selectedDept === dept.id;
               const isBrandDept = dept.id === '09';
+              const isBeBasicDept = dept.id === '12';
               return (
                 <button
                   key={dept.id}
                   onClick={() => handleSelectDept(dept.id)}
-                  className={`p-2.5 rounded-xl font-black text-xs border-2 md:border-3 border-[#222] transition-all flex items-center gap-2 text-left justify-start ${
+                  className={`p-2.5 rounded-xl font-black text-xs border-2 md:border-3 border-[#222] transition-all flex items-center gap-2 text-left justify-start cursor-pointer ${
                     active
                       ? 'bg-[#e52521] text-white shadow-[3px_3px_0px_#222] -translate-y-0.5'
                       : isBrandDept
                       ? 'bg-amber-100 hover:bg-amber-200 text-gray-950 shadow-[2px_2px_0px_#222] ring-2 ring-amber-400'
+                      : isBeBasicDept
+                      ? 'bg-emerald-100 hover:bg-emerald-200 text-gray-950 shadow-[2px_2px_0px_#222] ring-2 ring-emerald-400'
                       : 'bg-white text-gray-700 hover:bg-yellow-50 shadow-[2px_2px_0px_#222]'
                   }`}
                 >
@@ -1620,6 +1865,236 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   </button>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 6. USER LOGIN & REGISTRATION MODAL */}
+      {isAuthModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs animate-in fade-in duration-150">
+          <div className="bg-white rounded-3xl border-4 border-[#222] shadow-[8px_8px_0px_#222] max-w-md w-full overflow-hidden relative animate-in zoom-in-95 duration-150">
+            {/* Header */}
+            <div className="bg-[#e52521] p-4 text-white border-b-4 border-[#222] flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">👤</span>
+                <span className="font-black text-lg md:text-xl">
+                  {lang === 'zh' ? '商户与采购客户中心' : 'Acceso Clientes y Empresas'}
+                </span>
+              </div>
+              <button
+                onClick={() => {
+                  setIsAuthModalOpen(false);
+                  setAuthError(null);
+                  setAuthSuccess(null);
+                }}
+                className="w-8 h-8 rounded-full bg-white/20 hover:bg-white text-white hover:text-[#222] font-black flex items-center justify-center transition-colors cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Tabs */}
+            <div className="flex border-b-3 border-[#222] bg-gray-100">
+              <button
+                onClick={() => {
+                  setAuthTab('login');
+                  setAuthError(null);
+                  setAuthSuccess(null);
+                }}
+                className={`flex-1 py-3 text-sm font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                  authTab === 'login'
+                    ? 'bg-white text-[#222] border-b-4 border-[#e52521] -mb-[3px]'
+                    : 'text-gray-500 hover:text-[#222]'
+                }`}
+              >
+                <span>🔑</span>
+                <span>{lang === 'zh' ? '账号登录' : 'Iniciar Sesión'}</span>
+              </button>
+              <button
+                onClick={() => {
+                  setAuthTab('register');
+                  setAuthError(null);
+                  setAuthSuccess(null);
+                }}
+                className={`flex-1 py-3 text-sm font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                  authTab === 'register'
+                    ? 'bg-white text-[#222] border-b-4 border-[#e52521] -mb-[3px]'
+                    : 'text-gray-500 hover:text-[#222]'
+                }`}
+              >
+                <span>✨</span>
+                <span>{lang === 'zh' ? '新商户注册' : 'Crear Cuenta'}</span>
+              </button>
+            </div>
+
+            {/* Body */}
+            <div className="p-6">
+              {/* Alert message */}
+              {authError && (
+                <div className="mb-4 p-3 bg-red-100 border-2 border-red-500 rounded-xl text-red-700 text-xs font-bold flex items-center gap-2">
+                  <span>⚠️</span>
+                  <span>{authError}</span>
+                </div>
+              )}
+              {authSuccess && (
+                <div className="mb-4 p-3 bg-emerald-100 border-2 border-emerald-500 rounded-xl text-emerald-800 text-xs font-bold flex items-center gap-2">
+                  <span>✅</span>
+                  <span>{authSuccess}</span>
+                </div>
+              )}
+
+              {authTab === 'login' ? (
+                <div>
+                  {/* Quick Fill Test Account Banner */}
+                  <div className="mb-4 bg-yellow-50 p-3 rounded-2xl border-2 border-[#222] shadow-[2px_2px_0px_#222] flex items-center justify-between gap-2">
+                    <div className="text-[11px] font-bold text-gray-700">
+                      <div className="font-black text-[#222]">
+                        {lang === 'zh' ? '⚡ 体验/演示测试账号:' : '⚡ Cuenta Oficial de Prueba:'}
+                      </div>
+                      <div>账号: <code className="bg-yellow-200 px-1 rounded font-mono font-bold">test</code> · 密码: <code className="bg-yellow-200 px-1 rounded font-mono font-bold">test..</code></div>
+                      <div className="text-[10px] text-gray-500">邮箱: madyu001@gmail.com</div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleQuickFillTest}
+                      className="px-2.5 py-1.5 bg-[#f8d878] hover:bg-yellow-400 text-[#222] rounded-xl border-2 border-[#222] text-xs font-black shrink-0 shadow-[1px_1px_0px_#222] active:translate-y-0.5 cursor-pointer"
+                    >
+                      {lang === 'zh' ? '一键填入' : 'Rellenar'}
+                    </button>
+                  </div>
+
+                  <form onSubmit={handleLogin} className="space-y-4">
+                    <div>
+                      <label className="block text-xs font-black text-gray-700 mb-1">
+                        {lang === 'zh' ? '用户名 或 注册邮箱' : 'Usuario o Email'}
+                      </label>
+                      <input
+                        type="text"
+                        value={loginIdentifier}
+                        onChange={(e) => setLoginIdentifier(e.target.value)}
+                        placeholder="test 或 madyu001@gmail.com"
+                        className="w-full px-3.5 py-2.5 rounded-xl border-3 border-[#222] text-sm font-bold bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-black text-gray-700 mb-1">
+                        {lang === 'zh' ? '登录密码' : 'Contraseña'}
+                      </label>
+                      <input
+                        type="password"
+                        value={loginPassword}
+                        onChange={(e) => setLoginPassword(e.target.value)}
+                        placeholder="test.."
+                        className="w-full px-3.5 py-2.5 rounded-xl border-3 border-[#222] text-sm font-bold bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full py-3 bg-[#e52521] hover:bg-red-600 text-white rounded-xl border-3 border-[#222] shadow-[3px_3px_0px_#222] text-sm font-black transition-all active:translate-y-0.5 cursor-pointer flex items-center justify-center gap-2"
+                    >
+                      <span>🚀</span>
+                      <span>{lang === 'zh' ? '立即登录' : 'Entrar en la Tienda'}</span>
+                    </button>
+                  </form>
+                </div>
+              ) : (
+                <form onSubmit={handleRegister} className="space-y-3">
+                  <div>
+                    <label className="block text-xs font-black text-gray-700 mb-1">
+                      {lang === 'zh' ? '用户名 *' : 'Nombre de Usuario *'}
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={regUsername}
+                      onChange={(e) => setRegUsername(e.target.value)}
+                      placeholder="ej: papeleria_sol"
+                      className="w-full px-3 py-2 rounded-xl border-2 border-[#222] text-xs font-bold"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-black text-gray-700 mb-1">
+                      {lang === 'zh' ? '商户邮箱 *' : 'Email de Contacto *'}
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={regEmail}
+                      onChange={(e) => setRegEmail(e.target.value)}
+                      placeholder="tienda@ejemplo.com"
+                      className="w-full px-3 py-2 rounded-xl border-2 border-[#222] text-xs font-bold"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-xs font-black text-gray-700 mb-1">
+                        {lang === 'zh' ? '密码 *' : 'Contraseña *'}
+                      </label>
+                      <input
+                        type="password"
+                        required
+                        value={regPassword}
+                        onChange={(e) => setRegPassword(e.target.value)}
+                        placeholder="••••••"
+                        className="w-full px-3 py-2 rounded-xl border-2 border-[#222] text-xs font-bold"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-black text-gray-700 mb-1">
+                        {lang === 'zh' ? '确认密码 *' : 'Confirmar *'}
+                      </label>
+                      <input
+                        type="password"
+                        required
+                        value={regConfirmPassword}
+                        onChange={(e) => setRegConfirmPassword(e.target.value)}
+                        placeholder="••••••"
+                        className="w-full px-3 py-2 rounded-xl border-2 border-[#222] text-xs font-bold"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-xs font-black text-gray-700 mb-1">
+                        {lang === 'zh' ? '商户/店铺名称' : 'Nombre de Tienda'}
+                      </label>
+                      <input
+                        type="text"
+                        value={regCompany}
+                        onChange={(e) => setRegCompany(e.target.value)}
+                        placeholder="ej: Librería Madrid"
+                        className="w-full px-3 py-2 rounded-xl border-2 border-[#222] text-xs font-bold"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-black text-gray-700 mb-1">
+                        {lang === 'zh' ? 'WhatsApp/电话' : 'WhatsApp/Tel'}
+                      </label>
+                      <input
+                        type="text"
+                        value={regPhone}
+                        onChange={(e) => setRegPhone(e.target.value)}
+                        placeholder="+34 600..."
+                        className="w-full px-3 py-2 rounded-xl border-2 border-[#222] text-xs font-bold"
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full mt-2 py-3 bg-[#5c94fc] hover:bg-blue-600 text-white rounded-xl border-3 border-[#222] shadow-[3px_3px_0px_#222] text-sm font-black transition-all active:translate-y-0.5 cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    <span>✨</span>
+                    <span>{lang === 'zh' ? '立即创建商户账号' : 'Completar Registro'}</span>
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </div>

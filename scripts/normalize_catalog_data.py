@@ -20,17 +20,18 @@ import openpyxl
 
 # Master Department definitions
 MASTER_DEPT_INFO = {
-    '01': ('01', '📅 Agendas y Calendarios 2027', '📅 年历与日历 (2027专刊)'),
-    '02': ('02', '✏️ Escritura', '✏️ 书写用品'),
-    '03': ('03', '📎 Sobremesa y Oficina', '📎 桌面与办公用品'),
-    '04': ('04', '📁 Archivo y Clasificación', '📁 文件归档与分类'),
-    '05': ('05', '📓 Cuadernos y Manipulado', '📓 本册与纸品 (Manipulado)'),
-    '06': ('06', '🎒 Mochilas y Escolar', '🎒 箱包与学生用品'),
-    '07': ('07', '✂️ Manualidades y Adhesivos', '✂️ 手工与胶粘用品'),
-    '08': ('08', '🎨 Bellas Artes (Artix)', '🎨 美术画材 (Artix)'),
-    '09': ('09', '🏷️ Primeras Marcas', '🏷️ 国际合作名牌'),
-    '10': ('10', '🎀 Licencias, Sanrio y Regalo', '🎀 三丽鸥、IP与贺卡'),
-    '11': ('11', '📦 Expositores y PLV', '📦 展架与陈列物料'),
+    '01': ('01', 'Agendas y Calendarios 2027', '年历与日历 (2027专刊)'),
+    '02': ('02', 'Escritura', '书写用品'),
+    '03': ('03', 'Sobremesa, Corrección y Oficina', '桌面办公与修正工具'),
+    '04': ('04', 'Archivo y Clasificación', '文件归档与分类'),
+    '05': ('05', 'Cuadernos y Manipulado', '本册与纸品 (Manipulado)'),
+    '06': ('06', 'Mochilas y Escolar', '箱包与学生用品'),
+    '07': ('07', 'Manualidades y Adhesivos', '手工与胶粘用品'),
+    '08': ('08', 'Bellas Artes (Artix)', '美术画材 (Artix)'),
+    '09': ('09', 'Primeras Marcas', '国际合作名牌'),
+    '10': ('10', 'Licencias, Sanrio y Regalo', '三丽鸥、IP与贺卡'),
+    '11': ('11', 'Expositores y PLV', '展架与陈列物料'),
+    '12': ('12', 'Línea BeBasic (Ahorro)', 'BeBasic 超值基础系列'),
 }
 
 # 100% Verified Subcategory mappings based on ground truth product contents
@@ -227,6 +228,25 @@ def classify_product(p):
     sid = str(p.get('subid', ''))
     uc = clean_text(p.get('usercode', '')).upper()
     ne = clean_text(p.get('namees', '')).upper()
+
+    # Rule 0: BeBasic Series (Dedicated economy basic stationery line)
+    is_bebasic = (
+        (uc.startswith('S') and len(uc) > 1 and uc[1].isdigit()) or
+        'BEBASIC' in ne or 'BE BASIC' in ne or 'BEBASIC' in uc or
+        uc in ['EXBEBA', 'EXM26-33', 'EXM26-35', 'EXM26-36']
+    )
+    if is_bebasic:
+        m_id, d_es, d_zh = MASTER_DEPT_INFO['12']
+        if 'EXPOSITOR' in ne or uc.startswith('EX'):
+            return m_id, d_es, d_zh, 'Expositores BeBasic', 'BeBasic 陈列展架'
+        elif any(k in ne for k in ['PAPEL', 'FORRO', 'SOBRE', 'CARPETA', 'FUNDA', 'NOTAS', 'TACO']):
+            return m_id, d_es, d_zh, 'Papel y Oficina BeBasic', 'BeBasic 纸品与办公'
+        elif any(k in ne for k in ['ACRILIC', 'COLOR', 'PINCEL', 'CERA', 'DIBUJO', 'PEGAMENTO']):
+            return m_id, d_es, d_zh, 'Arte y Manualidades BeBasic', 'BeBasic 美术画材与胶粘'
+        elif any(k in ne for k in ['CALCULADORA', 'TIJERA', 'GRAP', 'CORRECTOR', 'GOMA', 'SACAPUNTA', 'PINZA', 'PERFORADORA']):
+            return m_id, d_es, d_zh, 'Sobremesa y Útiles BeBasic', 'BeBasic 桌面与实用工具'
+        else:
+            return m_id, d_es, d_zh, 'Escritura BeBasic', 'BeBasic 书写文具'
 
     # Rule 1: Greeting Cards (Tarjetas de Felicitación / Celebración)
     # The legacy database put TEM1 cards into topid 010 and 007. They belong in 'Licencias y Regalo'!

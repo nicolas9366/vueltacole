@@ -33,7 +33,11 @@ export const App: React.FC = () => {
       if (
         initial === 'tienda' ||
         host.startsWith('shop.') ||
+        host.startsWith('tienda.') ||
+        host.startsWith('store.') ||
         host.includes('shop.vueltacole.com') ||
+        host.includes('tienda.vueltacole.com') ||
+        host.includes('store.vueltacole.com') ||
         pathname.includes('shop') ||
         pathname.endsWith('shop.html') ||
         search.includes('page=tienda') ||
@@ -67,7 +71,11 @@ export const App: React.FC = () => {
       } else if (
         initial === 'tienda' ||
         host.startsWith('shop.') ||
+        host.startsWith('tienda.') ||
+        host.startsWith('store.') ||
         host.includes('shop.vueltacole.com') ||
+        host.includes('tienda.vueltacole.com') ||
+        host.includes('store.vueltacole.com') ||
         page === 'tienda' ||
         page === 'shop' ||
         page === 'catalogo' ||

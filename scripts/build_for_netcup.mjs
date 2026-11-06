@@ -89,8 +89,8 @@ fs.copyFileSync(
 const rootHtaccessContent = `<IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # Route shop.vueltacole.com to /shop/ if Document Root is set to httpdocs
-  RewriteCond %{HTTP_HOST} ^shop\\.vueltacole\\.com$ [NC]
+  # Route shop.vueltacole.com, tienda.vueltacole.com, store.vueltacole.com to /shop/ if Document Root is set to httpdocs
+  RewriteCond %{HTTP_HOST} ^(shop|tienda|store)\\.vueltacole\\.com$ [NC]
   RewriteCond %{REQUEST_URI} !^/shop/
   RewriteCond %{REQUEST_URI} !^/assets/
   RewriteCond %{REQUEST_URI} !^/data/
