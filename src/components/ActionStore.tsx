@@ -51,7 +51,7 @@ export const TEST_ACCOUNT = {
   username: 'test',
   password: 'test..',
   email: 'madyu001@gmail.com',
-  companyName: 'Main Paper VIP 商户',
+  companyName: 'KYRMAX VIP 采购商户',
   phone: '+34 604 229 098',
   role: 'vip' as const,
 };
@@ -948,16 +948,16 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="bg-[#f8d878] text-[#222] text-xs font-black px-3 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase tracking-wider">
-                {lang === 'zh' ? '✨ 2026 官方全系商品' : '✨ Catálogo Oficial 2026'}
+                {lang === 'zh' ? '✨ 2026 全系现货商品' : '✨ Catálogo Completo 2026'}
               </span>
               <span className="bg-[#5c94fc] text-white text-xs font-black px-2.5 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222]">
-                {lang === 'zh' ? '全系现货' : 'Catálogo Completo'}
+                {lang === 'zh' ? '现货直配' : 'Stock Inmediato'}
               </span>
             </div>
             <h1 className="text-2xl md:text-4xl font-black tracking-tight text-white drop-shadow-[2px_2px_0px_#222]">
               {lang === 'zh'
-                ? 'MAIN PAPER 全景文具站 & 样品展厅'
-                : 'MAIN PAPER · SUPERSTORE & SHOWROOM'}
+                ? '全景文具商城 & 样品展厅'
+                : 'CATÁLOGO & SHOWROOM DE PAPELERÍA'}
             </h1>
             <p className="text-sm md:text-base text-yellow-100 font-medium max-w-2xl mt-1">
               {mode === 'store'

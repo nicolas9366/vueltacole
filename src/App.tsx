@@ -135,11 +135,11 @@ export const App: React.FC = () => {
             className="flex items-center gap-3 cursor-pointer"
           >
             <div className="w-10 h-10 bg-[#e52521] rounded-xl border-2 border-[#f8d878] flex items-center justify-center shadow-[2px_2px_0px_#f8d878]">
-              <span className="font-black text-white text-base tracking-tighter">MP*</span>
+              <span className="font-black text-white text-base tracking-tighter">KM</span>
             </div>
             <div>
               <div className="font-black text-white text-lg leading-none tracking-wide">
-                MAIN PAPER <span className="text-[#f8d878] text-xs">20º ANIV.</span>
+                KYRMAX <span className="text-[#f8d878] text-xs">· {lang === 'zh' ? '文具贸易' : 'Papelería'}</span>
               </div>
               <div className="text-[11px] text-gray-400 font-medium">{t.brandSub}</div>
             </div>

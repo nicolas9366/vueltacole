@@ -14,7 +14,6 @@ export const Home: React.FC<HomeProps> = ({
   onNavigateToTienda,
   onNavigateToMap,
   onNavigateToNavidad,
-  onNavigateToCanje,
 }) => {
   // Contact info
   const WHATSAPP_NUMBER = '604229098';
@@ -54,19 +53,19 @@ export const Home: React.FC<HomeProps> = ({
         ? '学校机构 / Colegio'
         : '大宗分销 / Distribuidor';
 
-    let msg = `🤝 *【Main Paper 2026 招商入驻合作申请】*\n`;
+    let msg = `🤝 *【文具贸易与批发业务合作咨询】*\n`;
     msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
     msg += `🏪 店铺/公司: ${formData.shopName || '未填写'}\n`;
     msg += `👤 负责人: ${formData.contactName || '未填写'}\n`;
     msg += `📍 所在城市: ${formData.city || '未填写'}\n`;
     msg += `📞 联络电话: ${formData.phone || '未填写'}\n`;
     msg += `✉️ 电子邮箱: ${formData.email || '未填写'}\n`;
-    msg += `📦 意向类型: ${typeLabel}\n`;
+    msg += `📦 业务类型: ${typeLabel}\n`;
     if (formData.message) {
-      msg += `💬 留言备注: ${formData.message}\n`;
+      msg += `💬 采购需求: ${formData.message}\n`;
     }
     msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
-    msg += `来自 vueltacole.com 招商官网登记`;
+    msg += `来自 vueltacole.com 文具供应链直通平台`;
 
     const encoded = encodeURIComponent(msg);
     window.open(`${WHATSAPP_LINK}?text=${encoded}`, '_blank');
@@ -91,43 +90,45 @@ export const Home: React.FC<HomeProps> = ({
           <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
             <span className="bg-[#f8d878] text-[#222] text-xs md:text-sm font-black px-4 py-1.5 rounded-full border-3 border-[#222] shadow-[3px_3px_0px_#222] uppercase tracking-wider">
               {lang === 'zh'
-                ? '🚀 2026 官方招商入驻计划 · 西班牙全境招募'
-                : '🚀 Plan Oficial de Expansión y Puntos de Venta 2026'}
+                ? '🚀 西班牙文具贸易 · 批发供货与零售精选供应链'
+                : '🚀 Comercio y Distribución Mayorista de Papelería en España'}
             </span>
             <span className="bg-[#5c94fc] text-white text-xs md:text-sm font-black px-3.5 py-1.5 rounded-full border-3 border-[#222] shadow-[3px_3px_0px_#222]">
-              {lang === 'zh' ? '大厂直供 · 现货直发' : 'Directo de Fábrica'}
+              {lang === 'zh' ? '一手源头渠道 · 本地现货直发' : 'Stock Permanente · Envíos 48H'}
             </span>
           </div>
 
           {/* Main Title */}
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white drop-shadow-[4px_4px_0px_#222] mb-4 leading-tight">
             {lang === 'zh'
-              ? 'MAIN PAPER 欧洲文具大厂'
-              : 'MAIN PAPER · FABRICANTE LÍDER'}
+              ? '文具贸易与批发供应链服务'
+              : 'DISTRIBUCIÓN Y SUMINISTRO MAYORISTA DE PAPELERÍA'}
             <br />
             <span className="text-[#f8d878]">
-              {lang === 'zh' ? '全西班牙品牌招商加盟' : 'PROGRAMA DE DISTRIBUIDORES 2026'}
+              {lang === 'zh'
+                ? '专注百货零售 · 书店专柜 · 批量采购'
+                : 'Tu Socio Comercial para Bazares, Papelerías y Colegios'}
             </span>
           </h1>
 
           {/* Subtitle */}
           <p className="text-base sm:text-xl text-yellow-100 font-bold max-w-3xl mx-auto mb-8 leading-relaxed">
             {lang === 'zh'
-              ? '诚邀全西班牙百货零售店、文具书店、超市卖场及跨境商户携手入驻！6,000+ 现货SKU源头直供、超高毛利空间、阶梯采购返点、免费品牌陈列展架与本地48小时闪电配送。'
-              : 'Únete a la red oficial de distribución Main Paper en España. Más de 6.000 referencias en stock continuo, precios directos de fábrica, alta rentabilidad y entrega rápida en 48 horas.'}
+              ? '深耕西班牙文具贸易与批发市场，为您精选 6,000+ 现货文具 SKU，涵盖学生书写、办公桌面、收纳文件、本册纸品、美术画材与各大主流文具品牌一手货源。为百货零售店 (Bazar)、专业文具书店 (Papelería)、学校机构 (Colegios/AMPAs) 提供具有高度竞争力的批发价格、展架陈列支持、小额混批与 48 小时本地直发服务。'
+              : 'Especialistas en comercio y distribución de material escolar, oficina y papelería comercial en España. Suministro integral con más de 6.000 referencias en stock, precios competitivos sin intermediarios innecesarios y atención comercial directa para tu negocio.'}
           </p>
 
           {/* Fast Contact Callout Box */}
           <div className="max-w-2xl mx-auto bg-white p-4 md:p-6 rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] text-[#222] mb-8">
             <div className="text-xs md:text-sm font-black text-gray-600 uppercase mb-2">
-              {lang === 'zh' ? '⚡ 官方招商绿色对接通道' : '⚡ Canales Directos de Contratación'}
+              {lang === 'zh' ? '⚡ 业务咨询与采购订货绿色通道' : '⚡ Canales Directos de Consulta y Pedidos'}
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
                 href={`${WHATSAPP_LINK}?text=${encodeURIComponent(
                   lang === 'zh'
-                    ? '您好，我想咨询 Main Paper 2026 招商加盟入驻合作！'
-                    : 'Hola, me gustaría recibir información sobre la distribución de Main Paper.'
+                    ? '您好，我想咨询文具贸易与批发订货合作！'
+                    : 'Hola, me gustaría consultar tarifas y catálogo mayorista de papelería.'
                 )}`}
                 target="_blank"
                 rel="noreferrer"
@@ -139,7 +140,7 @@ export const Home: React.FC<HomeProps> = ({
 
               <a
                 href={`mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent(
-                  'Consulta Cooperación Main Paper 2026'
+                  'Consulta Comercial - Distribución y Venta Mayorista de Papelería'
                 )}`}
                 className="w-full sm:w-auto px-6 py-3.5 bg-[#5c94fc] hover:bg-blue-600 text-white rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-base flex items-center justify-center gap-2 active:translate-y-0.5 cursor-pointer"
               >
@@ -147,6 +148,11 @@ export const Home: React.FC<HomeProps> = ({
                 <span>{EMAIL_ADDRESS}</span>
               </a>
             </div>
+            <p className="text-[11px] md:text-xs text-gray-500 font-bold mt-2.5">
+              {lang === 'zh'
+                ? '💡 业务代表一对一专业对接，快速获取商品批发报价单、动销建议与样品展厅支持'
+                : '💡 Atención personalizada 1 a 1 para facilitarte listas de precios, muestras y condiciones comerciales.'}
+            </p>
           </div>
 
           {/* Primary Action Buttons */}
@@ -158,8 +164,8 @@ export const Home: React.FC<HomeProps> = ({
               <span>🛒</span>
               <span>
                 {lang === 'zh'
-                  ? '直接进入官方零售全景商城'
-                  : 'Explorar Catálogo & Tienda'}
+                  ? '浏览全景文具商城 & 选品订货'
+                  : 'Explorar Catálogo & Tienda Online'}
               </span>
             </button>
 
@@ -192,29 +198,29 @@ export const Home: React.FC<HomeProps> = ({
           {[
             {
               num: '6,000+',
-              labelZh: '现货产品 SKU',
+              labelZh: '现货文具 SKU',
               labelEs: 'Referencias en Stock',
               icon: '📦',
               color: 'bg-white',
             },
             {
               num: '48h',
-              labelZh: '本地极速直发',
-              labelEs: 'Envío Peninsular Rápido',
+              labelZh: '西班牙本土极速直发',
+              labelEs: 'Envío Peninsular Ágil',
               icon: '🚚',
               color: 'bg-white',
             },
             {
               num: '100%',
-              labelZh: '厂家底价保障',
-              labelEs: 'Precios de Fábrica',
+              labelZh: '一手批发底价保障',
+              labelEs: 'Tarifas Mayoristas Competitivas',
               icon: '💰',
               color: 'bg-white',
             },
             {
-              num: '500+',
-              labelZh: 'Bic/Milan等名牌合作',
-              labelEs: 'Grandes Marcas Oficiales',
+              num: '多元品牌',
+              labelZh: '知名名牌与源头品质',
+              labelEs: 'Primeras Marcas y Suministro',
               icon: '⭐',
               color: 'bg-white',
             },
@@ -239,17 +245,17 @@ export const Home: React.FC<HomeProps> = ({
       <section className="max-w-6xl mx-auto px-4 pt-16">
         <div className="text-center mb-10">
           <span className="bg-[#f8d878] text-[#222] text-xs font-black px-3.5 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase">
-            {lang === 'zh' ? '⭐ 合作价值 · 六大赋能' : '⭐ Ventajas Competitivas'}
+            {lang === 'zh' ? '⭐ 业务赋能 · 六大核心优势' : '⭐ Ventajas de Nuestro Servicio'}
           </span>
           <h2 className="text-2xl md:text-4xl font-black text-[#222] mt-2 drop-shadow-[2px_2px_0px_#f8d878]">
             {lang === 'zh'
-              ? '为什么选择与 MAIN PAPER 携手合作？'
-              : '¿Por Qué Asociarte con Main Paper?'}
+              ? '为什么选择我们的文具贸易与批发供应链？'
+              : '¿Por Qué Trabajar con Nosotros en Suministro de Papelería?'}
           </h2>
           <p className="text-sm md:text-base text-gray-600 font-bold max-w-2xl mx-auto mt-1">
             {lang === 'zh'
-              ? '二十年专注欧洲文具产业链，提供从一手货源、陈列展架到系统订货的全链路支持'
-              : 'Líder en suministro integral para bazares, papelerías y comercios minoristas.'}
+              ? '专注西班牙本地零售与批发市场，为您打通从一手货源、选品建议到数字化订货的每一个环节'
+              : 'Suministro integral para bazares, papelerías, colegios y comercios minoristas con atención comercial cercana.'}
           </p>
         </div>
 
@@ -257,62 +263,62 @@ export const Home: React.FC<HomeProps> = ({
           {[
             {
               icon: '🏭',
-              titleZh: '大厂源头直供 · 超高毛利',
-              titleEs: 'Directo de Fábrica',
+              titleZh: '一手贸易源头 · 充足利润空间',
+              titleEs: 'Precios Mayoristas Directos',
               descZh:
-                '砍掉中间多层批发加价，享受第一手出厂批发底价，终端指导建议售价 (PVP) 带来极具竞争力的利润空间。',
+                '剔除多层不必要中间加价环节，直接为您提供源头批发底价，为百货和文具零售商预留极具竞争力的销售毛利空间。',
               descEs:
-                'Sin intermediarios. Máxima rentabilidad y PVP oficial recomendado para competir con solidez en el mercado.',
+                'Sin intermediarios innecesarios. Precios competitivos para que tu comercio obtenga un margen saludable y sostenible.',
               tag: '100% Directo',
             },
             {
               icon: '📦',
-              titleZh: '6,000+ 现货 SKU 全品类覆盖',
-              titleEs: '+6.000 Referencias',
+              titleZh: '6,000+ SKU 全品类现货供应',
+              titleEs: '+6.000 Referencias en Stock',
               descZh:
-                '涵盖书写用品、办公桌面、文件收纳、本册纸品、Artix 美术画材、正版三丽鸥 IP 与 BeBasic 超值特惠系列。',
+                '涵盖学生书写用具、办公桌面、收纳文件夹、本册纸品、Artix 美术画材、正版热门 IP 与高性价比基础系列，一站式购齐。',
               descEs:
-                'Desde material escolar y de oficina hasta bellas artes Artix, licencias Sanrio y la línea económica BeBasic.',
+                'Material escolar, artículos de oficina, archivo, cuadernos, bellas artes y líneas de alta rotación.',
               tag: 'Catálogo Total',
             },
             {
               icon: '🚚',
-              titleZh: '西班牙本土大仓 · 48H 极速到店',
-              titleEs: 'Logística Local 48H',
+              titleZh: '西班牙本地大仓 · 48H 闪电到店',
+              titleEs: 'Logística Peninsular 48H',
               descZh:
-                '马德里与西班牙本土大型物流仓储基地，长期保持充沛常备库存，大批量采购与日常补货极速发货。',
+                '马德里本地大型仓储常备现货，小批量多频次灵活补货，不积压流动资金，紧急断货迅速送达。',
               descEs:
-                'Almacenes centrales en España con stock garantizado para reposiciones ágiles y sin esperas.',
+                'Almacenes en España con stock disponible continuo para reposiciones ágiles y sin tiempos de espera prolongados.',
               tag: 'Stock Real',
             },
             {
               icon: '🏷️',
-              titleZh: '国际一线知名名牌授权同仓',
-              titleEs: 'Primeras Marcas',
+              titleZh: '主流品牌与高性价比梯队',
+              titleEs: 'Gama Multimarca y Marcas Líderes',
               descZh:
-                '联合供应 Bic、Milan、Pilot、Stabilo、Edding、Jovi、Faber-Castell 等大牌，让您的门店商品结构一应俱全。',
+                '联合供应 Bic、Milan、Pilot、Stabilo、Edding、Main Paper 等各大品牌，满足不同消费客群的差异化需求。',
               descEs:
-                'Distribución de marcas líderes mundiales en el mismo pedido: Bic, Milan, Pilot, Stabilo y más.',
+                'Disponibilidad de marcas reconocidas del mercado escolar y de oficina en un único pedido consolidado.',
               tag: 'Top Brands',
             },
             {
               icon: '🎁',
-              titleZh: '免费专业陈列展架与宣传物料',
-              titleEs: 'PLV y Expositores Gratis',
+              titleZh: '陈列展架支持与动销物料',
+              titleEs: 'Expositores y Soporte Comercial',
               descZh:
-                '符合订货标准的合作商户免费赠送官方优质金属陈列展架、门头 POP 海报、宣传画册与展示样品。',
+                '符合订货标准的合作商户免费提供优质金属落地展架、台面展架、门头 POP 海报与当季宣传画册，助力店面动销。',
               descEs:
-                'Mobiliario comercial, expositores de suelo y sobremesa, catálogos impresos y material promocional incluido.',
+                'Mobiliario comercial, expositores de suelo y sobremesa, catálogos impresos y material promocional para tu punto de venta.',
               tag: 'Soporte PLV',
             },
             {
               icon: '💻',
-              titleZh: '数智化订货 · 支持导出 Excel',
-              titleEs: 'Plataforma Digital',
+              titleZh: '高效数智化系统 · 一键导出 Excel',
+              titleEs: 'Gestión Digital Ágil y Excel',
               descZh:
-                '支持在线自主加购、一键导出带 SKU、EAN 条码与包数的订货 Excel 表格，或通过 WhatsApp 秒发正式报单。',
+                '支持线上自主加购、一键导出带 SKU、EAN 条码与包数的标准 Excel 订货表格，或通过 WhatsApp 秒发正式报单。',
               descEs:
-                'Cesta digital ágil, exportación de pedidos a Excel con SKU y EAN, y tramitación instantánea vía WhatsApp.',
+                'Cesta digital rápida, exportación de listas a Excel con SKU y EAN, y tramitación instantánea vía WhatsApp.',
               tag: 'Excel & Web',
             },
           ].map((card, idx) => (
@@ -348,13 +354,13 @@ export const Home: React.FC<HomeProps> = ({
             </span>
             <h2 className="text-2xl md:text-4xl font-black mt-2 drop-shadow-[2px_2px_0px_#222]">
               {lang === 'zh'
-                ? '多元灵活的合作入驻方式'
+                ? '多元灵活的商业合作方式'
                 : 'Modalidades de Asociación Flexibles'}
             </h2>
             <p className="text-sm md:text-base text-blue-100 font-bold max-w-xl mx-auto mt-1">
               {lang === 'zh'
-                ? '无论您是社区百货小店还是区域大型连锁，均有量身定制的订货政策'
-                : 'Soluciones a medida para cada tipo de comercio y volumen.'}
+                ? '无论您是社区百货零售、专业文具书店还是学校机构集采，均有量身定制的供货方案'
+                : 'Soluciones a medida para cada tipo de comercio, volumen de compra y proyecto.'}
             </p>
           </div>
 
@@ -364,29 +370,29 @@ export const Home: React.FC<HomeProps> = ({
                 icon: '🏪',
                 titleZh: '百货零售 / Bazar',
                 titleEs: 'Bazar y Comercio',
-                descZh: '专架直配，精选热销高周转单品，门槛亲民，资金周转快。',
+                descZh: '专架直配，精选高频动销热门文具，小额混批，资金周转快。',
                 descEs: 'Expositores dedicados con alta rotación y reposición rápida.',
               },
               {
                 icon: '📚',
                 titleZh: '文具书店专柜',
                 titleEs: 'Papelería / Librería',
-                descZh: '全系列官方正品专柜，2027 年历日历首发专供，学生开学文具齐备。',
-                descEs: 'Gama completa escolar, agendas 2027 y licencias destacadas.',
+                descZh: '全套开学季文具、2027 年历日历首发、品质正品专柜支持。',
+                descEs: 'Gama completa escolar, agendas 2027 y marcas destacadas.',
               },
               {
                 icon: '🏫',
                 titleZh: '学校 / 家委会集采',
                 titleEs: 'Colegios y AMPAs',
-                descZh: '提供官方样品展厅模式（无标价），大宗学期订货享专属团购折扣。',
-                descEs: 'Catálogo de muestras para seleccionar listas escolares oficiales.',
+                descZh: '提供专属样品展厅模式（无标价），大宗学期订货享专属团购折扣与清单导出。',
+                descEs: 'Catálogo de muestras para seleccionar listas escolares sin precios.',
               },
               {
                 icon: '🌐',
                 titleZh: '区域分销与大宗客户',
-                titleEs: 'Distribuidores y Cuentas',
-                descZh: '专属区域支持，阶梯量贩采购返点，专职大客户经理一对一跟进。',
-                descEs: 'Tarifas por volumen, rapeles de compra y asesoría personalizada.',
+                titleEs: 'Distribuidores Mayoristas',
+                descZh: '专属区域支持，阶梯量贩采购返点，专职业务代表一对一全程跟进。',
+                descEs: 'Tarifas por volumen, rapeles de compra y asesoría comercial dedicada.',
               },
             ].map((item, idx) => (
               <div
@@ -411,15 +417,17 @@ export const Home: React.FC<HomeProps> = ({
         <div className="bg-white p-6 md:p-10 rounded-3xl border-4 border-[#222] shadow-[8px_8px_0px_#222]">
           <div className="text-center mb-6">
             <span className="bg-[#f8d878] text-[#222] text-xs font-black px-3.5 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase">
-              {lang === 'zh' ? '📝 在线登记' : '📝 Formulario Rápido'}
+              {lang === 'zh' ? '📝 业务咨询登记' : '📝 Contacto Comercial'}
             </span>
             <h2 className="text-2xl md:text-3xl font-black text-[#222] mt-2">
-              {lang === 'zh' ? '提交合作意向 · 专属招商经理 1 对 1 对接' : 'Solicitar Información de Distribución'}
+              {lang === 'zh'
+                ? '提交采购意向 · 业务代表 1 对 1 服务'
+                : 'Solicitar Catálogo y Contacto Comercial'}
             </h2>
             <p className="text-xs md:text-sm text-gray-500 font-bold mt-1">
               {lang === 'zh'
-                ? '填写基本信息后将自动拉起 WhatsApp 招商专线，或直接联系 604229098'
-                : 'Rellena el formulario y te contactaremos en menos de 24 horas laborables.'}
+                ? '填写基本信息后将自动拉起 WhatsApp 业务对接，或直接联络电话 604229098'
+                : 'Rellena el formulario y te contactaremos para facilitarte catálogo y condiciones comerciales.'}
             </p>
           </div>
 
@@ -428,7 +436,7 @@ export const Home: React.FC<HomeProps> = ({
               <span>✅</span>
               <span>
                 {lang === 'zh'
-                  ? '已为您整理好申请信息并打开 WhatsApp！如未弹出，请直接添加 WhatsApp: 604229098'
+                  ? '已为您整理好咨询信息并打开 WhatsApp！如未弹出，请直接联系业务专线: 604229098'
                   : '¡Solicitud preparada! Puedes enviarla directamente por WhatsApp al 604229098.'}
               </span>
             </div>
@@ -541,7 +549,7 @@ export const Home: React.FC<HomeProps> = ({
                 onChange={handleInputChange}
                 placeholder={
                   lang === 'zh'
-                    ? '例如：希望了解展架配送政策、批发起订金额与畅销文具清单...'
+                    ? '例如：希望了解起订金额、畅销文具清单、展架配送政策或索取样品...'
                     : 'Ej: Solicitar catálogo en PDF y condiciones de primer pedido.'
                 }
                 className="w-full px-3.5 py-2.5 rounded-xl border-3 border-[#222] text-sm font-bold bg-[#fcf8f2] focus:bg-white focus:outline-none"
@@ -556,14 +564,14 @@ export const Home: React.FC<HomeProps> = ({
                 <span>📱</span>
                 <span>
                   {lang === 'zh'
-                    ? '一键通过 WhatsApp 提交招商申请 (604229098)'
-                    : 'Enviar Solicitud por WhatsApp (604229098)'}
+                    ? '一键通过 WhatsApp 提交咨询 (604229098)'
+                    : 'Enviar Consulta por WhatsApp (604229098)'}
                 </span>
               </button>
 
               <a
                 href={`mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent(
-                  `Solicitud de Distribución - ${formData.shopName || 'Comercio'}`
+                  `Consulta Comercial - ${formData.shopName || 'Comercio'}`
                 )}&body=${encodeURIComponent(
                   `Tienda: ${formData.shopName}\nContacto: ${formData.contactName}\nCiudad: ${formData.city}\nTel/WhatsApp: ${formData.phone}\nTipo: ${formData.businessType}\nMensaje: ${formData.message}`
                 )}`}
@@ -582,13 +590,13 @@ export const Home: React.FC<HomeProps> = ({
         <div className="bg-[#f8d878] p-6 md:p-8 rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] text-[#222] flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-left">
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-2xl">🏛️</span>
-              <span className="font-black text-xl">MAIN PAPER S.L.</span>
+              <span className="text-2xl">📦</span>
+              <span className="font-black text-xl">KYRMAX · 文具贸易与批发供应链</span>
             </div>
             <p className="text-xs md:text-sm font-bold text-gray-800">
               {lang === 'zh'
-                ? '欧洲核心文具供应商 · 专业赋能每一家零售伙伴'
-                : 'Distribución y fabricación de material escolar, oficina y bellas artes en España.'}
+                ? '专注西班牙本土百货零售供货、专业文具批发与学校机构集采 · 业务经理 1 对 1 服务'
+                : 'Suministro y distribución mayorista de material escolar, oficina y papelería comercial en España.'}
             </p>
           </div>
 
