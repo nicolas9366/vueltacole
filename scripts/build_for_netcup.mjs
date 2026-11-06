@@ -43,8 +43,8 @@ fs.writeFileSync(navidadHtmlPath, navidadHtml, 'utf8');
 const shopHtml = compiledHtml
   .replace('<head>', '<head>\n  <script>window.__INITIAL_PAGE__="tienda";</script>')
   .replace(
-    '<title>Main Paper · Vuelta al Cole 2026 · Canje de Billete Dorado</title>',
-    '<title>Main Paper · Tienda & Showroom</title>'
+    '<title>KYRMAX · 西班牙文具贸易 · 批发与零售供应链服务</title>',
+    '<title>KYRMAX · 全景文具商城 & 样品展厅</title>'
   );
 fs.writeFileSync(shopHtmlPath, shopHtml, 'utf8');
 
