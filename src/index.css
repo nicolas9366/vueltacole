@@ -18,3 +18,12 @@ html, body, #root {
     background-color: transparent !important;
   }
 }
+
+/* Hide scrollbar for clean horizontal pill swiping on mobile */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

@@ -880,31 +880,31 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
   return (
     <div className="min-h-screen bg-[#fcf8f2] text-[#222] font-['Fredoka',sans-serif] pb-24">
       {/* 1. TOP MARIO BOARD-GAME HERO HEADER */}
-      <div className="bg-[#e52521] border-b-4 border-[#222] text-white px-4 py-6 shadow-md relative overflow-hidden">
+      <div className="bg-[#e52521] border-b-4 border-[#222] text-white px-4 py-3 md:py-6 shadow-md relative overflow-hidden">
         {/* Background decorative question marks & bricks */}
-        <div className="absolute -top-6 -right-6 text-white/10 text-9xl font-black select-none pointer-events-none">
+        <div className="absolute -top-6 -right-6 text-white/10 text-9xl font-black select-none pointer-events-none hidden sm:block">
           ★
         </div>
-        <div className="absolute bottom-1 right-20 text-white/10 text-7xl font-black select-none pointer-events-none">
+        <div className="absolute bottom-1 right-20 text-white/10 text-7xl font-black select-none pointer-events-none hidden sm:block">
           ?
         </div>
 
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="bg-[#f8d878] text-[#222] text-xs font-black px-3 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase tracking-wider">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4 relative z-10">
+          <div className="text-center md:text-left">
+            <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
+              <span className="bg-[#f8d878] text-[#222] text-[11px] md:text-xs font-black px-2.5 py-0.5 md:py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase tracking-wider">
                 {lang === 'zh' ? '✨ 2026 全系现货商品' : '✨ Catálogo Completo 2026'}
               </span>
-              <span className="bg-[#5c94fc] text-white text-xs font-black px-2.5 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222]">
+              <span className="bg-[#5c94fc] text-white text-[11px] md:text-xs font-black px-2 py-0.5 md:py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222]">
                 {lang === 'zh' ? '现货直配' : 'Stock Inmediato'}
               </span>
             </div>
-            <h1 className="text-2xl md:text-4xl font-black tracking-tight text-white drop-shadow-[2px_2px_0px_#222]">
+            <h1 className="text-xl md:text-4xl font-black tracking-tight text-white drop-shadow-[2px_2px_0px_#222]">
               {lang === 'zh'
                 ? '全景文具商城 & 样品展厅'
                 : 'CATÁLOGO & SHOWROOM DE PAPELERÍA'}
             </h1>
-            <p className="text-sm md:text-base text-yellow-100 font-medium max-w-2xl mt-1">
+            <p className="hidden md:block text-sm md:text-base text-yellow-100 font-medium max-w-2xl mt-1">
               {mode === 'store'
                 ? lang === 'zh'
                   ? '🛒 支持一键挑选加购并快速生成采购订货单！'
@@ -916,21 +916,19 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           </div>
 
           {/* USER AUTH & DUAL MODE SWITCHER */}
-          <div className="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
+          <div className="flex flex-row items-center gap-2 w-full md:w-auto justify-center md:justify-end">
             {currentUser ? (
-              <div className="bg-white px-3 py-2 rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] flex items-center gap-2 text-xs font-black w-full sm:w-auto justify-between sm:justify-start">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-gray-900 truncate max-w-[120px]">
-                    👤 {currentUser.username}
-                  </span>
-                  <span className="bg-[#f8d878] text-[#222] px-1.5 py-0.5 rounded text-[10px] border border-[#222]">
-                    {lang === 'zh' ? 'VIP商户' : 'VIP'}
-                  </span>
-                </div>
+              <div className="bg-white px-2.5 py-1.5 md:px-3 md:py-2 rounded-xl md:rounded-2xl border-3 md:border-4 border-[#222] shadow-[3px_3px_0px_#222] flex items-center gap-1.5 text-xs font-black">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-gray-900 truncate max-w-[90px] md:max-w-[120px]">
+                  👤 {currentUser.username}
+                </span>
+                <span className="bg-[#f8d878] text-[#222] px-1 py-0.5 rounded text-[9px] border border-[#222]">
+                  VIP
+                </span>
                 <button
                   onClick={handleLogout}
-                  className="text-[#e52521] hover:underline font-black text-xs ml-2 cursor-pointer"
+                  className="text-[#e52521] hover:underline font-black text-xs ml-1 cursor-pointer"
                 >
                   {lang === 'zh' ? '退出' : 'Salir'}
                 </button>
@@ -938,7 +936,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             ) : (
               <button
                 onClick={() => setIsAuthModalOpen(true)}
-                className="w-full sm:w-auto px-4 py-2.5 bg-white hover:bg-yellow-100 text-[#222] rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] text-xs md:text-sm font-black flex items-center justify-center gap-1.5 transition-all active:translate-y-0.5 cursor-pointer"
+                className="px-3 py-1.5 md:px-4 md:py-2.5 bg-white hover:bg-yellow-100 text-[#222] rounded-xl md:rounded-2xl border-3 md:border-4 border-[#222] shadow-[3px_3px_0px_#222] text-xs md:text-sm font-black flex items-center justify-center gap-1 transition-all active:translate-y-0.5 cursor-pointer shrink-0"
               >
                 <span>🔑</span>
                 <span>{lang === 'zh' ? '商户登录 / 注册' : 'Acceder / Registro'}</span>
@@ -946,28 +944,28 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             )}
 
             {/* DUAL MODE SWITCHER (Action Store vs Showroom) */}
-            <div className="bg-[#fff] p-2 rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
+            <div className="bg-[#fff] p-1 md:p-2 rounded-xl md:rounded-2xl border-3 md:border-4 border-[#222] shadow-[3px_3px_0px_#222] flex flex-row items-center gap-1.5">
               <button
                 onClick={() => setMode('store')}
-                className={`w-full sm:w-auto px-4 py-2.5 rounded-xl font-black text-sm md:text-base border-3 border-[#222] transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                className={`px-2.5 py-1.5 md:px-4 md:py-2.5 rounded-lg md:rounded-xl font-black text-xs md:text-base border-2 md:border-3 border-[#222] transition-all flex items-center justify-center gap-1 cursor-pointer ${
                   mode === 'store'
-                    ? 'bg-[#f8d878] text-[#222] shadow-[3px_3px_0px_#222] scale-105'
+                    ? 'bg-[#f8d878] text-[#222] shadow-[2px_2px_0px_#222] scale-102'
                     : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
                 }`}
               >
-                <span className="text-lg">🛒</span>
-                <span>{lang === 'zh' ? '订货商城' : 'Catálogo Comercial'}</span>
+                <span>🛒</span>
+                <span>{lang === 'zh' ? '零售商城' : 'Catálogo Comercial'}</span>
               </button>
 
               <button
                 onClick={() => setMode('showroom')}
-                className={`w-full sm:w-auto px-4 py-2.5 rounded-xl font-black text-sm md:text-base border-3 border-[#222] transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                className={`px-2.5 py-1.5 md:px-4 md:py-2.5 rounded-lg md:rounded-xl font-black text-xs md:text-base border-2 md:border-3 border-[#222] transition-all flex items-center justify-center gap-1 cursor-pointer ${
                   mode === 'showroom'
-                    ? 'bg-[#5c94fc] text-white shadow-[3px_3px_0px_#222] scale-105'
+                    ? 'bg-[#5c94fc] text-white shadow-[2px_2px_0px_#222] scale-102'
                     : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
                 }`}
               >
-                <span className="text-lg">🏛️</span>
+                <span>🏛️</span>
                 <span>{lang === 'zh' ? '样品展厅' : 'Sala de Muestras'}</span>
               </button>
             </div>
@@ -1004,8 +1002,8 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             )}
           </div>
 
-          {/* Sort Selector */}
-          <div className="flex items-center gap-2 w-full md:w-auto">
+          {/* Desktop Sort Selector */}
+          <div className="hidden md:flex items-center gap-2 w-full md:w-auto">
             <label className="text-xs font-black text-gray-600 whitespace-nowrap">
               {lang === 'zh' ? '排序:' : 'Ordenar:'}
             </label>
@@ -1039,6 +1037,286 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           </div>
         </div>
 
+        {/* ======================================================== */}
+        {/* MOBILE COMPACT DROPDOWN CONTROLS (Brand Standard: Shein/Amazon) */}
+        {/* ======================================================== */}
+        <div className="block md:hidden space-y-2 mb-3">
+          {/* Row 1: Two Cascading Dropdowns: Department + Subcategory / Brand */}
+          <div className="grid grid-cols-2 gap-2">
+            {/* Dropdown 1: Master Department */}
+            <div className="relative">
+              <select
+                value={selectedDept}
+                onChange={(e) => {
+                  handleSelectDept(e.target.value);
+                  setSelectedSubCategory('all');
+                }}
+                className="w-full appearance-none pl-3 pr-7 py-2.5 rounded-xl border-3 border-[#222] bg-white text-[#222] font-black text-xs shadow-[2px_2px_0px_#222] focus:outline-none focus:ring-2 focus:ring-[#5c94fc] truncate"
+              >
+                {MASTER_DEPARTMENTS.map((dept) => (
+                  <option key={dept.id} value={dept.id}>
+                    {dept.icon} {lang === 'zh' ? dept.labelZh : dept.labelEs}
+                  </option>
+                ))}
+              </select>
+              <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-700 font-black text-[10px]">
+                ▼
+              </span>
+            </div>
+
+            {/* Dropdown 2: Subcategory OR Popular Brand if in 'all' */}
+            {selectedDept === 'all' ? (
+              <div className="relative">
+                <select
+                  value="all"
+                  onChange={(e) => {
+                    if (e.target.value !== 'all') {
+                      setSelectedDept('09');
+                      setSelectedSubCategory(e.target.value);
+                    }
+                  }}
+                  className="w-full appearance-none pl-3 pr-7 py-2.5 rounded-xl border-3 border-[#222] bg-amber-50 text-[#222] font-black text-xs shadow-[2px_2px_0px_#222] focus:outline-none focus:ring-2 focus:ring-amber-400 truncate"
+                >
+                  <option value="all">🏷️ {lang === 'zh' ? '名牌直达 (全部)' : 'Marcas (Todas)'}</option>
+                  <option value="Bic">Bic 比克</option>
+                  <option value="Pilot">Pilot 百乐</option>
+                  <option value="Milan">Milan 米兰</option>
+                  <option value="Stabilo">Stabilo 思笔乐</option>
+                  <option value="Edding">Edding 艾丁</option>
+                  <option value="Jovi">Jovi 彩泥</option>
+                  <option value="Faber-Castell">Faber-Castell 辉柏嘉</option>
+                  <option value="Rubio">Rubio 鲁比奥字帖</option>
+                  <option value="Oxford">Oxford 牛津</option>
+                  <option value="Staedtler">Staedtler 施德楼</option>
+                  <option value="Pritt">Pritt 百特</option>
+                  <option value="Uni-Ball y Posca">Uni-Ball / Posca</option>
+                </select>
+                <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-700 font-black text-[10px]">
+                  ▼
+                </span>
+              </div>
+            ) : (
+              <div className="relative">
+                <select
+                  value={selectedSubCategory}
+                  onChange={(e) => setSelectedSubCategory(e.target.value)}
+                  className="w-full appearance-none pl-3 pr-7 py-2.5 rounded-xl border-3 border-[#222] bg-white text-[#222] font-black text-xs shadow-[2px_2px_0px_#222] focus:outline-none focus:ring-2 focus:ring-[#5c94fc] truncate"
+                >
+                  <option value="all">
+                    📂 {lang === 'zh'
+                      ? `全部子类 (${subCategories.reduce((acc, s) => acc + s.count, 0)})`
+                      : `Todas (${subCategories.reduce((acc, s) => acc + s.count, 0)})`}
+                  </option>
+                  {subCategories.map((sub) => (
+                    <option key={sub.key} value={sub.key}>
+                      {lang === 'zh' ? sub.labelZh : sub.labelEs} ({sub.count})
+                    </option>
+                  ))}
+                </select>
+                <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-700 font-black text-[10px]">
+                  ▼
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Row 2: Sort By + AI Natural Scenario Dropdowns */}
+          <div className="grid grid-cols-2 gap-2">
+            {/* Sort Selector */}
+            <div className="relative">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                className="w-full appearance-none pl-3 pr-7 py-2 rounded-xl border-2 border-[#222] bg-white text-[#222] font-black text-xs shadow-[1px_1px_0px_#222] focus:outline-none truncate"
+              >
+                <option value="sku">{lang === 'zh' ? '🔢 官方货号' : '🔢 Referencia SKU'}</option>
+                <option value="sales">{lang === 'zh' ? '🔥 畅销排行' : '🔥 Más Vendidos'}</option>
+                <option value="featured">{lang === 'zh' ? '⭐ 推荐精选' : '⭐ Destacados'}</option>
+                {mode === 'store' && currentUser && (
+                  <>
+                    <option value="priceAsc">{lang === 'zh' ? '🪙 价格低到高' : '🪙 Precio menor'}</option>
+                    <option value="priceDesc">{lang === 'zh' ? '💎 价格高到低' : '💎 Precio mayor'}</option>
+                  </>
+                )}
+                <option value="newest">{lang === 'zh' ? '🆕 新品上市' : '🆕 Novedades'}</option>
+                <option value="name">{lang === 'zh' ? '🔤 字母顺序' : '🔤 Nombre'}</option>
+              </select>
+              <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-700 font-black text-[10px]">
+                ▼
+              </span>
+            </div>
+
+            {/* AI Scenario Selector */}
+            <div className="relative">
+              <select
+                value={activeAIIntent?.id || ''}
+                onChange={(e) => {
+                  const intentId = e.target.value;
+                  if (!intentId) {
+                    setSearchQuery('');
+                  } else {
+                    const found = AI_INTENTS.find((i) => i.id === intentId);
+                    if (found) {
+                      setSearchQuery(found.triggers[0]);
+                      setSortBy('sku');
+                    }
+                  }
+                }}
+                className={`w-full appearance-none pl-3 pr-7 py-2 rounded-xl border-2 border-[#222] font-black text-xs shadow-[1px_1px_0px_#222] focus:outline-none truncate ${
+                  activeAIIntent
+                    ? 'bg-purple-600 text-white border-purple-800'
+                    : 'bg-purple-50 text-purple-950'
+                }`}
+              >
+                <option value="">{lang === 'zh' ? '✨ AI 场景找货...' : '✨ Inspiración IA...'}</option>
+                {AI_INTENTS.map((intent) => (
+                  <option key={intent.id} value={intent.id}>
+                    {lang === 'zh' ? intent.chipZh : intent.chipEs}
+                  </option>
+                ))}
+              </select>
+              <span className={`pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 font-black text-[10px] ${activeAIIntent ? 'text-white' : 'text-purple-700'}`}>
+                ▼
+              </span>
+            </div>
+          </div>
+
+          {/* Row 3: Single Touch-Swipeable Quick Pill Bar (Zero vertical bloat!) */}
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 -mx-1 px-1">
+            <button
+              onClick={() => {
+                setQuickFilter('all');
+                handleSelectDept('all');
+                setSelectedSubCategory('all');
+              }}
+              className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] shrink-0 transition-all ${
+                quickFilter === 'all' && selectedDept === 'all'
+                  ? 'bg-[#222] text-white shadow-[2px_2px_0px_#222]'
+                  : 'bg-white text-gray-800 shadow-[1px_1px_0px_#222]'
+              }`}
+            >
+              {lang === 'zh' ? '全部' : 'Todos'}
+            </button>
+
+            <button
+              onClick={() => {
+                setQuickFilter('top500');
+                setSortBy('sku');
+              }}
+              className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] shrink-0 flex items-center gap-1 transition-all ${
+                quickFilter === 'top500'
+                  ? 'bg-[#e52521] text-white shadow-[2px_2px_0px_#222]'
+                  : 'bg-white text-[#e52521] shadow-[1px_1px_0px_#222]'
+              }`}
+            >
+              <span>🏆</span>
+              <span>{lang === 'zh' ? '年度畅销榜' : 'Más Vendidos'}</span>
+            </button>
+
+            <button
+              onClick={() => {
+                handleSelectDept('12');
+                setSelectedSubCategory('all');
+              }}
+              className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] shrink-0 flex items-center gap-1 transition-all ${
+                selectedDept === '12'
+                  ? 'bg-emerald-600 text-white shadow-[2px_2px_0px_#222]'
+                  : 'bg-emerald-100 text-emerald-950 shadow-[1px_1px_0px_#222]'
+              }`}
+            >
+              <span>⚡</span>
+              <span>{lang === 'zh' ? 'BeBasic 超值' : 'BeBasic'}</span>
+            </button>
+
+            <button
+              onClick={() => {
+                handleSelectDept('09');
+                setSelectedSubCategory('all');
+              }}
+              className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] shrink-0 flex items-center gap-1 transition-all ${
+                selectedDept === '09'
+                  ? 'bg-amber-500 text-white shadow-[2px_2px_0px_#222]'
+                  : 'bg-amber-100 text-amber-950 shadow-[1px_1px_0px_#222]'
+              }`}
+            >
+              <span>⭐</span>
+              <span>{lang === 'zh' ? '国际名牌' : 'Marcas'}</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setQuickFilter('top1000');
+                setSortBy('sku');
+              }}
+              className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] shrink-0 flex items-center gap-1 transition-all ${
+                quickFilter === 'top1000'
+                  ? 'bg-amber-500 text-white shadow-[2px_2px_0px_#222]'
+                  : 'bg-white text-amber-800 shadow-[1px_1px_0px_#222]'
+              }`}
+            >
+              <span>⭐</span>
+              <span>{lang === 'zh' ? '推荐精选' : 'Destacados'}</span>
+            </button>
+
+            <button
+              onClick={() => setQuickFilter('isnew')}
+              className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] shrink-0 flex items-center gap-1 transition-all ${
+                quickFilter === 'isnew'
+                  ? 'bg-[#5c94fc] text-white shadow-[2px_2px_0px_#222]'
+                  : 'bg-white text-[#5c94fc] shadow-[1px_1px_0px_#222]'
+              }`}
+            >
+              <span>🌟</span>
+              <span>{lang === 'zh' ? '新品' : 'Nuevos'}</span>
+            </button>
+
+            <button
+              onClick={() => setQuickFilter('ispromote')}
+              className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] shrink-0 flex items-center gap-1 transition-all ${
+                quickFilter === 'ispromote'
+                  ? 'bg-rose-500 text-white shadow-[2px_2px_0px_#222]'
+                  : 'bg-white text-rose-700 shadow-[1px_1px_0px_#222]'
+              }`}
+            >
+              <span>🏷️</span>
+              <span>{lang === 'zh' ? '促销' : 'Promoción'}</span>
+            </button>
+          </div>
+
+          {/* Active AI scenario alert if active on mobile */}
+          {activeAIIntent && (
+            <div className="p-2 bg-purple-100 rounded-xl border-2 border-purple-400 flex items-center justify-between text-xs">
+              <span className="font-bold text-purple-950 truncate">
+                ✨ {lang === 'zh' ? activeAIIntent.chipZh : activeAIIntent.chipEs}
+              </span>
+              <button
+                onClick={() => setSearchQuery('')}
+                className="ml-2 px-2 py-0.5 bg-white text-purple-900 rounded font-black border border-purple-300 shrink-0"
+              >
+                ✕ {lang === 'zh' ? '退出' : 'Quitar'}
+              </button>
+            </div>
+          )}
+
+          {/* Mobile Slim Result Summary */}
+          <div className="pt-0.5 px-0.5 flex items-center justify-between text-[11px] font-black text-gray-600">
+            <span>
+              {lang === 'zh'
+                ? `共 ${filteredProducts.length} 款商品 · 第 ${page}/${totalPages} 页`
+                : `${filteredProducts.length} refs · Pág. ${page}/${totalPages}`}
+            </span>
+            <span className="text-gray-400">
+              {mode === 'store'
+                ? lang === 'zh' ? '🛒 零售选品' : '🛒 Pedido'
+                : lang === 'zh' ? '🏛️ 展厅模式' : '🏛️ Showroom'}
+            </span>
+          </div>
+        </div>
+
+        {/* ======================================================== */}
+        {/* DESKTOP RICH LAYOUT (Preserved for Laptop & Desktop Screens) */}
+        {/* ======================================================== */}
+        <div className="hidden md:block">
         {/* AI Natural Intent Prompts */}
         <div className="flex flex-wrap items-center gap-1.5 mb-3 px-1">
           <span className="text-[11px] font-black text-purple-700 flex items-center gap-1 mr-1">
@@ -1352,6 +1630,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 : `${filteredProducts.length} productos · Pág. ${page}/${totalPages}`}
             </div>
           </div>
+        </div>
         </div>
       </div>
 
