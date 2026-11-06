@@ -265,6 +265,57 @@ export const AI_INTENTS: AIIntent[] = [
   }
 ];
 
+// Anti-scanning and anti-printing protective watermark (light enough for human viewing, disrupts machine scanning/printing)
+const WatermarkOverlay: React.FC<{ isHD?: boolean; className?: string }> = ({
+  isHD = false,
+  className = '',
+}) => {
+  const w = isHD ? 280 : 200;
+  const h = isHD ? 140 : 100;
+  const cx = w / 2;
+  const cy = h / 2;
+  const fontSize = isHD ? 13 : 10;
+
+  const patternSvg = `
+    <svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}' viewBox='0 0 ${w} ${h}'>
+      <text 
+        x='${cx}' 
+        y='${cy}' 
+        fill='rgba(30,30,30,0.14)' 
+        stroke='rgba(255,255,255,0.25)' 
+        stroke-width='0.4'
+        font-family='sans-serif' 
+        font-weight='bold' 
+        font-size='${fontSize}' 
+        text-anchor='middle' 
+        transform='rotate(-24 ${cx} ${cy})'
+      >
+        KYRMAX · info@kyrmax.com
+      </text>
+    </svg>
+  `.trim();
+
+  const dataUri = `url("data:image/svg+xml,${encodeURIComponent(patternSvg)}")`;
+
+  return (
+    <div
+      className={`absolute inset-0 pointer-events-none select-none z-10 watermark-layer ${className}`}
+      style={{
+        backgroundImage: dataUri,
+        backgroundRepeat: 'repeat',
+      }}
+      aria-hidden="true"
+    >
+      {isHD && (
+        <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-white/95 text-[10px] font-mono font-bold px-2 py-0.5 rounded border border-white/20 select-none flex items-center gap-1 shadow">
+          <span>🔒</span>
+          <span>KYRMAX · info@kyrmax.com</span>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export const ActionStore: React.FC<ActionStoreProps> = ({
   lang,
   onNavigateHome,
@@ -780,22 +831,27 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
       return;
     }
 
+    const isShowroom = mode === 'showroom';
     const data = cart.map((item, index) => {
       const pvp = calculatePVP(item.product.price);
-      return {
+      const row: Record<string, any> = {
         '序号': index + 1,
         'SKU (货号)': item.product.usercode || item.product.code,
         'EAN (条形码)': item.product.code,
-        '包数 (采购数量)': item.quantity,
+        '包数 (采购/预定数量)': item.quantity,
         '每包规格 (支/本/件)': item.product.packet,
         '总件数': item.quantity * item.product.packet,
+        '箱规 (支/箱)': item.product.box,
         '商品名称 (西语)': item.product.namees,
         '商品名称 (中文)': item.product.namecn || '',
         '一级大类': item.product.deptZh || item.product.deptEs || '',
         '二级细分类': item.product.subZh || item.product.subEs || '',
-        '官方指导价 PVP (€)': pvp > 0 ? Number(pvp.toFixed(2)) : '',
-        '总价估算 PVP (€)': pvp > 0 ? Number((pvp * item.quantity).toFixed(2)) : '',
       };
+      if (!isShowroom) {
+        row['参考零售价 (€)'] = pvp > 0 ? Number(pvp.toFixed(2)) : '';
+        row['总价预估 (€)'] = pvp > 0 ? Number((pvp * item.quantity).toFixed(2)) : '';
+      }
+      return row;
     });
 
     const worksheet = XLSX.utils.json_to_sheet(data);
@@ -805,41 +861,51 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
       { wch: 6 },
       { wch: 16 },
       { wch: 18 },
-      { wch: 16 },
+      { wch: 22 },
       { wch: 20 },
       { wch: 10 },
+      { wch: 14 },
       { wch: 40 },
       { wch: 30 },
       { wch: 22 },
       { wch: 22 },
-      { wch: 18 },
-      { wch: 18 },
+      { wch: 16 },
+      { wch: 16 },
     ];
 
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, '采购订货单');
+    const sheetTitle = isShowroom ? '样品预定意向单' : '采购订货单';
+    XLSX.utils.book_append_sheet(workbook, worksheet, sheetTitle);
 
     const dateStr = new Date().toISOString().slice(0, 10);
-    const fileName = `MainPaper_Pedido_${dateStr}.xlsx`;
+    const fileName = isShowroom
+      ? `MainPaper_Reserva_${dateStr}.xlsx`
+      : `MainPaper_Pedido_${dateStr}.xlsx`;
     XLSX.writeFile(workbook, fileName);
   };
 
   // Export Current Filtered Catalog to Excel
   const exportCatalogToExcel = () => {
     if (filteredProducts.length === 0) return;
-    const data = filteredProducts.map((p, index) => ({
-      '序号': index + 1,
-      'SKU (货号)': p.usercode || p.code,
-      'EAN (条形码)': p.code,
-      '商品名称 (西语)': p.namees,
-      '商品名称 (中文)': p.namecn || '',
-      '一级大类': p.deptZh || p.deptEs,
-      '二级细分类': p.subZh || p.subEs,
-      '包装规格': `${p.packet} 支/包 · ${p.box} 支/箱`,
-      '每包支数': p.packet,
-      '每箱支数': p.box,
-      '官方建议价 PVP (€)': p.price > 0 ? Number(calculatePVP(p.price).toFixed(2)) : '',
-    }));
+    const isShowroom = mode === 'showroom';
+    const data = filteredProducts.map((p, index) => {
+      const row: Record<string, any> = {
+        '序号': index + 1,
+        'SKU (货号)': p.usercode || p.code,
+        'EAN (条形码)': p.code,
+        '商品名称 (西语)': p.namees,
+        '商品名称 (中文)': p.namecn || '',
+        '一级大类': p.deptZh || p.deptEs,
+        '二级细分类': p.subZh || p.subEs,
+        '包装规格': `${p.packet} 支/包 · ${p.box} 支/箱`,
+        '每包支数': p.packet,
+        '每箱支数': p.box,
+      };
+      if (!isShowroom && currentUser) {
+        row['参考零售价 (€)'] = p.price > 0 ? Number(calculatePVP(p.price).toFixed(2)) : '';
+      }
+      return row;
+    });
 
     const worksheet = XLSX.utils.json_to_sheet(data);
     worksheet['!cols'] = [
@@ -857,9 +923,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
     ];
 
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, '商品目录清单');
+    const sheetTitle = isShowroom ? '样品展厅目录' : '商品目录清单';
+    XLSX.utils.book_append_sheet(workbook, worksheet, sheetTitle);
     const dateStr = new Date().toISOString().slice(0, 10);
-    XLSX.writeFile(workbook, `MainPaper_Catalogo_${dateStr}.xlsx`);
+    const fileName = isShowroom
+      ? `MainPaper_Catalogo_Muestras_${dateStr}.xlsx`
+      : `MainPaper_Catalogo_${dateStr}.xlsx`;
+    XLSX.writeFile(workbook, fileName);
   };
 
   return (
@@ -941,7 +1011,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 }`}
               >
                 <span className="text-lg">🛒</span>
-                <span>{lang === 'zh' ? '零售商城 (PVP)' : 'Modo Tienda (PVP)'}</span>
+                <span>{lang === 'zh' ? '订货商城' : 'Catálogo Comercial'}</span>
               </button>
 
               <button
@@ -953,7 +1023,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 }`}
               >
                 <span className="text-lg">🏛️</span>
-                <span>{lang === 'zh' ? '样品展厅' : 'Modo Showroom'}</span>
+                <span>{lang === 'zh' ? '样品展厅' : 'Sala de Muestras'}</span>
               </button>
             </div>
           </div>
@@ -965,12 +1035,16 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
         <span>⚡</span>
         <span>
           {mode === 'store'
-            ? lang === 'zh'
-              ? '【官方建议零售价】本店标价均为建议零售价 (PVP)。如需整箱批发进货及大宗采购合作，请直接联系业务经理。'
-              : '【PVP RECOMENDADO】Precios oficiales recomendados al público. Para compras al por mayor y grandes cuentas, consultar tarifas especiales.'
+            ? currentUser
+              ? lang === 'zh'
+                ? '【订货商城已登录】商业批发与建议零售价已解锁，支持一键加购并直接生成采购报单。'
+                : '【Catálogo Comercial】Sesión iniciada. Precios y pedidos habilitados.'
+              : lang === 'zh'
+                ? '【订货商城】请登录商户账号查看价格与高清细节图（测试账号: test / test..）。'
+                : '【Catálogo Comercial】Inicia sesión para consultar precios y tramitar pedidos.'
             : lang === 'zh'
-              ? '【展厅模式】已开启无标价陈列。支持挑选并导出意向文具清单，方便与采购团队、学校及家长沟通。'
-              : '【SHOWROOM OFICIAL】Catálogo de exposición sin precios. Selecciona productos para confeccionar y exportar tu lista escolar.'}
+              ? '【样品展厅模式】已开启无标价陈列，支持挑选商品并导出预定清单，专供客户商务谈判使用。'
+              : '【Sala de Muestras】Catálogo de exposición sin precios, ideal para selección y negociación.'}
         </span>
         {onNavigateToNavidad && (
           <button
@@ -1025,18 +1099,18 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 {lang === 'zh' ? '🔢 官方货号目录 (按SKU自然序)' : '🔢 Catálogo Oficial (Ref. SKU)'}
               </option>
               <option value="sales">
-                {lang === 'zh' ? '🔥 权威畅销榜首' : '🔥 Los Más Vendidos'}
+                {lang === 'zh' ? '🔥 畅销排行 (按购买频次 / Nº Facturas)' : '🔥 Más Vendidos (Por Nº Facturas)'}
               </option>
               <option value="featured">
-                {lang === 'zh' ? '⭐ 推荐精选' : '⭐ Selección Destacada'}
+                {lang === 'zh' ? '⭐ 推荐精选 (综合优选)' : '⭐ Selección Destacada'}
               </option>
-              {mode === 'store' && (
+              {mode === 'store' && currentUser && (
                 <>
                   <option value="priceAsc">
-                    {lang === 'zh' ? '🪙 建议零售价: 低到高' : '🪙 Precio: Menor a Mayor'}
+                    {lang === 'zh' ? '🪙 单价: 低到高' : '🪙 Precio: Menor a Mayor'}
                   </option>
                   <option value="priceDesc">
-                    {lang === 'zh' ? '💎 建议零售价: 高到低' : '💎 Precio: Mayor a Menor'}
+                    {lang === 'zh' ? '💎 单价: 高到低' : '💎 Precio: Mayor a Menor'}
                   </option>
                 </>
               )}
@@ -1464,18 +1538,21 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   {/* Product Image Container */}
                   <div
                     onClick={() => setSelectedProduct(p)}
-                    className="relative w-full aspect-square bg-[#f9fafb] p-3 flex items-center justify-center cursor-pointer border-b-3 border-[#222] overflow-hidden group-hover:bg-amber-50/40 transition-colors"
+                    className="relative w-full aspect-square bg-[#f9fafb] p-3 flex items-center justify-center cursor-pointer border-b-3 border-[#222] overflow-hidden group-hover:bg-amber-50/40 transition-colors select-none"
+                    onContextMenu={(e) => e.preventDefault()}
                   >
                     <img
                       src={p.imageUrl}
                       alt={p.namees}
                       loading="lazy"
-                      className="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-300"
+                      draggable={false}
+                      className="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-300 pointer-events-none select-none"
                       onError={(e) => {
                         (e.target as HTMLElement).style.opacity = '0.5';
                       }}
                     />
-                    <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <WatermarkOverlay />
+                    <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-20">
                       <span className="bg-[#222] text-white text-xs font-bold px-2.5 py-1 rounded-lg shadow-md">
                         🔍 {lang === 'zh' ? '点击看 2K 原图' : 'Ver 2K'}
                       </span>
@@ -1514,83 +1591,115 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                         <span>📦 Paq: {p.packet}u</span>
                         <span>Caja: {p.box}u</span>
                       </div>
+
+                      {/* PowerBI Invoices Frequency (Nº Facturas) */}
+                      {Boolean(p.salesInvoices && p.salesInvoices > 0) && (
+                        <div className="flex items-center justify-between text-[10px] font-bold text-gray-600 bg-emerald-50/70 border border-emerald-200/80 px-2 py-0.5 rounded-md mb-2">
+                          <span className="flex items-center gap-1 text-emerald-700">
+                            <span>🧾</span>
+                            <span>{lang === 'zh' ? '开票频次:' : 'Nº Facturas:'}</span>
+                          </span>
+                          <span className="font-mono text-emerald-900 font-extrabold">
+                            {p.salesInvoices} {lang === 'zh' ? '次' : 'fac'}
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     {/* Price & Action Area */}
                     <div className="pt-2 border-t border-gray-100">
                       {mode === 'store' ? (
-                        <div>
-                          {/* Retail Price Display (Wholesale * 2.8) */}
-                          <div className="flex items-baseline justify-between mb-2">
-                            <div>
-                              <span className="text-[10px] font-bold text-gray-400 block leading-none">
-                                PVP RECOMENDADO
-                              </span>
-                              <div className="flex items-center gap-1">
-                                <span className="text-base md:text-xl font-black text-[#e52521]">
-                                  {hasValidPrice ? formatEuro(pvp) : 'Consultar'}
+                        currentUser ? (
+                          <div>
+                            {/* Retail Price Display */}
+                            <div className="flex items-baseline justify-between mb-2">
+                              <div>
+                                <span className="text-[10px] font-bold text-gray-400 block leading-none">
+                                  {lang === 'zh' ? '建议零售价' : 'PVP RECOMENDADO'}
                                 </span>
+                                <div className="flex items-center gap-1">
+                                  <span className="text-base md:text-xl font-black text-[#e52521]">
+                                    {hasValidPrice ? formatEuro(pvp) : 'Consultar'}
+                                  </span>
+                                </div>
                               </div>
+                              {hasValidPrice && p.packet > 1 && (
+                                <div className="text-right">
+                                  <span className="text-[9px] text-gray-400 block">
+                                    Paq ({p.packet}u)
+                                  </span>
+                                  <span className="text-xs font-bold text-gray-700">
+                                    {formatEuro(pvp * p.packet)}
+                                  </span>
+                                </div>
+                              )}
                             </div>
-                            {hasValidPrice && p.packet > 1 && (
-                              <div className="text-right">
-                                <span className="text-[9px] text-gray-400 block">
-                                  Paq ({p.packet}u)
-                                </span>
-                                <span className="text-xs font-bold text-gray-700">
-                                  {formatEuro(pvp * p.packet)}
-                                </span>
-                              </div>
-                            )}
-                          </div>
 
-                          {/* Add to Cart Button */}
-                          <button
-                            onClick={() => addToCart(p, 1)}
-                            className={`w-full py-2 px-3 rounded-xl font-black text-xs md:text-sm border-3 border-[#222] shadow-[2px_2px_0px_#222] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1.5 ${
-                              isAdded
-                                ? 'bg-emerald-400 text-[#222]'
-                                : 'bg-[#f8d878] text-[#222] hover:bg-yellow-400'
-                            }`}
-                          >
-                            <span>{isAdded ? '✓' : '🛒'}</span>
-                            <span>
-                              {isAdded
-                                ? lang === 'zh'
-                                  ? '已加入!'
-                                  : '¡Añadido!'
-                                : lang === 'zh'
-                                  ? '加入采购车'
-                                  : 'Añadir'}
-                            </span>
-                          </button>
-                        </div>
+                            {/* Add to Cart Button */}
+                            <button
+                              onClick={() => addToCart(p, 1)}
+                              className={`w-full py-2 px-3 rounded-xl font-black text-xs md:text-sm border-3 border-[#222] shadow-[2px_2px_0px_#222] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                                isAdded
+                                  ? 'bg-emerald-400 text-[#222]'
+                                  : 'bg-[#f8d878] text-[#222] hover:bg-yellow-400'
+                              }`}
+                            >
+                              <span>{isAdded ? '✓' : '🛒'}</span>
+                              <span>
+                                {isAdded
+                                  ? lang === 'zh'
+                                    ? '已加入购物车!'
+                                    : '¡Añadido!'
+                                  : lang === 'zh'
+                                    ? '加入购物车'
+                                    : 'Añadir al Carrito'}
+                              </span>
+                            </button>
+                          </div>
+                        ) : (
+                          <div>
+                            {/* Locked Price for Non-Logged-in Guest */}
+                            <div className="mb-2 bg-amber-50 p-1.5 rounded-lg border border-amber-200 text-center">
+                              <span className="text-[10px] md:text-[11px] font-bold text-amber-900 block leading-tight">
+                                🔒 {lang === 'zh' ? '价格保护中 (商户可见)' : 'Precios para clientes'}
+                              </span>
+                            </div>
+
+                            <button
+                              onClick={() => setIsAuthModalOpen(true)}
+                              className="w-full py-2 px-3 rounded-xl font-black text-xs md:text-sm bg-white hover:bg-amber-100 text-[#222] border-3 border-[#222] shadow-[2px_2px_0px_#222] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1 cursor-pointer"
+                            >
+                              <span>🔑</span>
+                              <span>{lang === 'zh' ? '登录查看价格' : 'Iniciar sesión'}</span>
+                            </button>
+                          </div>
+                        )
                       ) : (
                         <div>
                           {/* Showroom / Museum Mode (Zero Price) */}
                           <div className="mb-2 bg-[#5c94fc]/10 p-1.5 rounded-lg border border-[#5c94fc]/30 text-center">
                             <span className="text-[11px] font-black text-[#5c94fc] block">
-                              🏛️ {lang === 'zh' ? '产品展示厅' : 'Exposición de Catálogo'}
+                              🏛️ {lang === 'zh' ? '样品展品 · 意向洽谈' : 'Muestra para Reserva'}
                             </span>
                           </div>
 
                           <button
                             onClick={() => addToCart(p, 1)}
-                            className={`w-full py-2 px-3 rounded-xl font-black text-xs md:text-sm border-3 border-[#222] shadow-[2px_2px_0px_#222] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1.5 ${
+                            className={`w-full py-2 px-3 rounded-xl font-black text-xs md:text-sm border-3 border-[#222] shadow-[2px_2px_0px_#222] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                               isAdded
                                 ? 'bg-emerald-400 text-[#222]'
                                 : 'bg-[#5c94fc] text-white hover:bg-blue-600'
                             }`}
                           >
-                            <span>{isAdded ? '✓' : '🛒'}</span>
+                            <span>{isAdded ? '✓' : '📋'}</span>
                             <span>
                               {isAdded
                                 ? lang === 'zh'
-                                  ? '已加入购物车!'
-                                  : '¡En Carrito!'
+                                  ? '已加入预定车!'
+                                  : '¡Añadido!'
                                 : lang === 'zh'
-                                  ? '加入购物车'
-                                  : 'Añadir al Carrito'}
+                                  ? '加入预定车'
+                                  : 'Añadir a Reserva'}
                             </span>
                           </button>
                         </div>
@@ -1674,11 +1783,17 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             <span className="text-2xl">🛒</span>
             <div className="text-left">
               <div className="text-xs uppercase font-extrabold opacity-80 leading-none">
-                {lang === 'zh' ? '已选购物车' : 'Mi Carrito'}
+                {mode === 'store'
+                  ? lang === 'zh'
+                    ? '已选订货车'
+                    : 'Mi Carrito'
+                  : lang === 'zh'
+                    ? '已选样品预定车'
+                    : 'Lista Muestras'}
               </div>
               <div className="text-sm md:text-base font-black">
-                {totalItemsCount} {lang === 'zh' ? '件商品' : 'items'}
-                {mode === 'store' && ` · ${formatEuro(totalCartPVP)}`}
+                {totalItemsCount} {lang === 'zh' ? '包/件商品' : 'items'}
+                {mode === 'store' && currentUser && ` · ${formatEuro(totalCartPVP)}`}
               </div>
             </div>
           </button>
@@ -1699,11 +1814,17 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 <span className="text-2xl">🛒</span>
                 <div>
                   <h2 className="font-black text-lg text-[#222]">
-                    {lang === 'zh' ? '我的采购购物车' : 'Mi Carrito de Compra'}
+                    {mode === 'store'
+                      ? lang === 'zh'
+                        ? '我的采购订货车'
+                        : 'Mi Carrito de Compra'
+                      : lang === 'zh'
+                        ? '我的样品预定清单'
+                        : 'Mi Lista de Reserva'}
                   </h2>
                   <span className="text-xs font-bold text-gray-700">
                     {cart.length} {lang === 'zh' ? '款不同货品' : 'referencias'} · {totalItemsCount}{' '}
-                    {lang === 'zh' ? '件' : 'unidades'}
+                    {lang === 'zh' ? '包/件' : 'unidades'}
                   </span>
                 </div>
               </div>
@@ -1808,9 +1929,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               >
                 <span className="text-lg">📊</span>
                 <span>
-                  {lang === 'zh'
-                    ? '导出订货 Excel 表 (含 SKU、EAN、包数)'
-                    : 'Exportar Pedido a Excel (SKU, EAN, Paquetes)'}
+                  {mode === 'store'
+                    ? lang === 'zh'
+                      ? '导出订货 Excel 表 (含 SKU、EAN、包数)'
+                      : 'Exportar Pedido a Excel (SKU, EAN, Paquetes)'
+                    : lang === 'zh'
+                      ? '导出样品预定 Excel (无价格，供谈判)'
+                      : 'Exportar Reserva a Excel (Sin Precios)'}
                 </span>
               </button>
 
@@ -1846,14 +1971,19 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             </button>
 
             <div className="p-6">
-              {/* Image Preview with 2K Retina Indicator */}
-              <div className="relative aspect-4/3 bg-[#fdfdfd] rounded-2xl border-3 border-[#222] mb-4 flex items-center justify-center overflow-hidden p-4">
+              {/* Image Preview with 2K Retina Indicator & KYRMAX Anti-Scan Watermark */}
+              <div
+                className="relative aspect-4/3 bg-[#fdfdfd] rounded-2xl border-3 border-[#222] mb-4 flex items-center justify-center overflow-hidden p-4 select-none"
+                onContextMenu={(e) => e.preventDefault()}
+              >
                 <img
                   src={selectedProduct.imageUrl}
                   alt={selectedProduct.namees}
-                  className="w-full h-full object-contain"
+                  draggable={false}
+                  className="w-full h-full object-contain pointer-events-none select-none"
                 />
-                <span className="absolute bottom-2 right-2 bg-black/70 text-white text-[10px] font-bold px-2 py-0.5 rounded">
+                <WatermarkOverlay isHD={true} />
+                <span className="absolute bottom-2 right-2 bg-black/75 text-white text-[10px] font-bold px-2.5 py-1 rounded-md border border-white/20 z-20">
                   2K Ultra HD (2048px)
                 </span>
               </div>
@@ -1888,6 +2018,19 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   <p className="text-sm text-gray-500 font-bold">{selectedProduct.namecn}</p>
                 )}
 
+                {/* PowerBI Invoices Frequency (Nº Facturas) */}
+                {Boolean(selectedProduct.salesInvoices && selectedProduct.salesInvoices > 0) && (
+                  <div className="bg-emerald-50 border border-emerald-300 px-3 py-1.5 rounded-xl text-xs font-bold text-emerald-900 flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <span>🧾</span>
+                      <span>{lang === 'zh' ? '实销成交发票数 (Nº Facturas):' : 'Facturas emitidas:'}</span>
+                    </span>
+                    <span className="font-mono text-sm font-black text-emerald-950">
+                      {selectedProduct.salesInvoices} {lang === 'zh' ? '张发票' : 'facturas'}
+                    </span>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-2 gap-2 bg-yellow-50/60 p-3 rounded-xl border-2 border-yellow-200 text-xs">
                   <div>
                     <span className="text-gray-500 block">Departamento:</span>
@@ -1911,59 +2054,93 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
 
                 {/* Price Display */}
                 {mode === 'store' ? (
-                  <div className="bg-[#f8d878] p-4 rounded-2xl border-3 border-[#222] flex items-center justify-between">
-                    <div>
-                      <span className="text-xs font-black text-gray-700 block">
-                        PVP VENTA AL PÚBLICO RECOMENDADO
-                      </span>
-                      <div className="text-2xl font-black text-[#e52521]">
-                        {selectedProduct.price > 0
-                          ? formatEuro(calculatePVP(selectedProduct.price))
-                          : 'Consultar'}
+                  currentUser ? (
+                    <div className="bg-[#f8d878] p-4 rounded-2xl border-3 border-[#222] flex items-center justify-between">
+                      <div>
+                        <span className="text-xs font-black text-gray-700 block">
+                          PVP VENTA AL PÚBLICO RECOMENDADO
+                        </span>
+                        <div className="text-2xl font-black text-[#e52521]">
+                          {selectedProduct.price > 0
+                            ? formatEuro(calculatePVP(selectedProduct.price))
+                            : 'Consultar'}
+                        </div>
                       </div>
+                      {selectedProduct.price > 0 && selectedProduct.packet > 1 && (
+                        <div className="text-right text-xs">
+                          <span className="text-gray-600 block">Por paquete completo:</span>
+                          <span className="font-black text-sm">
+                            {formatEuro(calculatePVP(selectedProduct.price) * selectedProduct.packet)}
+                          </span>
+                        </div>
+                      )}
                     </div>
-                    {selectedProduct.price > 0 && selectedProduct.packet > 1 && (
-                      <div className="text-right text-xs">
-                        <span className="text-gray-600 block">Por paquete completo:</span>
-                        <span className="font-black text-sm">
-                          {formatEuro(calculatePVP(selectedProduct.price) * selectedProduct.packet)}
+                  ) : (
+                    <div className="bg-amber-50 p-4 rounded-2xl border-3 border-[#222] flex flex-col sm:flex-row items-center justify-between gap-3">
+                      <div>
+                        <span className="text-sm font-black text-amber-900 block">
+                          🔒 {lang === 'zh' ? '价格保护中 (商户可见)' : 'Precios protegidos'}
+                        </span>
+                        <span className="text-xs text-gray-600 block mt-0.5">
+                          {lang === 'zh' ? '登录商户账号后可解锁零售指导价并加入采购车' : 'Accede para ver tarifas y formalizar pedidos.'}
                         </span>
                       </div>
-                    )}
-                  </div>
+                      <button
+                        onClick={() => setIsAuthModalOpen(true)}
+                        className="px-4 py-2 bg-[#f8d878] hover:bg-yellow-400 text-[#222] font-black rounded-xl border-2 border-[#222] shadow-[2px_2px_0px_#222] text-xs shrink-0 cursor-pointer"
+                      >
+                        🔑 {lang === 'zh' ? '登录 / 注册' : 'Acceder'}
+                      </button>
+                    </div>
+                  )
                 ) : (
                   <div className="bg-[#5c94fc]/15 p-4 rounded-2xl border-3 border-[#5c94fc] text-center">
-                    <span className="text-sm font-black text-[#5c94fc]">
-                      🏛️ {lang === 'zh' ? '产品展示厅 · 官方精选样品' : 'MODO SHOWROOM: Catálogo oficial de muestras'}
+                    <span className="text-sm font-black text-[#5c94fc] block">
+                      🏛️ {lang === 'zh' ? '产品展示厅 · 官方精选样品 (无标价模式)' : 'MODO SHOWROOM: Sin precios'}
+                    </span>
+                    <span className="text-xs text-gray-600 block mt-0.5">
+                      {lang === 'zh' ? '已隐去商品价格，方便直接向客户沟通谈判并制定样品预定单' : 'Diseñado para reservar muestras sin precios para negociación comercial.'}
                     </span>
                   </div>
                 )}
 
                 {/* Actions */}
                 <div className="flex gap-3 pt-2">
-                  <button
-                    onClick={() => {
-                      addToCart(selectedProduct, 1);
-                      setSelectedProduct(null);
-                      setIsCartOpen(true);
-                    }}
-                    className={`flex-1 py-3.5 rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-base flex items-center justify-center gap-2 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none ${
-                      mode === 'store'
-                        ? 'bg-[#e52521] text-white hover:bg-red-600'
-                        : 'bg-[#5c94fc] text-white hover:bg-blue-600'
-                    }`}
-                  >
-                    <span>🛒</span>
-                    <span>
-                      {mode === 'store'
-                        ? lang === 'zh'
-                          ? '立即选购并查看采购车'
-                          : 'Añadir al Carrito'
-                        : lang === 'zh'
-                          ? '加入购物车'
-                          : 'Añadir al Carrito'}
-                    </span>
-                  </button>
+                  {mode === 'store' ? (
+                    currentUser ? (
+                      <button
+                        onClick={() => {
+                          addToCart(selectedProduct, 1);
+                          setSelectedProduct(null);
+                          setIsCartOpen(true);
+                        }}
+                        className="flex-1 py-3.5 rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-base flex items-center justify-center gap-2 bg-[#e52521] text-white hover:bg-red-600 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
+                      >
+                        <span>🛒</span>
+                        <span>{lang === 'zh' ? '加入购物车' : 'Añadir al Carrito'}</span>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => setIsAuthModalOpen(true)}
+                        className="flex-1 py-3.5 rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-base flex items-center justify-center gap-2 bg-[#f8d878] hover:bg-yellow-400 text-[#222] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
+                      >
+                        <span>🔑</span>
+                        <span>{lang === 'zh' ? '登录商户账号后加购' : 'Inicia sesión para pedir'}</span>
+                      </button>
+                    )
+                  ) : (
+                    <button
+                      onClick={() => {
+                        addToCart(selectedProduct, 1);
+                        setSelectedProduct(null);
+                        setIsCartOpen(true);
+                      }}
+                      className="flex-1 py-3.5 rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-base flex items-center justify-center gap-2 bg-[#5c94fc] text-white hover:bg-blue-600 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
+                    >
+                      <span>📋</span>
+                      <span>{lang === 'zh' ? '加入样品预定车' : 'Añadir a Reserva'}</span>
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

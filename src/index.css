@@ -10,3 +10,11 @@ html, body, #root {
   width: 100%;
   background-color: #000;
 }
+
+/* Security anti-scanning watermark print protection */
+@media print {
+  .watermark-layer {
+    opacity: 0.65 !important;
+    background-color: transparent !important;
+  }
+}
