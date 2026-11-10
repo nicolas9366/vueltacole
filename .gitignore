@@ -11,3 +11,7 @@ wecom_server/
 *.zip
 *.tsbuildinfo
 logs/
+.env
+.env.*
+.yollgo_session/
+.yollgo_credentials
