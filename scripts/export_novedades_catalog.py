@@ -27,8 +27,12 @@ def is_new_product(p):
         return True
     if p.get('masterId') == '01':
         return True
-    text = (str(p.get('namees', '')) + ' ' + str(p.get('namecn', '')) + ' ' + str(p.get('usercode', '')) + ' ' + str(p.get('category', ''))).lower()
-    if '2027' in text or '2026' in text or 'exm26' in text or 'novedad' in text:
+    uc = str(p.get('usercode', '')).upper()
+    c = str(p.get('code', ''))
+    if uc.startswith('PP948') or uc.startswith('EXM26') or c.startswith('843572105') or c.startswith('843572106'):
+        return True
+    text = (str(p.get('namees', '')) + ' ' + str(p.get('namecn', '')) + ' ' + uc + ' ' + str(p.get('category', ''))).lower()
+    if '2027' in text or '2026' in text or 'exm26' in text or 'pp948' in text or 'novedad' in text:
         return True
     return False
 

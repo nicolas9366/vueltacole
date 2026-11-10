@@ -667,14 +667,18 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
     }
 
     // Quick filter (top500, top1000, new, promo)
-    if (quickFilter === 'top500') {
-      result = result.filter((p) => p.isTop500);
-    } else if (quickFilter === 'top1000') {
-      result = result.filter((p) => p.isTop1000);
-    } else if (quickFilter === 'isnew') {
-      result = result.filter((p) => p.isnew);
-    } else if (quickFilter === 'ispromote') {
-      result = result.filter((p) => p.ispromote);
+    // If user enters an explicit text search query (e.g. searching 'pp948'), search the entire store
+    const hasExplicitQuery = searchQuery.trim().length > 0;
+    if (!hasExplicitQuery) {
+      if (quickFilter === 'top500') {
+        result = result.filter((p) => p.isTop500);
+      } else if (quickFilter === 'top1000') {
+        result = result.filter((p) => p.isTop1000);
+      } else if (quickFilter === 'isnew') {
+        result = result.filter((p) => p.isnew);
+      } else if (quickFilter === 'ispromote') {
+        result = result.filter((p) => p.ispromote);
+      }
     }
 
     // AI Intent Search or standard query filter
@@ -789,6 +793,14 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
     if (!products || products.length === 0) return [];
     const list: ProductItem[] = [];
     const seenDepts = new Set<string>();
+
+    // Priority 1: Flagship brand new acrylic brush marker PP948
+    const pp948 = products.find((p) => (p.usercode || '').toUpperCase().startsWith('PP948'));
+    if (pp948) {
+      list.push(pp948);
+      seenDepts.add(pp948.deptEs || pp948.masterId || 'other');
+    }
+
     for (const p of products) {
       const deptKey = p.deptEs || p.masterId || 'other';
       if (p.imageUrl && !seenDepts.has(deptKey) && list.length < 8) {

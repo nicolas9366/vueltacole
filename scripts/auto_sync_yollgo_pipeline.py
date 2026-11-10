@@ -246,7 +246,16 @@ def run_pipeline(phone=None, password=None, headless=True):
         text = (str(p.get("namees") or "") + " " + str(p.get("namecn") or "") + " " + uc).upper()
         
         is_diff_new = (code and code not in baseline_codes) and (not uc or uc.upper() not in baseline_usercodes)
-        is_season_new = p.get("isnew") or "2027" in text or "2026" in text or "EXM26" in uc.upper() or "NOVEDAD" in text
+        is_season_new = (
+            p.get("isnew") or
+            "2027" in text or
+            "2026" in text or
+            "EXM26" in uc.upper() or
+            "PP948" in uc.upper() or
+            code.startswith("843572105") or
+            code.startswith("843572106") or
+            "NOVEDAD" in text
+        )
         if is_diff_new or is_season_new:
             p["isnew"] = True
             brand_new_items.append(p)

@@ -131,7 +131,8 @@ VERIFIED_SUBCATS = {
     '028:1C6': ('Pegatinas y Stickers en Relieve', '立体手账装饰贴纸'),
 
     # 08. Bellas Artes (topid 053, 013)
-    '053:': ('Carpetas Portadocumentos de Arte', '艺术图纸夹'),
+    '053:': ('Materiales y Accesorios de Bellas Artes', '美术画材综合配件'),
+    '053:063': ('Rotuladores Acrílicos y de Arte', '直液丙烯与艺术马克笔'),
     '053:0BB': ('Rotuladores Artísticos de Doble Punta', '双头素描马克笔与丙烯笔'),
     '053:10A': ('Rotuladores Escolares Clásicos', '学生彩色水彩笔'),
     '053:14F': ('Gomas Moldeables y de Dibujo', '素描可塑橡皮'),
@@ -383,10 +384,31 @@ def main():
         clean_uc = re.sub(r'[\s\-]', '', uc)
         clean_c = re.sub(r'[\s\-]', '', c)
 
+        if uc == 'PP948-1':
+            namees = 'ROTULADOR ACRÍLICO PUNTA PINCEL 12 COLORES'
+            namecn = '直液丙烯马克笔 软头 12色'
+        elif uc == 'PP948-2':
+            namees = 'ROTULADOR ACRÍLICO PUNTA PINCEL 24 COLORES'
+            namecn = '直液丙烯马克笔 软头 24色'
+        elif uc == 'PP948-3':
+            namees = 'ROTULADOR ACRÍLICO PUNTA PINCEL 36 COLORES'
+            namecn = '直液丙烯马克笔 软头 36色'
+
         info = sales_dict.get(uc) or sales_dict.get(c) or sales_dict.get(clean_uc) or sales_dict.get(clean_c) or {'ventas': 0.0, 'units': 0, 'invoices': 0}
         sales_rev = round(info['ventas'], 2)
         sales_units = info['units']
         sales_inv = info['invoices']
+
+        is_new_sku = (
+            bool(p.get('isnew', False)) or
+            master_id == '01' or
+            '2027' in (namees + ' ' + uc) or
+            '2026' in (namees + ' ' + uc) or
+            uc.startswith('EXM26') or
+            uc.startswith('PP948') or
+            c.startswith('843572105') or
+            c.startswith('843572106')
+        )
 
         clean_item = {
             "id": str(p.get('id', '')),
@@ -405,7 +427,7 @@ def main():
             "packet": int(p.get('packet', 1)),
             "box": int(p.get('box', 1)),
             "stock": p.get('stock', 1),
-            "isnew": bool(p.get('isnew', False)) or master_id == '01' or '2027' in (p.get('namees', '') + p.get('usercode', '')) or '2026' in (p.get('namees', '') + p.get('usercode', '')) or 'EXM26' in p.get('usercode', '').upper(),
+            "isnew": is_new_sku,
             "ishot": bool(p.get('ishot', False)),
             "ispromote": bool(p.get('ispromote', False)),
             "salesRevenue": sales_rev,
