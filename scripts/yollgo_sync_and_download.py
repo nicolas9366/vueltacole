@@ -21,9 +21,12 @@ from concurrent.futures import ThreadPoolExecutor
 PORT = 8999
 IMG_SAVE_DIR = "/Users/dengyu/CentrodeVender/MainPaper_Full_Images"
 DOWNLOADS_DIR = "/Users/dengyu/Downloads/MainPaper_2026_Catalog"
-DATA_DIR = "/Users/dengyu/github/vueltacole/src/data"
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SRC_DATA_DIR = os.path.join(REPO_ROOT, "src/data")
+PUBLIC_DATA_DIR = os.path.join(REPO_ROOT, "public/data")
+SHOP_DATA_DIR = os.path.join(REPO_ROOT, "shop/data")
 
-TARGET_DIRS = [IMG_SAVE_DIR, DOWNLOADS_DIR, DATA_DIR]
+TARGET_DIRS = [IMG_SAVE_DIR, DOWNLOADS_DIR, SRC_DATA_DIR, PUBLIC_DATA_DIR, SHOP_DATA_DIR]
 for d in TARGET_DIRS:
     os.makedirs(d, exist_ok=True)
 
@@ -73,6 +76,9 @@ def save_manifest_files(target_dir, no_price, with_price):
     with open(os.path.join(target_dir, "mainpaper_catalog_with_price.json"), "w", encoding="utf-8") as f:
         json.dump(with_price, f, ensure_ascii=False, indent=2)
 
+    with open(os.path.join(target_dir, "catalog.json"), "w", encoding="utf-8") as f:
+        json.dump(with_price, f, ensure_ascii=False, indent=2)
+
     with open(os.path.join(target_dir, "mainpaper_catalog_no_price.csv"), "w", encoding="utf-8-sig", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(['货号(Code)', '条码/客户码', '西语名称', '中文名称', '分类', '小包装(Packet)', '外箱包装(Box)', '新品', '爆款', '高清图片链接'])
@@ -89,8 +95,9 @@ def process_and_download(payload):
     no_price = payload.get("noPrice", [])
     with_price = payload.get("withPrice", [])
     total_items = len(no_price)
+    new_count = sum(1 for p in no_price if p.get('isnew'))
     print(f"\n=======================================================")
-    print(f"📥 成功接收商品清单！总款数: {total_items}")
+    print(f"📥 成功接收商品清单！总款数: {total_items} (其中标注新品: {new_count} 款)")
     print(f"=======================================================")
 
     for d in TARGET_DIRS:

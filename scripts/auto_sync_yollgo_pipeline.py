@@ -25,6 +25,30 @@ DOWNLOADS_DIR = "/Users/dengyu/Downloads/MainPaper_2026_Catalog"
 CHROME_PATH = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 SHOP_ID = "019"
 
+def load_env_file():
+    for fname in [".env", "yollgo_login.txt"]:
+        env_path = os.path.join(REPO_ROOT, fname)
+        if os.path.exists(env_path):
+            with open(env_path, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if line and not line.startswith("#") and "=" in line:
+                        k, v = line.split("=", 1)
+                        k = k.strip()
+                        v = v.strip().strip("'\"")
+                        if k not in os.environ and v:
+                            os.environ[k] = v
+                    elif line and not line.startswith("#") and ":" in line:
+                        k, v = line.split(":", 1)
+                        k = k.strip()
+                        v = v.strip().strip("'\"")
+                        if ("phone" in k.lower() or "手机" in k) and "YOLLGO_PHONE" not in os.environ and v:
+                            os.environ["YOLLGO_PHONE"] = v
+                        elif ("pass" in k.lower() or "密码" in k) and "YOLLGO_PASSWORD" not in os.environ and v:
+                            os.environ["YOLLGO_PASSWORD"] = v
+
+load_env_file()
+
 EXTRACTION_JS = """
 async () => {
   const rootEl = document.querySelector('[ng-app]') || document.body;
@@ -105,6 +129,11 @@ async () => {
         boxPrice: +(price * box).toFixed(3)
       });
     }
+
+    if (window.onProgress && (i % 10 === 0 || i === categories.length - 1)) {
+      await window.onProgress(i + 1, categories.length, catName, products.length);
+    }
+    await new Promise(r => setTimeout(r, 60));
   }
 
   return { success: true, count: products.length, products: products };
@@ -113,6 +142,9 @@ async () => {
 
 def extract_from_yollgo_browser(phone=None, password=None, headless=True):
     from playwright.sync_api import sync_playwright
+
+    phone = phone or os.getenv("YOLLGO_PHONE")
+    password = password or os.getenv("YOLLGO_PASSWORD")
 
     os.makedirs(PROFILE_DIR, exist_ok=True)
     print("🚀 启动自动化 Chrome 浏览器引擎...")
@@ -125,6 +157,12 @@ def extract_from_yollgo_browser(phone=None, password=None, headless=True):
             args=["--disable-blink-features=AutomationControlled"]
         )
         page = context.pages[0] if context.pages else context.new_page()
+        page.set_default_timeout(300000)
+
+        def on_prog(cur, tot, cat_name, cnt):
+            print(f"⏳ 抓取进度: [{cur}/{tot}] {cat_name} (已累计: {cnt} 款)", flush=True)
+
+        page.expose_function("onProgress", on_prog)
 
         print("🌐 访问 Yollgo 商城类目页...")
         page.goto(f"https://app.yollgo.com/#/home/category/{SHOP_ID}", timeout=30000)

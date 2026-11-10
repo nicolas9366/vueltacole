@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>电子签名矢量图预览 - PDF签名专用</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #f1f3f5; color: #333; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+    h1 { font-size: 24px; margin-bottom: 8px; color: #111; }
+    .subtitle { font-size: 14px; color: #666; margin-bottom: 30px; }
+    .container { max-width: 900px; width: 100%; display: flex; flex-direction: column; gap: 30px; }
+    .card { background: #fff; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); padding: 24px; }
+    .card-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
+    .badge { font-size: 12px; background: #e7f5ff; color: #1971c2; padding: 4px 10px; border-radius: 99px; font-weight: 500; }
+    .signature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .sig-item { border: 1px solid #e9ecef; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; align-items: center; background: #fafafa; }
+    .sig-box { width: 100%; height: 140px; display: flex; align-items: center; justify-content: center; background: #ffffff; border: 1px dashed #ced4da; border-radius: 6px; margin-bottom: 12px; padding: 10px; }
+    .sig-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .sig-label { font-size: 14px; font-weight: 600; color: #212529; margin-bottom: 4px; }
+    .sig-meta { font-size: 12px; color: #868e96; margin-bottom: 10px; }
+    .btn-group { display: flex; gap: 8px; width: 100%; }
+    .btn { flex: 1; text-align: center; padding: 6px 0; font-size: 12px; font-weight: 500; border-radius: 6px; text-decoration: none; transition: all 0.2s; }
+    .btn-primary { background: #0b4ba2; color: #fff; }
+    .btn-primary:hover { background: #08387a; }
+    .btn-secondary { background: #e9ecef; color: #495057; }
+    .btn-secondary:hover { background: #dee2e6; }
+    .mock-doc { background: #ffffff; border: 1px solid #dee2e6; box-shadow: 0 6px 24px rgba(0,0,0,0.08); padding: 40px 50px; border-radius: 4px; font-family: Georgia, serif; line-height: 1.8; color: #2b2b2b; position: relative; }
+    .doc-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #222; padding-bottom: 15px; }
+    .doc-title { font-size: 20px; font-weight: bold; letter-spacing: 1px; }
+    .doc-p { margin-bottom: 16px; text-align: justify; font-size: 14px; }
+    .sign-section { margin-top: 40px; display: flex; justify-content: flex-end; }
+    .sign-field { width: 280px; border-bottom: 1px solid #333; padding-bottom: 4px; position: relative; }
+    .sign-stamp { position: absolute; bottom: 2px; right: 20px; width: 170px; height: 90px; pointer-events: none; }
+    .sign-stamp img { width: 100%; height: 100%; object-fit: contain; }
+    .sign-text { font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; color: #555; }
+  </style>
+</head>
+<body>
+  <h1>电子签名矢量图预览 (PDF 签名专用)</h1>
+  <div class="subtitle">已完成背景透明化、笔迹去噪、矢量平滑拟合与纯正商务签名蓝调色</div>
+  <div class="container">
+    <div class="card">
+      <div class="card-title">
+        <span>可用配色及格式下载</span>
+        <span class="badge">SVG 矢量 + 300 DPI 透明 PNG</span>
+      </div>
+      <div class="signature-grid">
+        <div class="sig-item">
+          <div class="sig-box"><img src="signature_blue.svg" alt="经典深蓝" /></div>
+          <div class="sig-label">经典深蓝 (推荐首选)</div>
+          <div class="sig-meta">#0b4ba2 · 纯正签字笔墨蓝</div>
+          <div class="btn-group">
+            <a href="signature_blue.svg" download class="btn btn-primary">下载 SVG</a>
+            <a href="signature_blue.png" download class="btn btn-secondary">下载 PNG</a>
+          </div>
+        </div>
+        <div class="sig-item">
+          <div class="sig-box"><img src="signature_navy.svg" alt="深藏青蓝" /></div>
+          <div class="sig-label">深藏青蓝 (庄重正式)</div>
+          <div class="sig-meta">#0a2558 · 严谨商务合同</div>
+          <div class="btn-group">
+            <a href="signature_navy.svg" download class="btn btn-primary">下载 SVG</a>
+            <a href="signature_navy.png" download class="btn btn-secondary">下载 PNG</a>
+          </div>
+        </div>
+        <div class="sig-item">
+          <div class="sig-box"><img src="signature_royal.svg" alt="亮宝石蓝" /></div>
+          <div class="sig-label">亮宝石蓝 (清透醒目)</div>
+          <div class="sig-meta">#0056cc · 鲜艳易识</div>
+          <div class="btn-group">
+            <a href="signature_royal.svg" download class="btn btn-primary">下载 SVG</a>
+            <a href="signature_royal.png" download class="btn btn-secondary">下载 PNG</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">
+        <span>PDF 文档签名嵌入效果模拟</span>
+        <span class="badge">A4 真实文档质感</span>
+      </div>
+      <div class="mock-doc">
+        <div class="doc-header"><div class="doc-title">CONFIRMATION & AGREEMENT / 协议确认书</div></div>
+        <p class="doc-p">本协议各方经友好协商，确认已阅读并充分理解上述全部条款。各方在此声明所提交信息的真实性与合法性，并同意承担相应的法律义务与责任。</p>
+        <div class="sign-section">
+          <div class="sign-field">
+            <div class="sign-stamp"><img src="signature_blue.svg" alt="签名效果" /></div>
+            <div class="sign-text">签署人 (Signature): _________________</div>
+            <div class="sign-text" style="margin-top: 8px;">日期 (Date): 2026-09-08</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

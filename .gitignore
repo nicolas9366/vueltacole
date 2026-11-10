@@ -15,3 +15,5 @@ logs/
 .env.*
 .yollgo_session/
 .yollgo_credentials
+yollgo_login.txt
+*login.txt

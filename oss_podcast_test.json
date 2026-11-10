@@ -1,0 +1,42 @@
+[
+  {
+    "index": 1,
+    "speaker": "observer",
+    "speaker_name": "特约商业观察员",
+    "start_sec": 0.0,
+    "end_sec": 20.53,
+    "text": "Hello大家好！欢迎收听我们的深度商业播客。[pause] 今天我们来重点聊聊西班牙刚公布的宏观经贸大盘数据。[breathe] 据说三季度表现非常亮眼？"
+  },
+  {
+    "index": 2,
+    "speaker": "niko",
+    "speaker_name": "Niko 首席商业情报官",
+    "start_sec": 20.880000000000003,
+    "end_sec": 38.77,
+    "text": "没错。[laugh] 西班牙三季度GDP同比大涨2.7%，环比涨了0.6%，这个增速在整个欧洲来说都相当突出，大幅超过了欧元区平均水平。"
+  },
+  {
+    "index": 3,
+    "speaker": "observer",
+    "speaker_name": "特约商业观察员",
+    "start_sec": 39.120000000000005,
+    "end_sec": 45.7,
+    "text": "那主要动力来自哪里呢？是出口拉动还是国内消费给力？"
+  },
+  {
+    "index": 4,
+    "speaker": "niko",
+    "speaker_name": "Niko 首席商业情报官",
+    "start_sec": 46.050000000000004,
+    "end_sec": 67.10000000000001,
+    "text": "两头都在发力。[pause] 家庭消费涨了3.1%，出口同比也大涨3.6%。不过对于华商零售老板来说，更要警惕上游工业出厂价10.5%的暴涨，切忌盲目囤货压货。"
+  },
+  {
+    "index": 5,
+    "speaker": "observer",
+    "speaker_name": "特约商业观察员",
+    "start_sec": 67.45,
+    "end_sec": 79.03,
+    "text": "明白！守好现金流，做好周转才是关键。[laugh] 感谢大家的收听，咱们下期商业对谈见！"
+  }
+]

@@ -1,0 +1,7 @@
+# Project Strategy: Main Paper Back-to-School Map (Vuelta al Cole)
+- **Role**: Senior UI/UX Architect & Frontend Developer.
+- **Rules**: 
+  1. **Planning First**: 在执行复杂功能（如 Mapbox 深度集成或抽奖逻辑）前，必须先将任务拆解为原子步骤。
+  2. **Visual Consistency**: 严格遵循马里奥/大富翁游戏美学。使用高饱和度色彩 (红 #e52521, 蓝 #5c94fc, 黄 #f8d878)，粗黑边框 (#222)，以及硬阴影。
+  3. **Core Features**: 互动地图展示、门店搜索与过滤、Main Paper 扫码抽奖功能。
+  4. **Font**: 强制使用 'Fredoka' 字体以保持游戏化的圆润感。
