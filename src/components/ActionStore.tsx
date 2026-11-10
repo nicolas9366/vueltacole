@@ -374,7 +374,14 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
   const [loadError, setLoadError] = useState<string | null>(null);
 
   // Filters & Search
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('q') || params.get('search') || '';
+    } catch {
+      return '';
+    }
+  });
   const [selectedDept, setSelectedDept] = useState<string>('all');
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>('all');
   const [quickFilter, setQuickFilter] = useState<'all' | 'top500' | 'top1000' | 'isnew' | 'ispromote'>(() => {
@@ -585,12 +592,15 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
   useEffect(() => {
     try {
       const params = new URLSearchParams(window.location.search);
+      const q = params.get('q') || params.get('search');
+      if (q) setSearchQuery(q);
+
       const f = params.get('filter');
       const h = window.location.hash.toLowerCase();
       if (f === 'isnew' || f === 'new' || f === 'novedades' || h.includes('novedades') || h.includes('new')) {
         setSelectedDept('all');
         setSelectedSubCategory('all');
-        setSearchQuery('');
+        if (!q) setSearchQuery('');
         setQuickFilter('isnew');
         setPage(1);
       }
