@@ -47,14 +47,41 @@ export interface AuthUser {
   loginAt: string;
 }
 
-export const TEST_ACCOUNT = {
-  username: 'test',
-  password: 'test..',
-  email: 'madyu001@gmail.com',
-  companyName: 'KYRMAX VIP 采购商户',
-  phone: '+34 604 229 098',
-  role: 'vip' as const,
-};
+export const VALID_ACCOUNTS: Array<{
+  username: string;
+  password: string;
+  email: string;
+  companyName: string;
+  phone?: string;
+  role: 'vip' | 'retailer' | 'school' | 'customer';
+}> = [
+  {
+    username: 'guest',
+    password: 'km8296',
+    email: 'guest@vueltacole.com',
+    companyName: 'Invitado / 访客体验',
+    phone: '+34 604 229 098',
+    role: 'retailer',
+  },
+  {
+    username: 'kyrmax',
+    password: 'km8296',
+    email: 'info@kyrmax.com',
+    companyName: 'KYRMAX Mayorista B2B',
+    phone: '+34 604 229 098',
+    role: 'vip',
+  },
+  {
+    username: 'test',
+    password: 'test..',
+    email: 'madyu001@gmail.com',
+    companyName: 'KYRMAX VIP 采购商户',
+    phone: '+34 604 229 098',
+    role: 'vip',
+  },
+];
+
+export const TEST_ACCOUNT = VALID_ACCOUNTS[2];
 
 interface ActionStoreProps {
   lang: 'zh' | 'es';
@@ -317,10 +344,27 @@ const WatermarkOverlay: React.FC<{ isHD?: boolean; className?: string }> = ({
 };
 
 export const ActionStore: React.FC<ActionStoreProps> = ({
-  lang,
+  lang: propLang,
   onNavigateHome,
   onNavigateToNavidad,
 }) => {
+  const [lang, setLang] = useState<'zh' | 'es'>(() => {
+    try {
+      const saved = localStorage.getItem('vueltacole_lang');
+      return (saved === 'zh' || saved === 'es') ? saved : propLang;
+    } catch {
+      return propLang;
+    }
+  });
+
+  const toggleLang = () => {
+    const next = lang === 'zh' ? 'es' : 'zh';
+    setLang(next);
+    try {
+      localStorage.setItem('vueltacole_lang', next);
+    } catch {}
+  };
+
   // Dual-mode: 'store' (PVP with cart) vs 'showroom' (zero prices for schools/parents)
   const [mode, setMode] = useState<'store' | 'showroom'>('store');
 
@@ -385,39 +429,41 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
   const [regCompany, setRegCompany] = useState<string>('');
   const [regPhone, setRegPhone] = useState<string>('');
 
-  const handleLogin = (e?: React.FormEvent) => {
+  const handleLogin = (e?: React.FormEvent, customId?: string, customPwd?: string) => {
     if (e) e.preventDefault();
     setAuthError(null);
 
-    const id = loginIdentifier.trim().toLowerCase();
-    const pwd = loginPassword.trim();
+    const id = (customId !== undefined ? customId : loginIdentifier).trim().toLowerCase();
+    const pwd = (customPwd !== undefined ? customPwd : loginPassword).trim();
 
     if (!id || !pwd) {
       setAuthError(lang === 'zh' ? '请输入用户名或邮箱及密码' : 'Introduce usuario/email y contraseña');
       return;
     }
 
-    // Official test account: test / test.. / madyu001@gmail.com
-    const isTestMatch =
-      (id === TEST_ACCOUNT.username.toLowerCase() || id === TEST_ACCOUNT.email.toLowerCase()) &&
-      pwd === TEST_ACCOUNT.password;
+    // Match valid accounts (guest, kyrmax, test)
+    const matched = VALID_ACCOUNTS.find(
+      (acc) =>
+        (acc.username.toLowerCase() === id || acc.email.toLowerCase() === id) &&
+        acc.password === pwd
+    );
 
-    if (isTestMatch) {
+    if (matched) {
       const user: AuthUser = {
-        username: TEST_ACCOUNT.username,
-        email: TEST_ACCOUNT.email,
-        role: TEST_ACCOUNT.role,
-        companyName: TEST_ACCOUNT.companyName,
-        phone: TEST_ACCOUNT.phone,
+        username: matched.username,
+        email: matched.email,
+        role: matched.role,
+        companyName: matched.companyName,
+        phone: matched.phone,
         loginAt: new Date().toISOString(),
       };
       setCurrentUser(user);
       localStorage.setItem('vueltacole_logged_user', JSON.stringify(user));
-      setAuthSuccess(lang === 'zh' ? '欢迎回来，VIP 商户！' : '¡Bienvenido de nuevo!');
+      setAuthSuccess(lang === 'zh' ? `欢迎，${user.companyName || user.username}！` : `¡Bienvenido, ${user.companyName || user.username}!`);
       setTimeout(() => {
         setIsAuthModalOpen(false);
         setAuthSuccess(null);
-      }, 700);
+      }, 500);
       return;
     }
 
@@ -442,7 +488,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
         setTimeout(() => {
           setIsAuthModalOpen(false);
           setAuthSuccess(null);
-        }, 700);
+        }, 500);
         return;
       }
     } catch {
@@ -725,6 +771,28 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
     return filteredProducts.slice(start, start + ITEMS_PER_PAGE);
   }, [filteredProducts, page]);
 
+  // 8 Curated representative products for unauthenticated preview landing
+  const previewProducts = useMemo(() => {
+    if (!products || products.length === 0) return [];
+    const list: ProductItem[] = [];
+    const seenDepts = new Set<string>();
+    for (const p of products) {
+      const deptKey = p.deptEs || p.masterId || 'other';
+      if (p.imageUrl && !seenDepts.has(deptKey) && list.length < 8) {
+        seenDepts.add(deptKey);
+        list.push(p);
+      }
+    }
+    if (list.length < 8) {
+      for (const p of products) {
+        if (p.imageUrl && !list.some((item) => item.id === p.id) && list.length < 8) {
+          list.push(p);
+        }
+      }
+    }
+    return list;
+  }, [products]);
+
   // Scroll to grid top smoothly
   const scrollToGrid = () => {
     topGridRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -878,9 +946,561 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#fcf8f2] text-[#222] font-['Fredoka',sans-serif] pb-24">
-      {/* 1. TOP MARIO BOARD-GAME HERO HEADER */}
-      <div className="bg-[#e52521] border-b-4 border-[#222] text-white px-4 py-3 md:py-6 shadow-md relative overflow-hidden">
+    <div className="min-h-screen bg-[#fcf8f2] text-[#222] font-['Fredoka',sans-serif] pb-24 selection:bg-[#f8d878]">
+      {/* ======================================================== */}
+      {/* A. GATED B2B PREVIEW LANDING PORTAL (WHEN NOT LOGGED IN) */}
+      {/* ======================================================== */}
+      {!currentUser ? (
+        <>
+          {/* 1. TOP BRAND NAVIGATION */}
+          <header className="bg-[#e52521] border-b-4 border-[#222] text-white px-4 py-3 md:py-4 sticky top-0 z-30 shadow-md">
+            <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2 md:gap-3">
+                {onNavigateHome && (
+                  <button
+                    onClick={onNavigateHome}
+                    className="px-3 py-1.5 bg-white/20 hover:bg-white text-white hover:text-[#222] rounded-xl border-2 border-[#222] text-xs font-black transition-all flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>←</span>
+                    <span className="hidden sm:inline">{lang === 'zh' ? '活动地图' : 'Mapa'}</span>
+                  </button>
+                )}
+                <div className="flex items-center gap-2">
+                  <span className="bg-[#f8d878] text-[#222] px-2.5 py-1 rounded-xl border-2 border-[#222] font-black text-xs md:text-sm shadow-[2px_2px_0px_#222]">
+                    🎒 VUELTA AL COLE
+                  </span>
+                  <span className="font-black text-sm md:text-lg tracking-tight hidden sm:inline">
+                    KYRMAX B2B · {lang === 'zh' ? '西班牙文具采购展厅' : 'Central Mayorista de Papelería'}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {onNavigateToNavidad && (
+                  <button
+                    onClick={onNavigateToNavidad}
+                    className="px-2.5 py-1.5 bg-[#f8d878] text-[#222] hover:bg-yellow-400 rounded-xl border-2 border-[#222] text-xs font-black transition-all shadow-[2px_2px_0px_#222] cursor-pointer"
+                  >
+                    🎄 {lang === 'zh' ? '圣诞专区' : 'Navidad'}
+                  </button>
+                )}
+                <button
+                  onClick={toggleLang}
+                  className="px-2.5 py-1.5 bg-white text-[#222] hover:bg-yellow-100 rounded-xl border-2 border-[#222] text-xs font-black transition-all shadow-[2px_2px_0px_#222] cursor-pointer"
+                >
+                  🌐 {lang === 'zh' ? 'Español' : '中文'}
+                </button>
+                <button
+                  onClick={() => {
+                    setAuthTab('login');
+                    setIsAuthModalOpen(true);
+                  }}
+                  className="px-3.5 py-1.5 md:px-4 md:py-2 bg-[#5c94fc] hover:bg-blue-600 text-white rounded-xl border-2 md:border-3 border-[#222] text-xs md:text-sm font-black transition-all shadow-[3px_3px_0px_#222] cursor-pointer flex items-center gap-1.5"
+                >
+                  <span>🔑</span>
+                  <span>{lang === 'zh' ? '商户登录' : 'Acceder'}</span>
+                </button>
+              </div>
+            </div>
+          </header>
+
+          {/* 2. HERO: BRAND VALUE PROPOSITION & EMBEDDED MARIO QUICK LOGIN */}
+          <section className="bg-gradient-to-b from-[#e52521] to-[#cf1f1b] text-white border-b-4 border-[#222] px-4 py-8 md:py-14 relative overflow-hidden">
+            <div className="absolute top-2 right-6 text-white/10 text-9xl font-black select-none pointer-events-none hidden sm:block">
+              ★
+            </div>
+            <div className="absolute -bottom-8 left-10 text-white/10 text-8xl font-black select-none pointer-events-none hidden sm:block">
+              ?
+            </div>
+
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+              {/* Left 7 Cols: Brand Value Proposition & Trust */}
+              <div className="lg:col-span-7 space-y-4 md:space-y-6 text-center lg:text-left">
+                <div className="inline-flex items-center gap-2 bg-[#f8d878] text-[#222] px-3 py-1 rounded-full border-2 border-[#222] font-black text-xs md:text-sm shadow-[2px_2px_0px_#222]">
+                  <span>🇪🇸</span>
+                  <span>
+                    {lang === 'zh'
+                      ? '西班牙本土专业文具大宗供应链'
+                      : 'Proveedor Líder de Papelería B2B en España'}
+                  </span>
+                </div>
+
+                <h1 className="text-2xl sm:text-3xl md:text-5xl font-black leading-tight drop-shadow-[2px_2px_0px_#222]">
+                  {lang === 'zh' ? (
+                    <>
+                      全景文具现货展厅<br />
+                      <span className="text-[#f8d878]">& 批发展销选品中心</span>
+                    </>
+                  ) : (
+                    <>
+                      Catálogo Profesional de Papelería<br />
+                      <span className="text-[#f8d878]">& Showroom Mayorista</span>
+                    </>
+                  )}
+                </h1>
+
+                <p className="text-sm md:text-base text-yellow-50 font-medium max-w-xl leading-relaxed mx-auto lg:mx-0">
+                  {lang === 'zh'
+                    ? '专注服务西班牙书店、文具店、百货超市与教育机构。汇聚 6,100+ 款优质文具现货，涵盖欧洲标准学生文具、高规格纸品与知名画材，源头直供，全国快速直发。'
+                    : 'Suministro especializado para librerías, papelerías, bazares y centros educativos. Más de 6.100 referencias en stock real peninsular con precios directos de mayorista y entrega rápida.'}
+                </p>
+
+                {/* 4 Trust Feature Tiles */}
+                <div className="grid grid-cols-2 gap-2.5 sm:gap-3 pt-2 max-w-lg mx-auto lg:mx-0 text-left">
+                  <div className="bg-white/10 backdrop-blur-xs p-3 rounded-2xl border-2 border-white/30 text-white">
+                    <div className="text-lg">🛡️</div>
+                    <div className="font-black text-xs md:text-sm mt-0.5">
+                      {lang === 'zh' ? '欧盟安全双认证' : 'Marcado CE & EN-71'}
+                    </div>
+                    <div className="text-[11px] text-white/80 mt-0.5 leading-tight">
+                      {lang === 'zh' ? '全线符合欧洲学生用品安全检测' : '100% seguros y no tóxicos'}
+                    </div>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-xs p-3 rounded-2xl border-2 border-white/30 text-white">
+                    <div className="text-lg">📐</div>
+                    <div className="font-black text-xs md:text-sm mt-0.5">
+                      {lang === 'zh' ? '深度适配西班牙课标' : 'Currículo Escolar'}
+                    </div>
+                    <div className="text-[11px] text-white/80 mt-0.5 leading-tight">
+                      {lang === 'zh' ? 'Cuadrícula 4x4 及学校指定标准' : 'Formatos y pautas homologadas'}
+                    </div>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-xs p-3 rounded-2xl border-2 border-white/30 text-white">
+                    <div className="text-lg">⚡</div>
+                    <div className="font-black text-xs md:text-sm mt-0.5">
+                      {lang === 'zh' ? '48-72H 半岛现货直配' : 'Envíos 48-72 Horas'}
+                    </div>
+                    <div className="text-[11px] text-white/80 mt-0.5 leading-tight">
+                      {lang === 'zh' ? '伊比利亚本土现货仓，无断货之忧' : 'Stock real en península'}
+                    </div>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-xs p-3 rounded-2xl border-2 border-white/30 text-white">
+                    <div className="text-lg">🏭</div>
+                    <div className="font-black text-xs md:text-sm mt-0.5">
+                      {lang === 'zh' ? '源头一手批发直销' : 'Precios Mayoristas'}
+                    </div>
+                    <div className="text-[11px] text-white/80 mt-0.5 leading-tight">
+                      {lang === 'zh' ? '直连品牌大宗供应链，充足毛利空间' : 'Margen óptimo para comercio'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right 5 Cols: Interactive Mario Quick Login Box */}
+              <div className="lg:col-span-5">
+                <div className="bg-white text-[#222] rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] overflow-hidden">
+                  <div className="bg-[#f8d878] p-4 border-b-4 border-[#222] flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">🔑</span>
+                      <h3 className="font-black text-base md:text-lg text-[#222]">
+                        {lang === 'zh' ? '商户准入认证' : 'Acceso Clientes B2B'}
+                      </h3>
+                    </div>
+                    <span className="text-[11px] font-black bg-[#5c94fc] text-white px-2 py-0.5 rounded-lg border border-[#222]">
+                      B2B ONLY
+                    </span>
+                  </div>
+
+                  <div className="p-5 md:p-6 space-y-4">
+                    <p className="text-xs text-gray-600 font-medium leading-relaxed">
+                      {lang === 'zh'
+                        ? '输入商户或访客账号，解锁全量 6,100+ 现货品类、库存状态与采购订货权限。'
+                        : 'Introduce tu usuario o email para consultar el catálogo completo de más de 6.100 productos y precios mayoristas.'}
+                    </p>
+
+                    {authError && (
+                      <div className="p-2.5 bg-red-100 border-2 border-red-500 rounded-xl text-red-700 text-xs font-bold flex items-center gap-1.5">
+                        <span>⚠️</span>
+                        <span>{authError}</span>
+                      </div>
+                    )}
+                    {authSuccess && (
+                      <div className="p-2.5 bg-emerald-100 border-2 border-emerald-500 rounded-xl text-emerald-800 text-xs font-bold flex items-center gap-1.5">
+                        <span>✅</span>
+                        <span>{authSuccess}</span>
+                      </div>
+                    )}
+
+                    <form onSubmit={handleLogin} className="space-y-3">
+                      <div>
+                        <label className="block text-xs font-black text-gray-700 mb-1">
+                          {lang === 'zh' ? '用户名或邮箱' : 'Usuario o Email'}
+                        </label>
+                        <input
+                          type="text"
+                          value={loginIdentifier}
+                          onChange={(e) => setLoginIdentifier(e.target.value)}
+                          placeholder={lang === 'zh' ? '请输入商户账号' : 'Usuario o email'}
+                          className="w-full px-3.5 py-2.5 rounded-xl border-3 border-[#222] text-sm font-bold bg-[#fafafa] text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-black text-gray-700 mb-1">
+                          {lang === 'zh' ? '密码' : 'Contraseña'}
+                        </label>
+                        <input
+                          type="password"
+                          value={loginPassword}
+                          onChange={(e) => setLoginPassword(e.target.value)}
+                          placeholder="••••••••"
+                          className="w-full px-3.5 py-2.5 rounded-xl border-3 border-[#222] text-sm font-bold bg-[#fafafa] text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
+                        />
+                      </div>
+
+                      <button
+                        type="submit"
+                        className="w-full py-3 bg-[#e52521] hover:bg-red-600 text-white rounded-xl border-3 border-[#222] shadow-[3px_3px_0px_#222] text-sm font-black transition-all active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer flex items-center justify-center gap-2"
+                      >
+                        <span>🚀</span>
+                        <span>{lang === 'zh' ? '立即验证并进入全景商城' : 'Entrar en el Catálogo Completo'}</span>
+                      </button>
+                    </form>
+
+                    <div className="pt-2 border-t-2 border-gray-100 flex flex-col gap-2 text-center text-xs">
+                      <a
+                        href="https://wa.me/34604229098?text=Hola,%20deseo%20solicitar%20acceso%20comercial%20al%20catalogo%20completo%20de%20papeleria"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-emerald-700 hover:text-emerald-800 font-bold flex items-center justify-center gap-1.5 py-1"
+                      >
+                        <span>💬</span>
+                        <span>
+                          {lang === 'zh'
+                            ? '尚无账号？WhatsApp 快速申请 (+34 604 229 098)'
+                            : '¿No tienes cuenta? Solicita acceso por WhatsApp'}
+                        </span>
+                      </a>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setAuthTab('register');
+                          setIsAuthModalOpen(true);
+                        }}
+                        className="text-gray-600 hover:text-[#222] font-black underline cursor-pointer"
+                      >
+                        {lang === 'zh' ? '✨ 新商户在线注册申请' : 'Registrar nueva cuenta comercial'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 3. STATIONERY CONTENT ECOSYSTEM (6 CORE PILLARS) */}
+          <section className="max-w-7xl mx-auto px-4 py-10 md:py-16">
+            <div className="text-center max-w-3xl mx-auto mb-10">
+              <span className="bg-[#5c94fc] text-white text-xs font-black px-3 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase tracking-wider inline-block mb-2">
+                {lang === 'zh' ? '📚 文具核心生态' : 'Gama de Productos'}
+              </span>
+              <h2 className="text-2xl md:text-4xl font-black text-[#222]">
+                {lang === 'zh' ? '全景品类矩阵 · 覆盖全场景文具需求' : 'Ecosistema Integral de Papelería y Material Escolar'}
+              </h2>
+              <p className="text-xs md:text-sm text-gray-600 font-medium mt-2">
+                {lang === 'zh'
+                  ? '从日常书写到专业艺术创作，从开学季刚需到办公归档，严格按照欧洲标准与西班牙教学需求精工选品。'
+                  : 'Selección rigurosa adaptada a las necesidades reales de estudiantes, oficinas, artistas y comercios minoristas.'}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {/* Card 1 */}
+              <div className="bg-white p-5 rounded-2xl border-3 border-[#222] shadow-[4px_4px_0px_#222] hover:-translate-y-1 transition-transform">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="w-12 h-12 rounded-xl bg-red-100 border-2 border-[#222] flex items-center justify-center text-2xl shadow-[2px_2px_0px_#222]">
+                    ✏️
+                  </span>
+                  <div>
+                    <h3 className="font-black text-base text-[#222]">
+                      {lang === 'zh' ? '书写与修正系统' : 'Escritura y Corrección'}
+                    </h3>
+                    <span className="text-[11px] font-bold text-gray-500">Bolígrafos, rollers y correctores</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600 leading-relaxed font-medium">
+                  {lang === 'zh'
+                    ? '速干中性笔、直液式走珠笔、双头彩色记号笔、马卡龙色系荧光笔、精密按动修正带与学生无碎屑绘图橡皮。出墨顺畅，经久耐写。'
+                    : 'Bolígrafos gel de secado rápido, rotuladores punta fina, marcadores pastel y cintas correctoras de alta cobertura ergonómicas.'}
+                </p>
+              </div>
+
+              {/* Card 2 */}
+              <div className="bg-white p-5 rounded-2xl border-3 border-[#222] shadow-[4px_4px_0px_#222] hover:-translate-y-1 transition-transform">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="w-12 h-12 rounded-xl bg-blue-100 border-2 border-[#222] flex items-center justify-center text-2xl shadow-[2px_2px_0px_#222]">
+                    🎒
+                  </span>
+                  <div>
+                    <h3 className="font-black text-base text-[#222]">
+                      {lang === 'zh' ? '学生与开学季专区' : 'Material Escolar & Vuelta al Cole'}
+                    </h3>
+                    <span className="text-[11px] font-bold text-gray-500">Mochilas, estuches y accesorios</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600 leading-relaxed font-medium">
+                  {lang === 'zh'
+                    ? '减负人体工学书包、三层大容量笔袋、安全圆头手工剪刀、柔韧抗摔几何套尺、防误伤学生圆规。满足全学龄段装备清单。'
+                    : 'Mochilas ergonómicas, estuches múltiples, reglas flexibles irrompibles, compases escolares seguros y tijeras punta roma.'}
+                </p>
+              </div>
+
+              {/* Card 3 */}
+              <div className="bg-white p-5 rounded-2xl border-3 border-[#222] shadow-[4px_4px_0px_#222] hover:-translate-y-1 transition-transform">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="w-12 h-12 rounded-xl bg-yellow-100 border-2 border-[#222] flex items-center justify-center text-2xl shadow-[2px_2px_0px_#222]">
+                    📓
+                  </span>
+                  <div>
+                    <h3 className="font-black text-base text-[#222]">
+                      {lang === 'zh' ? '纸品与西班牙标准本册' : 'Cuadernos y Papelería Reglada'}
+                    </h3>
+                    <span className="text-[11px] font-bold text-gray-500">Cuadrícula 4x4, pauta y blocs</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600 leading-relaxed font-medium">
+                  {lang === 'zh'
+                    ? '西班牙学校必备 Cuadrícula 4x4 方格带边距本、Lamela 双线/四线教学本、活页打孔替芯、速写草稿画本与大克重彩色卡纸。'
+                    : 'Cuadernos espiral y grapados 4x4 con margen, pauta Lamela, recambios con taladro estándar y blocs de dibujo homologados.'}
+                </p>
+              </div>
+
+              {/* Card 4 */}
+              <div className="bg-white p-5 rounded-2xl border-3 border-[#222] shadow-[4px_4px_0px_#222] hover:-translate-y-1 transition-transform">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="w-12 h-12 rounded-xl bg-emerald-100 border-2 border-[#222] flex items-center justify-center text-2xl shadow-[2px_2px_0px_#222]">
+                    📁
+                  </span>
+                  <div>
+                    <h3 className="font-black text-base text-[#222]">
+                      {lang === 'zh' ? '办公归档与商务耗材' : 'Oficina y Archivo Profesional'}
+                    </h3>
+                    <span className="text-[11px] font-bold text-gray-500">Archivadores, carpetas y accesorios</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600 leading-relaxed font-medium">
+                  {lang === 'zh'
+                    ? '金属杠杆铁夹档案盒、风琴分类包、透明多孔文件袋、省力强力订书机、打孔机、回形针与高粘性商务便签纸。耐用高效。'
+                    : 'Archivadores de palanca de alto gramaje, carpetas de fundas, clasificadores de fuelle y material resistente para empresas.'}
+                </p>
+              </div>
+
+              {/* Card 5 */}
+              <div className="bg-white p-5 rounded-2xl border-3 border-[#222] shadow-[4px_4px_0px_#222] hover:-translate-y-1 transition-transform">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="w-12 h-12 rounded-xl bg-purple-100 border-2 border-[#222] flex items-center justify-center text-2xl shadow-[2px_2px_0px_#222]">
+                    🎨
+                  </span>
+                  <div>
+                    <h3 className="font-black text-base text-[#222]">
+                      {lang === 'zh' ? '美术画材与手工创作' : 'Bellas Artes & Creatividad'}
+                    </h3>
+                    <span className="text-[11px] font-bold text-gray-500">Artix, lienzos y pinturas</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600 leading-relaxed font-medium">
+                  {lang === 'zh'
+                    ? 'Artix 专业丙烯颜料、纯植物水彩/油画颜料、高韧性尼龙画笔、纯棉绷布油画框、超轻塑形粘土与雕塑工具，色彩饱和度高。'
+                    : 'Línea completa Artix Bellas Artes: acrílicos densos, acuarelas, óleos, pinceles de cerda fina, lienzos 100% algodón y arcillas.'}
+                </p>
+              </div>
+
+              {/* Card 6 */}
+              <div className="bg-white p-5 rounded-2xl border-3 border-[#222] shadow-[4px_4px_0px_#222] hover:-translate-y-1 transition-transform">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="w-12 h-12 rounded-xl bg-amber-100 border-2 border-[#222] flex items-center justify-center text-2xl shadow-[2px_2px_0px_#222]">
+                    🏷️
+                  </span>
+                  <div>
+                    <h3 className="font-black text-base text-[#222]">
+                      {lang === 'zh' ? '精选授权与合作品牌' : 'Colecciones & Marcas Licenciadas'}
+                    </h3>
+                    <span className="text-[11px] font-bold text-gray-500">Ediciones temáticas y expositores</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600 leading-relaxed font-medium">
+                  {lang === 'zh'
+                    ? '原创新颖文创周边、热门IP主题系列文具、季节性高频流通爆款，并提供配套实体店铺专用陈列展架，提升终端动销率。'
+                    : 'Colecciones escolares temáticas, diseños exclusivos, artículos de alta rotación e islas de exposición para tiendas físicas.'}
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* 4. BRAND PRESTIGE & SPANISH MARKET INFLUENCE */}
+          <section className="bg-[#fff] border-y-4 border-[#222] py-12 md:py-16 px-4">
+            <div className="max-w-7xl mx-auto">
+              <div className="text-center max-w-3xl mx-auto mb-10">
+                <span className="bg-[#e52521] text-white text-xs font-black px-3 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase tracking-wider inline-block mb-2">
+                  {lang === 'zh' ? '🇪🇸 西班牙本土影响力' : 'Liderazgo en España'}
+                </span>
+                <h2 className="text-2xl md:text-4xl font-black text-[#222]">
+                  {lang === 'zh' ? '深耕西班牙市场 · 赢得数千商户与学校信赖' : 'Confianza Consolidada en el Mercado Español'}
+                </h2>
+                <p className="text-xs md:text-sm text-gray-600 font-medium mt-2">
+                  {lang === 'zh'
+                    ? '凭借稳定的供应质量、严谨的课标匹配度与极具竞争力的源头价格，成为西班牙各地书店与零售商的常年战略伙伴。'
+                    : 'Respaldados por una sólida trayectoria de fiabilidad logística, cumplimiento de normativas y servicio directo a minoristas.'}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-[#fcf8f2] p-6 rounded-2xl border-3 border-[#222] shadow-[4px_4px_0px_#222]">
+                  <div className="text-3xl mb-3">🏫</div>
+                  <h3 className="font-black text-lg text-[#222] mb-2">
+                    {lang === 'zh' ? '开学季骨干供应中枢' : 'Pilar de la Vuelta al Cole'}
+                  </h3>
+                  <p className="text-xs text-gray-600 leading-relaxed font-medium">
+                    {lang === 'zh'
+                      ? '每逢 8 至 9 月开学消费高峰期，我们全力为马德里、加泰罗尼亚、安达卢西亚、瓦伦西亚等各自治区超千家传统书店与百货渠道提供稳定现货支持，保障学生刚需品从不脱销。'
+                      : 'Proveedor de referencia para cientos de librerías y comercios minoristas durante la campaña escolar de mayor exigencia logística del año.'}
+                  </p>
+                </div>
+
+                <div className="bg-[#fcf8f2] p-6 rounded-2xl border-3 border-[#222] shadow-[4px_4px_0px_#222]">
+                  <div className="text-3xl mb-3">🇪🇸</div>
+                  <h3 className="font-black text-lg text-[#222] mb-2">
+                    {lang === 'zh' ? '100% 契合西班牙教学大纲' : 'Adaptación Curricular Total'}
+                  </h3>
+                  <p className="text-xs text-gray-600 leading-relaxed font-medium">
+                    {lang === 'zh'
+                      ? '不同于一般通用文具，我们的练习本、尺规、画材严格匹配西班牙各学校官方推荐清单，涵盖 Cuadrícula 4x4、Lamela 双线格与 Montessori 规范，深受教师与家委会（AMPA）认可。'
+                      : 'Artículos diseñados específicamente conforme a los estándares docentes españoles (pautas escolares, cuadrículas exactas y materiales homologados).'}
+                  </p>
+                </div>
+
+                <div className="bg-[#fcf8f2] p-6 rounded-2xl border-3 border-[#222] shadow-[4px_4px_0px_#222]">
+                  <div className="text-3xl mb-3">📦</div>
+                  <h3 className="font-black text-lg text-[#222] mb-2">
+                    {lang === 'zh' ? '敏捷大仓与灵活批发模式' : 'Distribución Mayorista Ágil'}
+                  </h3>
+                  <p className="text-xs text-gray-600 leading-relaxed font-medium">
+                    {lang === 'zh'
+                      ? '依托伊比利亚半岛实体大仓，支持箱装大宗采购与多品类灵活混批。无需跨国海运数月等待与资金积压，帮助实体店伙伴以轻资产方式实现高效周转与高毛利。'
+                      : 'Stock peninsular con opciones de compra por cajas completas o surtidos flexibles, facilitando la máxima rentabilidad y rotación de producto.'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 5. CURATED SAMPLE TEASER GALLERY (8 ITEMS) */}
+          <section className="max-w-7xl mx-auto px-4 py-10 md:py-16">
+            <div className="text-center max-w-3xl mx-auto mb-8">
+              <span className="bg-[#f8d878] text-[#222] text-xs font-black px-3 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase tracking-wider inline-block mb-2">
+                {lang === 'zh' ? '🔍 样品做工质感实拍' : 'Muestras Seleccionadas'}
+              </span>
+              <h2 className="text-2xl md:text-4xl font-black text-[#222]">
+                {lang === 'zh' ? '精选文具样品陈列' : 'Exposición de Muestras Representativas'}
+              </h2>
+              <p className="text-xs md:text-sm text-gray-600 font-medium mt-1">
+                {lang === 'zh'
+                  ? '以下精选 8 款代表性样品供材质与做工参考。全量 6,100+ 现货品类、规格与商户批发价格请登录后查看。'
+                  : 'Mostramos a continuación 8 muestras representativas. Para acceder al catálogo completo con más de 6.100 referencias y precios, inicia sesión.'}
+              </p>
+            </div>
+
+            {/* 8 Curated Teaser Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-10">
+              {previewProducts.map((p) => (
+                <div
+                  key={p.id}
+                  onClick={() => setSelectedProduct(p)}
+                  className="bg-white rounded-2xl border-3 border-[#222] shadow-[4px_4px_0px_#222] overflow-hidden flex flex-col justify-between hover:-translate-y-1 transition-all cursor-pointer group"
+                >
+                  <div className="relative aspect-square bg-[#fafafa] p-3 flex items-center justify-center overflow-hidden border-b-2 border-gray-100 select-none">
+                    <img
+                      src={p.imageUrl}
+                      alt={p.namees}
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 pointer-events-none"
+                      loading="lazy"
+                    />
+                    <WatermarkOverlay isHD={false} />
+                    <span className="absolute top-2 left-2 bg-[#f8d878] text-[#222] text-[10px] font-black px-2 py-0.5 rounded-md border border-[#222] shadow-[1px_1px_0px_#222]">
+                      Ref: {p.usercode || p.code}
+                    </span>
+                  </div>
+
+                  <div className="p-3 flex-1 flex flex-col justify-between">
+                    <div>
+                      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider block">
+                        {p.deptEs || 'Papelería'}
+                      </span>
+                      <h4 className="font-black text-xs md:text-sm text-[#222] line-clamp-2 mt-0.5 group-hover:text-[#5c94fc] transition-colors">
+                        {p.namees}
+                      </h4>
+                    </div>
+
+                    <div className="mt-3 pt-2 border-t border-gray-100">
+                      <div className="bg-amber-50 rounded-xl p-2 border border-amber-200 text-center mb-2">
+                        <span className="text-[11px] font-black text-amber-900 block leading-tight">
+                          🔒 {lang === 'zh' ? '登录解锁价格' : 'Inicia sesión'}
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setAuthTab('login');
+                          setIsAuthModalOpen(true);
+                        }}
+                        className="w-full py-1.5 px-2 bg-[#f8d878] hover:bg-yellow-400 text-[#222] rounded-xl border-2 border-[#222] font-black text-xs shadow-[2px_2px_0px_#222] flex items-center justify-center gap-1 cursor-pointer"
+                      >
+                        <span>🔑</span>
+                        <span>{lang === 'zh' ? '登录看详情' : 'Ver detalle'}</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Gated Callout Box */}
+            <div className="bg-gradient-to-r from-amber-50 via-yellow-50 to-orange-50 rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] p-6 md:p-8 text-center max-w-4xl mx-auto">
+              <span className="text-3xl md:text-4xl block mb-2">🔒</span>
+              <h3 className="text-xl md:text-3xl font-black text-[#222] mb-2">
+                {lang === 'zh'
+                  ? '更多 6,101 款现货文具受商户权限保护'
+                  : 'Catálogo Mayorista Completo Protegido'}
+              </h3>
+              <p className="text-xs md:text-sm text-gray-700 font-medium max-w-2xl mx-auto leading-relaxed mb-6">
+                {lang === 'zh'
+                  ? '为维护西班牙各地合作书店与零售终端的价格隐私，全量商品目录、实时库存与大宗批发指导价仅对认证商户开放。使用商户账号登录或联系客户经理获取专属准入！'
+                  : 'Para proteger el margen de nuestros distribuidores y tiendas asociadas, los precios y el stock en tiempo real solo están disponibles para usuarios registrados.'}
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAuthTab('login');
+                    setIsAuthModalOpen(true);
+                  }}
+                  className="w-full sm:w-auto px-6 py-3.5 bg-[#e52521] hover:bg-red-600 text-white rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-sm md:text-base flex items-center justify-center gap-2 cursor-pointer transition-all active:translate-y-0.5"
+                >
+                  <span>🔑</span>
+                  <span>{lang === 'zh' ? '立即登录查看全景商城' : 'Iniciar Sesión Comercial'}</span>
+                </button>
+                <a
+                  href="https://wa.me/34604229098?text=Hola,%20deseo%20solicitar%20acceso%20comercial%20al%20catalogo%20completo%20de%20papeleria"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto px-6 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-sm md:text-base flex items-center justify-center gap-2 cursor-pointer transition-all active:translate-y-0.5"
+                >
+                  <span>💬</span>
+                  <span>{lang === 'zh' ? 'WhatsApp 申请准入 (+34 604 229 098)' : 'Pedir Acceso por WhatsApp'}</span>
+                </a>
+              </div>
+            </div>
+          </section>
+        </>
+      ) : (
+        <>
+          {/* ======================================================== */}
+          {/* B. FULL ACTIVE STORE (AUTHENTICATED COMMERCIAL ACCESS) */}
+          {/* ======================================================== */}
+          {/* 1. TOP MARIO BOARD-GAME HERO HEADER */}
+          <div className="bg-[#e52521] border-b-4 border-[#222] text-white px-4 py-3 md:py-6 shadow-md relative overflow-hidden">
         {/* Background decorative question marks & bricks */}
         <div className="absolute -top-6 -right-6 text-white/10 text-9xl font-black select-none pointer-events-none hidden sm:block">
           ★
@@ -933,15 +1553,15 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   {lang === 'zh' ? '退出' : 'Salir'}
                 </button>
               </div>
-            ) : (
-              <button
-                onClick={() => setIsAuthModalOpen(true)}
-                className="px-3 py-1.5 md:px-4 md:py-2.5 bg-white hover:bg-yellow-100 text-[#222] rounded-xl md:rounded-2xl border-3 md:border-4 border-[#222] shadow-[3px_3px_0px_#222] text-xs md:text-sm font-black flex items-center justify-center gap-1 transition-all active:translate-y-0.5 cursor-pointer shrink-0"
-              >
-                <span>🔑</span>
-                <span>{lang === 'zh' ? '商户登录 / 注册' : 'Acceder / Registro'}</span>
-              </button>
-            )}
+            ) : null}
+
+            {/* Language Switcher */}
+            <button
+              onClick={toggleLang}
+              className="px-2.5 py-1.5 md:px-3 md:py-2 bg-white hover:bg-yellow-100 text-[#222] rounded-xl md:rounded-2xl border-3 md:border-4 border-[#222] shadow-[3px_3px_0px_#222] text-xs font-black transition-all cursor-pointer"
+            >
+              🌐 {lang === 'zh' ? 'ES' : '中文'}
+            </button>
 
             {/* DUAL MODE SWITCHER (Action Store vs Showroom) */}
             <div className="bg-[#fff] p-1 md:p-2 rounded-xl md:rounded-2xl border-3 md:border-4 border-[#222] shadow-[3px_3px_0px_#222] flex flex-row items-center gap-1.5">
@@ -1942,6 +2562,8 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           </div>
         )}
       </div>
+        </>
+      )}
 
       {/* 6. FLOATING CART / LIST LAUNCHER BUTTON */}
       {cart.length > 0 && (
