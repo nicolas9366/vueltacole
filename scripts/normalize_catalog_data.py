@@ -405,7 +405,7 @@ def main():
             "packet": int(p.get('packet', 1)),
             "box": int(p.get('box', 1)),
             "stock": p.get('stock', 1),
-            "isnew": bool(p.get('isnew', False)),
+            "isnew": bool(p.get('isnew', False)) or master_id == '01' or '2027' in (p.get('namees', '') + p.get('usercode', '')),
             "ishot": bool(p.get('ishot', False)),
             "ispromote": bool(p.get('ispromote', False)),
             "salesRevenue": sales_rev,

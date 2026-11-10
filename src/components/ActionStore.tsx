@@ -377,7 +377,20 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedDept, setSelectedDept] = useState<string>('all');
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>('all');
-  const [quickFilter, setQuickFilter] = useState<'all' | 'top500' | 'top1000' | 'isnew' | 'ispromote'>('all');
+  const [quickFilter, setQuickFilter] = useState<'all' | 'top500' | 'top1000' | 'isnew' | 'ispromote'>(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const f = params.get('filter');
+      if (f === 'isnew' || f === 'new' || f === 'novedades') return 'isnew';
+      if (f === 'top500') return 'top500';
+      if (f === 'top1000') return 'top1000';
+      if (f === 'ispromote') return 'ispromote';
+      if (window.location.hash.toLowerCase().includes('novedades') || window.location.hash.toLowerCase().includes('new')) {
+        return 'isnew';
+      }
+    } catch {}
+    return 'all';
+  });
   // Default sort order is official SKU catalog order
   const [sortBy, setSortBy] = useState<'sku' | 'sales' | 'featured' | 'priceAsc' | 'priceDesc' | 'name' | 'newest'>('sku');
 
