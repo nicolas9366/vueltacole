@@ -581,14 +581,43 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
     localStorage.removeItem('vueltacole_logged_user');
   };
 
-  // Load catalog.json asynchronously from public/data/
+  // Ensure ?filter=isnew or #novedades cleans any department filters on load
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const f = params.get('filter');
+      const h = window.location.hash.toLowerCase();
+      if (f === 'isnew' || f === 'new' || f === 'novedades' || h.includes('novedades') || h.includes('new')) {
+        setSelectedDept('all');
+        setSelectedSubCategory('all');
+        setSearchQuery('');
+        setQuickFilter('isnew');
+        setPage(1);
+      }
+    } catch {}
+  }, []);
+
+  // Load catalog.json asynchronously with aggressive cache-busting to avoid stale browser cache
   useEffect(() => {
     let isMounted = true;
     setLoading(true);
-    fetch('/data/catalog.json')
+    const cb = Date.now();
+    fetch(`/data/catalog.json?v=${cb}`, {
+      cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache'
+      }
+    })
       .then((res) => {
         if (!res.ok) {
-          throw new Error(`Error ${res.status} al cargar catálogo de productos`);
+          return fetch(`/shop/data/catalog.json?v=${cb}`, {
+            cache: 'no-store',
+            headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
+          }).then((r) => {
+            if (!r.ok) throw new Error(`Error ${r.status} al cargar catálogo de productos`);
+            return r.json();
+          });
         }
         return res.json();
       })
@@ -1389,8 +1418,8 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   </h3>
                   <p className="text-xs text-gray-600 leading-relaxed font-medium">
                     {lang === 'zh'
-                      ? '不同于一般通用文具，我们的练习本、尺规、画材严格匹配西班牙各学校官方推荐清单，涵盖 Cuadrícula 4x4、Lamela 双线格与 Montessori 规范，深受教师与家委会（AMPA）认可。'
-                      : 'Artículos diseñados específicamente conforme a los estándares docentes españoles (pautas escolares, cuadrículas exactas y materiales homologados).'}
+                      ? '不同于一般通用文具，我们的练习本、尺规、画材严格匹配西班牙各学校官方推荐清单，涵盖 Cuadrícula 4x4、Lamela 双线格与 Montessori 规范，深受教师与家委会 AMPA 认可。'
+                      : 'Artículos diseñados específicamente conforme a los estándares docentes españoles: pautas escolares, cuadrículas exactas y materiales homologados.'}
                   </p>
                 </div>
 
@@ -1828,9 +1857,11 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 -mx-1 px-1">
             <button
               onClick={() => {
-                setQuickFilter('all');
-                handleSelectDept('all');
+                setSelectedDept('all');
                 setSelectedSubCategory('all');
+                setSearchQuery('');
+                setQuickFilter('all');
+                setPage(1);
               }}
               className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] shrink-0 transition-all ${
                 quickFilter === 'all' && selectedDept === 'all'
@@ -1843,8 +1874,12 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
 
             <button
               onClick={() => {
+                setSelectedDept('all');
+                setSelectedSubCategory('all');
+                setSearchQuery('');
                 setQuickFilter('top500');
-                setSortBy('sku');
+                setSortBy('sales');
+                setPage(1);
               }}
               className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] shrink-0 flex items-center gap-1 transition-all ${
                 quickFilter === 'top500'
@@ -1888,8 +1923,12 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
 
             <button
               onClick={() => {
+                setSelectedDept('all');
+                setSelectedSubCategory('all');
+                setSearchQuery('');
                 setQuickFilter('top1000');
                 setSortBy('sku');
+                setPage(1);
               }}
               className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] shrink-0 flex items-center gap-1 transition-all ${
                 quickFilter === 'top1000'
@@ -1902,7 +1941,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             </button>
 
             <button
-              onClick={() => setQuickFilter('isnew')}
+              onClick={() => {
+                setSelectedDept('all');
+                setSelectedSubCategory('all');
+                setSearchQuery('');
+                setQuickFilter('isnew');
+                setPage(1);
+              }}
               className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] shrink-0 flex items-center gap-1 transition-all ${
                 quickFilter === 'isnew'
                   ? 'bg-[#5c94fc] text-white shadow-[2px_2px_0px_#222]'
@@ -1914,7 +1959,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             </button>
 
             <button
-              onClick={() => setQuickFilter('ispromote')}
+              onClick={() => {
+                setSelectedDept('all');
+                setSelectedSubCategory('all');
+                setSearchQuery('');
+                setQuickFilter('ispromote');
+                setPage(1);
+              }}
               className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-[#222] shrink-0 flex items-center gap-1 transition-all ${
                 quickFilter === 'ispromote'
                   ? 'bg-rose-500 text-white shadow-[2px_2px_0px_#222]'
@@ -2215,7 +2266,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               {lang === 'zh' ? '快捷标签:' : 'Filtros:'}
             </span>
             <button
-              onClick={() => setQuickFilter('all')}
+              onClick={() => {
+                setSelectedDept('all');
+                setSelectedSubCategory('all');
+                setSearchQuery('');
+                setQuickFilter('all');
+                setPage(1);
+              }}
               className={`px-3 py-1 rounded-lg text-xs font-black border-2 border-[#222] ${
                 quickFilter === 'all' ? 'bg-[#222] text-white' : 'bg-white text-gray-700'
               }`}
@@ -2224,8 +2281,12 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             </button>
             <button
               onClick={() => {
+                setSelectedDept('all');
+                setSelectedSubCategory('all');
+                setSearchQuery('');
                 setQuickFilter('top500');
-                setSortBy('sku');
+                setSortBy('sales');
+                setPage(1);
               }}
               className={`px-3 py-1 rounded-lg text-xs font-black border-2 border-[#222] flex items-center gap-1 ${
                 quickFilter === 'top500' ? 'bg-[#e52521] text-white shadow-[1px_1px_0px_#222]' : 'bg-white text-[#e52521]'
@@ -2236,8 +2297,12 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             </button>
             <button
               onClick={() => {
+                setSelectedDept('all');
+                setSelectedSubCategory('all');
+                setSearchQuery('');
                 setQuickFilter('top1000');
                 setSortBy('sku');
+                setPage(1);
               }}
               className={`px-3 py-1 rounded-lg text-xs font-black border-2 border-[#222] flex items-center gap-1 ${
                 quickFilter === 'top1000' ? 'bg-amber-500 text-white shadow-[1px_1px_0px_#222]' : 'bg-white text-amber-700'
@@ -2247,7 +2312,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               <span>{lang === 'zh' ? '推荐精选' : 'Selección Destacada'}</span>
             </button>
             <button
-              onClick={() => setQuickFilter('isnew')}
+              onClick={() => {
+                setSelectedDept('all');
+                setSelectedSubCategory('all');
+                setSearchQuery('');
+                setQuickFilter('isnew');
+                setPage(1);
+              }}
               className={`px-3 py-1 rounded-lg text-xs font-black border-2 border-[#222] flex items-center gap-1 ${
                 quickFilter === 'isnew' ? 'bg-[#5c94fc] text-white' : 'bg-white text-[#5c94fc]'
               }`}
@@ -2256,7 +2327,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               <span>{lang === 'zh' ? '新品' : 'Nuevos'}</span>
             </button>
             <button
-              onClick={() => setQuickFilter('ispromote')}
+              onClick={() => {
+                setSelectedDept('all');
+                setSelectedSubCategory('all');
+                setSearchQuery('');
+                setQuickFilter('ispromote');
+                setPage(1);
+              }}
               className={`px-3 py-1 rounded-lg text-xs font-black border-2 border-[#222] flex items-center gap-1 ${
                 quickFilter === 'ispromote' ? 'bg-amber-600 text-white' : 'bg-white text-amber-700'
               }`}
@@ -2307,17 +2384,33 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 ? '尝试更换搜索词，或清除分类与筛选标签'
                 : 'Prueba con otro término de búsqueda o restablece los filtros'}
             </p>
-            <button
-              onClick={() => {
-                setSearchQuery('');
-                setSelectedDept('all');
-                setSelectedSubCategory('all');
-                setQuickFilter('all');
-              }}
-              className="px-4 py-2 bg-[#f8d878] text-[#222] font-black rounded-xl border-3 border-[#222] shadow-[2px_2px_0px_#222]"
-            >
-              {lang === 'zh' ? '重置所有筛选' : 'Restablecer filtros'}
-            </button>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <button
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedDept('all');
+                  setSelectedSubCategory('all');
+                  setQuickFilter('all');
+                  setPage(1);
+                }}
+                className="px-4 py-2 bg-[#f8d878] text-[#222] font-black rounded-xl border-3 border-[#222] shadow-[2px_2px_0px_#222] hover:bg-amber-300 transition-colors cursor-pointer"
+              >
+                {lang === 'zh' ? '重置所有筛选' : 'Restablecer filtros'}
+              </button>
+              <button
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedDept('all');
+                  setSelectedSubCategory('all');
+                  setQuickFilter('isnew');
+                  setPage(1);
+                }}
+                className="px-4 py-2 bg-[#5c94fc] text-white font-black rounded-xl border-3 border-[#222] shadow-[2px_2px_0px_#222] hover:bg-blue-600 transition-colors cursor-pointer flex items-center gap-1.5"
+              >
+                <span>🌟</span>
+                <span>{lang === 'zh' ? '查看全部新品' : 'Ver Novedades'}</span>
+              </button>
+            </div>
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">

@@ -96,6 +96,15 @@ const rootHtaccessContent = `<IfModule mod_rewrite.c>
   RewriteCond %{REQUEST_URI} !^/data/
   RewriteRule ^(.*)$ /shop/$1 [L]
 </IfModule>
+
+<IfModule mod_headers.c>
+  # Disable caching for catalog JSON and HTML entry points to ensure instant live updates
+  <FilesMatch "\\.(json|html)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+  </FilesMatch>
+</IfModule>
 `;
 fs.writeFileSync(path.join(rootDir, '.htaccess'), rootHtaccessContent, 'utf8');
 
@@ -105,6 +114,15 @@ const shopHtaccessContent = `<IfModule mod_rewrite.c>
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^ index.html [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Disable caching for catalog JSON and HTML entry points to ensure instant live updates
+  <FilesMatch "\\.(json|html)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+  </FilesMatch>
 </IfModule>
 `;
 fs.writeFileSync(path.join(shopDir, '.htaccess'), shopHtaccessContent, 'utf8');

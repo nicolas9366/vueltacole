@@ -8,3 +8,12 @@
   RewriteCond %{REQUEST_URI} !^/data/
   RewriteRule ^(.*)$ /shop/$1 [L]
 </IfModule>
+
+<IfModule mod_headers.c>
+  # Disable caching for catalog JSON and HTML entry points to ensure instant live updates
+  <FilesMatch "\.(json|html)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+  </FilesMatch>
+</IfModule>
