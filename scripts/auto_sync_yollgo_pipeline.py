@@ -71,17 +71,21 @@ async () => {
     return { error: 'NOT_LOGGED_IN' };
   }
 
+  // Filter leaf categories (the ones with subid containing the actual products)
+  const leafCats = categories.filter(c => c.subid);
   const products = [];
   const seen = new Set();
 
-  for (let i = 0; i < categories.length; i++) {
-    const cat = categories[i];
+  for (let i = 0; i < leafCats.length; i++) {
+    const cat = leafCats[i];
     const catName = cat.namecn || cat.namees || `分类_${cat.topid}`;
 
     const prodRes = await new Promise(r => {
       ps.products({
         load: false,
-        reload: false,
+        reload: true,
+        cacheextend: cat.category,
+        sessionextend: cat.category,
         data: {
           shopid: SHOP_ID,
           topid: String(cat.topid || ''),
@@ -99,7 +103,7 @@ async () => {
 
       let imgUrl = '';
       if (p.id && p.hash) {
-        imgUrl = `https://img.freex.es/img/${SHOP_ID}/${p.id}/1200x1200/${p.hash}`;
+        imgUrl = `https://img-eu-1.freex.es/img/${SHOP_ID}/${p.id}/1200x1200/${p.hash}`;
       } else if (helper && helper.shopImage) {
         imgUrl = helper.shopImage(SHOP_ID, p, 600, 600, 1200, 1200);
       }
@@ -120,9 +124,9 @@ async () => {
         packet: packet,
         box: box,
         stock: p.stock !== undefined ? p.stock : 1,
-        isnew: Boolean(p.isnew),
-        ishot: Boolean(p.ishot),
-        ispromote: Boolean(p.ispromote),
+        isnew: Boolean(p.isnew || p.is_new),
+        ishot: Boolean(p.ishot || p.is_hot),
+        ispromote: Boolean(p.ispromote || p.is_promote),
         imageUrl: imgUrl,
         price: price,
         packetPrice: +(price * packet).toFixed(3),
@@ -130,10 +134,9 @@ async () => {
       });
     }
 
-    if (window.onProgress && (i % 10 === 0 || i === categories.length - 1)) {
-      await window.onProgress(i + 1, categories.length, catName, products.length);
+    if (window.onProgress && (i % 10 === 0 || i === leafCats.length - 1)) {
+      await window.onProgress(i + 1, leafCats.length, catName, products.length);
     }
-    await new Promise(r => setTimeout(r, 60));
   }
 
   return { success: true, count: products.length, products: products };
@@ -230,25 +233,30 @@ def run_pipeline(phone=None, password=None, headless=True):
 
     raw_products = res.get("products", [])
     total_fetched = len(raw_products)
+    if total_fetched < 1000:
+        print(f"❌ 抓取到的商品数量过少: {total_fetched} < 1000 款，停止保存以保护现有数据！")
+        return False
     print(f"✅ 成功从 Yollgo 抓取到 {total_fetched} 款商品！")
 
     # 3. Detect Brand New Products (Differential analysis)
     brand_new_items = []
     for p in raw_products:
-        code = p.get("code", "")
-        uc = p.get("usercode", "")
-        # If code and usercode are NOT in our baseline catalog, it is a brand-new SKU!
-        if (code and code not in baseline_codes) and (not uc or uc not in baseline_usercodes):
+        code = str(p.get("code") or "").strip()
+        uc = str(p.get("usercode") or "").strip()
+        text = (str(p.get("namees") or "") + " " + str(p.get("namecn") or "") + " " + uc).upper()
+        
+        is_diff_new = (code and code not in baseline_codes) and (not uc or uc.upper() not in baseline_usercodes)
+        is_season_new = p.get("isnew") or "2027" in text or "2026" in text or "EXM26" in uc.upper() or "NOVEDAD" in text
+        if is_diff_new or is_season_new:
             p["isnew"] = True
             brand_new_items.append(p)
-        elif p.get("isnew") or "2027" in (p.get("namees", "") + " " + uc):
-            p["isnew"] = True
-            brand_new_items.append(p)
+
+    brand_new_items.sort(key=lambda x: str(x.get("usercode") or x.get("code") or ""))
 
     print(f"\n=======================================================")
     print(f"🔍 智能比对结果：")
     print(f"  • Yollgo 在架商品总数: {total_fetched} 款")
-    print(f"  • 本次新上线全新 SKU: {len([p for p in brand_new_items if p.get('code') not in baseline_codes])} 款")
+    print(f"  • 本次新上线全新 SKU: {len([p for p in brand_new_items if str(p.get('code')).strip() not in baseline_codes])} 款")
     print(f"  • 累计 2026/2027 新品总数: {len(brand_new_items)} 款")
     print(f"=======================================================\n")
 
@@ -270,20 +278,21 @@ def run_pipeline(phone=None, password=None, headless=True):
     os.makedirs(DOWNLOADS_DIR, exist_ok=True)
     novedades_with_excel = os.path.join(DOWNLOADS_DIR, "novedades_2026_with_price.xlsx")
     novedades_no_excel = os.path.join(DOWNLOADS_DIR, "novedades_2026_no_price.xlsx")
+    novedades_csv_no = os.path.join(DOWNLOADS_DIR, "novedades_catalog_no_price.csv")
     novedades_json_pub = os.path.join(REPO_ROOT, "public/data/novedades_catalog.json")
 
     with open(novedades_json_pub, "w", encoding="utf-8") as f:
         json.dump(brand_new_items, f, ensure_ascii=False, indent=2)
 
-    # Export formatted Excel with prices
+    # Export formatted Excel with prices (strictly NO brackets or parentheses per user rule)
     wb_with = Workbook()
     ws_with = wb_with.active
     ws_with.title = "2026新品进货底表"
     h_font = Font(name="Arial", size=11, bold=True, color="FFFFFF")
     h_fill = PatternFill(start_color="1E3A8A", end_color="1E3A8A", fill_type="solid")
     headers_with = [
-        "序号", "型号/货号 (Ref)", "条码 (EAN)", "西语品名", "中文品名",
-        "分类", "进货单价 (€)", "建议零售价 (€)", "小包装数", "整包金额 (€)", "整箱装箱量", "整箱金额 (€)", "高清实拍图"
+        "序号", "型号货号", "条形码", "西语品名", "中文品名",
+        "分类", "进货单价", "建议零售价", "小包装数", "整包金额", "整箱装箱量", "整箱金额", "高清实拍图"
     ]
     ws_with.append(headers_with)
     for col_idx in range(1, len(headers_with) + 1):
@@ -308,7 +317,7 @@ def run_pipeline(phone=None, password=None, headless=True):
     ws_no = wb_no.active
     ws_no.title = "2026新品选品展厅目录"
     h_fill_no = PatternFill(start_color="B45309", end_color="B45309", fill_type="solid")
-    headers_no = ["序号", "型号/货号 (Ref)", "条码 (EAN)", "西语品名", "中文品名", "分类", "小包装数", "整箱装箱量", "高清实拍图"]
+    headers_no = ["序号", "型号货号", "条形码", "西语品名", "中文品名", "分类", "小包装数", "整箱装箱量", "高清实拍图"]
     ws_no.append(headers_no)
     for col_idx in range(1, len(headers_no) + 1):
         c = ws_no.cell(row=1, column=col_idx)
@@ -322,12 +331,23 @@ def run_pipeline(phone=None, password=None, headless=True):
             p.get("category", ""), p.get("packet", 1), p.get("box", 1), p.get("imageUrl", "")
         ])
     wb_no.save(novedades_no_excel)
+
+    with open(novedades_csv_no, "w", encoding="utf-8-sig", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(headers_no)
+        for idx, p in enumerate(brand_new_items, start=1):
+            writer.writerow([
+                idx, p.get("usercode", ""), p.get("code", ""), p.get("namees", ""), p.get("namecn", ""),
+                p.get("category", ""), p.get("packet", 1), p.get("box", 1), p.get("imageUrl", "")
+            ])
+
     print(f"✅ 独立新品 Catalog 导出成功：\n  • 内部底表: {novedades_with_excel}\n  • 客户展厅表: {novedades_no_excel}")
 
     # 6. Run Data Normalization
     print("\n⚙️ 正在执行官方 12 大品类归一化与销量排序...")
     py_exec = sys.executable
     subprocess.run([py_exec, os.path.join(REPO_ROOT, "scripts/normalize_catalog_data.py")], check=True)
+    subprocess.run([py_exec, os.path.join(REPO_ROOT, "scripts/export_novedades_catalog.py")], check=True)
 
     # 7. Build production bundle
     print("\n🏗️ 正在自动编译打包生产环境静态资源 (Vite)...")

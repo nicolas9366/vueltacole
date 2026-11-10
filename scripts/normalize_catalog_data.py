@@ -405,7 +405,7 @@ def main():
             "packet": int(p.get('packet', 1)),
             "box": int(p.get('box', 1)),
             "stock": p.get('stock', 1),
-            "isnew": bool(p.get('isnew', False)) or master_id == '01' or '2027' in (p.get('namees', '') + p.get('usercode', '')),
+            "isnew": bool(p.get('isnew', False)) or master_id == '01' or '2027' in (p.get('namees', '') + p.get('usercode', '')) or '2026' in (p.get('namees', '') + p.get('usercode', '')) or 'EXM26' in p.get('usercode', '').upper(),
             "ishot": bool(p.get('ishot', False)),
             "ispromote": bool(p.get('ispromote', False)),
             "salesRevenue": sales_rev,
@@ -483,18 +483,18 @@ def main():
         with open(os.path.join(d, 'mainpaper_catalog_with_price.csv'), 'w', encoding='utf-8-sig', newline='') as f:
             writer = csv.writer(f)
             writer.writerow([
-                '条码 (EAN)', '货号/型号 (Ref)', '西语品名', '中文品名', 
-                '一级大类 (Departamento)', '二级细分 (Categoría)', 
-                '进货单价 (€)', '建议零售价 (€)',
-                '小包装数量 (Packet)', '小包整包金额 (€)', 
-                '外箱装箱量 (Box)', '整箱总金额 (€)', 
-                '新品 (New)', '年度畅销前500', '推荐精选前1000', '历史销量 (件)', '历史销售额 (€)', '促销状态', '2K高清实拍图链接'
+                '条形码', '货号型号', '西语品名', '中文品名', 
+                '一级大类', '二级细分', 
+                '进货单价', '建议零售价', 
+                '小包装数量', '小包整包金额', 
+                '外箱装箱量', '整箱总金额', 
+                '新品标签', '年度畅销前500', '推荐精选前1000', '历史销量', '历史销售额', '促销状态', '高清实拍图链接'
             ])
             for p in clean_with_price:
                 pvp = round(p['price'] * 2.8, 2)
                 writer.writerow([
                     p['code'], p['usercode'], p['namees'], p['namecn'],
-                    f"{p['deptZh']} ({p['deptEs']})", f"{p['subZh']} ({p['subEs']})",
+                    f"{p['deptZh']} {p['deptEs']}", f"{p['subZh']} {p['subEs']}",
                     p['price'], pvp,
                     p['packet'], p['packetPrice'],
                     p['box'], p['boxPrice'],
@@ -509,15 +509,15 @@ def main():
         with open(os.path.join(d, 'mainpaper_catalog_no_price.csv'), 'w', encoding='utf-8-sig', newline='') as f:
             writer = csv.writer(f)
             writer.writerow([
-                '条码 (EAN)', '货号/型号 (Ref)', '西语品名', '中文品名', 
-                '一级大类 (Departamento)', '二级细分 (Categoría)', 
-                '小包装数量 (Packet)', '外箱装箱量 (Box)', 
-                '新品 (New)', '年度畅销前500', '推荐精选前1000', '2K高清实拍图链接'
+                '条形码', '货号型号', '西语品名', '中文品名', 
+                '一级大类', '二级细分', 
+                '小包装数量', '外箱装箱量', 
+                '新品标签', '年度畅销前500', '推荐精选前1000', '高清实拍图链接'
             ])
             for p in clean_no_price:
                 writer.writerow([
                     p['code'], p['usercode'], p['namees'], p['namecn'],
-                    f"{p['deptZh']} ({p['deptEs']})", f"{p['subZh']} ({p['subEs']})",
+                    f"{p['deptZh']} {p['deptEs']}", f"{p['subZh']} {p['subEs']}",
                     p['packet'], p['box'],
                     '是' if p['isnew'] else '否',
                     'Top 500' if p['isTop500'] else '',

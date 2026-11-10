@@ -27,8 +27,8 @@ def is_new_product(p):
         return True
     if p.get('masterId') == '01':
         return True
-    text = (p.get('namees', '') + ' ' + p.get('usercode', '') + ' ' + p.get('category', '')).lower()
-    if '2027' in text or '2026/2027' in text:
+    text = (str(p.get('namees', '')) + ' ' + str(p.get('namecn', '')) + ' ' + str(p.get('usercode', '')) + ' ' + str(p.get('category', ''))).lower()
+    if '2027' in text or '2026' in text or 'exm26' in text or 'novedad' in text:
         return True
     return False
 
@@ -70,7 +70,7 @@ def main():
         csv_no_price = os.path.join(d, 'novedades_catalog_no_price.csv')
         with open(csv_no_price, 'w', encoding='utf-8-sig', newline='') as f:
             writer = csv.writer(f)
-            writer.writerow(['条码 (EAN)', '型号/货号 (Ref)', '西语品名', '中文品名', '分类', '小包装数量', '整箱装箱量', '高清实拍图'])
+            writer.writerow(['条形码', '型号货号', '西语品名', '中文品名', '分类', '小包装数量', '整箱装箱量', '高清实拍图'])
             for p in novedades:
                 writer.writerow([
                     p.get('code', ''),
@@ -94,8 +94,8 @@ def main():
                     top=Side(style='thin', color='DDDDDD'), bottom=Side(style='thin', color='DDDDDD'))
 
     headers_with = [
-        '序号', '货号/型号 (Ref)', '条码 (EAN)', '西语品名', '中文品名',
-        '一级品类', '进货单价 (€)', '建议零售价 (€)', '小包装数', '整包金额 (€)', '装箱量', '整箱金额 (€)', '实拍图片'
+        '序号', '型号货号', '条形码', '西语品名', '中文品名',
+        '一级品类', '进货单价', '建议零售价', '小包装数', '整包金额', '装箱量', '整箱金额', '实拍图片'
     ]
     ws_with.append(headers_with)
     for col_idx in range(1, len(headers_with) + 1):
@@ -135,7 +135,7 @@ def main():
     ws_no.title = "2026新品选品展厅目录"
 
     header_fill_no = PatternFill(start_color='B45309', end_color='B45309', fill_type='solid')
-    headers_no = ['序号', '货号/型号 (Ref)', '条码 (EAN)', '西语品名', '中文品名', '一级品类', '小包装数', '装箱量', '实拍图链接']
+    headers_no = ['序号', '型号货号', '条形码', '西语品名', '中文品名', '一级品类', '小包装数', '装箱量', '实拍图链接']
     ws_no.append(headers_no)
     for col_idx in range(1, len(headers_no) + 1):
         cell = ws_no.cell(row=1, column=col_idx)
