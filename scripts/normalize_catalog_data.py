@@ -433,7 +433,7 @@ def main():
             "salesRevenue": sales_rev,
             "salesUnits": sales_units,
             "salesInvoices": sales_inv,
-            "imageUrl": p.get('imageUrl', ''),
+            "imageUrl": p.get('imageUrl', '').replace('1200x1200', '1024x1024'),
         }
 
         cost = float(p.get('price', 0))

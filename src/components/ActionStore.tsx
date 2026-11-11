@@ -633,7 +633,16 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
       })
       .then((data: ProductItem[]) => {
         if (isMounted) {
-          setProducts(data);
+          const sanitized = Array.isArray(data)
+            ? data.map((p) => {
+                let img = p.imageUrl || '';
+                if (img.includes('/1200x1200/')) {
+                  img = img.replace('/1200x1200/', '/1024x1024/');
+                }
+                return { ...p, imageUrl: img };
+              })
+            : [];
+          setProducts(sanitized);
           setLoading(false);
         }
       })
@@ -1478,6 +1487,14 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                       alt={p.namees}
                       className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 pointer-events-none"
                       loading="lazy"
+                      onError={(e) => {
+                        const t = e.currentTarget;
+                        if (t.src.includes('/1200x1200/')) {
+                          t.src = t.src.replace('/1200x1200/', '/1024x1024/');
+                        } else if (t.src.includes('/1024x1024/')) {
+                          t.src = t.src.replace('/1024x1024/', '/600x600/');
+                        }
+                      }}
                     />
                     <WatermarkOverlay isHD={false} />
                     <span className="absolute top-2 left-2 bg-[#f8d878] text-[#222] text-[10px] font-black px-2 py-0.5 rounded-md border border-[#222] shadow-[1px_1px_0px_#222]">
@@ -2481,7 +2498,16 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                       draggable={false}
                       className="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-300 pointer-events-none select-none"
                       onError={(e) => {
-                        (e.target as HTMLElement).style.opacity = '0.5';
+                        const t = e.currentTarget;
+                        if (t.src.includes('/1200x1200/')) {
+                          t.src = t.src.replace('/1200x1200/', '/1024x1024/');
+                        } else if (t.src.includes('/1024x1024/')) {
+                          t.src = t.src.replace('/1024x1024/', '/600x600/');
+                        } else if (t.src.includes('/600x600/')) {
+                          t.src = t.src.replace('/600x600/', '/300x300/');
+                        } else {
+                          t.style.opacity = '0.3';
+                        }
                       }}
                     />
                     <WatermarkOverlay />
@@ -2771,6 +2797,14 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                       src={item.product.imageUrl}
                       alt={item.product.namees}
                       className="w-16 h-16 object-contain bg-white rounded-xl border border-gray-300 p-1"
+                      onError={(e) => {
+                        const t = e.currentTarget;
+                        if (t.src.includes('/1200x1200/')) {
+                          t.src = t.src.replace('/1200x1200/', '/600x600/');
+                        } else if (t.src.includes('/1024x1024/')) {
+                          t.src = t.src.replace('/1024x1024/', '/600x600/');
+                        }
+                      }}
                     />
                     <div className="flex-1 min-w-0">
                       <div className="text-[10px] font-mono text-gray-500 font-bold">
@@ -2887,10 +2921,22 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 onContextMenu={(e) => e.preventDefault()}
               >
                 <img
-                  src={selectedProduct.imageUrl}
+                  src={
+                    selectedProduct.imageUrl
+                      ? selectedProduct.imageUrl.replace('/1200x1200/', '/2048x2048/').replace('/1024x1024/', '/2048x2048/')
+                      : ''
+                  }
                   alt={selectedProduct.namees}
                   draggable={false}
                   className="w-full h-full object-contain pointer-events-none select-none"
+                  onError={(e) => {
+                    const t = e.currentTarget;
+                    if (t.src.includes('/2048x2048/')) {
+                      t.src = t.src.replace('/2048x2048/', '/1024x1024/');
+                    } else if (t.src.includes('/1024x1024/')) {
+                      t.src = t.src.replace('/1024x1024/', '/600x600/');
+                    }
+                  }}
                 />
                 <WatermarkOverlay isHD={true} />
                 <span className="absolute bottom-2 right-2 bg-black/75 text-white text-[10px] font-bold px-2.5 py-1 rounded-md border border-white/20 z-20">

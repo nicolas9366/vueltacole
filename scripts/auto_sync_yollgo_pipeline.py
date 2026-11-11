@@ -103,9 +103,9 @@ async () => {
 
       let imgUrl = '';
       if (p.id && p.hash) {
-        imgUrl = `https://img-eu-1.freex.es/img/${SHOP_ID}/${p.id}/1200x1200/${p.hash}`;
+        imgUrl = `https://img-eu-1.freex.es/img/${SHOP_ID}/${p.id}/1024x1024/${p.hash}`;
       } else if (helper && helper.shopImage) {
-        imgUrl = helper.shopImage(SHOP_ID, p, 600, 600, 1200, 1200);
+        imgUrl = helper.shopImage(SHOP_ID, p, 600, 600, 1024, 1024);
       }
 
       const packet = parseInt(p.packet || 1);
