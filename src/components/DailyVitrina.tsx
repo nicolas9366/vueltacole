@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { DAILY_VITRINA_ITEMS, DailyVitrinaEntry, VitrinaCategory } from '../data/dailyVitrinaDB';
 import { Lang } from '../data/christmas2026DB';
 
@@ -16,14 +16,13 @@ const UI_TEXT: Record<
     copyLink: string;
     linkCopied: string;
     backHome: string;
+    treeTitle: string;
     searchPlaceholder: string;
-    catAll: string;
     catWriting: string;
     catArt: string;
     catOffice: string;
     catPaper: string;
-    showingCount: string;
-    viewBtn: string;
+    toggleTree: string;
     galleryTitle: string;
     galleryHint: string;
     videosTitle: string;
@@ -42,23 +41,22 @@ const UI_TEXT: Record<
   }
 > = {
   zh: {
-    badge: '每日热卖产品目录 · TOP 100+ 宣传库',
-    title: '每日热卖主推馆 · 产品宣传目录',
-    subtitle: '按畅销榜精选 100+ 非品牌学习办公与美术爆款，按品类或货号检索，随选查看云端效果图、宣传视频与一键转发话术。',
-    copyLink: '复制当前单品链接',
+    badge: '每日热卖严选 · VITRINA DIARIA',
+    title: '每日热卖主推馆 · 效果图与短剧中心',
+    subtitle: '精选西班牙畅销非品牌核心单品，云端高清场景图库、双语短剧与社媒一键转发话术。',
+    copyLink: '复制本页推广链接',
     linkCopied: '已复制当前单品推广链接',
     backHome: '返回主站',
-    searchPlaceholder: '搜索货号 (如 PP948, PE517, PP631-01) 或产品名称 / EAN...',
-    catAll: '全部单品',
+    treeTitle: '产品目录树',
+    searchPlaceholder: '筛选货号或品名...',
     catWriting: '书写与记号笔',
     catArt: '美术与颜料',
     catOffice: '办公与修正工具',
     catPaper: '本册与收纳',
-    showingCount: '共筛选出单品数：',
-    viewBtn: '查看宣传物料',
+    toggleTree: '📂 展开/收起产品目录',
     galleryTitle: '产品视觉效果图（云端图库 · 点击放大）',
     galleryHint: '纯画面无叠加字，点击右下角可保存原图',
-    videosTitle: '配套宣传视频（云端流媒体 · 在线播放 / 下载）',
+    videosTitle: '配套宣传短剧视频（云端流媒体 · 在线播放 / 下载）',
     videoDownload: '下载 MP4',
     shareTitle: '一键分享话术与社媒直发',
     shareHint: '可自由修改文案后一键复制到微信或海外社媒',
@@ -73,23 +71,22 @@ const UI_TEXT: Record<
     tiktokTip: '文案已复制，选择 TikTok 或下载视频后即可直接上传发布',
   },
   en: {
-    badge: 'TOP 100+ PRODUCT CATALOG · VITRINA DIARIA',
-    title: 'Bestsellers Catalog · Visuals & Video Hub',
-    subtitle: 'Browse 100+ high-turnover non-brand stationery picks by category or SKU, with cloud studio visuals, promo videos, and 1-click social sharing.',
+    badge: 'DAILY HOT PICK · VITRINA DIARIA',
+    title: 'Daily Bestsellers · Visuals & Video Hub',
+    subtitle: 'Curated high-turnover stationery picks with cloud-hosted studio visuals, promo videos, and 1-click social sharing.',
     copyLink: 'Copy Product Link',
     linkCopied: 'Product link copied!',
     backHome: 'Back Home',
-    searchPlaceholder: 'Search by SKU (e.g. PP948, PE517), product name or EAN...',
-    catAll: 'All Products',
+    treeTitle: 'Product Catalog',
+    searchPlaceholder: 'Filter SKU or name...',
     catWriting: 'Writing & Markers',
     catArt: 'Fine Arts & Paints',
     catOffice: 'Office & School',
     catPaper: 'Notebooks & Files',
-    showingCount: 'Showing products:',
-    viewBtn: 'Open Promo Kit',
+    toggleTree: '📂 Catalog Directory',
     galleryTitle: 'Product Visual Gallery (Cloud CDN · Tap to Zoom)',
     galleryHint: 'Clean text-free images ready for social posts',
-    videosTitle: 'Promo Video (Cloud Stream & Download)',
+    videosTitle: 'Promo Short Videos (Cloud Stream & Download)',
     videoDownload: 'Download MP4',
     shareTitle: 'Ready-to-Share Social Caption',
     shareHint: 'Edit caption freely and share in one tap',
@@ -104,23 +101,22 @@ const UI_TEXT: Record<
     tiktokTip: 'Caption copied! Pick TikTok in the share sheet or upload the MP4 video.',
   },
   es: {
-    badge: 'CATÁLOGO TOP 100+ · VITRINA DIARIA',
-    title: 'Catálogo de Productos Estrella · Galería y Vídeos',
-    subtitle: 'Explora más de 100 referencias top ventas por categoría o código SKU, con imágenes en la nube, vídeos promocionales y textos listos para compartir.',
+    badge: 'SELECCIÓN DIARIA · VITRINA DIARIA',
+    title: 'Vitrina Diaria · Galería y Vídeos Top Ventas',
+    subtitle: 'Productos estrella seleccionados con imágenes limpias en la nube, vídeos promocionales y textos listos para redes sociales.',
     copyLink: 'Copiar Enlace',
     linkCopied: '¡Enlace del producto copiado!',
     backHome: 'Inicio',
-    searchPlaceholder: 'Buscar por código (ej. PP948, PE517), nombre o EAN...',
-    catAll: 'Todos',
+    treeTitle: 'Catálogo de Productos',
+    searchPlaceholder: 'Filtrar SKU o nombre...',
     catWriting: 'Escritura y Rotuladores',
     catArt: 'Bellas Artes y Pinturas',
     catOffice: 'Oficina y Escolar',
     catPaper: 'Cuadernos y Archivo',
-    showingCount: 'Productos encontrados:',
-    viewBtn: 'Ver Material',
+    toggleTree: '📂 Directorio de Productos',
     galleryTitle: 'Galería Visual del Producto (Clic para ampliar)',
     galleryHint: 'Imágenes limpias en la nube listas para publicar',
-    videosTitle: 'Vídeo Promocional (Reproducción en la nube y descarga)',
+    videosTitle: 'Vídeos Promocionales (Reproducción en la nube y descarga)',
     videoDownload: 'Descargar MP4',
     shareTitle: 'Texto Listo para Compartir en Redes',
     shareHint: 'Edita el mensaje si lo deseas y compártelo al instante',
@@ -138,16 +134,23 @@ const UI_TEXT: Record<
 
 export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome }) => {
   const ui = UI_TEXT[lang];
-  const viewerRef = useRef<HTMLDivElement | null>(null);
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [catFilter, setCatFilter] = useState<'all' | VitrinaCategory>('all');
-  const [visibleLimit, setVisibleLimit] = useState(24);
+  const [openCats, setOpenCats] = useState<Record<VitrinaCategory, boolean>>({
+    art: true,
+    writing: true,
+    office: false,
+    paper: false,
+  });
+  const [mobileTreeOpen, setMobileTreeOpen] = useState(false);
+
   const [selectedSku, setSelectedSku] = useState<string>(() => {
     if (typeof window !== 'undefined') {
       const qSku = new URLSearchParams(window.location.search).get('sku');
       if (qSku) {
-        const found = DAILY_VITRINA_ITEMS.find((i) => i.sku.toLowerCase() === qSku.toLowerCase() || i.id === qSku.toLowerCase());
+        const found = DAILY_VITRINA_ITEMS.find(
+          (i) => i.sku.toLowerCase() === qSku.toLowerCase() || i.id === qSku.toLowerCase()
+        );
         if (found) return found.id;
       }
     }
@@ -159,20 +162,28 @@ export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome
     [selectedSku]
   );
 
-  const filteredItems = useMemo(() => {
+  const groupedByCat = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
-    return DAILY_VITRINA_ITEMS.filter((entry) => {
-      if (catFilter !== 'all' && entry.catKey !== catFilter) return false;
-      if (!q) return true;
-      return (
-        entry.sku.toLowerCase().includes(q) ||
-        entry.ean.toLowerCase().includes(q) ||
-        entry.titleZh.toLowerCase().includes(q) ||
-        entry.titleEn.toLowerCase().includes(q) ||
-        entry.titleEs.toLowerCase().includes(q)
-      );
-    });
-  }, [searchQuery, catFilter]);
+    const groups: Record<VitrinaCategory, DailyVitrinaEntry[]> = {
+      writing: [],
+      art: [],
+      office: [],
+      paper: [],
+    };
+    for (const entry of DAILY_VITRINA_ITEMS) {
+      if (q) {
+        const match =
+          entry.sku.toLowerCase().includes(q) ||
+          entry.ean.toLowerCase().includes(q) ||
+          entry.titleZh.toLowerCase().includes(q) ||
+          entry.titleEn.toLowerCase().includes(q) ||
+          entry.titleEs.toLowerCase().includes(q);
+        if (!match) continue;
+      }
+      groups[entry.catKey].push(entry);
+    }
+    return groups;
+  }, [searchQuery]);
 
   const getLocalizedShare = (entry: DailyVitrinaEntry, l: Lang) =>
     l === 'zh' ? entry.shareTextZh : l === 'en' ? entry.shareTextEn : entry.shareTextEs;
@@ -205,7 +216,7 @@ export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome
     try {
       await navigator.clipboard.writeText(shareText);
     } catch {
-      // ignore clipboard fallback
+      // ignore
     }
     if (navigator.share) {
       try {
@@ -241,29 +252,97 @@ export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome
   };
 
   const handleShareX = () => {
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`, '_blank', 'noopener,noreferrer');
   };
 
   const handleShareFacebook = () => {
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageShareUrl)}&quote=${encodeURIComponent(shareText)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageShareUrl)}&quote=${encodeURIComponent(shareText)}`,
+      '_blank',
+      'noopener,noreferrer'
+    );
   };
 
   const handleShareWhatsApp = () => {
-    const url = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
-
-  const selectProduct = (id: string) => {
-    setSelectedSku(id);
-    viewerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank', 'noopener,noreferrer');
   };
 
   const title = lang === 'zh' ? item.titleZh : lang === 'en' ? item.titleEn : item.titleEs;
   const tagline = lang === 'zh' ? item.taglineZh : lang === 'en' ? item.taglineEn : item.taglineEs;
   const packInfo = lang === 'zh' ? item.packInfoZh : lang === 'en' ? item.packInfoEn : item.packInfoEs;
   const highlights = lang === 'zh' ? item.highlightsZh : lang === 'en' ? item.highlightsEn : item.highlightsEs;
+
+  const catList: { key: VitrinaCategory; label: string }[] = [
+    { key: 'art', label: ui.catArt },
+    { key: 'writing', label: ui.catWriting },
+    { key: 'office', label: ui.catOffice },
+    { key: 'paper', label: ui.catPaper },
+  ];
+
+  const renderSidebarTree = () => (
+    <div className="bg-white rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] p-3.5">
+      <div className="font-black text-sm mb-2 flex items-center justify-between">
+        <span>📂 {ui.treeTitle}</span>
+        <span className="text-[11px] text-gray-500 font-bold">{DAILY_VITRINA_ITEMS.length}</span>
+      </div>
+      <input
+        type="text"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        placeholder={ui.searchPlaceholder}
+        className="w-full px-3 py-2 rounded-xl border-2 border-[#222] bg-[#fcf8f2] text-xs font-bold mb-3 focus:outline-none focus:ring-2 focus:ring-[#e52521]"
+      />
+      <div className="space-y-2 max-h-[70vh] overflow-y-auto pr-1">
+        {catList.map(({ key, label }) => {
+          const list = groupedByCat[key];
+          const isOpen = searchQuery.trim().length > 0 || openCats[key];
+          return (
+            <div key={key} className="border-b border-gray-200 pb-2 last:border-b-0">
+              <button
+                onClick={() => setOpenCats((prev) => ({ ...prev, [key]: !prev[key] }))}
+                className="w-full flex items-center justify-between text-left font-black text-xs py-1.5 px-1 hover:text-[#e52521]"
+              >
+                <span>
+                  {isOpen ? '▾' : '▸'} {label}
+                </span>
+                <span className="text-[11px] bg-gray-100 px-1.5 py-0.5 rounded font-bold text-gray-600">
+                  {list.length}
+                </span>
+              </button>
+              {isOpen && (
+                <ul className="mt-1 space-y-1 pl-2">
+                  {list.map((entry) => {
+                    const active = entry.id === item.id;
+                    const entryTitle = lang === 'zh' ? entry.titleZh : lang === 'en' ? entry.titleEn : entry.titleEs;
+                    return (
+                      <li key={entry.id}>
+                        <button
+                          onClick={() => {
+                            setSelectedSku(entry.id);
+                            setMobileTreeOpen(false);
+                          }}
+                          className={`w-full text-left px-2 py-1.5 rounded-lg text-xs transition-all flex items-center gap-1.5 ${
+                            active
+                              ? 'bg-[#e52521] text-white font-black'
+                              : 'hover:bg-amber-50 text-gray-800 font-medium'
+                          }`}
+                        >
+                          <span className={`shrink-0 text-[10px] font-black px-1 rounded ${active ? 'bg-white text-[#e52521]' : 'bg-[#f8d878] text-[#222]'}`}>
+                            {entry.sku.split('/')[0].trim()}
+                          </span>
+                          <span className="truncate">{entryTitle}</span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-[#fcf8f2] text-[#222] pb-16">
@@ -288,7 +367,7 @@ export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome
 
       {/* Hero Banner */}
       <section className="bg-[#111827] text-white border-b-4 border-[#222] px-4 py-8">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <div className="inline-flex items-center gap-2 bg-[#e52521] text-white text-xs font-black px-3 py-1 rounded-full border-2 border-[#f8d878] mb-3">
               <span>🔥</span>
@@ -314,103 +393,25 @@ export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome
         </div>
       </section>
 
-      <div className="max-w-6xl mx-auto px-4 mt-8 space-y-8">
-        {/* Search & Category Product Catalog Bar */}
-        <div className="bg-white rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] p-5 md:p-6">
-          <div className="flex flex-col md:flex-row gap-3">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setVisibleLimit(24);
-              }}
-              placeholder={ui.searchPlaceholder}
-              className="flex-1 px-4 py-3 rounded-xl border-2 border-[#222] bg-[#fcf8f2] font-bold text-sm focus:outline-none focus:ring-2 focus:ring-[#e52521]"
-            />
-            <div className="flex flex-wrap items-center gap-2">
-              {(
-                [
-                  ['all', ui.catAll],
-                  ['writing', ui.catWriting],
-                  ['art', ui.catArt],
-                  ['office', ui.catOffice],
-                  ['paper', ui.catPaper],
-                ] as const
-              ).map(([key, label]) => (
-                <button
-                  key={key}
-                  onClick={() => {
-                    setCatFilter(key);
-                    setVisibleLimit(24);
-                  }}
-                  className={`px-3.5 py-2 rounded-xl font-black text-xs border-2 border-[#222] transition-all ${
-                    catFilter === key
-                      ? 'bg-[#e52521] text-white shadow-[2px_2px_0px_#222]'
-                      : 'bg-gray-100 text-[#222] hover:bg-yellow-50'
-                  }`}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-3 text-xs font-black text-gray-500">
-            {ui.showingCount} {filteredItems.length}
-          </div>
-
-          {/* Product Directory Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 mt-4">
-            {filteredItems.slice(0, visibleLimit).map((entry) => {
-              const isSelected = entry.id === item.id;
-              const entryName = lang === 'zh' ? entry.titleZh : lang === 'en' ? entry.titleEn : entry.titleEs;
-              return (
-                <button
-                  key={entry.id}
-                  onClick={() => selectProduct(entry.id)}
-                  className={`text-left rounded-2xl border-2 p-2 transition-all flex flex-col ${
-                    isSelected
-                      ? 'border-[#e52521] bg-red-50 shadow-[3px_3px_0px_#e52521]'
-                      : 'border-[#222] bg-[#fcf8f2] hover:bg-yellow-50 shadow-[2px_2px_0px_#222]'
-                  }`}
-                >
-                  <div className="aspect-square rounded-xl overflow-hidden bg-white border border-gray-200 mb-2">
-                    <img
-                      src={entry.images[0]?.src || entry.heroImage}
-                      alt={entryName}
-                      loading="lazy"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="flex items-center justify-between gap-1">
-                    <span className="text-[10px] font-black bg-[#f8d878] px-1.5 py-0.5 rounded border border-[#222] truncate">
-                      {entry.sku.split('/')[0].trim()}
-                    </span>
-                    {entry.rank > 0 && (
-                      <span className="text-[10px] font-black text-[#e52521]">#{entry.rank}</span>
-                    )}
-                  </div>
-                  <div className="text-xs font-bold mt-1 line-clamp-2 leading-snug">{entryName}</div>
-                </button>
-              );
-            })}
-          </div>
-
-          {filteredItems.length > visibleLimit && (
-            <div className="mt-5 text-center">
-              <button
-                onClick={() => setVisibleLimit((v) => v + 24)}
-                className="px-6 py-2.5 rounded-xl bg-[#f8d878] text-[#222] font-black text-xs border-2 border-[#222] shadow-[3px_3px_0px_#222] hover:bg-yellow-300"
-              >
-                + {filteredItems.length - visibleLimit}
-              </button>
-            </div>
-          )}
+      {/* Main Layout: Amazon-style Left Category Tree + Featured Showcase Right */}
+      <div className="max-w-7xl mx-auto px-4 mt-8 flex flex-col lg:flex-row gap-6 items-start">
+        {/* Mobile Collapsible Directory Button */}
+        <div className="w-full lg:hidden">
+          <button
+            onClick={() => setMobileTreeOpen((v) => !v)}
+            className="w-full py-2.5 px-4 rounded-xl bg-white border-2 border-[#222] shadow-[3px_3px_0px_#222] font-black text-xs flex items-center justify-between"
+          >
+            <span>{ui.toggleTree}</span>
+            <span>{mobileTreeOpen ? '▲' : '▼'}</span>
+          </button>
+          {mobileTreeOpen && <div className="mt-3">{renderSidebarTree()}</div>}
         </div>
 
-        {/* Selected Product Showcase */}
-        <div ref={viewerRef} className="space-y-8 scroll-mt-20">
+        {/* Desktop Left Sidebar Tree */}
+        <aside className="hidden lg:block w-72 shrink-0 sticky top-20">{renderSidebarTree()}</aside>
+
+        {/* Main Featured Product Showcase */}
+        <div className="flex-1 min-w-0 w-full space-y-8">
           <div className="bg-white rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] p-6 md:p-8">
             <div className="flex flex-wrap items-center gap-2 mb-3">
               {item.rank > 0 && (
