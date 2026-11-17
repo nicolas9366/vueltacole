@@ -10,8 +10,11 @@ const ActionStore = lazy(() =>
 const Redemption = lazy(() =>
   import('./components/Redemption').then((m) => ({ default: m.Redemption }))
 );
+const DailyVitrina = lazy(() =>
+  import('./components/DailyVitrina').then((m) => ({ default: m.DailyVitrina }))
+);
 
-type ViewMode = 'home' | 'tienda' | 'navidad' | 'map' | 'canje';
+type ViewMode = 'home' | 'tienda' | 'navidad' | 'map' | 'canje' | 'vitrina';
 
 export const App: React.FC = () => {
   // Auto-detect browser language per REBUILD_SOP §3
@@ -49,6 +52,9 @@ export const App: React.FC = () => {
       }
       if (initial === 'navidad' || pathname.endsWith('navidad.html') || search.includes('navidad')) {
         return 'navidad';
+      }
+      if (initial === 'vitrina' || pathname.endsWith('vitrina.html') || search.includes('vitrina') || hash.includes('vitrina')) {
+        return 'vitrina';
       }
     }
     return 'home';
@@ -94,6 +100,13 @@ export const App: React.FC = () => {
         initial === 'navidad'
       ) {
         setView('navidad');
+      } else if (
+        page === 'vitrina' ||
+        hash.includes('vitrina') ||
+        pathname.endsWith('vitrina.html') ||
+        initial === 'vitrina'
+      ) {
+        setView('vitrina');
       } else if (page === 'map' || hash.includes('map')) {
         setView('map');
       } else if (page === 'canje' || hash.includes('canje')) {
@@ -175,6 +188,17 @@ export const App: React.FC = () => {
                   }`}
                 >
                   {t.navHome}
+                </button>
+
+                <button
+                  onClick={() => navigateTo('vitrina')}
+                  className={`px-3.5 py-2 rounded-xl font-black text-xs md:text-sm border-2 transition-all ${
+                    view === 'vitrina'
+                      ? 'bg-[#e52521] text-white border-[#f8d878] shadow-[2px_2px_0px_#f8d878]'
+                      : 'bg-amber-500 text-[#111827] border-[#222] hover:bg-amber-400'
+                  }`}
+                >
+                  {lang === 'zh' ? '🔥 每日主推' : '🔥 Vitrina'}
                 </button>
 
                 <button
@@ -273,6 +297,17 @@ export const App: React.FC = () => {
         )}
         {view === 'navidad' && (
           <NavidadPromo lang={lang} onNavigateHome={() => navigateTo('home')} />
+        )}
+        {view === 'vitrina' && (
+          <Suspense
+            fallback={
+              <div className="min-h-[60vh] flex items-center justify-center bg-[#fcf8f2] text-[#e52521] font-black text-xl">
+                🔥 Cargando Vitrina Diaria...
+              </div>
+            }
+          >
+            <DailyVitrina lang={lang} onNavigateHome={() => navigateTo('home')} />
+          </Suspense>
         )}
         {view === 'map' && (
           <Suspense

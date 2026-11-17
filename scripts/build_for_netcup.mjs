@@ -40,6 +40,14 @@ const navidadHtml = compiledHtml.replace(
 );
 fs.writeFileSync(navidadHtmlPath, navidadHtml, 'utf8');
 
+const vitrinaHtml = compiledHtml
+  .replace('<head>', '<head>\n  <script>window.__INITIAL_PAGE__="vitrina";</script>')
+  .replace(
+    '<title>KYRMAX · 西班牙文具贸易 · 批发与零售供应链服务</title>',
+    '<title>KYRMAX · 每日热卖主推馆 | Vitrina Diaria</title>'
+  );
+fs.writeFileSync(path.join(rootDir, 'vitrina.html'), vitrinaHtml, 'utf8');
+
 const shopHtml = compiledHtml
   .replace('<head>', '<head>\n  <script>window.__INITIAL_PAGE__="tienda";</script>')
   .replace(
@@ -69,6 +77,14 @@ fs.cpSync(distAssetsDir, shopAssetsDir, { recursive: true });
 // 5. Ensure catalog.json is available at root ./data/catalog.json and ./shop/data/catalog.json
 if (!fs.existsSync(rootDataDir)) {
   fs.mkdirSync(rootDataDir, { recursive: true });
+}
+const publicDailyDir = path.join(rootDir, 'public/daily');
+const rootDailyDir = path.join(rootDir, 'daily');
+if (fs.existsSync(publicDailyDir)) {
+  if (fs.existsSync(rootDailyDir)) {
+    fs.rmSync(rootDailyDir, { recursive: true, force: true });
+  }
+  fs.cpSync(publicDailyDir, rootDailyDir, { recursive: true });
 }
 fs.copyFileSync(
   path.join(rootDir, 'public/data/catalog.json'),
