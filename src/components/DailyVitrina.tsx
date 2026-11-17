@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { DAILY_VITRINA_ITEMS, DailyVitrinaEntry } from '../data/dailyVitrinaDB';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { DAILY_VITRINA_ITEMS, DailyVitrinaEntry, VitrinaCategory } from '../data/dailyVitrinaDB';
 import { Lang } from '../data/christmas2026DB';
 
 interface DailyVitrinaProps {
@@ -16,6 +16,14 @@ const UI_TEXT: Record<
     copyLink: string;
     linkCopied: string;
     backHome: string;
+    searchPlaceholder: string;
+    catAll: string;
+    catWriting: string;
+    catArt: string;
+    catOffice: string;
+    catPaper: string;
+    showingCount: string;
+    viewBtn: string;
     galleryTitle: string;
     galleryHint: string;
     videosTitle: string;
@@ -34,15 +42,23 @@ const UI_TEXT: Record<
   }
 > = {
   zh: {
-    badge: '每日热卖严选 · VITRINA DIARIA',
-    title: '每日热卖主推馆 · 效果图与短剧中心',
-    subtitle: '每日精选高走量非品牌核心单品，云端高清图库、双语宣传短剧与社媒一键转发话术。',
-    copyLink: '复制本页推广链接',
-    linkCopied: '已复制本页链接',
+    badge: '每日热卖产品目录 · TOP 100+ 宣传库',
+    title: '每日热卖主推馆 · 产品宣传目录',
+    subtitle: '按畅销榜精选 100+ 非品牌学习办公与美术爆款，按品类或货号检索，随选查看云端效果图、宣传视频与一键转发话术。',
+    copyLink: '复制当前单品链接',
+    linkCopied: '已复制当前单品推广链接',
     backHome: '返回主站',
+    searchPlaceholder: '搜索货号 (如 PP948, PE517, PP631-01) 或产品名称 / EAN...',
+    catAll: '全部单品',
+    catWriting: '书写与记号笔',
+    catArt: '美术与颜料',
+    catOffice: '办公与修正工具',
+    catPaper: '本册与收纳',
+    showingCount: '共筛选出单品数：',
+    viewBtn: '查看宣传物料',
     galleryTitle: '产品视觉效果图（云端图库 · 点击放大）',
     galleryHint: '纯画面无叠加字，点击右下角可保存原图',
-    videosTitle: '配套宣传短剧视频（云端流媒体 · 在线播放 / 下载）',
+    videosTitle: '配套宣传视频（云端流媒体 · 在线播放 / 下载）',
     videoDownload: '下载 MP4',
     shareTitle: '一键分享话术与社媒直发',
     shareHint: '可自由修改文案后一键复制到微信或海外社媒',
@@ -57,15 +73,23 @@ const UI_TEXT: Record<
     tiktokTip: '文案已复制，选择 TikTok 或下载视频后即可直接上传发布',
   },
   en: {
-    badge: 'DAILY HOT PICK · VITRINA DIARIA',
-    title: 'Daily Bestsellers · Visuals & Video Hub',
-    subtitle: 'Daily high-turnover stationery picks with cloud-hosted studio visuals, short promo videos, and 1-click social sharing.',
-    copyLink: 'Copy Page Link',
-    linkCopied: 'Page link copied!',
+    badge: 'TOP 100+ PRODUCT CATALOG · VITRINA DIARIA',
+    title: 'Bestsellers Catalog · Visuals & Video Hub',
+    subtitle: 'Browse 100+ high-turnover non-brand stationery picks by category or SKU, with cloud studio visuals, promo videos, and 1-click social sharing.',
+    copyLink: 'Copy Product Link',
+    linkCopied: 'Product link copied!',
     backHome: 'Back Home',
+    searchPlaceholder: 'Search by SKU (e.g. PP948, PE517), product name or EAN...',
+    catAll: 'All Products',
+    catWriting: 'Writing & Markers',
+    catArt: 'Fine Arts & Paints',
+    catOffice: 'Office & School',
+    catPaper: 'Notebooks & Files',
+    showingCount: 'Showing products:',
+    viewBtn: 'Open Promo Kit',
     galleryTitle: 'Product Visual Gallery (Cloud CDN · Tap to Zoom)',
     galleryHint: 'Clean text-free images ready for social posts',
-    videosTitle: 'Promo Short Videos (Cloud Stream & Download)',
+    videosTitle: 'Promo Video (Cloud Stream & Download)',
     videoDownload: 'Download MP4',
     shareTitle: 'Ready-to-Share Social Caption',
     shareHint: 'Edit caption freely and share in one tap',
@@ -80,15 +104,23 @@ const UI_TEXT: Record<
     tiktokTip: 'Caption copied! Pick TikTok in the share sheet or upload the MP4 video.',
   },
   es: {
-    badge: 'SELECCIÓN DIARIA · VITRINA DIARIA',
-    title: 'Vitrina Diaria · Galería y Vídeos Top Ventas',
-    subtitle: 'Productos estrella seleccionados cada día con imágenes limpias en la nube, vídeos cortos y textos listos para redes sociales.',
+    badge: 'CATÁLOGO TOP 100+ · VITRINA DIARIA',
+    title: 'Catálogo de Productos Estrella · Galería y Vídeos',
+    subtitle: 'Explora más de 100 referencias top ventas por categoría o código SKU, con imágenes en la nube, vídeos promocionales y textos listos para compartir.',
     copyLink: 'Copiar Enlace',
-    linkCopied: '¡Enlace copiado!',
+    linkCopied: '¡Enlace del producto copiado!',
     backHome: 'Inicio',
+    searchPlaceholder: 'Buscar por código (ej. PP948, PE517), nombre o EAN...',
+    catAll: 'Todos',
+    catWriting: 'Escritura y Rotuladores',
+    catArt: 'Bellas Artes y Pinturas',
+    catOffice: 'Oficina y Escolar',
+    catPaper: 'Cuadernos y Archivo',
+    showingCount: 'Productos encontrados:',
+    viewBtn: 'Ver Material',
     galleryTitle: 'Galería Visual del Producto (Clic para ampliar)',
     galleryHint: 'Imágenes limpias en la nube listas para publicar',
-    videosTitle: 'Vídeos Promocionales (Reproducción en la nube y descarga)',
+    videosTitle: 'Vídeo Promocional (Reproducción en la nube y descarga)',
     videoDownload: 'Descargar MP4',
     shareTitle: 'Texto Listo para Compartir en Redes',
     shareHint: 'Edita el mensaje si lo deseas y compártelo al instante',
@@ -105,9 +137,42 @@ const UI_TEXT: Record<
 };
 
 export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome }) => {
-  const [selectedIdx, setSelectedIdx] = useState(0);
-  const item: DailyVitrinaEntry = DAILY_VITRINA_ITEMS[selectedIdx] || DAILY_VITRINA_ITEMS[0];
   const ui = UI_TEXT[lang];
+  const viewerRef = useRef<HTMLDivElement | null>(null);
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [catFilter, setCatFilter] = useState<'all' | VitrinaCategory>('all');
+  const [visibleLimit, setVisibleLimit] = useState(24);
+  const [selectedSku, setSelectedSku] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const qSku = new URLSearchParams(window.location.search).get('sku');
+      if (qSku) {
+        const found = DAILY_VITRINA_ITEMS.find((i) => i.sku.toLowerCase() === qSku.toLowerCase() || i.id === qSku.toLowerCase());
+        if (found) return found.id;
+      }
+    }
+    return DAILY_VITRINA_ITEMS[0]?.id || 'pp948';
+  });
+
+  const item: DailyVitrinaEntry = useMemo(
+    () => DAILY_VITRINA_ITEMS.find((i) => i.id === selectedSku) || DAILY_VITRINA_ITEMS[0],
+    [selectedSku]
+  );
+
+  const filteredItems = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    return DAILY_VITRINA_ITEMS.filter((entry) => {
+      if (catFilter !== 'all' && entry.catKey !== catFilter) return false;
+      if (!q) return true;
+      return (
+        entry.sku.toLowerCase().includes(q) ||
+        entry.ean.toLowerCase().includes(q) ||
+        entry.titleZh.toLowerCase().includes(q) ||
+        entry.titleEn.toLowerCase().includes(q) ||
+        entry.titleEs.toLowerCase().includes(q)
+      );
+    });
+  }, [searchQuery, catFilter]);
 
   const getLocalizedShare = (entry: DailyVitrinaEntry, l: Lang) =>
     l === 'zh' ? entry.shareTextZh : l === 'en' ? entry.shareTextEn : entry.shareTextEs;
@@ -118,12 +183,14 @@ export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome
 
   useEffect(() => {
     setShareText(getLocalizedShare(item, lang));
-  }, [lang, selectedIdx, item]);
+  }, [lang, item]);
 
   const showToast = (msg: string) => {
     setToastMsg(msg);
     setTimeout(() => setToastMsg(''), 2800);
   };
+
+  const pageShareUrl = `https://vueltacole.com/vitrina.html?sku=${encodeURIComponent(item.sku.split('/')[0].trim())}`;
 
   const handleCopy = async (text: string, msg: string) => {
     try {
@@ -166,8 +233,9 @@ export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome
       }
     }
     const a = document.createElement('a');
-    a.href = item.heroImage;
-    a.download = `${item.id}.jpg`;
+    a.href = item.images[0]?.downloadUrl || item.heroImage;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
     a.click();
     showToast(`✅ ${platformTip || ui.downloadShareMsg}`);
   };
@@ -187,7 +255,11 @@ export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  const pageShareUrl = 'https://vueltacole.com/vitrina.html';
+  const selectProduct = (id: string) => {
+    setSelectedSku(id);
+    viewerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   const title = lang === 'zh' ? item.titleZh : lang === 'en' ? item.titleEn : item.titleEs;
   const tagline = lang === 'zh' ? item.taglineZh : lang === 'en' ? item.taglineEn : item.taglineEs;
   const packInfo = lang === 'zh' ? item.packInfoZh : lang === 'en' ? item.packInfoEn : item.packInfoEs;
@@ -222,12 +294,8 @@ export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome
               <span>🔥</span>
               <span>{ui.badge}</span>
             </div>
-            <h1 className="text-2xl md:text-4xl font-black tracking-tight text-[#f8d878]">
-              {ui.title}
-            </h1>
-            <p className="text-gray-300 text-sm md:text-base mt-2 max-w-2xl">
-              {ui.subtitle}
-            </p>
+            <h1 className="text-2xl md:text-4xl font-black tracking-tight text-[#f8d878]">{ui.title}</h1>
+            <p className="text-gray-300 text-sm md:text-base mt-2 max-w-2xl">{ui.subtitle}</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <button
@@ -247,215 +315,296 @@ export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome
       </section>
 
       <div className="max-w-6xl mx-auto px-4 mt-8 space-y-8">
-        {/* Date Tabs */}
-        {DAILY_VITRINA_ITEMS.length > 1 && (
-          <div className="flex flex-wrap gap-2">
-            {DAILY_VITRINA_ITEMS.map((entry, idx) => (
-              <button
-                key={entry.id}
-                onClick={() => setSelectedIdx(idx)}
-                className={`px-4 py-2 rounded-xl font-black text-xs border-2 border-[#222] ${
-                  idx === selectedIdx
-                    ? 'bg-[#e52521] text-white shadow-[3px_3px_0px_#222]'
-                    : 'bg-white text-[#222] hover:bg-yellow-50'
-                }`}
-              >
-                📅 {entry.date} · {entry.sku.split('/')[0].trim()}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* Featured Product Header Card */}
-        <div className="bg-white rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] p-6 md:p-8">
-          <div className="flex flex-wrap items-center gap-2 mb-3">
-            <span className="bg-[#5c94fc] text-white text-xs font-black px-3 py-1 rounded-lg border-2 border-[#222]">
-              📅 {item.date}
-            </span>
-            <span className="bg-[#f8d878] text-[#222] text-xs font-black px-3 py-1 rounded-lg border-2 border-[#222]">
-              SKU: {item.sku}
-            </span>
-            <span className="bg-gray-100 text-gray-700 text-xs font-bold px-3 py-1 rounded-lg border-2 border-gray-300">
-              EAN: {item.ean}
-            </span>
-          </div>
-
-          <h2 className="text-2xl md:text-3xl font-black text-[#111827]">{title}</h2>
-          <p className="text-sm md:text-base font-bold text-[#e52521] mt-1">{tagline}</p>
-          <div className="mt-3 text-xs md:text-sm bg-amber-50 border-2 border-amber-300 rounded-xl px-4 py-2.5 font-bold text-amber-950">
-            📦 {packInfo}
-          </div>
-
-          <ul className="mt-4 grid md:grid-cols-3 gap-3">
-            {highlights.map((hl, i) => (
-              <li
-                key={i}
-                className="bg-[#fcf8f2] border-2 border-[#222] rounded-xl p-3 text-xs md:text-sm font-bold flex items-start gap-2"
-              >
-                <span className="text-[#e52521] font-black">★</span>
-                <span>{hl}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Visual Gallery (Cloud CDN) */}
-        <div className="bg-white rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] p-6 md:p-8">
-          <div className="flex flex-wrap items-center justify-between gap-2 mb-5">
-            <h3 className="text-xl font-black flex items-center gap-2">
-              <span>🖼️</span>
-              <span>{ui.galleryTitle}</span>
-            </h3>
-            <span className="text-xs font-bold text-gray-500">{ui.galleryHint}</span>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {item.images.map((img, i) => {
-              const label = lang === 'zh' ? img.labelZh : lang === 'en' ? img.labelEn : img.labelEs;
-              return (
-                <div
-                  key={i}
-                  className="group bg-[#fcf8f2] rounded-2xl border-2 border-[#222] overflow-hidden shadow-[3px_3px_0px_#222] flex flex-col"
+        {/* Search & Category Product Catalog Bar */}
+        <div className="bg-white rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] p-5 md:p-6">
+          <div className="flex flex-col md:flex-row gap-3">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setVisibleLimit(24);
+              }}
+              placeholder={ui.searchPlaceholder}
+              className="flex-1 px-4 py-3 rounded-xl border-2 border-[#222] bg-[#fcf8f2] font-bold text-sm focus:outline-none focus:ring-2 focus:ring-[#e52521]"
+            />
+            <div className="flex flex-wrap items-center gap-2">
+              {(
+                [
+                  ['all', ui.catAll],
+                  ['writing', ui.catWriting],
+                  ['art', ui.catArt],
+                  ['office', ui.catOffice],
+                  ['paper', ui.catPaper],
+                ] as const
+              ).map(([key, label]) => (
+                <button
+                  key={key}
+                  onClick={() => {
+                    setCatFilter(key);
+                    setVisibleLimit(24);
+                  }}
+                  className={`px-3.5 py-2 rounded-xl font-black text-xs border-2 border-[#222] transition-all ${
+                    catFilter === key
+                      ? 'bg-[#e52521] text-white shadow-[2px_2px_0px_#222]'
+                      : 'bg-gray-100 text-[#222] hover:bg-yellow-50'
+                  }`}
                 >
-                  <div
-                    onClick={() => setLightboxImg(img.src)}
-                    className="aspect-square overflow-hidden cursor-zoom-in bg-white"
-                  >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-3 text-xs font-black text-gray-500">
+            {ui.showingCount} {filteredItems.length}
+          </div>
+
+          {/* Product Directory Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 mt-4">
+            {filteredItems.slice(0, visibleLimit).map((entry) => {
+              const isSelected = entry.id === item.id;
+              const entryName = lang === 'zh' ? entry.titleZh : lang === 'en' ? entry.titleEn : entry.titleEs;
+              return (
+                <button
+                  key={entry.id}
+                  onClick={() => selectProduct(entry.id)}
+                  className={`text-left rounded-2xl border-2 p-2 transition-all flex flex-col ${
+                    isSelected
+                      ? 'border-[#e52521] bg-red-50 shadow-[3px_3px_0px_#e52521]'
+                      : 'border-[#222] bg-[#fcf8f2] hover:bg-yellow-50 shadow-[2px_2px_0px_#222]'
+                  }`}
+                >
+                  <div className="aspect-square rounded-xl overflow-hidden bg-white border border-gray-200 mb-2">
                     <img
-                      src={img.src}
-                      alt={label}
+                      src={entry.images[0]?.src || entry.heroImage}
+                      alt={entryName}
                       loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="p-2.5 flex items-center justify-between gap-2 border-t-2 border-[#222]">
-                    <span className="text-xs font-bold truncate">{label}</span>
-                    <a
-                      href={img.downloadUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="shrink-0 text-xs font-black px-2 py-1 rounded-lg bg-[#f8d878] border border-[#222] hover:bg-yellow-300"
-                    >
-                      ⬇️
-                    </a>
+                  <div className="flex items-center justify-between gap-1">
+                    <span className="text-[10px] font-black bg-[#f8d878] px-1.5 py-0.5 rounded border border-[#222] truncate">
+                      {entry.sku.split('/')[0].trim()}
+                    </span>
+                    {entry.rank > 0 && (
+                      <span className="text-[10px] font-black text-[#e52521]">#{entry.rank}</span>
+                    )}
                   </div>
-                </div>
+                  <div className="text-xs font-bold mt-1 line-clamp-2 leading-snug">{entryName}</div>
+                </button>
               );
             })}
           </div>
+
+          {filteredItems.length > visibleLimit && (
+            <div className="mt-5 text-center">
+              <button
+                onClick={() => setVisibleLimit((v) => v + 24)}
+                className="px-6 py-2.5 rounded-xl bg-[#f8d878] text-[#222] font-black text-xs border-2 border-[#222] shadow-[3px_3px_0px_#222] hover:bg-yellow-300"
+              >
+                + {filteredItems.length - visibleLimit}
+              </button>
+            </div>
+          )}
         </div>
 
-        {/* Cloud Video Streaming Players */}
-        <div className="bg-white rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] p-6 md:p-8">
-          <h3 className="text-xl font-black flex items-center gap-2 mb-5">
-            <span>🎬</span>
-            <span>{ui.videosTitle}</span>
-          </h3>
+        {/* Selected Product Showcase */}
+        <div ref={viewerRef} className="space-y-8 scroll-mt-20">
+          <div className="bg-white rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] p-6 md:p-8">
+            <div className="flex flex-wrap items-center gap-2 mb-3">
+              {item.rank > 0 && (
+                <span className="bg-[#5c94fc] text-white text-xs font-black px-3 py-1 rounded-lg border-2 border-[#222]">
+                  TOP #{item.rank}
+                </span>
+              )}
+              <span className="bg-[#f8d878] text-[#222] text-xs font-black px-3 py-1 rounded-lg border-2 border-[#222]">
+                SKU: {item.sku}
+              </span>
+              {item.ean && (
+                <span className="bg-gray-100 text-gray-700 text-xs font-bold px-3 py-1 rounded-lg border-2 border-gray-300">
+                  EAN: {item.ean}
+                </span>
+              )}
+            </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {item.videos.map((vid, i) => {
-              const vTitle = lang === 'zh' ? vid.titleZh : lang === 'en' ? vid.titleEn : vid.titleEs;
-              const vTag = lang === 'zh' ? vid.tagZh : lang === 'en' ? vid.tagEn : vid.tagEs;
-              return (
-                <div
+            <h2 className="text-2xl md:text-3xl font-black text-[#111827]">{title}</h2>
+            <p className="text-sm md:text-base font-bold text-[#e52521] mt-1">{tagline}</p>
+            <div className="mt-3 text-xs md:text-sm bg-amber-50 border-2 border-amber-300 rounded-xl px-4 py-2.5 font-bold text-amber-950">
+              📦 {packInfo}
+            </div>
+
+            <ul className="mt-4 grid md:grid-cols-3 gap-3">
+              {highlights.map((hl, i) => (
+                <li
                   key={i}
-                  className="bg-[#111827] text-white rounded-2xl border-2 border-[#222] overflow-hidden shadow-[4px_4px_0px_#222]"
+                  className="bg-[#fcf8f2] border-2 border-[#222] rounded-xl p-3 text-xs md:text-sm font-bold flex items-start gap-2"
                 >
-                  <div className="px-4 py-3 flex items-center justify-between gap-2 border-b border-gray-700">
-                    <div className="min-w-0">
-                      <span className="inline-block bg-[#e52521] text-white text-[11px] font-black px-2 py-0.5 rounded mr-2">
-                        {vTag}
-                      </span>
-                      <span className="font-black text-sm">{vTitle}</span>
-                    </div>
-                    <a
-                      href={vid.downloadUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="shrink-0 text-xs font-black bg-[#f8d878] text-[#222] px-2.5 py-1 rounded-lg hover:bg-yellow-300"
+                  <span className="text-[#e52521] font-black">★</span>
+                  <span>{hl}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Visual Gallery */}
+          <div className="bg-white rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] p-6 md:p-8">
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-5">
+              <h3 className="text-xl font-black flex items-center gap-2">
+                <span>🖼️</span>
+                <span>{ui.galleryTitle}</span>
+              </h3>
+              <span className="text-xs font-bold text-gray-500">{ui.galleryHint}</span>
+            </div>
+
+            <div className={`grid gap-4 ${item.images.length === 1 ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-2 md:grid-cols-4'}`}>
+              {item.images.map((img, i) => {
+                const label = lang === 'zh' ? img.labelZh : lang === 'en' ? img.labelEn : img.labelEs;
+                return (
+                  <div
+                    key={i}
+                    className="group bg-[#fcf8f2] rounded-2xl border-2 border-[#222] overflow-hidden shadow-[3px_3px_0px_#222] flex flex-col"
+                  >
+                    <div
+                      onClick={() => setLightboxImg(img.src)}
+                      className="aspect-square overflow-hidden cursor-zoom-in bg-white"
                     >
-                      ⬇️ {ui.videoDownload}
-                    </a>
+                      <img
+                        src={img.src}
+                        alt={label}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                    <div className="p-2.5 flex items-center justify-between gap-2 border-t-2 border-[#222]">
+                      <span className="text-xs font-bold truncate">{label}</span>
+                      <a
+                        href={img.downloadUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="shrink-0 text-xs font-black px-2 py-1 rounded-lg bg-[#f8d878] border border-[#222] hover:bg-yellow-300"
+                      >
+                        ⬇️
+                      </a>
+                    </div>
                   </div>
-                  <iframe
-                    src={vid.embedUrl}
-                    title={vTitle}
-                    allow="autoplay; fullscreen"
-                    className="w-full aspect-video bg-black border-0"
-                  />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* One-Click Social Sharing Hub */}
-        <div className="bg-white rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#5c94fc] p-6 md:p-8">
-          <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-            <h3 className="text-xl font-black">🚀 {ui.shareTitle}</h3>
-            <span className="text-xs font-bold text-gray-500">{ui.shareHint}</span>
+                );
+              })}
+            </div>
           </div>
 
-          <textarea
-            value={shareText}
-            onChange={(e) => setShareText(e.target.value)}
-            rows={7}
-            className="w-full rounded-xl border-2 border-[#222] bg-[#fcf8f2] p-3.5 text-xs md:text-sm font-medium leading-relaxed focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
-          />
+          {/* Cloud Video Streaming Players */}
+          <div className="bg-white rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] p-6 md:p-8">
+            <h3 className="text-xl font-black flex items-center gap-2 mb-5">
+              <span>🎬</span>
+              <span>{ui.videosTitle}</span>
+            </h3>
 
-          <div className="mt-4 text-xs font-bold text-gray-600">{ui.socialHint}</div>
+            <div className={`grid gap-6 ${item.videos.length === 1 ? 'md:grid-cols-1 max-w-2xl mx-auto' : 'md:grid-cols-2'}`}>
+              {item.videos.map((vid, i) => {
+                const vTitle = lang === 'zh' ? vid.titleZh : lang === 'en' ? vid.titleEn : vid.titleEs;
+                const vTag = lang === 'zh' ? vid.tagZh : lang === 'en' ? vid.tagEn : vid.tagEs;
+                return (
+                  <div
+                    key={i}
+                    className="bg-[#111827] text-white rounded-2xl border-2 border-[#222] overflow-hidden shadow-[4px_4px_0px_#222]"
+                  >
+                    <div className="px-4 py-3 flex items-center justify-between gap-2 border-b border-gray-700">
+                      <div className="min-w-0">
+                        <span className="inline-block bg-[#e52521] text-white text-[11px] font-black px-2 py-0.5 rounded mr-2">
+                          {vTag}
+                        </span>
+                        <span className="font-black text-sm">{vTitle}</span>
+                      </div>
+                      <a
+                        href={vid.downloadUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="shrink-0 text-xs font-black bg-[#f8d878] text-[#222] px-2.5 py-1 rounded-lg hover:bg-yellow-300"
+                      >
+                        ⬇️ {ui.videoDownload}
+                      </a>
+                    </div>
+                    <iframe
+                      src={vid.embedUrl}
+                      title={vTitle}
+                      allow="autoplay; fullscreen"
+                      className="w-full aspect-video bg-black border-0"
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5 mt-3">
-            <button
-              onClick={() => handleCopy(shareText, ui.copiedMsg)}
-              className="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#222] bg-gray-100 hover:bg-gray-200"
-            >
-              📋 {ui.copyBtn}
-            </button>
+          {/* One-Click Social Sharing Hub */}
+          <div className="bg-white rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#5c94fc] p-6 md:p-8">
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <h3 className="text-xl font-black">🚀 {ui.shareTitle}</h3>
+              <span className="text-xs font-bold text-gray-500">{ui.shareHint}</span>
+            </div>
 
-            <button
-              onClick={() => handleNativeShare(ui.igTip)}
-              className="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#222] bg-gradient-to-r from-[#f58529] via-[#dd2a7b] to-[#8134af] text-white shadow-[2px_2px_0px_#222] hover:opacity-95"
-            >
-              📸 Instagram
-            </button>
+            <textarea
+              value={shareText}
+              onChange={(e) => setShareText(e.target.value)}
+              rows={6}
+              className="w-full rounded-xl border-2 border-[#222] bg-[#fcf8f2] p-3.5 text-xs md:text-sm font-medium leading-relaxed focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
+            />
 
-            <button
-              onClick={handleShareX}
-              className="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#222] bg-black text-white shadow-[2px_2px_0px_#222] hover:bg-neutral-800"
-            >
-              𝕏 X / Twitter
-            </button>
+            <div className="mt-4 text-xs font-bold text-gray-600">{ui.socialHint}</div>
 
-            <button
-              onClick={handleShareFacebook}
-              className="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#222] bg-[#1877F2] text-white shadow-[2px_2px_0px_#222] hover:bg-blue-600"
-            >
-              📘 Facebook
-            </button>
-
-            <button
-              onClick={() => handleNativeShare(ui.tiktokTip)}
-              className="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#222] bg-[#111827] text-[#25F4EE] shadow-[2px_2px_0px_#FE2C55] hover:opacity-95"
-            >
-              🎵 TikTok
-            </button>
-
-            {lang === 'zh' ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5 mt-3">
               <button
-                onClick={() => handleNativeShare()}
-                className="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#222] bg-[#07C160] text-white shadow-[2px_2px_0px_#222] hover:bg-emerald-600"
+                onClick={() => handleCopy(shareText, ui.copiedMsg)}
+                className="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#222] bg-gray-100 hover:bg-gray-200"
               >
-                💬 {ui.nativeShareBtn}
+                📋 {ui.copyBtn}
               </button>
-            ) : (
+
               <button
-                onClick={handleShareWhatsApp}
-                className="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#222] bg-[#25D366] text-white shadow-[2px_2px_0px_#222] hover:bg-emerald-600"
+                onClick={() => handleNativeShare(ui.igTip)}
+                className="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#222] bg-gradient-to-r from-[#f58529] via-[#dd2a7b] to-[#8134af] text-white shadow-[2px_2px_0px_#222] hover:opacity-95"
               >
-                💬 WhatsApp
+                📸 Instagram
               </button>
-            )}
+
+              <button
+                onClick={handleShareX}
+                className="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#222] bg-black text-white shadow-[2px_2px_0px_#222] hover:bg-neutral-800"
+              >
+                𝕏 X / Twitter
+              </button>
+
+              <button
+                onClick={handleShareFacebook}
+                className="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#222] bg-[#1877F2] text-white shadow-[2px_2px_0px_#222] hover:bg-blue-600"
+              >
+                📘 Facebook
+              </button>
+
+              <button
+                onClick={() => handleNativeShare(ui.tiktokTip)}
+                className="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#222] bg-[#111827] text-[#25F4EE] shadow-[2px_2px_0px_#FE2C55] hover:opacity-95"
+              >
+                🎵 TikTok
+              </button>
+
+              {lang === 'zh' ? (
+                <button
+                  onClick={() => handleNativeShare()}
+                  className="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#222] bg-[#07C160] text-white shadow-[2px_2px_0px_#222] hover:bg-emerald-600"
+                >
+                  💬 {ui.nativeShareBtn}
+                </button>
+              ) : (
+                <button
+                  onClick={handleShareWhatsApp}
+                  className="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#222] bg-[#25D366] text-white shadow-[2px_2px_0px_#222] hover:bg-emerald-600"
+                >
+                  💬 WhatsApp
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
