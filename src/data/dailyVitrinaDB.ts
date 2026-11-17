@@ -482,6 +482,200 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
       '✅ Negro intenso resistente al agua sobre cartón, plástico, vidrio y metal.\n' +
       '👉 Mira fotos y vídeos aquí: https://vueltacole.com/vitrina.html?sku=PE486-1',
   },
+  'PP162-01': {
+    id: 'pp162-01',
+    rank: 3,
+    sku: 'PP162-01',
+    ean: '8435250994441',
+    catKey: 'art',
+    packInfoZh: '6色经典水粉颜料 ｜ 6 盒/包 · 72 盒/箱',
+    packInfoEn: '6 Classic Tempera Paint Pots ｜ 6 sets/pack · 72 sets/carton',
+    packInfoEs: 'Témpera 6 Colores Clásicos ｜ 6 uds/pack · 72 uds/caja',
+    titleZh: 'MP* 6色经典水粉颜料套装',
+    titleEn: 'MP* Tempera 6 Classic Colors Paint Set',
+    titleEs: 'MP* Témpera 6 Colores Clásicos',
+    taglineZh: 'TOP 3 爆款 · 红黄蓝绿黑白 6 大正色 · 细腻易洗 · 学校手工刚需',
+    taglineEn: 'Top #3 Bestseller · 6 classic primary shades · Smooth & washable · School favorite',
+    taglineEs: 'Top #3 en ventas · 6 colores clásicos cubrientes · Lavable con agua · Uso escolar',
+    highlightsZh: [
+      '西班牙畅销榜第 3 名，红黄蓝绿黑白 6 大高频正色一盒配齐',
+      '水粉膏体细腻顺滑、色彩饱满，水溶性配方沾手衣物易清洗',
+      '6盒/包、72盒/箱，返校季与日常儿童手作区高周转常青单品',
+    ],
+    highlightsEn: [
+      '#3 bestselling school & craft SKU with 6 vibrant classic colors',
+      'Smooth opaque tempera texture that washes easily with water',
+      'Wholesale pack 6 sets/pack · 72 sets/carton for fast retail turnover',
+    ],
+    highlightsEs: [
+      'Top #3 escolar y manualidades con 6 tonos clásicos muy cubrientes',
+      'Textura suave lista para pincel y lavable fácilmente con agua',
+      'Formato mayorista: 6 uds/pack · 72 uds/caja',
+    ],
+    heroImage: gdImg('16k6gFuUM0HiBB1SaJYB7DnB48U2q1zxF'),
+    images: [
+      {
+        src: gdImg('16k6gFuUM0HiBB1SaJYB7DnB48U2q1zxF'),
+        downloadUrl: gdDl('16k6gFuUM0HiBB1SaJYB7DnB48U2q1zxF'),
+        labelZh: '俯拍手工桌6色水粉与调色盘',
+        labelEn: 'Overhead craft desk flat-lay',
+        labelEs: 'Vista cenital mesa creativa',
+      },
+      {
+        src: gdImg('1FAHwsaFCWzm81DNMCfwDERYyg9_dDzaZ'),
+        downloadUrl: gdDl('1FAHwsaFCWzm81DNMCfwDERYyg9_dDzaZ'),
+        labelZh: '手持蘸取红色颜料彩绘场景',
+        labelEn: 'Dipping brush & painting flowers',
+        labelEs: 'Pintando con pincel en papel',
+      },
+      {
+        src: gdImg('1ZQYdZYtCwyoRJb8lZ0-B5pLbPUTL-nhg'),
+        downloadUrl: gdDl('1ZQYdZYtCwyoRJb8lZ0-B5pLbPUTL-nhg'),
+        labelZh: '画室桌面包装与木艺成品陈列',
+        labelEn: 'Studio display with painted crafts',
+        labelEs: 'Exposición en taller escolar',
+      },
+      {
+        src: gdImg('194YHcsDhImyEGVobS5zqkMnxk_DjVeHW'),
+        downloadUrl: gdDl('194YHcsDhImyEGVobS5zqkMnxk_DjVeHW'),
+        labelZh: '四原色厚实哑光笔触微距',
+        labelEn: 'Velvet matte pigment macro',
+        labelEs: 'Macro textura mate cubriente',
+      },
+    ],
+    videos: [
+      {
+        embedUrl: gdVid('10Aaovm2Zd0H2MyTXaJPsLKKC3QcU9IYp'),
+        downloadUrl: gdDl('10Aaovm2Zd0H2MyTXaJPsLKKC3QcU9IYp'),
+        titleZh: '百元店选品短剧《六色经典水粉》',
+        titleEn: 'B2B Retail Short: #3 Tempera Set',
+        titleEs: 'Corto B2B: Témpera Clásica PP162-01',
+        tagZh: 'B2B 百元店推销版',
+        tagEn: 'B2B Retail',
+        tagEs: 'B2B Bazares',
+      },
+      {
+        embedUrl: gdVid('1AnCxws1Qu7ydQFqHb4MYgb3qVQrDpO_Y'),
+        downloadUrl: gdDl('1AnCxws1Qu7ydQFqHb4MYgb3qVQrDpO_Y'),
+        titleZh: '西班牙语校园种草短剧《水粉色彩》',
+        titleEn: 'Consumer Spot: Washable Tempera',
+        titleEs: 'Spot España: Témperas MP* PP162-01',
+        tagZh: 'B2C 西语消费版',
+        tagEn: 'B2C Consumer',
+        tagEs: 'B2C España',
+      },
+    ],
+    shareTextZh:
+      '🎨【畅销榜 #3｜MP* PP162-01 六色经典水粉颜料】\n' +
+      '红黄蓝绿黑白六大经典正色，细腻易调、水溶好洗不伤手，学校采购与家庭手工必备！\n' +
+      '📦 6盒/包 · 72盒/箱 · 查看全套效果图与短剧：\n' +
+      '👉 https://vueltacole.com/vitrina.html?sku=PP162-01',
+    shareTextEn:
+      '🎨 #3 Bestseller: MP* PP162-01 Tempera 6 Classic Colors!\n' +
+      '✨ Smooth opaque coverage in 6 primary shades, easy to wash with water.\n' +
+      '👉 See gallery & videos: https://vueltacole.com/vitrina.html?sku=PP162-01',
+    shareTextEs:
+      '🎨 ¡Top #3 en ventas: Témpera 6 Colores Clásicos MP* PP162-01!\n' +
+      '✨ Colores vivos muy cubrientes y lavables con agua, ideales para el cole.\n' +
+      '👉 Mira fotos y vídeos aquí: https://vueltacole.com/vitrina.html?sku=PP162-01',
+  },
+  PE411: {
+    id: 'pe411',
+    rank: 4,
+    sku: 'PE411',
+    ean: '8435464171973',
+    catKey: 'writing',
+    packInfoZh: '细头黑色 CD/塑料记号笔 ｜ 18 支/包 · 432 支/箱',
+    packInfoEn: 'Fine-Tip Black CD & Plastic Marker ｜ 18 pcs/pack · 432 pcs/carton',
+    packInfoEs: 'Marcador CD Punta Fina Negro ｜ 18 uds/pack · 432 uds/caja',
+    titleZh: 'MP* 细头黑色 CD 永久记号笔',
+    titleEn: 'MP* Fine-Tip Black CD & Plastic Marker',
+    titleEs: 'MP* Marcador CD Punta Fina Negro',
+    taglineZh: 'TOP 4 爆款 · 精密金属包头细笔尖 · 速干防水 · 光盘/塑料袋/标签专用',
+    taglineEn: 'Top #4 Bestseller · Precision fine needle tip · Quick-dry waterproof on discs & plastic',
+    taglineEs: 'Top #4 en ventas · Punta fina precisa · Secado rápido resistente al agua',
+    highlightsZh: [
+      '西班牙畅销榜第 4 名，细字精准不糊边，小标签与光盘书写清晰利落',
+      '光盘、透明文件袋、玻璃器皿、PVC 卡片与塑料包装袋一笔附着',
+      '18支/包、432支/箱，办公文具柜台与百元店收银台高频补货单品',
+    ],
+    highlightsEn: [
+      '#4 bestselling fine-tip permanent marker for crisp small labels',
+      'Instant-dry waterproof black ink safe for optical discs & glossy plastic',
+      'Wholesale pack 18 pcs/pack · 432 pcs/carton',
+    ],
+    highlightsEs: [
+      'Top #4 en ventas: punta fina ideal para rotular etiquetas pequeñas y CDs',
+      'Tinta negra permanente de secado instantáneo y resistente al agua',
+      'Formato mayorista: 18 uds/pack · 432 uds/caja',
+    ],
+    heroImage: gdImg('1oh_NGUNHjcsVYvh1_OmNWDqZY7GIdUyO'),
+    images: [
+      {
+        src: gdImg('1oh_NGUNHjcsVYvh1_OmNWDqZY7GIdUyO'),
+        downloadUrl: gdDl('1oh_NGUNHjcsVYvh1_OmNWDqZY7GIdUyO'),
+        labelZh: '俯拍办公桌面与光盘档案袋标注',
+        labelEn: 'Overhead office desk flat-lay',
+        labelEs: 'Mesa de oficina y archivos',
+      },
+      {
+        src: gdImg('12TaGXayVLpFcyKOJXFdIOVd5nZ4RGt2O'),
+        downloadUrl: gdDl('12TaGXayVLpFcyKOJXFdIOVd5nZ4RGt2O'),
+        labelZh: '手持细笔头光盘与透明袋实写',
+        labelEn: 'Fine-tip labeling on disc & sleeve',
+        labelEs: 'Rotulando CD y funda plástica',
+      },
+      {
+        src: gdImg('1inztH9VFRWE31fWQVS1_i9Vowmv1Iyc-'),
+        downloadUrl: gdDl('1inztH9VFRWE31fWQVS1_i9Vowmv1Iyc-'),
+        labelZh: '玻璃瓶/PVC卡/拉链袋多材质展示',
+        labelEn: 'Glass, PVC card & zip pouch showcase',
+        labelEs: 'Vidrio, tarjeta PVC y bolsa zip',
+      },
+      {
+        src: gdImg('1MFrVk1KqtRhT4DfhYJ7ejonkO_2K5167'),
+        downloadUrl: gdDl('1MFrVk1KqtRhT4DfhYJ7ejonkO_2K5167'),
+        labelZh: '精密细头防水细线微距实测',
+        labelEn: 'Fine needle tip waterproof macro',
+        labelEs: 'Macro punta fina resistente al agua',
+      },
+    ],
+    videos: [
+      {
+        embedUrl: gdVid('1i9X9eiyLZvvAIDAKxyKiUaVWqUlWun_Q'),
+        downloadUrl: gdDl('1i9X9eiyLZvvAIDAKxyKiUaVWqUlWun_Q'),
+        titleZh: '百元店选品短剧《细头 CD 记号笔》',
+        titleEn: 'B2B Retail Short: #4 Fine CD Marker',
+        titleEs: 'Corto B2B: Marcador CD PE411',
+        tagZh: 'B2B 百元店推销版',
+        tagEn: 'B2B Retail',
+        tagEs: 'B2B Bazares',
+      },
+      {
+        embedUrl: gdVid('1DBemJWZPm85jj6YjkP5d0BxMIsrZQQvO'),
+        downloadUrl: gdDl('1DBemJWZPm85jj6YjkP5d0BxMIsrZQQvO'),
+        titleZh: '西班牙语办公种草短剧《精细标注》',
+        titleEn: 'Consumer Spot: Precision Marker',
+        titleEs: 'Spot España: Precisión PE411',
+        tagZh: 'B2C 西语消费版',
+        tagEn: 'B2C Consumer',
+        tagEs: 'B2C España',
+      },
+    ],
+    shareTextZh:
+      '🖊️【畅销榜 #4｜MP* PE411 细头黑色 CD 记号笔】\n' +
+      '光盘、透明袋、小标签精细书写不糊边，速干防水！\n' +
+      '📦 18支/包 · 432支/箱 · 查看全套效果图与短剧：\n' +
+      '👉 https://vueltacole.com/vitrina.html?sku=PE411',
+    shareTextEn:
+      '🖊️ #4 Bestseller: MP* PE411 Fine-Tip Black CD & Plastic Marker!\n' +
+      '✅ Ultra-precise needle tip, instant-dry waterproof black ink.\n' +
+      '👉 See gallery & videos: https://vueltacole.com/vitrina.html?sku=PE411',
+    shareTextEs:
+      '🖊️ ¡Top #4 en ventas: Marcador CD Punta Fina Negro MP* PE411!\n' +
+      '✅ Trazo preciso, secado rápido y resistente al agua sobre plástico y discos.\n' +
+      '👉 Mira fotos y vídeos aquí: https://vueltacole.com/vitrina.html?sku=PE411',
+  },
 };
 
 const generatedItems: DailyVitrinaEntry[] = (top100Raw.items || []).map((raw: any) => {
