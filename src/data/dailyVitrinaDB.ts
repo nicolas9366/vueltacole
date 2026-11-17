@@ -161,11 +161,11 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
         labelEs: 'Aplicación en tela, madera, piedra y metal',
       },
       {
-        src: gdImg('1qY9ZaTyyOFQ0ukSJP7HZ-U9ffyLNwm7C'),
-        downloadUrl: gdDl('1qY9ZaTyyOFQ0ukSJP7HZ-U9ffyLNwm7C'),
-        labelZh: '防水凝珠微距与官网二维码',
-        labelEn: 'Waterproof macro & website QR',
-        labelEs: 'Macro impermeable y código QR',
+        src: gdImg('16vGz21xYRBIm_ukYB2aTVFwGoiH5PWDr'),
+        downloadUrl: gdDl('16vGz21xYRBIm_ukYB2aTVFwGoiH5PWDr'),
+        labelZh: '黑瓷盘防水凝珠与笔触细节',
+        labelEn: 'Waterproof droplets & brush macro',
+        labelEs: 'Detalle impermeable y trazo 1,5–6 mm',
       },
     ],
     videos: [

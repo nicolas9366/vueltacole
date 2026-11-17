@@ -9,8 +9,11 @@ const ActionStore = lazy(() =>
 const DailyVitrina = lazy(() =>
   import('./components/DailyVitrina').then((m) => ({ default: m.DailyVitrina }))
 );
+const AppleShowcase = lazy(() =>
+  import('./components/AppleShowcase').then((m) => ({ default: m.AppleShowcase }))
+);
 
-type ViewMode = 'home' | 'tienda' | 'map' | 'vitrina';
+type ViewMode = 'home' | 'tienda' | 'map' | 'vitrina' | 'showcase';
 
 export const App: React.FC = () => {
   // Auto-detect browser language per REBUILD_SOP §3
@@ -53,6 +56,9 @@ export const App: React.FC = () => {
       ) {
         return 'tienda';
       }
+      if (initial === 'showcase' || pathname.endsWith('showcase.html') || search.includes('page=showcase') || hash.includes('showcase')) {
+        return 'showcase';
+      }
       if (initial === 'vitrina' || pathname.endsWith('vitrina.html') || search.includes('vitrina') || hash.includes('vitrina')) {
         return 'vitrina';
       }
@@ -92,6 +98,13 @@ export const App: React.FC = () => {
       ) {
         setView('tienda');
       } else if (
+        page === 'showcase' ||
+        hash.includes('showcase') ||
+        pathname.endsWith('showcase.html') ||
+        initial === 'showcase'
+      ) {
+        setView('showcase');
+      } else if (
         page === 'vitrina' ||
         hash.includes('vitrina') ||
         pathname.endsWith('vitrina.html') ||
@@ -125,6 +138,20 @@ export const App: React.FC = () => {
   };
 
   const t = CONFIG_I18N[lang];
+
+  if (view === 'showcase') {
+    return (
+      <Suspense
+        fallback={
+          <div className="min-h-screen flex items-center justify-center bg-white text-[#1d1d1f] font-medium text-base">
+            Loading...
+          </div>
+        }
+      >
+        <AppleShowcase lang={lang} onSetLang={setLang} />
+      </Suspense>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col font-['Fredoka',sans-serif]">
@@ -177,17 +204,6 @@ export const App: React.FC = () => {
                   }`}
                 >
                   {t.navHome}
-                </button>
-
-                <button
-                  onClick={() => navigateTo('vitrina')}
-                  className={`px-3.5 py-2 rounded-xl font-black text-xs md:text-sm border-2 transition-all ${
-                    view === 'vitrina'
-                      ? 'bg-[#e52521] text-white border-[#f8d878] shadow-[2px_2px_0px_#f8d878]'
-                      : 'bg-amber-500 text-[#111827] border-[#222] hover:bg-amber-400'
-                  }`}
-                >
-                  {lang === 'zh' ? '🔥 每日主推' : lang === 'en' ? '🔥 Daily Pick' : '🔥 Vitrina'}
                 </button>
 
                 <button

@@ -42,6 +42,14 @@ const vitrinaHtml = compiledHtml
   );
 fs.writeFileSync(path.join(rootDir, 'vitrina.html'), vitrinaHtml, 'utf8');
 
+const showcaseHtml = compiledHtml
+  .replace('<head>', '<head>\n  <script>window.__INITIAL_PAGE__="showcase";</script>')
+  .replace(
+    '<title>KYRMAX · 西班牙文具贸易 · 批发与零售供应链服务</title>',
+    '<title>MP* STYLE · Product Showcase</title>'
+  );
+fs.writeFileSync(path.join(rootDir, 'showcase.html'), showcaseHtml, 'utf8');
+
 const shopHtml = compiledHtml
   .replace('<head>', '<head>\n  <script>window.__INITIAL_PAGE__="tienda";</script>')
   .replace(

@@ -396,6 +396,14 @@ export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome
             <p className="text-gray-300 text-sm md:text-base mt-2 max-w-2xl">{ui.subtitle}</p>
           </div>
           <div className="flex flex-wrap gap-2">
+            <a
+              href={`https://vueltacole.com/showcase.html?sku=${encodeURIComponent(item.sku.split('/')[0].trim())}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2.5 rounded-xl bg-white text-[#1d1d1f] font-black text-xs md:text-sm border-2 border-[#222] shadow-[3px_3px_0px_#5c94fc] hover:translate-y-[-1px] transition-all"
+            >
+              ✨ {lang === 'zh' ? '苹果风客户展示页 ↗' : lang === 'en' ? 'Customer Showcase ↗' : 'Vista Cliente ↗'}
+            </a>
             <button
               onClick={() => handleCopy(pageShareUrl, ui.linkCopied)}
               className="px-4 py-2.5 rounded-xl bg-[#f8d878] text-[#222] font-black text-xs md:text-sm border-2 border-[#222] shadow-[3px_3px_0px_#e52521] hover:translate-y-[-1px] transition-all"
