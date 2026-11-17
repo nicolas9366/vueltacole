@@ -63,9 +63,9 @@ const UI_TEXT: Record<
     copyBtn: '复制文案',
     copiedMsg: '已复制推广文案',
     manualCopyMsg: '请长按文本框手动复制',
-    nativeShareBtn: '带图分享微信',
+    nativeShareBtn: '一键分享六宫格到微信',
     nativeSharedMsg: '文案已复制，请在微信粘贴发布',
-    downloadShareMsg: '文案已复制并保存配图，可直接发朋友圈',
+    downloadShareMsg: '文案已复制并保存六宫格拼图，可直接发朋友圈',
     socialHint: '支持一键发往海外社媒或手机系统原生分享面板：',
     igTip: '文案已复制，已为您打开图片/分享面板，选择 Instagram 即可发布',
     tiktokTip: '文案已复制，选择 TikTok 或下载视频后即可直接上传发布',
@@ -474,17 +474,7 @@ export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome
                 <span>🖼️</span>
                 <span>{ui.galleryTitle}</span>
               </h3>
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs font-bold text-gray-500">{ui.galleryHint}</span>
-                {item.images.length > 1 && (
-                  <button
-                    onClick={handleDownloadAllGallery}
-                    className="px-3 py-1.5 rounded-xl bg-[#f8d878] text-[#222] font-black text-xs border-2 border-[#222] shadow-[2px_2px_0px_#222] hover:bg-yellow-300"
-                  >
-                    ⬇️ {lang === 'zh' ? `保存全部 ${item.images.length} 张` : lang === 'en' ? `Save All ${item.images.length}` : `Guardar ${item.images.length} fotos`}
-                  </button>
-                )}
-              </div>
+              <span className="text-xs font-bold text-gray-500">{ui.galleryHint}</span>
             </div>
 
             <div className={`grid gap-4 ${item.images.length === 1 ? 'grid-cols-1 max-w-md mx-auto' : item.images.length === 6 ? 'grid-cols-2 md:grid-cols-3' : 'grid-cols-2 md:grid-cols-4'}`}>
