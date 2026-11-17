@@ -8,6 +8,8 @@ wecom_server/
 *.pdf
 *.csv
 *.mp4
+!public/daily/**/*.mp4
+!daily/**/*.mp4
 *.zip
 *.tsbuildinfo
 logs/
