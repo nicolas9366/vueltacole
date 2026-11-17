@@ -101,7 +101,7 @@ export const MapApp: React.FC<MapAppProps> = ({ onNavigateHome }) => {
                 </p>
                 
                 {/* List of stores would go here, filtered by searchQuery */}
-                {MOCK_BAZARES.filter(store => !searchQuery || store.name.toLowerCase().includes(searchQuery.toLowerCase()) || searchQuery === 'CEIP 1º Primaria' || searchQuery === 'ESO Kit Básico').map(store => (
+                {MOCK_BAZARES.filter(store => !(store as any).hidden && (!searchQuery || store.name.toLowerCase().includes(searchQuery.toLowerCase()) || searchQuery === 'CEIP 1º Primaria' || searchQuery === 'ESO Kit Básico')).map(store => (
                   <div 
                     key={store.id} 
                     className="bg-white p-3 mb-3 rounded-xl border-4 border-[#222] cursor-pointer hover:bg-gray-50 shadow-[2px_2px_0px_#222]"
@@ -128,7 +128,7 @@ export const MapApp: React.FC<MapAppProps> = ({ onNavigateHome }) => {
             onMove={evt => setViewState(evt.viewState)}
             mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
           >
-            {MOCK_BAZARES.map(store => (
+            {MOCK_BAZARES.filter(store => !(store as any).hidden).map(store => (
               <Marker 
                 key={store.id} 
                 longitude={store.coordinates[0]} 

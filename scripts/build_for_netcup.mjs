@@ -34,12 +34,6 @@ execSync('npx vite build', { stdio: 'inherit' });
 const compiledHtml = fs.readFileSync(path.join(distDir, 'index.html'), 'utf8');
 fs.writeFileSync(indexHtmlPath, compiledHtml, 'utf8');
 
-const navidadHtml = compiledHtml.replace(
-  '<head>',
-  '<head>\n  <script>window.__INITIAL_PAGE__="navidad";</script>'
-);
-fs.writeFileSync(navidadHtmlPath, navidadHtml, 'utf8');
-
 const vitrinaHtml = compiledHtml
   .replace('<head>', '<head>\n  <script>window.__INITIAL_PAGE__="vitrina";</script>')
   .replace(

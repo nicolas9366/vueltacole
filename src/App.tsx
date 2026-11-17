@@ -1,20 +1,16 @@
 import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { Home } from './components/Home';
-import { NavidadPromo } from './components/NavidadPromo';
 import { CONFIG_I18N, Lang } from './data/christmas2026DB';
 
 const MapApp = lazy(() => import('./components/MapApp').then((m) => ({ default: m.MapApp })));
 const ActionStore = lazy(() =>
   import('./components/ActionStore').then((m) => ({ default: m.ActionStore }))
 );
-const Redemption = lazy(() =>
-  import('./components/Redemption').then((m) => ({ default: m.Redemption }))
-);
 const DailyVitrina = lazy(() =>
   import('./components/DailyVitrina').then((m) => ({ default: m.DailyVitrina }))
 );
 
-type ViewMode = 'home' | 'tienda' | 'navidad' | 'map' | 'canje' | 'vitrina';
+type ViewMode = 'home' | 'tienda' | 'map' | 'vitrina';
 
 export const App: React.FC = () => {
   // Auto-detect browser language per REBUILD_SOP §3
@@ -57,16 +53,15 @@ export const App: React.FC = () => {
       ) {
         return 'tienda';
       }
-      if (initial === 'navidad' || pathname.endsWith('navidad.html') || search.includes('navidad')) {
-        return 'navidad';
-      }
       if (initial === 'vitrina' || pathname.endsWith('vitrina.html') || search.includes('vitrina') || hash.includes('vitrina')) {
         return 'vitrina';
+      }
+      if (pathname.includes('map') || search.includes('page=map') || hash.includes('map')) {
+        return 'map';
       }
     }
     return 'home';
   });
-  const [canjeToken, setCanjeToken] = useState<string>('');
 
   useEffect(() => {
     const syncRouteFromUrl = () => {
@@ -74,14 +69,10 @@ export const App: React.FC = () => {
       const hash = window.location.hash.toLowerCase();
       const pathname = window.location.pathname.toLowerCase();
       const host = window.location.hostname.toLowerCase();
-      const token = params.get('canje');
       const page = params.get('page')?.toLowerCase();
       const initial = (window as any).__INITIAL_PAGE__;
 
-      if (token) {
-        setCanjeToken(token);
-        setView('canje');
-      } else if (
+      if (
         initial === 'tienda' ||
         host.startsWith('shop.') ||
         host.startsWith('tienda.') ||
@@ -101,13 +92,6 @@ export const App: React.FC = () => {
       ) {
         setView('tienda');
       } else if (
-        page === 'navidad' ||
-        hash.includes('navidad') ||
-        pathname.endsWith('navidad.html') ||
-        initial === 'navidad'
-      ) {
-        setView('navidad');
-      } else if (
         page === 'vitrina' ||
         hash.includes('vitrina') ||
         pathname.endsWith('vitrina.html') ||
@@ -116,8 +100,6 @@ export const App: React.FC = () => {
         setView('vitrina');
       } else if (page === 'map' || hash.includes('map')) {
         setView('map');
-      } else if (page === 'canje' || hash.includes('canje')) {
-        setView('canje');
       } else {
         setView('home');
       }
@@ -209,17 +191,6 @@ export const App: React.FC = () => {
                 </button>
 
                 <button
-                  onClick={() => navigateTo('navidad')}
-                  className={`px-3.5 py-2 rounded-xl font-black text-xs md:text-sm border-2 transition-all ${
-                    view === 'navidad'
-                      ? 'bg-[#e52521] text-white border-[#f8d878] shadow-[2px_2px_0px_#f8d878]'
-                      : 'bg-[#14532d] text-[#f8d878] border-[#f8d878]/60 hover:bg-emerald-800'
-                  }`}
-                >
-                  {t.navNavidad}
-                </button>
-
-                <button
                   onClick={() => navigateTo('map')}
                   className={`px-3.5 py-2 rounded-xl font-black text-xs md:text-sm border-2 transition-all ${
                     view === 'map'
@@ -228,17 +199,6 @@ export const App: React.FC = () => {
                   }`}
                 >
                   {t.navMap}
-                </button>
-
-                <button
-                  onClick={() => navigateTo('canje')}
-                  className={`px-3.5 py-2 rounded-xl font-black text-xs md:text-sm border-2 transition-all ${
-                    view === 'canje'
-                      ? 'bg-[#f8d878] text-[#222] border-[#222]'
-                      : 'bg-slate-800 text-gray-200 border-slate-700 hover:bg-slate-700'
-                  }`}
-                >
-                  {t.navCanje}
                 </button>
 
                 <a
@@ -291,8 +251,6 @@ export const App: React.FC = () => {
             lang={lang}
             onNavigateToTienda={() => navigateTo('tienda')}
             onNavigateToMap={() => navigateTo('map')}
-            onNavigateToNavidad={() => navigateTo('navidad')}
-            onNavigateToCanje={() => navigateTo('canje')}
           />
         )}
         {view === 'tienda' && (
@@ -306,12 +264,8 @@ export const App: React.FC = () => {
             <ActionStore
               lang={lang === 'zh' ? 'zh' : 'es'}
               onNavigateHome={() => navigateTo('home')}
-              onNavigateToNavidad={() => navigateTo('navidad')}
             />
           </Suspense>
-        )}
-        {view === 'navidad' && (
-          <NavidadPromo lang={lang} onNavigateHome={() => navigateTo('home')} />
         )}
         {view === 'vitrina' && (
           <Suspense
@@ -333,20 +287,6 @@ export const App: React.FC = () => {
             }
           >
             <MapApp onNavigateHome={() => navigateTo('home')} />
-          </Suspense>
-        )}
-        {view === 'canje' && (
-          <Suspense
-            fallback={
-              <div className="min-h-[60vh] flex items-center justify-center bg-[#0f172a] text-[#f8d878] font-black text-xl">
-                🎁 Cargando Sistema de Canje...
-              </div>
-            }
-          >
-            <Redemption
-              initialToken={canjeToken || 'CP-SMN3BYY1HKUN'}
-              onClose={() => navigateTo('home')}
-            />
           </Suspense>
         )}
       </main>
