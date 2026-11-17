@@ -123,8 +123,15 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
       'Máxima cobertura extra opaca sobre cartulina negra, cerámica, piedra, madera, tela y metal',
       'Resistente al agua y a la luz al secar; caja con eurocolgador lista para lineal',
     ],
-    heroImage: '/daily/2026-11-17/pp948_scene_03.jpg',
+    heroImage: '/daily/2026-11-17/pp948_6grid_combo.jpg',
     images: [
+      {
+        src: gdImg('1vHb77nyphoS6AAU_J-KEj6ELtU9_OTFD'),
+        downloadUrl: gdDl('1vHb77nyphoS6AAU_J-KEj6ELtU9_OTFD'),
+        labelZh: '西班牙消费者上镜展示 1',
+        labelEn: 'Spanish Creator Showcase 1',
+        labelEs: 'Creadora en España 1',
+      },
       {
         src: gdImg('17WNX9C7ubQp16eI4lg1P3rGChfmYMC_i'),
         downloadUrl: gdDl('17WNX9C7ubQp16eI4lg1P3rGChfmYMC_i'),
@@ -140,6 +147,13 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
         labelEs: 'Pintando sobre piedra natural',
       },
       {
+        src: gdImg('1t9FUX4-HwUFYSl3AhjFWSAJvdz2cL7UU'),
+        downloadUrl: gdDl('1t9FUX4-HwUFYSl3AhjFWSAJvdz2cL7UU'),
+        labelZh: '西班牙消费者上镜展示 2',
+        labelEn: 'Spanish Creator Showcase 2',
+        labelEs: 'Creadora en España 2',
+      },
+      {
         src: gdImg('1wVhegMwisr7n_SkOx7j-Ty5AWhLZL0pC'),
         downloadUrl: gdDl('1wVhegMwisr7n_SkOx7j-Ty5AWhLZL0pC'),
         labelZh: '牛仔布·木片·石头·金属壶多材质展示',
@@ -147,11 +161,11 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
         labelEs: 'Aplicación en tela, madera, piedra y metal',
       },
       {
-        src: gdImg('16vGz21xYRBIm_ukYB2aTVFwGoiH5PWDr'),
-        downloadUrl: gdDl('16vGz21xYRBIm_ukYB2aTVFwGoiH5PWDr'),
-        labelZh: '黑瓷盘防水凝珠与笔触细节',
-        labelEn: 'Waterproof droplets & brush macro',
-        labelEs: 'Detalle impermeable y trazo 1,5–6 mm',
+        src: gdImg('1qY9ZaTyyOFQ0ukSJP7HZ-U9ffyLNwm7C'),
+        downloadUrl: gdDl('1qY9ZaTyyOFQ0ukSJP7HZ-U9ffyLNwm7C'),
+        labelZh: '防水凝珠微距与官网二维码',
+        labelEn: 'Waterproof macro & website QR',
+        labelEs: 'Macro impermeable y código QR',
       },
     ],
     videos: [
@@ -177,19 +191,13 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
       },
     ],
     shareTextZh:
-      '🔥【主推爆款｜MP* PP948 直液丙烯软头马克笔】\n' +
-      '做文具和百元店的老板注意啦！12/24/36 色全齐：\n' +
-      '✅ 直液控墨视窗，不用摇不用按，下笔流畅不断墨\n' +
-      '✅ 黑卡纸、石头、木片、黑陶瓷、牛仔布一笔高遮盖，干后防水不晕染\n' +
-      '👉 查看全套效果图与宣传短剧：https://vueltacole.com/vitrina.html',
+      '最近店里走得特别快的一款直液丙烯软头笔，型号 PP948，12、24、36色都齐。\n' +
+      '不用摇也不用按压，直接在石头、黑卡纸、牛仔布、木片或者水壶上画，遮盖力很强，干透之后碰水也不花。\n' +
+      '盒面自带使用效果图，挂在文具区很吸引人，有需要备货的老板随时联系。',
     shareTextEn:
-      '🎨 Transform any surface in minutes with MP* STYLE PP948 Acrylic Brush Markers!\n' +
-      '✨ Direct liquid-ink regulator + extra-opaque coverage on black paper, stone, wood, ceramic, denim & metal\n' +
-      '👉 Watch showcase & videos: https://vueltacole.com/vitrina.html',
+      'Loving how versatile these MP* PP948 acrylic brush markers are. Smooth liquid-ink flow, rich coverage even on black paper, stone, denim, and ceramic, and waterproof once dry.',
     shareTextEs:
-      '🎨 ¡Transforma cualquier objeto en 5 minutos con MP* STYLE PP948!\n' +
-      'Rotuladores acrílicos punta pincel (1,5–6 mm) con tinta directa y cobertura extra opaca.\n' +
-      '👉 Mira fotos y vídeos aquí: https://vueltacole.com/vitrina.html',
+      'Así quedan los rotuladores acrílicos punta pincel MP* PP948 sobre piedra, madera, tela vaquera o cerámica negra. Tinta fluida, súper cubriente y resistente al agua al secar.',
   },
   PE517: {
     id: 'pe517',
@@ -275,18 +283,12 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
       },
     ],
     shareTextZh:
-      '🔥【热卖主推｜MP* PE517 马卡龙柔色荧光笔 6支超值装】\n' +
-      '✅ 奶油黄/薄荷绿/香芋紫等 6 种高颜值柔色，久看笔记不刺眼\n' +
-      '✅ 1–3 mm 斜头可粗可细，水性配方不透纸背 · 12挂板/包 · 144挂板/箱\n' +
-      '👉 效果图、宣传短剧与详情：https://vueltacole.com/vitrina.html',
+      '这两年学生和办公族都偏爱柔和一点的色调，这款 MP* PE517 马卡龙六色荧光笔一直很稳。\n' +
+      '斜头 1 到 3 毫米，划重点或者勾细线都顺手，水性墨水不透纸背，长期看笔记不刺眼，整板 6 支装陈列很醒目。',
     shareTextEn:
-      '✨ Upgrade your study & office notes with MP* PE517 Pastel Highlighters (6-Pack)!\n' +
-      '🖍️ 6 soft pastel shades with 1–3 mm beveled tip & water-based no-bleed ink.\n' +
-      '👉 See gallery & videos: https://vueltacole.com/vitrina.html',
+      'Soft pastel highlighters that make study notes much easier on the eyes. MP* PE517 comes in 6 calm shades with a 1–3 mm chisel tip and clean no-bleed ink.',
     shareTextEs:
-      '✨ ¡Tus apuntes más bonitos y sin cansar la vista con MP* PE517!\n' +
-      'Pack ahorro de 6 subrayadores pastel con punta biselada 1–3 mm.\n' +
-      '👉 Mira las fotos y el vídeo aquí: https://vueltacole.com/vitrina.html',
+      'Seis tonos pastel suaves que no cansan la vista y dejan los apuntes súper limpios. Punta biselada de 1 a 3 mm y tinta al agua que no traspasa el papel.',
   },
   'PP631-01': {
     id: 'pp631-01',
@@ -372,18 +374,11 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
       },
     ],
     shareTextZh:
-      '🔥【冠军爆款 #1｜Artix PP631-01 75ml 白色丙烯颜料】\n' +
-      '画室和学生消耗最快的基础色！深色画布一笔高遮盖，干后防水耐晒。\n' +
-      '📦 6支/包 · 96支/箱 · 欢迎查看全套效果图与短剧：\n' +
-      '👉 https://vueltacole.com/vitrina.html?sku=PP631-01',
+      '画室和美术生日常消耗最大的就是白色丙烯。这款 Artix PP631-01 75ml 钛白色膏体很厚实，刷在深色画布上一笔就能盖住，干后防水耐晒，销量一直排在前面。',
     shareTextEn:
-      '🎨 #1 Bestseller: Artix PP631-01 Titanium White Acrylic 75 ml!\n' +
-      '✨ Rich creamy body, high opacity over dark canvas & waterproof satin finish.\n' +
-      '👉 See gallery & videos: https://vueltacole.com/vitrina.html?sku=PP631-01',
+      'A reliable studio staple: Artix PP631-01 Titanium White Acrylic in 75 ml. Rich creamy body with strong opacity over dark canvas and a waterproof satin finish.',
     shareTextEs:
-      '🎨 ¡Top #1 en ventas: Pintura Acrílica Blanca Titanio 75 ml Artix (PP631-01)!\n' +
-      '✨ Textura cremosa cubriente, ideal para pincel y espátula, resistente al agua.\n' +
-      '👉 Mira fotos y vídeos aquí: https://vueltacole.com/vitrina.html?sku=PP631-01',
+      'Un básico imprescindible de estudio: Acrílico Blanco Titanio 75 ml Artix PP631-01. Textura cremosa de alta opacidad sobre fondos oscuros y secado resistente al agua.',
   },
   'PE486-1': {
     id: 'pe486-1',
@@ -469,18 +464,11 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
       },
     ],
     shareTextZh:
-      '🔥【畅销榜 #2｜MP* PE486-1 永不干涸黑色记号笔】\n' +
-      '仓库打包、门店贴标刚需！纸箱、塑料袋、玻璃、铁盒一笔黑亮快干不掉色。\n' +
-      '📦 12支/包 · 480支/箱 · 点击看全套效果图与短剧：\n' +
-      '👉 https://vueltacole.com/vitrina.html?sku=PE486-1',
+      '门店、仓库打包最怕记号笔忘盖帽就干了。这款 MP* PE486-1 永不干涸黑色记号笔开盖放置也很耐用，纸箱、塑料袋、玻璃和铁盒上都能一笔黑亮快干，遇水不糊。',
     shareTextEn:
-      '🖊️ #2 Bestseller: MP* PE486-1 No-Dry Black Permanent Marker!\n' +
-      '✅ Writes bold waterproof black on cardboard, plastic, metal & glass without drying out.\n' +
-      '👉 See gallery & videos: https://vueltacole.com/vitrina.html?sku=PE486-1',
+      'Everyday warehouse and shop essential: MP* PE486-1 No-Dry Black Permanent Marker. Writes bold waterproof black on cardboard, plastic, metal, and glass without drying out.',
     shareTextEs:
-      '🖊️ ¡Top #2 en ventas: Marcador Permanente No Dry MP* PE486-1!\n' +
-      '✅ Negro intenso resistente al agua sobre cartón, plástico, vidrio y metal.\n' +
-      '👉 Mira fotos y vídeos aquí: https://vueltacole.com/vitrina.html?sku=PE486-1',
+      'Imprescindible en almacén y tienda: marcador permanente MP* PE486-1 No Dry. Negro intenso de secado rápido y resistente al agua sobre cartón, plástico, vidrio y metal.',
   },
   'PP162-01': {
     id: 'pp162-01',
@@ -566,18 +554,12 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
       },
     ],
     shareTextZh:
-      '🎨【畅销榜 #3｜MP* PP162-01 六色经典水粉颜料】\n' +
-      '红黄蓝绿黑白六大经典正色，细腻易调、水溶好洗不伤手，学校采购与家庭手工必备！\n' +
-      '📦 6盒/包 · 72盒/箱 · 查看全套效果图与短剧：\n' +
-      '👉 https://vueltacole.com/vitrina.html?sku=PP162-01',
+      '学校美术课和小朋友在家画画都很实用的一盒 6 色水粉颜料，型号 PP162-01。\n' +
+      '红黄蓝绿黑白六大经典正色，膏体细腻容易调色，水溶性配方沾到手上也很好洗。',
     shareTextEn:
-      '🎨 #3 Bestseller: MP* PP162-01 Tempera 6 Classic Colors!\n' +
-      '✨ Smooth opaque coverage in 6 primary shades, easy to wash with water.\n' +
-      '👉 See gallery & videos: https://vueltacole.com/vitrina.html?sku=PP162-01',
+      'Classic 6-color tempera set MP* PP162-01 for school and kids crafts. Smooth opaque colors that wash off easily with water.',
     shareTextEs:
-      '🎨 ¡Top #3 en ventas: Témpera 6 Colores Clásicos MP* PP162-01!\n' +
-      '✨ Colores vivos muy cubrientes y lavables con agua, ideales para el cole.\n' +
-      '👉 Mira fotos y vídeos aquí: https://vueltacole.com/vitrina.html?sku=PP162-01',
+      'Témperas escolares MP* PP162-01 en los 6 colores clásicos. Textura suave muy cubriente y lavable fácilmente con agua.',
   },
   PE411: {
     id: 'pe411',
@@ -663,18 +645,11 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
       },
     ],
     shareTextZh:
-      '🖊️【畅销榜 #4｜MP* PE411 细头黑色 CD 记号笔】\n' +
-      '光盘、透明袋、小标签精细书写不糊边，速干防水！\n' +
-      '📦 18支/包 · 432支/箱 · 查看全套效果图与短剧：\n' +
-      '👉 https://vueltacole.com/vitrina.html?sku=PE411',
+      '写光盘、文件袋或者小标签时最需要细头记号笔。这款 MP* PE411 笔尖精细不糊边，写完即干还不怕沾水。',
     shareTextEn:
-      '🖊️ #4 Bestseller: MP* PE411 Fine-Tip Black CD & Plastic Marker!\n' +
-      '✅ Ultra-precise needle tip, instant-dry waterproof black ink.\n' +
-      '👉 See gallery & videos: https://vueltacole.com/vitrina.html?sku=PE411',
+      'Fine-tip permanent marker MP* PE411 for clean labeling on optical discs, plastic sleeves, and small tags. Quick-dry and waterproof.',
     shareTextEs:
-      '🖊️ ¡Top #4 en ventas: Marcador CD Punta Fina Negro MP* PE411!\n' +
-      '✅ Trazo preciso, secado rápido y resistente al agua sobre plástico y discos.\n' +
-      '👉 Mira fotos y vídeos aquí: https://vueltacole.com/vitrina.html?sku=PE411',
+      'Marcador de punta fina MP* PE411 ideal para rotular discos, fundas de plástico y etiquetas pequeñas con trazo limpio y secado rápido.',
   },
 };
 
@@ -741,18 +716,11 @@ const generatedItems: DailyVitrinaEntry[] = (top100Raw.items || []).map((raw: an
       },
     ],
     shareTextZh:
-      `🔥【热卖推荐 #${raw.rank}｜${raw.sku} ${raw.namecn}】\n` +
-      `西语名：${raw.namees}\n` +
-      `✅ 西班牙 TOP 畅销常备爆款 · 小包 ${raw.packet} 件 / 整箱 ${raw.box} 件\n` +
-      `👉 查看产品展示图与视频：https://vueltacole.com/vitrina.html?sku=${encodeURIComponent(raw.sku)}`,
+      `${raw.namecn}，型号 ${raw.sku}，西班牙门店常备高周转单品，品质稳定好走量，欢迎需要补货的老板随时咨询。`,
     shareTextEn:
-      `🔥 Top Bestseller #${raw.rank}: ${raw.namees} (${raw.sku})\n` +
-      `📦 Pack: ${raw.packet} pcs | Carton: ${raw.box} pcs\n` +
-      `👉 See product visual & promo video: https://vueltacole.com/vitrina.html?sku=${encodeURIComponent(raw.sku)}`,
+      `${raw.namees} (${raw.sku}) — a reliable everyday bestseller in Spanish stationery and retail stores.`,
     shareTextEs:
-      `🔥 ¡Top Ventas #${raw.rank}: ${raw.namees} (${raw.sku})!\n` +
-      `📦 Formato: ${raw.packet} uds/pack · ${raw.box} uds/caja\n` +
-      `👉 Mira la ficha visual y vídeo aquí: https://vueltacole.com/vitrina.html?sku=${encodeURIComponent(raw.sku)}`,
+      `${raw.namees} (${raw.sku}), una referencia imprescindible de alta rotación para papelería y bazar.`,
   };
 });
 

@@ -267,6 +267,25 @@ export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome
     window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank', 'noopener,noreferrer');
   };
 
+  const handleDownloadAllGallery = () => {
+    item.images.forEach((img, idx) => {
+      setTimeout(() => {
+        const a = document.createElement('a');
+        a.href = img.downloadUrl;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.click();
+      }, idx * 350);
+    });
+    showToast(
+      lang === 'zh'
+        ? `✅ 正在为您保存全部 ${item.images.length} 张图片，可直接发朋友圈六宫格`
+        : lang === 'en'
+          ? `✅ Downloading all ${item.images.length} photos for your post`
+          : `✅ Descargando las ${item.images.length} imágenes para publicar`
+    );
+  };
+
   const title = lang === 'zh' ? item.titleZh : lang === 'en' ? item.titleEn : item.titleEs;
   const tagline = lang === 'zh' ? item.taglineZh : lang === 'en' ? item.taglineEn : item.taglineEs;
   const packInfo = lang === 'zh' ? item.packInfoZh : lang === 'en' ? item.packInfoEn : item.packInfoEs;
@@ -455,10 +474,20 @@ export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome
                 <span>🖼️</span>
                 <span>{ui.galleryTitle}</span>
               </h3>
-              <span className="text-xs font-bold text-gray-500">{ui.galleryHint}</span>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs font-bold text-gray-500">{ui.galleryHint}</span>
+                {item.images.length > 1 && (
+                  <button
+                    onClick={handleDownloadAllGallery}
+                    className="px-3 py-1.5 rounded-xl bg-[#f8d878] text-[#222] font-black text-xs border-2 border-[#222] shadow-[2px_2px_0px_#222] hover:bg-yellow-300"
+                  >
+                    ⬇️ {lang === 'zh' ? `保存全部 ${item.images.length} 张` : lang === 'en' ? `Save All ${item.images.length}` : `Guardar ${item.images.length} fotos`}
+                  </button>
+                )}
+              </div>
             </div>
 
-            <div className={`grid gap-4 ${item.images.length === 1 ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-2 md:grid-cols-4'}`}>
+            <div className={`grid gap-4 ${item.images.length === 1 ? 'grid-cols-1 max-w-md mx-auto' : item.images.length === 6 ? 'grid-cols-2 md:grid-cols-3' : 'grid-cols-2 md:grid-cols-4'}`}>
               {item.images.map((img, i) => {
                 const label = lang === 'zh' ? img.labelZh : lang === 'en' ? img.labelEn : img.labelEs;
                 return (
