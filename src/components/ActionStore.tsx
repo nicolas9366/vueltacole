@@ -83,8 +83,10 @@ export const VALID_ACCOUNTS: Array<{
 
 export const TEST_ACCOUNT = VALID_ACCOUNTS[2];
 
+import { Lang } from '../data/christmas2026DB';
+
 interface ActionStoreProps {
-  lang: 'zh' | 'es';
+  lang: Lang;
   onNavigateHome: () => void;
   onNavigateToNavidad?: () => void;
 }
@@ -94,28 +96,30 @@ const PVP_MULTIPLIER = 2.8;
 // 12 Official Master Catalog Departments covering 100% of products cleanly
 // Strictly aligned with official catalogs & verified subcategories
 export const MASTER_DEPARTMENTS = [
-  { id: 'all', labelEs: 'Todo el Catálogo', labelZh: '全部商品', icon: '⭐' },
-  { id: '09', labelEs: 'Primeras Marcas', labelZh: '国际知名品牌', icon: '🏷️' },
-  { id: '12', labelEs: 'Línea BeBasic', labelZh: 'BeBasic 超值系列', icon: '⚡' },
-  { id: '01', labelEs: 'Agendas y Calendarios', labelZh: '年历与日历', icon: '📅' },
-  { id: '02', labelEs: 'Escritura', labelZh: '书写用品', icon: '✏️' },
-  { id: '03', labelEs: 'Sobremesa, Corrección y Oficina', labelZh: '桌面办公与修正工具', icon: '📎' },
-  { id: '04', labelEs: 'Archivo y Clasificación', labelZh: '文件归档与分类', icon: '📁' },
-  { id: '05', labelEs: 'Cuadernos y Papel', labelZh: '本册与纸品', icon: '📓' },
-  { id: '06', labelEs: 'Mochilas y Escolar', labelZh: '箱包与学生用品', icon: '🎒' },
-  { id: '07', labelEs: 'Manualidades y Adhesivos', labelZh: '手工与胶粘用品', icon: '✂️' },
-  { id: '08', labelEs: 'Bellas Artes', labelZh: '美术画材', icon: '🎨' },
-  { id: '10', labelEs: 'Sanrio y Licencias', labelZh: '三丽鸥与IP周边', icon: '🎀' },
-  { id: '11', labelEs: 'Expositores y PLV', labelZh: '展架与陈列物料', icon: '📦' },
+  { id: 'all', labelEs: 'Todo el Catálogo', labelEn: 'Full Catalog', labelZh: '全部商品', icon: '⭐' },
+  { id: '09', labelEs: 'Primeras Marcas', labelEn: 'Top Brands', labelZh: '国际知名品牌', icon: '🏷️' },
+  { id: '12', labelEs: 'Línea BeBasic', labelEn: 'BeBasic Line', labelZh: 'BeBasic 超值系列', icon: '⚡' },
+  { id: '01', labelEs: 'Agendas y Calendarios', labelEn: 'Agendas & Calendars', labelZh: '年历与日历', icon: '📅' },
+  { id: '02', labelEs: 'Escritura', labelEn: 'Writing', labelZh: '书写用品', icon: '✏️' },
+  { id: '03', labelEs: 'Sobremesa, Corrección y Oficina', labelEn: 'Desk, Correction & Office', labelZh: '桌面办公与修正工具', icon: '📎' },
+  { id: '04', labelEs: 'Archivo y Clasificación', labelEn: 'Filing & Organization', labelZh: '文件归档与分类', icon: '📁' },
+  { id: '05', labelEs: 'Cuadernos y Papel', labelEn: 'Notebooks & Paper', labelZh: '本册与纸品', icon: '📓' },
+  { id: '06', labelEs: 'Mochilas y Escolar', labelEn: 'Backpacks & School', labelZh: '箱包与学生用品', icon: '🎒' },
+  { id: '07', labelEs: 'Manualidades y Adhesivos', labelEn: 'Crafts & Adhesives', labelZh: '手工与胶粘用品', icon: '✂️' },
+  { id: '08', labelEs: 'Bellas Artes', labelEn: 'Fine Arts', labelZh: '美术画材', icon: '🎨' },
+  { id: '10', labelEs: 'Sanrio y Licencias', labelEn: 'Sanrio & Licenses', labelZh: '三丽鸥与IP周边', icon: '🎀' },
+  { id: '11', labelEs: 'Expositores y PLV', labelEn: 'Displays & POS', labelZh: '展架与陈列物料', icon: '📦' },
 ];
 
 export interface AIIntent {
   id: string;
   chipZh: string;
+  chipEn: string;
   chipEs: string;
   triggers: string[];
   filterFn: (p: ProductItem) => boolean;
   bannerZh: string;
+  bannerEn: string;
   bannerEs: string;
 }
 
@@ -123,6 +127,7 @@ export const AI_INTENTS: AIIntent[] = [
   {
     id: 'paint',
     chipZh: '🎨 我想画画',
+    chipEn: '🎨 Fine Arts & Painting',
     chipEs: '🎨 Quiero pintar',
     triggers: [
       '我想画画', '画画', '绘画', '画水彩', '素描', '丙烯', '油画', '水彩', 
@@ -145,11 +150,13 @@ export const AI_INTENTS: AIIntent[] = [
       );
     },
     bannerZh: '🎨 场景精选：Artix 专业丙烯/油画/水彩颜料、排刷画笔、画框画板与速写画册',
+    bannerEn: '🎨 Curated Selection: Artix Fine Arts acrylic/oil/watercolor paints, brushes, canvases & sketch pads.',
     bannerEs: '🎨 Selección recomendada: Bellas Artes Artix, pinturas, pinceles, lienzos y blocs.'
   },
   {
     id: 'diary',
     chipZh: '📖 我想写日记',
+    chipEn: '📖 Journaling & Diaries',
     chipEs: '📖 Escribir diario',
     triggers: [
       '我想写日记', '写日记', '日记', '手账', '手帐', '日记本', '记事本', 
@@ -171,11 +178,13 @@ export const AI_INTENTS: AIIntent[] = [
       );
     },
     bannerZh: '📖 场景精选：带锁密码日记本、创意插画硬皮手账本、闪光中性笔与精美年历',
+    bannerEn: '📖 Curated Selection: Secret lock diaries, illustrated notebooks, gel pens & planners.',
     bannerEs: '📖 Selección recomendada: Diarios con candado secreto, libretas decoradas y bolígrafos gel.'
   },
   {
     id: 'craft',
     chipZh: '✂️ 我想做手工',
+    chipEn: '✂️ DIY & Crafts',
     chipEs: '✂️ Manualidades',
     triggers: [
       '我想做一个手工', '我想做手工', '做手工', '手工', '手工作业', '儿童手工', 
@@ -195,11 +204,13 @@ export const AI_INTENTS: AIIntent[] = [
       );
     },
     bannerZh: '✂️ 场景精选：EVA 海绵纸、彩色卡纸、手工毛毡布、安全剪刀、胶棒与彩泥',
+    bannerEn: '✂️ Curated Selection: EVA foam, colored cardstock, felt sheets, glue sticks & craft tools.',
     bannerEs: '✂️ Selección recomendada: Goma EVA, cartulinas de colores, fieltro, pegamentos y herramientas.'
   },
   {
     id: 'school',
     chipZh: '🎒 开学备货清单',
+    chipEn: '🎒 Back to School',
     chipEs: '🎒 Vuelta al Cole',
     triggers: [
       '开学', '学生文具', '开学备货', '开学清单', '书包', '文具盒', '笔袋', 
@@ -220,11 +231,13 @@ export const AI_INTENTS: AIIntent[] = [
       );
     },
     bannerZh: '🎒 场景精选：减负书包、大容量笔袋、自粘包书皮、米兰精品橡皮与标准练习本',
+    bannerEn: '🎒 Curated Selection: School backpacks, pencil cases, book covers, Milan erasers & notebooks.',
     bannerEs: '🎒 Selección recomendada: Mochilas, estuches, forros para libros, gomas Milan y libretas escolares.'
   },
   {
     id: 'office',
     chipZh: '📁 办公室文件整理',
+    chipEn: '📁 Office & Filing',
     chipEs: '📁 Oficina y Archivo',
     triggers: [
       '办公室整理', '整理文件', '文件收纳', '文件归档', '资料收纳', '资料册', 
@@ -242,11 +255,13 @@ export const AI_INTENTS: AIIntent[] = [
       );
     },
     bannerZh: '📁 场景精选：多孔活页资料册、风琴扩展夹、归档文件盒、强力订书机与票夹',
+    bannerEn: '📁 Curated Selection: Ring binders, punched pockets, expanding files, archive boxes & desktop tools.',
     bannerEs: '📁 Selección recomendada: Carpetas de anillas, fundas multitaladro, cajas de archivo y sobremesa.'
   },
   {
     id: 'caligrafia',
     chipZh: '✒️ 练字与书法',
+    chipEn: '✒️ Calligraphy',
     chipEs: '✒️ Caligrafía',
     triggers: [
       '我想练字', '练字', '书法', '练字帖', '字帖', '写好字', '钢笔', 
@@ -264,11 +279,13 @@ export const AI_INTENTS: AIIntent[] = [
       );
     },
     bannerZh: '✒️ 场景精选：Rubio 官方描红练习册、精装钢笔与高密度顺滑书写纸',
+    bannerEn: '✒️ Curated Selection: Official Rubio calligraphy workbooks, fountain pens & ink refills.',
     bannerEs: '✒️ Selección recomendada: Cuadernos de caligrafía Rubio, plumas estilográficas y recambios.'
   },
   {
     id: 'gift',
     chipZh: '🎀 三丽鸥与送礼',
+    chipEn: '🎀 Sanrio & Gifts',
     chipEs: '🎀 Sanrio y Regalos',
     triggers: [
       '送礼', '儿童礼物', '生日礼物', '三丽鸥', '库洛米', '美乐蒂', '女孩喜欢', 
@@ -288,6 +305,7 @@ export const AI_INTENTS: AIIntent[] = [
       );
     },
     bannerZh: '🎀 场景精选：正版三丽鸥授权文具、Kuromi 主题礼盒、追梦女孩与节庆贺卡',
+    bannerEn: '🎀 Curated Selection: Official Sanrio licensed stationery, Kuromi gift sets & greeting cards.',
     bannerEs: '🎀 Selección recomendada: Licencias oficiales Sanrio, Kuromi, sets de regalo y tarjetas.'
   }
 ];
@@ -348,22 +366,22 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
   onNavigateHome,
   onNavigateToNavidad,
 }) => {
-  const [lang, setLang] = useState<'zh' | 'es'>(() => {
-    try {
-      const saved = localStorage.getItem('vueltacole_lang');
-      return (saved === 'zh' || saved === 'es') ? saved : propLang;
-    } catch {
-      return propLang;
-    }
-  });
+  const [lang, setLang] = useState<Lang>(propLang);
+
+  useEffect(() => {
+    setLang(propLang);
+  }, [propLang]);
 
   const toggleLang = () => {
-    const next = lang === 'zh' ? 'es' : 'zh';
+    const next: Lang = lang === 'zh' ? 'en' : lang === 'en' ? 'es' : 'zh';
     setLang(next);
     try {
       localStorage.setItem('vueltacole_lang', next);
     } catch {}
   };
+
+  const tr = (zh: string, en: string, es: string) =>
+    lang === 'zh' ? zh : lang === 'en' ? en : es;
 
   // Dual-mode: 'store' (PVP with cart) vs 'showroom' (zero prices for schools/parents)
   const [mode, setMode] = useState<'store' | 'showroom'>('store');
@@ -457,7 +475,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
     const pwd = (customPwd !== undefined ? customPwd : loginPassword).trim();
 
     if (!id || !pwd) {
-      setAuthError(lang === 'zh' ? '请输入用户名或邮箱及密码' : 'Introduce usuario/email y contraseña');
+      setAuthError(tr('请输入用户名或邮箱及密码', 'Enter username/email and password', 'Introduce usuario/email y contraseña'));
       return;
     }
 
@@ -479,7 +497,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
       };
       setCurrentUser(user);
       localStorage.setItem('vueltacole_logged_user', JSON.stringify(user));
-      setAuthSuccess(lang === 'zh' ? `欢迎，${user.companyName || user.username}！` : `¡Bienvenido, ${user.companyName || user.username}!`);
+      setAuthSuccess(tr(`欢迎，${user.companyName || user.username}！`, `Welcome, ${user.companyName || user.username}!`, `¡Bienvenido, ${user.companyName || user.username}!`));
       setTimeout(() => {
         setIsAuthModalOpen(false);
         setAuthSuccess(null);
@@ -504,7 +522,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
         };
         setCurrentUser(user);
         localStorage.setItem('vueltacole_logged_user', JSON.stringify(user));
-        setAuthSuccess(lang === 'zh' ? `欢迎，${user.username}！` : `¡Bienvenido, ${user.username}!`);
+        setAuthSuccess(tr(`欢迎，${user.username}！`, `Welcome, ${user.username}!`, `¡Bienvenido, ${user.username}!`));
         setTimeout(() => {
           setIsAuthModalOpen(false);
           setAuthSuccess(null);
@@ -516,9 +534,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
     }
 
     setAuthError(
-      lang === 'zh'
-        ? '账号或密码不正确'
-        : 'Credenciales incorrectas'
+      tr('账号或密码不正确', 'Invalid username or password', 'Credenciales incorrectas')
     );
   };
 
@@ -527,15 +543,15 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
     setAuthError(null);
 
     if (!regUsername.trim() || !regEmail.trim() || !regPassword) {
-      setAuthError(lang === 'zh' ? '请填写完整的用户名、邮箱和密码' : 'Completa todos los campos obligatorios');
+      setAuthError(tr('请填写完整的用户名、邮箱和密码', 'Please fill in all required fields', 'Completa todos los campos obligatorios'));
       return;
     }
     if (regPassword !== regConfirmPassword) {
-      setAuthError(lang === 'zh' ? '两次输入的密码不一致' : 'Las contraseñas no coinciden');
+      setAuthError(tr('两次输入的密码不一致', 'Passwords do not match', 'Las contraseñas no coinciden'));
       return;
     }
     if (!regEmail.includes('@')) {
-      setAuthError(lang === 'zh' ? '请输入有效的邮箱地址' : 'Introduce un email válido');
+      setAuthError(tr('请输入有效的邮箱地址', 'Please enter a valid email address', 'Introduce un email válido'));
       return;
     }
 
@@ -557,7 +573,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             u.email.toLowerCase() === newUser.email.toLowerCase()
         )
       ) {
-        setAuthError(lang === 'zh' ? '该用户名或邮箱已被注册' : 'El usuario o email ya está registrado');
+        setAuthError(tr('该用户名或邮箱已被注册', 'Username or email is already registered', 'El usuario o email ya está registrado'));
         return;
       }
       savedAccounts.push(newUser);
@@ -576,7 +592,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
     };
     setCurrentUser(user);
     localStorage.setItem('vueltacole_logged_user', JSON.stringify(user));
-    setAuthSuccess(lang === 'zh' ? '注册成功并已自动登录！' : '¡Registro completado con éxito!');
+    setAuthSuccess(tr('注册成功并已自动登录！', 'Registration complete! Signed in automatically.', '¡Registro completado con éxito!'));
     setTimeout(() => {
       setIsAuthModalOpen(false);
       setAuthSuccess(null);
@@ -962,7 +978,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
   // Export Cart to Excel (.xlsx) including SKU, EAN, and Packages count (包数)
   const exportCartToExcel = () => {
     if (cart.length === 0) {
-      alert(lang === 'zh' ? '购物车为空，请先挑选并加入商品！' : 'La cesta está vacía.');
+      alert(tr('购物车为空，请先挑选并加入商品！', 'Your cart is empty. Please add items first!', 'La cesta está vacía.'));
       return;
     }
 
@@ -1019,7 +1035,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#fcf8f2] text-[#222] font-['Fredoka',sans-serif] pb-24 selection:bg-[#f8d878]">
+    <div className="min-h-screen overflow-x-hidden bg-[#fcf8f2] text-[#222] font-['Fredoka',sans-serif] pb-24 selection:bg-[#f8d878]">
       {/* ======================================================== */}
       {/* A. GATED B2B PREVIEW LANDING PORTAL (WHEN NOT LOGGED IN) */}
       {/* ======================================================== */}
@@ -1035,7 +1051,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     className="px-3 py-1.5 bg-white/20 hover:bg-white text-white hover:text-[#222] rounded-xl border-2 border-[#222] text-xs font-black transition-all flex items-center gap-1 cursor-pointer"
                   >
                     <span>←</span>
-                    <span className="hidden sm:inline">{lang === 'zh' ? '活动地图' : 'Mapa'}</span>
+                    <span className="hidden sm:inline">{tr('活动地图', 'Map', 'Mapa')}</span>
                   </button>
                 )}
                 <div className="flex items-center gap-2">
@@ -1043,7 +1059,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     🎒 VUELTA AL COLE
                   </span>
                   <span className="font-black text-sm md:text-lg tracking-tight hidden sm:inline">
-                    KYRMAX B2B · {lang === 'zh' ? '西班牙文具采购展厅' : 'Central Mayorista de Papelería'}
+                    KYRMAX B2B · {tr('西班牙文具采购展厅', 'Spain Wholesale Stationery Hub', 'Central Mayorista de Papelería')}
                   </span>
                 </div>
               </div>
@@ -1054,14 +1070,14 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     onClick={onNavigateToNavidad}
                     className="px-2.5 py-1.5 bg-[#f8d878] text-[#222] hover:bg-yellow-400 rounded-xl border-2 border-[#222] text-xs font-black transition-all shadow-[2px_2px_0px_#222] cursor-pointer"
                   >
-                    🎄 {lang === 'zh' ? '圣诞专区' : 'Navidad'}
+                    🎄 {tr('圣诞专区', 'Christmas', 'Navidad')}
                   </button>
                 )}
                 <button
                   onClick={toggleLang}
                   className="px-2.5 py-1.5 bg-white text-[#222] hover:bg-yellow-100 rounded-xl border-2 border-[#222] text-xs font-black transition-all shadow-[2px_2px_0px_#222] cursor-pointer"
                 >
-                  🌐 {lang === 'zh' ? 'Español' : '中文'}
+                  🌐 {lang === 'zh' ? '中文' : lang === 'en' ? 'EN' : 'ES'}
                 </button>
                 <button
                   onClick={() => {
@@ -1071,7 +1087,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   className="px-3.5 py-1.5 md:px-4 md:py-2 bg-[#5c94fc] hover:bg-blue-600 text-white rounded-xl border-2 md:border-3 border-[#222] text-xs md:text-sm font-black transition-all shadow-[3px_3px_0px_#222] cursor-pointer flex items-center gap-1.5"
                 >
                   <span>🔑</span>
-                  <span>{lang === 'zh' ? '商户登录' : 'Acceder'}</span>
+                  <span>{tr('商户登录', 'Sign In', 'Acceder')}</span>
                 </button>
               </div>
             </div>
@@ -1092,9 +1108,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 <div className="inline-flex items-center gap-2 bg-[#f8d878] text-[#222] px-3 py-1 rounded-full border-2 border-[#222] font-black text-xs md:text-sm shadow-[2px_2px_0px_#222]">
                   <span>🇪🇸</span>
                   <span>
-                    {lang === 'zh'
-                      ? '西班牙本土专业文具大宗供应链'
-                      : 'Proveedor Líder de Papelería B2B en España'}
+                    {tr('西班牙本土专业文具大宗供应链', 'Leading B2B Stationery Supplier in Spain', 'Proveedor Líder de Papelería B2B en España')}
                   </span>
                 </div>
 
@@ -1103,6 +1117,11 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     <>
                       全景文具现货展厅<br />
                       <span className="text-[#f8d878]">& 批发展销选品中心</span>
+                    </>
+                  ) : lang === 'en' ? (
+                    <>
+                      Professional Stationery Catalog<br />
+                      <span className="text-[#f8d878]">& Wholesale Showroom</span>
                     </>
                   ) : (
                     <>
@@ -1113,9 +1132,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 </h1>
 
                 <p className="text-sm md:text-base text-yellow-50 font-medium max-w-xl leading-relaxed mx-auto lg:mx-0">
-                  {lang === 'zh'
-                    ? '专注服务西班牙书店、文具店、百货超市与教育机构。汇聚 6,100+ 款优质文具现货，涵盖欧洲标准学生文具、高规格纸品与知名画材，源头直供，全国快速直发。'
-                    : 'Suministro especializado para librerías, papelerías, bazares y centros educativos. Más de 6.100 referencias en stock real peninsular con precios directos de mayorista y entrega rápida.'}
+                  {tr('专注服务西班牙书店、文具店、百货超市与教育机构。汇聚 6,100+ 款优质文具现货，涵盖欧洲标准学生文具、高规格纸品与知名画材，源头直供，全国快速直发。', 'Specialized wholesale supply for bookstores, stationery shops, bazaars and schools. 6,100+ references in real Spanish warehouse stock with direct wholesale pricing and fast shipping.', 'Suministro especializado para librerías, papelerías, bazares y centros educativos. Más de 6.100 referencias en stock real peninsular con precios directos de mayorista y entrega rápida.')}
                 </p>
 
                 {/* 4 Trust Feature Tiles */}
@@ -1123,37 +1140,37 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   <div className="bg-white/10 backdrop-blur-xs p-3 rounded-2xl border-2 border-white/30 text-white">
                     <div className="text-lg">🛡️</div>
                     <div className="font-black text-xs md:text-sm mt-0.5">
-                      {lang === 'zh' ? '欧盟安全双认证' : 'Marcado CE & EN-71'}
+                      {tr('欧盟安全双认证', 'CE & EN-71 Certified', 'Marcado CE & EN-71')}
                     </div>
                     <div className="text-[11px] text-white/80 mt-0.5 leading-tight">
-                      {lang === 'zh' ? '全线符合欧洲学生用品安全检测' : '100% seguros y no tóxicos'}
+                      {tr('全线符合欧洲学生用品安全检测', '100% EU-safe & non-toxic', '100% seguros y no tóxicos')}
                     </div>
                   </div>
                   <div className="bg-white/10 backdrop-blur-xs p-3 rounded-2xl border-2 border-white/30 text-white">
                     <div className="text-lg">📐</div>
                     <div className="font-black text-xs md:text-sm mt-0.5">
-                      {lang === 'zh' ? '深度适配西班牙课标' : 'Currículo Escolar'}
+                      {tr('深度适配西班牙课标', 'School Curriculum Fit', 'Currículo Escolar')}
                     </div>
                     <div className="text-[11px] text-white/80 mt-0.5 leading-tight">
-                      {lang === 'zh' ? 'Cuadrícula 4x4 及学校指定标准' : 'Formatos y pautas homologadas'}
+                      {tr('Cuadrícula 4x4 及学校指定标准', '4x4 grids & certified formats', 'Formatos y pautas homologadas')}
                     </div>
                   </div>
                   <div className="bg-white/10 backdrop-blur-xs p-3 rounded-2xl border-2 border-white/30 text-white">
                     <div className="text-lg">⚡</div>
                     <div className="font-black text-xs md:text-sm mt-0.5">
-                      {lang === 'zh' ? '48-72H 半岛现货直配' : 'Envíos 48-72 Horas'}
+                      {tr('48-72H 半岛现货直配', '48-72H Peninsula Delivery', 'Envíos 48-72 Horas')}
                     </div>
                     <div className="text-[11px] text-white/80 mt-0.5 leading-tight">
-                      {lang === 'zh' ? '伊比利亚本土现货仓，无断货之忧' : 'Stock real en península'}
+                      {tr('伊比利亚本土现货仓，无断货之忧', 'Real local stock in Spain', 'Stock real en península')}
                     </div>
                   </div>
                   <div className="bg-white/10 backdrop-blur-xs p-3 rounded-2xl border-2 border-white/30 text-white">
                     <div className="text-lg">🏭</div>
                     <div className="font-black text-xs md:text-sm mt-0.5">
-                      {lang === 'zh' ? '源头一手批发直销' : 'Precios Mayoristas'}
+                      {tr('源头一手批发直销', 'Direct Wholesale Pricing', 'Precios Mayoristas')}
                     </div>
                     <div className="text-[11px] text-white/80 mt-0.5 leading-tight">
-                      {lang === 'zh' ? '直连品牌大宗供应链，充足毛利空间' : 'Margen óptimo para comercio'}
+                      {tr('直连品牌大宗供应链，充足毛利空间', 'Optimal retail margins', 'Margen óptimo para comercio')}
                     </div>
                   </div>
                 </div>
@@ -1166,7 +1183,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     <div className="flex items-center gap-2">
                       <span className="text-xl">🔑</span>
                       <h3 className="font-black text-base md:text-lg text-[#222]">
-                        {lang === 'zh' ? '商户准入认证' : 'Acceso Clientes B2B'}
+                        {tr('商户准入认证', 'B2B Partner Access', 'Acceso Clientes B2B')}
                       </h3>
                     </div>
                     <span className="text-[11px] font-black bg-[#5c94fc] text-white px-2 py-0.5 rounded-lg border border-[#222]">
@@ -1176,9 +1193,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
 
                   <div className="p-5 md:p-6 space-y-4">
                     <p className="text-xs text-gray-600 font-medium leading-relaxed">
-                      {lang === 'zh'
-                        ? '输入商户或访客账号，解锁全量 6,100+ 现货品类、库存状态与采购订货权限。'
-                        : 'Introduce tu usuario o email para consultar el catálogo completo de más de 6.100 productos y precios mayoristas.'}
+                      {tr('输入商户或访客账号，解锁全量 6,100+ 现货品类、库存状态与采购订货权限。', 'Sign in with your trade account to access 6,100+ in-stock references, live stock and wholesale pricing.', 'Introduce tu usuario o email para consultar el catálogo completo de más de 6.100 productos y precios mayoristas.')}
                     </p>
 
                     {authError && (
@@ -1197,20 +1212,20 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     <form onSubmit={handleLogin} className="space-y-3">
                       <div>
                         <label className="block text-xs font-black text-gray-700 mb-1">
-                          {lang === 'zh' ? '用户名或邮箱' : 'Usuario o Email'}
+                          {tr('用户名或邮箱', 'Username or Email', 'Usuario o Email')}
                         </label>
                         <input
                           type="text"
                           value={loginIdentifier}
                           onChange={(e) => setLoginIdentifier(e.target.value)}
-                          placeholder={lang === 'zh' ? '请输入商户账号' : 'Usuario o email'}
+                          placeholder={tr('请输入商户账号', 'Username or email', 'Usuario o email')}
                           className="w-full px-3.5 py-2.5 rounded-xl border-3 border-[#222] text-sm font-bold bg-[#fafafa] text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
                         />
                       </div>
 
                       <div>
                         <label className="block text-xs font-black text-gray-700 mb-1">
-                          {lang === 'zh' ? '密码' : 'Contraseña'}
+                          {tr('密码', 'Password', 'Contraseña')}
                         </label>
                         <input
                           type="password"
@@ -1226,7 +1241,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                         className="w-full py-3 bg-[#e52521] hover:bg-red-600 text-white rounded-xl border-3 border-[#222] shadow-[3px_3px_0px_#222] text-sm font-black transition-all active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer flex items-center justify-center gap-2"
                       >
                         <span>🚀</span>
-                        <span>{lang === 'zh' ? '立即验证并进入全景商城' : 'Entrar en el Catálogo Completo'}</span>
+                        <span>{tr('立即验证并进入全景商城', 'Enter Full Catalog', 'Entrar en el Catálogo Completo')}</span>
                       </button>
                     </form>
 
@@ -1239,9 +1254,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                       >
                         <span>💬</span>
                         <span>
-                          {lang === 'zh'
-                            ? '尚无账号？WhatsApp 快速申请 (+34 604 229 098)'
-                            : '¿No tienes cuenta? Solicita acceso por WhatsApp'}
+                          {tr('尚无账号？WhatsApp 快速申请 (+34 604 229 098)', 'No account yet? Request access via WhatsApp', '¿No tienes cuenta? Solicita acceso por WhatsApp')}
                         </span>
                       </a>
                       <button
@@ -1252,7 +1265,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                         }}
                         className="text-gray-600 hover:text-[#222] font-black underline cursor-pointer"
                       >
-                        {lang === 'zh' ? '✨ 新商户在线注册申请' : 'Registrar nueva cuenta comercial'}
+                        {tr('✨ 新商户在线注册申请', '✨ Register New Trade Account', 'Registrar nueva cuenta comercial')}
                       </button>
                     </div>
                   </div>
@@ -1265,15 +1278,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           <section className="max-w-7xl mx-auto px-4 py-10 md:py-16">
             <div className="text-center max-w-3xl mx-auto mb-10">
               <span className="bg-[#5c94fc] text-white text-xs font-black px-3 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase tracking-wider inline-block mb-2">
-                {lang === 'zh' ? '📚 文具核心生态' : 'Gama de Productos'}
+                {tr('📚 文具核心生态', '📚 Product Ecosystem', 'Gama de Productos')}
               </span>
               <h2 className="text-2xl md:text-4xl font-black text-[#222]">
-                {lang === 'zh' ? '全景品类矩阵 · 覆盖全场景文具需求' : 'Ecosistema Integral de Papelería y Material Escolar'}
+                {tr('全景品类矩阵 · 覆盖全场景文具需求', 'Complete Stationery & School Supply Matrix', 'Ecosistema Integral de Papelería y Material Escolar')}
               </h2>
               <p className="text-xs md:text-sm text-gray-600 font-medium mt-2">
-                {lang === 'zh'
-                  ? '从日常书写到专业艺术创作，从开学季刚需到办公归档，严格按照欧洲标准与西班牙教学需求精工选品。'
-                  : 'Selección rigurosa adaptada a las necesidades reales de estudiantes, oficinas, artistas y comercios minoristas.'}
+                {tr('从日常书写到专业艺术创作，从开学季刚需到办公归档，严格按照欧洲标准与西班牙教学需求精工选品。', 'Carefully curated to EU standards for students, offices, artists and retail stores.', 'Selección rigurosa adaptada a las necesidades reales de estudiantes, oficinas, artistas y comercios minoristas.')}
               </p>
             </div>
 
@@ -1286,15 +1297,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   </span>
                   <div>
                     <h3 className="font-black text-base text-[#222]">
-                      {lang === 'zh' ? '书写与修正系统' : 'Escritura y Corrección'}
+                      {tr('书写与修正系统', 'Writing & Correction', 'Escritura y Corrección')}
                     </h3>
                     <span className="text-[11px] font-bold text-gray-500">Bolígrafos, rollers y correctores</span>
                   </div>
                 </div>
                 <p className="text-xs text-gray-600 leading-relaxed font-medium">
-                  {lang === 'zh'
-                    ? '速干中性笔、直液式走珠笔、双头彩色记号笔、马卡龙色系荧光笔、精密按动修正带与学生无碎屑绘图橡皮。出墨顺畅，经久耐写。'
-                    : 'Bolígrafos gel de secado rápido, rotuladores punta fina, marcadores pastel y cintas correctoras de alta cobertura ergonómicas.'}
+                  {tr('速干中性笔、直液式走珠笔、双头彩色记号笔、马卡龙色系荧光笔、精密按动修正带与学生无碎屑绘图橡皮。出墨顺畅，经久耐写。', 'Quick-dry gel pens, rollerballs, dual-tip markers, pastel highlighters, correction tapes and dust-free erasers.', 'Bolígrafos gel de secado rápido, rotuladores punta fina, marcadores pastel y cintas correctoras de alta cobertura ergonómicas.')}
                 </p>
               </div>
 
@@ -1306,15 +1315,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   </span>
                   <div>
                     <h3 className="font-black text-base text-[#222]">
-                      {lang === 'zh' ? '学生与开学季专区' : 'Material Escolar & Vuelta al Cole'}
+                      {tr('学生与开学季专区', 'School & Back-to-School', 'Material Escolar & Vuelta al Cole')}
                     </h3>
                     <span className="text-[11px] font-bold text-gray-500">Mochilas, estuches y accesorios</span>
                   </div>
                 </div>
                 <p className="text-xs text-gray-600 leading-relaxed font-medium">
-                  {lang === 'zh'
-                    ? '减负人体工学书包、三层大容量笔袋、安全圆头手工剪刀、柔韧抗摔几何套尺、防误伤学生圆规。满足全学龄段装备清单。'
-                    : 'Mochilas ergonómicas, estuches múltiples, reglas flexibles irrompibles, compases escolares seguros y tijeras punta roma.'}
+                  {tr('减负人体工学书包、三层大容量笔袋、安全圆头手工剪刀、柔韧抗摔几何套尺、防误伤学生圆规。满足全学龄段装备清单。', 'Ergonomic backpacks, triple-zip pencil cases, flexible rulers, safe school compasses and blunt-tip scissors.', 'Mochilas ergonómicas, estuches múltiples, reglas flexibles irrompibles, compases escolares seguros y tijeras punta roma.')}
                 </p>
               </div>
 
@@ -1326,15 +1333,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   </span>
                   <div>
                     <h3 className="font-black text-base text-[#222]">
-                      {lang === 'zh' ? '纸品与西班牙标准本册' : 'Cuadernos y Papelería Reglada'}
+                      {tr('纸品与西班牙标准本册', 'Notebooks & Spanish Formats', 'Cuadernos y Papelería Reglada')}
                     </h3>
                     <span className="text-[11px] font-bold text-gray-500">Cuadrícula 4x4, pauta y blocs</span>
                   </div>
                 </div>
                 <p className="text-xs text-gray-600 leading-relaxed font-medium">
-                  {lang === 'zh'
-                    ? '西班牙学校必备 Cuadrícula 4x4 方格带边距本、Lamela 双线/四线教学本、活页打孔替芯、速写草稿画本与大克重彩色卡纸。'
-                    : 'Cuadernos espiral y grapados 4x4 con margen, pauta Lamela, recambios con taladro estándar y blocs de dibujo homologados.'}
+                  {tr('西班牙学校必备 Cuadrícula 4x4 方格带边距本、Lamela 双线/四线教学本、活页打孔替芯、速写草稿画本与大克重彩色卡纸。', '4x4 grid notebooks with margin, Lamela guidelines, punched loose-leaf refills, sketch pads and heavy cardstock.', 'Cuadernos espiral y grapados 4x4 con margen, pauta Lamela, recambios con taladro estándar y blocs de dibujo homologados.')}
                 </p>
               </div>
 
@@ -1346,15 +1351,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   </span>
                   <div>
                     <h3 className="font-black text-base text-[#222]">
-                      {lang === 'zh' ? '办公归档与商务耗材' : 'Oficina y Archivo Profesional'}
+                      {tr('办公归档与商务耗材', 'Office & Filing Supplies', 'Oficina y Archivo Profesional')}
                     </h3>
                     <span className="text-[11px] font-bold text-gray-500">Archivadores, carpetas y accesorios</span>
                   </div>
                 </div>
                 <p className="text-xs text-gray-600 leading-relaxed font-medium">
-                  {lang === 'zh'
-                    ? '金属杠杆铁夹档案盒、风琴分类包、透明多孔文件袋、省力强力订书机、打孔机、回形针与高粘性商务便签纸。耐用高效。'
-                    : 'Archivadores de palanca de alto gramaje, carpetas de fundas, clasificadores de fuelle y material resistente para empresas.'}
+                  {tr('金属杠杆铁夹档案盒、风琴分类包、透明多孔文件袋、省力强力订书机、打孔机、回形针与高粘性商务便签纸。耐用高效。', 'Heavy-duty lever arch files, display books, expanding organizers, staplers, punches and sticky notes.', 'Archivadores de palanca de alto gramaje, carpetas de fundas, clasificadores de fuelle y material resistente para empresas.')}
                 </p>
               </div>
 
@@ -1366,7 +1369,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   </span>
                   <div>
                     <h3 className="font-black text-base text-[#222]">
-                      {lang === 'zh' ? '美术画材与手工创作' : 'Bellas Artes & Creatividad'}
+                      {tr('美术画材与手工创作', 'Fine Arts & Creativity', 'Bellas Artes & Creatividad')}
                     </h3>
                     <span className="text-[11px] font-bold text-gray-500">Artix, lienzos y pinturas</span>
                   </div>
@@ -1386,7 +1389,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   </span>
                   <div>
                     <h3 className="font-black text-base text-[#222]">
-                      {lang === 'zh' ? '精选授权与合作品牌' : 'Colecciones & Marcas Licenciadas'}
+                      {tr('精选授权与合作品牌', 'Licensed Brands & Collections', 'Colecciones & Marcas Licenciadas')}
                     </h3>
                     <span className="text-[11px] font-bold text-gray-500">Ediciones temáticas y expositores</span>
                   </div>
@@ -1405,10 +1408,10 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             <div className="max-w-7xl mx-auto">
               <div className="text-center max-w-3xl mx-auto mb-10">
                 <span className="bg-[#e52521] text-white text-xs font-black px-3 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase tracking-wider inline-block mb-2">
-                  {lang === 'zh' ? '🇪🇸 西班牙本土影响力' : 'Liderazgo en España'}
+                  {tr('🇪🇸 西班牙本土影响力', '🇪🇸 Presence Across Spain', 'Liderazgo en España')}
                 </span>
                 <h2 className="text-2xl md:text-4xl font-black text-[#222]">
-                  {lang === 'zh' ? '深耕西班牙市场 · 赢得数千商户与学校信赖' : 'Confianza Consolidada en el Mercado Español'}
+                  {tr('深耕西班牙市场 · 赢得数千商户与学校信赖', 'Trusted by Thousands of Retailers & Schools in Spain', 'Confianza Consolidada en el Mercado Español')}
                 </h2>
                 <p className="text-xs md:text-sm text-gray-600 font-medium mt-2">
                   {lang === 'zh'
@@ -1421,7 +1424,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 <div className="bg-[#fcf8f2] p-6 rounded-2xl border-3 border-[#222] shadow-[4px_4px_0px_#222]">
                   <div className="text-3xl mb-3">🏫</div>
                   <h3 className="font-black text-lg text-[#222] mb-2">
-                    {lang === 'zh' ? '开学季骨干供应中枢' : 'Pilar de la Vuelta al Cole'}
+                    {tr('开学季骨干供应中枢', 'Back-to-School Supply Hub', 'Pilar de la Vuelta al Cole')}
                   </h3>
                   <p className="text-xs text-gray-600 leading-relaxed font-medium">
                     {lang === 'zh'
@@ -1433,7 +1436,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 <div className="bg-[#fcf8f2] p-6 rounded-2xl border-3 border-[#222] shadow-[4px_4px_0px_#222]">
                   <div className="text-3xl mb-3">🇪🇸</div>
                   <h3 className="font-black text-lg text-[#222] mb-2">
-                    {lang === 'zh' ? '100% 契合西班牙教学大纲' : 'Adaptación Curricular Total'}
+                    {tr('100% 契合西班牙教学大纲', '100% Curriculum Aligned', 'Adaptación Curricular Total')}
                   </h3>
                   <p className="text-xs text-gray-600 leading-relaxed font-medium">
                     {lang === 'zh'
@@ -1445,12 +1448,10 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 <div className="bg-[#fcf8f2] p-6 rounded-2xl border-3 border-[#222] shadow-[4px_4px_0px_#222]">
                   <div className="text-3xl mb-3">📦</div>
                   <h3 className="font-black text-lg text-[#222] mb-2">
-                    {lang === 'zh' ? '敏捷大仓与灵活批发模式' : 'Distribución Mayorista Ágil'}
+                    {tr('敏捷大仓与灵活批发模式', 'Agile Wholesale Distribution', 'Distribución Mayorista Ágil')}
                   </h3>
                   <p className="text-xs text-gray-600 leading-relaxed font-medium">
-                    {lang === 'zh'
-                      ? '依托伊比利亚半岛实体大仓，支持箱装大宗采购与多品类灵活混批。无需跨国海运数月等待与资金积压，帮助实体店伙伴以轻资产方式实现高效周转与高毛利。'
-                      : 'Stock peninsular con opciones de compra por cajas completas o surtidos flexibles, facilitando la máxima rentabilidad y rotación de producto.'}
+                    {tr('依托伊比利亚半岛实体大仓，支持箱装大宗采购与多品类灵活混批。无需跨国海运数月等待与资金积压，帮助实体店伙伴以轻资产方式实现高效周转与高毛利。', 'Backed by our Iberian warehouse with full-case or flexible mixed-pack ordering for fast inventory turnover and strong retail margins.', 'Stock peninsular con opciones de compra por cajas completas o surtidos flexibles, facilitando la máxima rentabilidad y rotación de producto.')}
                   </p>
                 </div>
               </div>
@@ -1461,15 +1462,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           <section className="max-w-7xl mx-auto px-4 py-10 md:py-16">
             <div className="text-center max-w-3xl mx-auto mb-8">
               <span className="bg-[#f8d878] text-[#222] text-xs font-black px-3 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase tracking-wider inline-block mb-2">
-                {lang === 'zh' ? '🔍 样品做工质感实拍' : 'Muestras Seleccionadas'}
+                {tr('🔍 样品做工质感实拍', '🔍 Curated Samples', 'Muestras Seleccionadas')}
               </span>
               <h2 className="text-2xl md:text-4xl font-black text-[#222]">
-                {lang === 'zh' ? '精选文具样品陈列' : 'Exposición de Muestras Representativas'}
+                {tr('精选文具样品陈列', 'Representative Sample Showcase', 'Exposición de Muestras Representativas')}
               </h2>
               <p className="text-xs md:text-sm text-gray-600 font-medium mt-1">
-                {lang === 'zh'
-                  ? '以下精选 8 款代表性样品供材质与做工参考。全量 6,100+ 现货品类、规格与商户批发价格请登录后查看。'
-                  : 'Mostramos a continuación 8 muestras representativas. Para acceder al catálogo completo con más de 6.100 referencias y precios, inicia sesión.'}
+                {tr('以下精选 8 款代表性样品供材质与做工参考。全量 6,100+ 现货品类、规格与商户批发价格请登录后查看。', 'Below are 8 representative samples for quality reference. Sign in to access the full catalog of 6,100+ items and wholesale prices.', 'Mostramos a continuación 8 muestras representativas. Para acceder al catálogo completo con más de 6.100 referencias y precios, inicia sesión.')}
               </p>
             </div>
 
@@ -1515,7 +1514,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     <div className="mt-3 pt-2 border-t border-gray-100">
                       <div className="bg-amber-50 rounded-xl p-2 border border-amber-200 text-center mb-2">
                         <span className="text-[11px] font-black text-amber-900 block leading-tight">
-                          🔒 {lang === 'zh' ? '登录解锁价格' : 'Inicia sesión'}
+                          🔒 {tr('登录解锁价格', 'Sign in for prices', 'Inicia sesión')}
                         </span>
                       </div>
                       <button
@@ -1528,7 +1527,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                         className="w-full py-1.5 px-2 bg-[#f8d878] hover:bg-yellow-400 text-[#222] rounded-xl border-2 border-[#222] font-black text-xs shadow-[2px_2px_0px_#222] flex items-center justify-center gap-1 cursor-pointer"
                       >
                         <span>🔑</span>
-                        <span>{lang === 'zh' ? '登录看详情' : 'Ver detalle'}</span>
+                        <span>{tr('登录看详情', 'View details', 'Ver detalle')}</span>
                       </button>
                     </div>
                   </div>
@@ -1540,14 +1539,10 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             <div className="bg-gradient-to-r from-amber-50 via-yellow-50 to-orange-50 rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] p-6 md:p-8 text-center max-w-4xl mx-auto">
               <span className="text-3xl md:text-4xl block mb-2">🔒</span>
               <h3 className="text-xl md:text-3xl font-black text-[#222] mb-2">
-                {lang === 'zh'
-                  ? '更多 6,101 款现货文具受商户权限保护'
-                  : 'Catálogo Mayorista Completo Protegido'}
+                {tr('更多 6,101 款现货文具受商户权限保护', 'Full Wholesale Catalog Protected', 'Catálogo Mayorista Completo Protegido')}
               </h3>
               <p className="text-xs md:text-sm text-gray-700 font-medium max-w-2xl mx-auto leading-relaxed mb-6">
-                {lang === 'zh'
-                  ? '为维护西班牙各地合作书店与零售终端的价格隐私，全量商品目录、实时库存与大宗批发指导价仅对认证商户开放。使用商户账号登录或联系客户经理获取专属准入！'
-                  : 'Para proteger el margen de nuestros distribuidores y tiendas asociadas, los precios y el stock en tiempo real solo están disponibles para usuarios registrados.'}
+                {tr('为维护西班牙各地合作书店与零售终端的价格隐私，全量商品目录、实时库存与大宗批发指导价仅对认证商户开放。使用商户账号登录或联系客户经理获取专属准入！', 'To protect partner store pricing and margins, our full catalog, live stock and wholesale rates are available exclusively to registered trade accounts.', 'Para proteger el margen de nuestros distribuidores y tiendas asociadas, los precios y el stock en tiempo real solo están disponibles para usuarios registrados.')}
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -1560,7 +1555,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   className="w-full sm:w-auto px-6 py-3.5 bg-[#e52521] hover:bg-red-600 text-white rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-sm md:text-base flex items-center justify-center gap-2 cursor-pointer transition-all active:translate-y-0.5"
                 >
                   <span>🔑</span>
-                  <span>{lang === 'zh' ? '立即登录查看全景商城' : 'Iniciar Sesión Comercial'}</span>
+                  <span>{tr('立即登录查看全景商城', 'Sign In to Full Catalog', 'Iniciar Sesión Comercial')}</span>
                 </button>
                 <a
                   href="https://wa.me/34604229098?text=Hola,%20deseo%20solicitar%20acceso%20comercial%20al%20catalogo%20completo%20de%20papeleria"
@@ -1569,7 +1564,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   className="w-full sm:w-auto px-6 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-sm md:text-base flex items-center justify-center gap-2 cursor-pointer transition-all active:translate-y-0.5"
                 >
                   <span>💬</span>
-                  <span>{lang === 'zh' ? 'WhatsApp 申请准入 (+34 604 229 098)' : 'Pedir Acceso por WhatsApp'}</span>
+                  <span>{tr('WhatsApp 申请准入 (+34 604 229 098)', 'Request Access via WhatsApp', 'Pedir Acceso por WhatsApp')}</span>
                 </a>
               </div>
             </div>
@@ -1594,22 +1589,18 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           <div className="text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
               <span className="bg-[#f8d878] text-[#222] text-[11px] md:text-xs font-black px-2.5 py-0.5 md:py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase tracking-wider">
-                {lang === 'zh' ? '✨ 2026 全系现货商品' : '✨ Catálogo Completo 2026'}
+                {tr('✨ 2026 全系现货商品', '✨ 2026 Full In-Stock Catalog', '✨ Catálogo Completo 2026')}
               </span>
               <span className="bg-[#5c94fc] text-white text-[11px] md:text-xs font-black px-2 py-0.5 md:py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222]">
-                {lang === 'zh' ? '现货直配' : 'Stock Inmediato'}
+                {tr('现货直配', 'Ready to Ship', 'Stock Inmediato')}
               </span>
             </div>
             <h1 className="text-xl md:text-4xl font-black tracking-tight text-white drop-shadow-[2px_2px_0px_#222]">
-              {lang === 'zh'
-                ? '全景文具商城 & 样品展厅'
-                : 'CATÁLOGO & SHOWROOM DE PAPELERÍA'}
+              {tr('全景文具商城 & 样品展厅', 'STATIONERY CATALOG & SHOWROOM', 'CATÁLOGO & SHOWROOM DE PAPELERÍA')}
             </h1>
             <p className="hidden md:block text-sm md:text-base text-yellow-100 font-medium max-w-2xl mt-1">
               {mode === 'store'
-                ? lang === 'zh'
-                  ? '🛒 支持一键挑选加购并快速生成采购订货单！'
-                  : '🛒 Añade a tu cesta y tramita tu selección o pedido cómodamente.'
+                ? tr('🛒 支持一键挑选加购并快速生成采购订货单！', '🛒 Add items to your cart and generate wholesale orders effortlessly.', '🛒 Añade a tu cesta y tramita tu selección o pedido cómodamente.')
                 : lang === 'zh'
                   ? '🏛️ 官方样品展厅：画册全景展示，不显示价格，专为学校机构、家委会及大宗选品定制！'
                   : '🏛️ Showroom de Catálogo: Exposición oficial de producto sin precios visibles, ideal para colegios y AMPAs.'}
@@ -1631,7 +1622,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   onClick={handleLogout}
                   className="text-[#e52521] hover:underline font-black text-xs ml-1 cursor-pointer"
                 >
-                  {lang === 'zh' ? '退出' : 'Salir'}
+                  {tr('退出', 'Sign Out', 'Salir')}
                 </button>
               </div>
             ) : null}
@@ -1641,7 +1632,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               onClick={toggleLang}
               className="px-2.5 py-1.5 md:px-3 md:py-2 bg-white hover:bg-yellow-100 text-[#222] rounded-xl md:rounded-2xl border-3 md:border-4 border-[#222] shadow-[3px_3px_0px_#222] text-xs font-black transition-all cursor-pointer"
             >
-              🌐 {lang === 'zh' ? 'ES' : '中文'}
+              🌐 {lang === 'zh' ? '中文' : lang === 'en' ? 'EN' : 'ES'}
             </button>
 
             {/* DUAL MODE SWITCHER (Action Store vs Showroom) */}
@@ -1655,7 +1646,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 }`}
               >
                 <span>🛒</span>
-                <span>{lang === 'zh' ? '零售商城' : 'Catálogo Comercial'}</span>
+                <span>{tr('零售商城', 'Trade Catalog', 'Catálogo Comercial')}</span>
               </button>
 
               <button
@@ -1667,7 +1658,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 }`}
               >
                 <span>🏛️</span>
-                <span>{lang === 'zh' ? '样品展厅' : 'Sala de Muestras'}</span>
+                <span>{tr('样品展厅', 'Sample Showroom', 'Sala de Muestras')}</span>
               </button>
             </div>
           </div>
@@ -1687,9 +1678,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={
-                lang === 'zh'
-                  ? '✨ 试着输入自然场景：“我想画画”、“我想写日记”、“做手工”，或输入型号/条码...'
-                  : '✨ Búsquedas naturales: "quiero pintar", "hacer un diario", o ref/código...'
+                tr('✨ 试着输入自然场景：“我想画画”、“我想写日记”、“做手工”，或输入型号/条码...', '✨ Try natural search: "painting", "journal", "crafts", or SKU/barcode...', '✨ Búsquedas naturales: "quiero pintar", "hacer un diario", o ref/código...')
               }
               className="w-full pl-12 pr-10 py-3.5 rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] text-sm md:text-base font-bold bg-white text-[#222] focus:outline-none focus:ring-4 focus:ring-[#5c94fc]"
             />
@@ -1706,7 +1695,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           {/* Desktop Sort Selector */}
           <div className="hidden md:flex items-center gap-2 w-full md:w-auto">
             <label className="text-xs font-black text-gray-600 whitespace-nowrap">
-              {lang === 'zh' ? '排序:' : 'Ordenar:'}
+              {tr('排序:', 'Sort:', 'Ordenar:')}
             </label>
             <select
               value={sortBy}
@@ -1714,26 +1703,26 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               className="w-full md:w-auto px-4 py-3 rounded-xl border-3 border-[#222] font-black text-sm bg-white shadow-[2px_2px_0px_#222] focus:outline-none"
             >
               <option value="sku">
-                {lang === 'zh' ? '🔢 官方货号' : '🔢 Referencia SKU'}
+                {tr('🔢 官方货号', '🔢 Official SKU', '🔢 Referencia SKU')}
               </option>
               <option value="sales">
-                {lang === 'zh' ? '🔥 畅销排行' : '🔥 Más Vendidos'}
+                {tr('🔥 畅销排行', '🔥 Best Sellers', '🔥 Más Vendidos')}
               </option>
               <option value="featured">
-                {lang === 'zh' ? '⭐ 推荐精选' : '⭐ Destacados'}
+                {tr('⭐ 推荐精选', '⭐ Featured', '⭐ Destacados')}
               </option>
               {mode === 'store' && currentUser && (
                 <>
                   <option value="priceAsc">
-                    {lang === 'zh' ? '🪙 价格低到高' : '🪙 Precio menor a mayor'}
+                    {tr('🪙 价格低到高', '🪙 Price: Low to High', '🪙 Precio menor a mayor')}
                   </option>
                   <option value="priceDesc">
-                    {lang === 'zh' ? '💎 价格高到低' : '💎 Precio mayor a menor'}
+                    {tr('💎 价格高到低', '💎 Price: High to Low', '💎 Precio mayor a menor')}
                   </option>
                 </>
               )}
-              <option value="newest">{lang === 'zh' ? '🆕 新品' : '🆕 Novedades'}</option>
-              <option value="name">{lang === 'zh' ? '🔤 字母顺序' : '🔤 Nombre'}</option>
+              <option value="newest">{tr('🆕 新品', '🆕 New Arrivals', '🆕 Novedades')}</option>
+              <option value="name">{tr('🔤 字母顺序', '🔤 Name A-Z', '🔤 Nombre')}</option>
             </select>
           </div>
         </div>
@@ -1756,7 +1745,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               >
                 {MASTER_DEPARTMENTS.map((dept) => (
                   <option key={dept.id} value={dept.id}>
-                    {dept.icon} {lang === 'zh' ? dept.labelZh : dept.labelEs}
+                    {dept.icon} {(lang === 'zh' ? dept.labelZh : lang === 'en' ? dept.labelEn : dept.labelEs)}
                   </option>
                 ))}
               </select>
@@ -1778,7 +1767,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   }}
                   className="w-full appearance-none pl-3 pr-7 py-2.5 rounded-xl border-3 border-[#222] bg-amber-50 text-[#222] font-black text-xs shadow-[2px_2px_0px_#222] focus:outline-none focus:ring-2 focus:ring-amber-400 truncate"
                 >
-                  <option value="all">🏷️ {lang === 'zh' ? '品牌精选直达' : 'Todas las Marcas'}</option>
+                  <option value="all">🏷️ {tr('品牌精选直达', 'All Brands', 'Todas las Marcas')}</option>
                   <option value="Bic">Bic 比克</option>
                   <option value="Pilot">Pilot 百乐</option>
                   <option value="Milan">Milan 米兰</option>
@@ -1804,11 +1793,11 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   className="w-full appearance-none pl-3 pr-7 py-2.5 rounded-xl border-3 border-[#222] bg-white text-[#222] font-black text-xs shadow-[2px_2px_0px_#222] focus:outline-none focus:ring-2 focus:ring-[#5c94fc] truncate"
                 >
                   <option value="all">
-                    📂 {lang === 'zh' ? '全部细分类目' : 'Todas las Subcategorías'}
+                    📂 {tr('全部细分类目', 'All Subcategories', 'Todas las Subcategorías')}
                   </option>
                   {subCategories.map((sub) => (
                     <option key={sub.key} value={sub.key}>
-                      {lang === 'zh' ? sub.labelZh : sub.labelEs}
+                      {(lang === 'zh' ? sub.labelZh : sub.labelEs)}
                     </option>
                   ))}
                 </select>
@@ -1828,17 +1817,17 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 onChange={(e) => setSortBy(e.target.value as any)}
                 className="w-full appearance-none pl-3 pr-7 py-2 rounded-xl border-2 border-[#222] bg-white text-[#222] font-black text-xs shadow-[1px_1px_0px_#222] focus:outline-none truncate"
               >
-                <option value="sku">{lang === 'zh' ? '🔢 官方货号' : '🔢 Referencia SKU'}</option>
-                <option value="sales">{lang === 'zh' ? '🔥 畅销排行' : '🔥 Más Vendidos'}</option>
-                <option value="featured">{lang === 'zh' ? '⭐ 推荐精选' : '⭐ Destacados'}</option>
+                <option value="sku">{tr('🔢 官方货号', '🔢 Official SKU', '🔢 Referencia SKU')}</option>
+                <option value="sales">{tr('🔥 畅销排行', '🔥 Best Sellers', '🔥 Más Vendidos')}</option>
+                <option value="featured">{tr('⭐ 推荐精选', '⭐ Featured', '⭐ Destacados')}</option>
                 {mode === 'store' && currentUser && (
                   <>
-                    <option value="priceAsc">{lang === 'zh' ? '🪙 价格低到高' : '🪙 Precio menor'}</option>
-                    <option value="priceDesc">{lang === 'zh' ? '💎 价格高到低' : '💎 Precio mayor'}</option>
+                    <option value="priceAsc">{tr('🪙 价格低到高', '🪙 Price Low', '🪙 Precio menor')}</option>
+                    <option value="priceDesc">{tr('💎 价格高到低', '💎 Price High', '💎 Precio mayor')}</option>
                   </>
                 )}
-                <option value="newest">{lang === 'zh' ? '🆕 新品上市' : '🆕 Novedades'}</option>
-                <option value="name">{lang === 'zh' ? '🔤 字母顺序' : '🔤 Nombre'}</option>
+                <option value="newest">{tr('🆕 新品上市', '🆕 New Arrivals', '🆕 Novedades')}</option>
+                <option value="name">{tr('🔤 字母顺序', '🔤 Name A-Z', '🔤 Nombre')}</option>
               </select>
               <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-700 font-black text-[10px]">
                 ▼
@@ -1867,10 +1856,10 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     : 'bg-purple-50 text-purple-950'
                 }`}
               >
-                <option value="">{lang === 'zh' ? '✨ AI 场景找货...' : '✨ Inspiración IA...'}</option>
+                <option value="">{tr('✨ AI 场景找货...', '✨ AI Finder...', '✨ Inspiración IA...')}</option>
                 {AI_INTENTS.map((intent) => (
                   <option key={intent.id} value={intent.id}>
-                    {lang === 'zh' ? intent.chipZh : intent.chipEs}
+                    {(lang === 'zh' ? intent.chipZh : lang === 'en' ? intent.chipEn : intent.chipEs)}
                   </option>
                 ))}
               </select>
@@ -1896,7 +1885,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   : 'bg-white text-gray-800 shadow-[1px_1px_0px_#222]'
               }`}
             >
-              {lang === 'zh' ? '全部' : 'Todos'}
+              {tr('全部', 'All', 'Todos')}
             </button>
 
             <button
@@ -1915,7 +1904,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               }`}
             >
               <span>🏆</span>
-              <span>{lang === 'zh' ? '年度畅销榜' : 'Más Vendidos'}</span>
+              <span>{tr('年度畅销榜', 'Best Sellers', 'Más Vendidos')}</span>
             </button>
 
             <button
@@ -1930,7 +1919,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               }`}
             >
               <span>⚡</span>
-              <span>{lang === 'zh' ? 'BeBasic 超值' : 'BeBasic'}</span>
+              <span>{tr('BeBasic 超值', 'BeBasic', 'BeBasic')}</span>
             </button>
 
             <button
@@ -1945,7 +1934,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               }`}
             >
               <span>⭐</span>
-              <span>{lang === 'zh' ? '国际名牌' : 'Marcas'}</span>
+              <span>{tr('国际名牌', 'Top Brands', 'Marcas')}</span>
             </button>
 
             <button
@@ -1964,7 +1953,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               }`}
             >
               <span>⭐</span>
-              <span>{lang === 'zh' ? '推荐精选' : 'Destacados'}</span>
+              <span>{tr('推荐精选', 'Featured', 'Destacados')}</span>
             </button>
 
             <button
@@ -1982,7 +1971,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               }`}
             >
               <span>🌟</span>
-              <span>{lang === 'zh' ? '新品' : 'Nuevos'}</span>
+              <span>{tr('新品', 'New', 'Nuevos')}</span>
             </button>
 
             <button
@@ -2000,7 +1989,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               }`}
             >
               <span>🏷️</span>
-              <span>{lang === 'zh' ? '促销' : 'Promoción'}</span>
+              <span>{tr('促销', 'Promo', 'Promoción')}</span>
             </button>
           </div>
 
@@ -2008,13 +1997,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           {activeAIIntent && (
             <div className="p-2 bg-purple-100 rounded-xl border-2 border-purple-400 flex items-center justify-between text-xs">
               <span className="font-bold text-purple-950 truncate">
-                ✨ {lang === 'zh' ? activeAIIntent.chipZh : activeAIIntent.chipEs}
+                ✨ {(lang === 'zh' ? activeAIIntent.chipZh : lang === 'en' ? activeAIIntent.chipEn : activeAIIntent.chipEs)}
               </span>
               <button
                 onClick={() => setSearchQuery('')}
                 className="ml-2 px-2 py-0.5 bg-white text-purple-900 rounded font-black border border-purple-300 shrink-0"
               >
-                ✕ {lang === 'zh' ? '退出' : 'Quitar'}
+                ✕ {tr('退出', 'Clear', 'Quitar')}
               </button>
             </div>
           )}
@@ -2022,14 +2011,12 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           {/* Mobile Slim Result Summary */}
           <div className="pt-0.5 px-0.5 flex items-center justify-between text-[11px] font-black text-gray-600">
             <span>
-              {lang === 'zh'
-                ? `共 ${filteredProducts.length} 款商品 · 第 ${page}/${totalPages} 页`
-                : `${filteredProducts.length} refs · Pág. ${page}/${totalPages}`}
+              {tr(`共 ${filteredProducts.length} 款商品 · 第 ${page}/${totalPages} 页`, `${filteredProducts.length} items · Page ${page}/${totalPages}`, `${filteredProducts.length} refs · Pág. ${page}/${totalPages}`)}
             </span>
             <span className="text-gray-400">
               {mode === 'store'
-                ? lang === 'zh' ? '🛒 零售选品' : '🛒 Pedido'
-                : lang === 'zh' ? '🏛️ 展厅模式' : '🏛️ Showroom'}
+                ? tr('🛒 零售选品', '🛒 Order', '🛒 Pedido')
+                : tr('🏛️ 展厅模式', '🏛️ Showroom', '🏛️ Showroom')}
             </span>
           </div>
         </div>
@@ -2042,7 +2029,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
         <div className="flex flex-wrap items-center gap-1.5 mb-3 px-1">
           <span className="text-[11px] font-black text-purple-700 flex items-center gap-1 mr-1">
             <span>✨</span>
-            <span>{lang === 'zh' ? 'AI 场景灵感:' : 'Inspiración IA:'}</span>
+            <span>{tr('AI 场景灵感:', 'AI Inspiration:', 'Inspiración IA:')}</span>
           </span>
           {AI_INTENTS.map((intent) => {
             const isCurrentActive = activeAIIntent?.id === intent.id;
@@ -2063,7 +2050,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     : 'bg-purple-50 hover:bg-purple-100 text-purple-900 shadow-[1px_1px_0px_#222]'
                 }`}
               >
-                <span>{lang === 'zh' ? intent.chipZh : intent.chipEs}</span>
+                <span>{(lang === 'zh' ? intent.chipZh : lang === 'en' ? intent.chipEn : intent.chipEs)}</span>
               </button>
             );
           })}
@@ -2081,10 +2068,10 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   <span className="bg-purple-200 text-purple-900 text-[10px] px-2 py-0.5 rounded-full font-black border border-purple-300">
                     AI 智能场景识别已生效
                   </span>
-                  <span>{lang === 'zh' ? '已自动为您推荐全套关联商品：' : 'Resultados sugeridos por IA:'}</span>
+                  <span>{tr('已自动为您推荐全套关联商品：', 'AI-curated related products:', 'Resultados sugeridos por IA:')}</span>
                 </div>
                 <p className="text-xs font-bold text-gray-800 mt-0.5">
-                  {lang === 'zh' ? activeAIIntent.bannerZh : activeAIIntent.bannerEs}
+                  {(lang === 'zh' ? activeAIIntent.bannerZh : lang === 'en' ? activeAIIntent.bannerEn : activeAIIntent.bannerEs)}
                 </p>
               </div>
             </div>
@@ -2093,7 +2080,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               className="self-end sm:self-center px-3 py-1.5 bg-white hover:bg-gray-100 text-purple-900 text-xs font-black rounded-xl border-2 border-purple-400 shadow-[1px_1px_0px_#222] transition-all flex items-center gap-1 shrink-0"
             >
               <span>✕</span>
-              <span>{lang === 'zh' ? '退出 AI 场景' : 'Limpiar'}</span>
+              <span>{tr('退出 AI 场景', 'Clear', 'Limpiar')}</span>
             </button>
           </div>
         )}
@@ -2103,7 +2090,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5 px-0.5">
             <div className="flex items-center gap-2">
               <span className="text-xs md:text-sm font-black text-gray-800">
-                {lang === 'zh' ? '📑 全部分类' : '📑 Todas las Categorías'}
+                {tr('📑 全部分类', '📑 All Categories', '📑 Todas las Categorías')}
               </span>
             </div>
 
@@ -2121,7 +2108,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 }`}
               >
                 <span>🏷️</span>
-                <span>{lang === 'zh' ? '⭐ 国际品牌' : '⭐ Primeras Marcas'}</span>
+                <span>{tr('⭐ 国际品牌', '⭐ Top Brands', '⭐ Primeras Marcas')}</span>
               </button>
 
               <button
@@ -2136,7 +2123,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 }`}
               >
                 <span>⚡</span>
-                <span>{lang === 'zh' ? '⚡ BeBasic 系列' : '⚡ Línea BeBasic'}</span>
+                <span>{tr('⚡ BeBasic 系列', '⚡ BeBasic Line', '⚡ Línea BeBasic')}</span>
               </button>
             </div>
           </div>
@@ -2162,7 +2149,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 >
                   <span className="text-base shrink-0">{dept.icon}</span>
                   <span className="leading-tight line-clamp-2">
-                    {lang === 'zh' ? dept.labelZh : dept.labelEs}
+                    {(lang === 'zh' ? dept.labelZh : lang === 'en' ? dept.labelEn : dept.labelEs)}
                   </span>
                 </button>
               );
@@ -2175,7 +2162,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           <div className="mb-4 bg-amber-50/90 p-2.5 rounded-2xl border-2 border-amber-300 shadow-[2px_2px_0px_#222] flex flex-wrap items-center gap-2">
             <span className="text-xs font-black text-amber-900 flex items-center gap-1 mr-1">
               <span>🏷️</span>
-              <span>{lang === 'zh' ? '名牌直达:' : 'Marcas:'}</span>
+              <span>{tr('名牌直达:', 'Brands:', 'Marcas:')}</span>
             </span>
             {[
               { nameZh: 'Bic 比克', nameEs: 'Bic', subKey: 'Bic' },
@@ -2199,7 +2186,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 }}
                 className="px-2.5 py-1 rounded-lg text-xs font-black bg-white hover:bg-amber-200 text-gray-900 border border-amber-400 shadow-[1px_1px_0px_#222] transition-all active:translate-y-0.5"
               >
-                {lang === 'zh' ? b.nameZh : b.nameEs}
+                {(lang === 'zh' ? b.nameZh : b.nameEs)}
               </button>
             ))}
           </div>
@@ -2271,7 +2258,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                         : 'bg-white hover:bg-blue-50 text-gray-700 shadow-[1px_1px_0px_#222]'
                     }`}
                   >
-                    <span>{lang === 'zh' ? sub.labelZh : sub.labelEs}</span>
+                    <span>{(lang === 'zh' ? sub.labelZh : sub.labelEs)}</span>
                     <span
                       className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
                         isSelected ? 'bg-white/30 text-white' : 'bg-gray-200 text-gray-600'
@@ -2290,7 +2277,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
         <div className="flex flex-wrap items-center justify-between gap-3 mb-6 bg-[#f8d878]/30 p-3 rounded-2xl border-3 border-[#222]">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-xs font-black text-gray-700 mr-1">
-              {lang === 'zh' ? '快捷标签:' : 'Filtros:'}
+              {tr('快捷标签:', 'Filters:', 'Filtros:')}
             </span>
             <button
               onClick={() => {
@@ -2304,7 +2291,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 quickFilter === 'all' ? 'bg-[#222] text-white' : 'bg-white text-gray-700'
               }`}
             >
-              {lang === 'zh' ? '全部' : 'Todos'}
+              {tr('全部', 'All', 'Todos')}
             </button>
             <button
               onClick={() => {
@@ -2320,7 +2307,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               }`}
             >
               <span>🏆</span>
-              <span>{lang === 'zh' ? '年度畅销榜' : 'Los Más Vendidos'}</span>
+              <span>{tr('年度畅销榜', 'Annual Best Sellers', 'Los Más Vendidos')}</span>
             </button>
             <button
               onClick={() => {
@@ -2336,7 +2323,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               }`}
             >
               <span>⭐</span>
-              <span>{lang === 'zh' ? '推荐精选' : 'Selección Destacada'}</span>
+              <span>{tr('推荐精选', 'Featured Selection', 'Selección Destacada')}</span>
             </button>
             <button
               onClick={() => {
@@ -2351,7 +2338,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               }`}
             >
               <span>🌟</span>
-              <span>{lang === 'zh' ? '新品' : 'Nuevos'}</span>
+              <span>{tr('新品', 'New', 'Nuevos')}</span>
             </button>
             <button
               onClick={() => {
@@ -2366,15 +2353,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               }`}
             >
               <span>🏷️</span>
-              <span>{lang === 'zh' ? '促销' : 'Promoción'}</span>
+              <span>{tr('促销', 'Promo', 'Promoción')}</span>
             </button>
           </div>
 
           <div className="flex items-center gap-2">
             <div className="text-xs md:text-sm font-black text-[#222] bg-white px-3 py-1.5 rounded-xl border-2 border-[#222]">
-              {lang === 'zh'
-                ? `共 ${filteredProducts.length} 款商品 · 第 ${page}/${totalPages} 页`
-                : `${filteredProducts.length} productos · Pág. ${page}/${totalPages}`}
+              {tr(`共 ${filteredProducts.length} 款商品 · 第 ${page}/${totalPages} 页`, `${filteredProducts.length} products · Page ${page}/${totalPages}`, `${filteredProducts.length} productos · Pág. ${page}/${totalPages}`)}
             </div>
           </div>
         </div>
@@ -2387,7 +2372,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           <div className="min-h-[400px] flex flex-col items-center justify-center p-8 bg-white rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222]">
             <div className="text-6xl animate-bounce mb-4">🍄</div>
             <div className="text-2xl font-black text-[#e52521] mb-2">
-              {lang === 'zh' ? '正在装载官方商品目录...' : 'Cargando Catálogo Oficial...'}
+              {tr('正在装载官方商品目录...', 'Loading Official Catalog...', 'Cargando Catálogo Oficial...')}
             </div>
             <p className="text-sm text-gray-500 font-medium">
               {lang === 'zh'
@@ -2404,7 +2389,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
           <div className="min-h-[300px] flex flex-col items-center justify-center p-8 bg-white rounded-3xl border-4 border-[#222] text-center">
             <div className="text-5xl mb-3">👻</div>
             <div className="text-xl font-black text-[#222] mb-1">
-              {lang === 'zh' ? '未找到相关商品' : 'No se encontraron productos'}
+              {tr('未找到相关商品', 'No products found', 'No se encontraron productos')}
             </div>
             <p className="text-sm text-gray-500 mb-4">
               {lang === 'zh'
@@ -2422,7 +2407,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 }}
                 className="px-4 py-2 bg-[#f8d878] text-[#222] font-black rounded-xl border-3 border-[#222] shadow-[2px_2px_0px_#222] hover:bg-amber-300 transition-colors cursor-pointer"
               >
-                {lang === 'zh' ? '重置所有筛选' : 'Restablecer filtros'}
+                {tr('重置所有筛选', 'Reset Filters', 'Restablecer filtros')}
               </button>
               <button
                 onClick={() => {
@@ -2435,7 +2420,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 className="px-4 py-2 bg-[#5c94fc] text-white font-black rounded-xl border-3 border-[#222] shadow-[2px_2px_0px_#222] hover:bg-blue-600 transition-colors cursor-pointer flex items-center gap-1.5"
               >
                 <span>🌟</span>
-                <span>{lang === 'zh' ? '查看全部新品' : 'Ver Novedades'}</span>
+                <span>{tr('查看全部新品', 'View New Arrivals', 'Ver Novedades')}</span>
               </button>
             </div>
           </div>
@@ -2455,11 +2440,11 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   <div className="absolute top-2 left-2 z-10 flex flex-col gap-1">
                     {p.isTop500 ? (
                       <span className="bg-[#e52521] text-white text-[10px] md:text-xs font-black px-2 py-0.5 rounded-full border-2 border-[#222] shadow-[1px_1px_0px_#222] animate-pulse">
-                        🔥 {lang === 'zh' ? '年度畅销' : 'Más Vendido'}
+                        🔥 {tr('年度畅销', 'Best Seller', 'Más Vendido')}
                       </span>
                     ) : p.isTop1000 ? (
                       <span className="bg-amber-500 text-white text-[10px] md:text-xs font-black px-2 py-0.5 rounded-full border-2 border-[#222] shadow-[1px_1px_0px_#222]">
-                        ⭐ {lang === 'zh' ? '推荐精选' : 'Destacado'}
+                        ⭐ {tr('推荐精选', 'Featured', 'Destacado')}
                       </span>
                     ) : p.ishot ? (
                       <span className="bg-[#e52521] text-white text-[10px] md:text-xs font-black px-2 py-0.5 rounded-full border-2 border-[#222] shadow-[1px_1px_0px_#222]">
@@ -2513,7 +2498,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     <WatermarkOverlay />
                     <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-20">
                       <span className="bg-[#222] text-white text-xs font-bold px-2.5 py-1 rounded-lg shadow-md">
-                        🔍 {lang === 'zh' ? '点击看 2K 原图' : 'Ver 2K'}
+                        🔍 {tr('点击看 2K 原图', 'View 2K', 'Ver 2K')}
                       </span>
                     </div>
                   </div>
@@ -2524,7 +2509,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                       {/* Department / Category Pill */}
                       <div className="flex items-center justify-between text-[10px] font-bold text-gray-500 mb-1.5">
                         <span className="font-mono bg-amber-50 text-amber-800 px-1.5 py-0.5 rounded border border-amber-200 truncate max-w-[140px]">
-                          {lang === 'zh' ? p.subZh : p.subEs}
+                          {(lang === 'zh' ? p.subZh : p.subEs)}
                         </span>
                         <span className="font-mono text-gray-400">{p.usercode || p.code}</span>
                       </div>
@@ -2561,7 +2546,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                             <div className="flex items-baseline justify-between mb-2">
                               <div>
                                 <span className="text-[10px] font-bold text-gray-400 block leading-none">
-                                  {lang === 'zh' ? '建议零售价' : 'PRECIO RECOMENDADO'}
+                                  {tr('建议零售价', 'RECOMMENDED RETAIL', 'PRECIO RECOMENDADO')}
                                 </span>
                                 <div className="flex items-center gap-1">
                                   <span className="text-base md:text-xl font-black text-[#e52521]">
@@ -2596,9 +2581,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                                   ? lang === 'zh'
                                     ? '已加入购物车!'
                                     : '¡Añadido!'
-                                  : lang === 'zh'
-                                    ? '加入购物车'
-                                    : 'Añadir al Carrito'}
+                                  : tr('加入购物车', 'Add to Cart', 'Añadir al Carrito')}
                               </span>
                             </button>
                           </div>
@@ -2607,7 +2590,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                             {/* Locked Price for Non-Logged-in Guest */}
                             <div className="mb-2 bg-amber-50 p-1.5 rounded-lg border border-amber-200 text-center">
                               <span className="text-[10px] md:text-[11px] font-bold text-amber-900 block leading-tight">
-                                🔒 {lang === 'zh' ? '登录查看价格' : 'Inicia sesión'}
+                                🔒 {tr('登录查看价格', 'Sign in for prices', 'Inicia sesión')}
                               </span>
                             </div>
 
@@ -2616,7 +2599,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                               className="w-full py-2 px-3 rounded-xl font-black text-xs md:text-sm bg-white hover:bg-amber-100 text-[#222] border-3 border-[#222] shadow-[2px_2px_0px_#222] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1 cursor-pointer"
                             >
                               <span>🔑</span>
-                              <span>{lang === 'zh' ? '登录查看价格' : 'Iniciar sesión'}</span>
+                              <span>{tr('登录查看价格', 'Sign in for prices', 'Iniciar sesión')}</span>
                             </button>
                           </div>
                         )
@@ -2625,7 +2608,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                           {/* Showroom / Museum Mode (Zero Price) */}
                           <div className="mb-2 bg-[#5c94fc]/10 p-1.5 rounded-lg border border-[#5c94fc]/30 text-center">
                             <span className="text-[11px] font-black text-[#5c94fc] block">
-                              🏛️ {lang === 'zh' ? '样品展品' : 'Muestra'}
+                              🏛️ {tr('样品展品', 'Sample', 'Muestra')}
                             </span>
                           </div>
 
@@ -2643,9 +2626,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                                 ? lang === 'zh'
                                   ? '已加入预定车!'
                                   : '¡Añadido!'
-                                : lang === 'zh'
-                                  ? '加入预定车'
-                                  : 'Añadir a Reserva'}
+                                : tr('加入预定车', 'Reserve Sample', 'Añadir a Reserva')}
                             </span>
                           </button>
                         </div>
@@ -2669,7 +2650,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               disabled={page === 1}
               className="px-4 py-2.5 rounded-xl font-black text-sm border-3 border-[#222] shadow-[3px_3px_0px_#222] bg-white disabled:opacity-40 disabled:pointer-events-none active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
             >
-              {lang === 'zh' ? '« 上一页' : '« Anterior'}
+              {tr('« 上一页', '« Prev', '« Anterior')}
             </button>
 
             {/* Jump pages */}
@@ -2711,7 +2692,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               disabled={page === totalPages}
               className="px-4 py-2.5 rounded-xl font-black text-sm border-3 border-[#222] shadow-[3px_3px_0px_#222] bg-white disabled:opacity-40 disabled:pointer-events-none active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
             >
-              {lang === 'zh' ? '下一页 »' : 'Siguiente »'}
+              {tr('下一页 »', 'Next »', 'Siguiente »')}
             </button>
           </div>
         )}
@@ -2735,12 +2716,10 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   ? lang === 'zh'
                     ? '已选订货车'
                     : 'Mi Carrito'
-                  : lang === 'zh'
-                    ? '已选样品预定车'
-                    : 'Lista Muestras'}
+                  : tr('已选样品预定车', 'Sample List', 'Lista Muestras')}
               </div>
               <div className="text-sm md:text-base font-black">
-                {totalItemsCount} {lang === 'zh' ? '包/件商品' : 'items'}
+                {totalItemsCount} {tr('包/件商品', 'items', 'items')}
                 {mode === 'store' && currentUser && ` · ${formatEuro(totalCartPVP)}`}
               </div>
             </div>
@@ -2766,13 +2745,11 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                       ? lang === 'zh'
                         ? '我的采购订货车'
                         : 'Mi Carrito de Compra'
-                      : lang === 'zh'
-                        ? '我的样品预定清单'
-                        : 'Mi Lista de Reserva'}
+                      : tr('我的样品预定清单', 'My Sample Reservation List', 'Mi Lista de Reserva')}
                   </h2>
                   <span className="text-xs font-bold text-gray-700">
-                    {cart.length} {lang === 'zh' ? '款不同货品' : 'referencias'} · {totalItemsCount}{' '}
-                    {lang === 'zh' ? '包/件' : 'unidades'}
+                    {cart.length} {tr('款不同货品', 'SKUs', 'referencias')} · {totalItemsCount}{' '}
+                    {tr('包/件', 'units', 'unidades')}
                   </span>
                 </div>
               </div>
@@ -2853,7 +2830,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
             <div className="p-4 bg-gray-100 border-t-4 border-[#222] space-y-3">
               {mode === 'store' && (
                 <div className="flex items-center justify-between text-base font-black text-[#222]">
-                  <span>{lang === 'zh' ? '总计预估:' : 'Total Estimado:'}</span>
+                  <span>{tr('总计预估:', 'Estimated Total:', 'Total Estimado:')}</span>
                   <span className="text-xl text-[#e52521]">{formatEuro(totalCartPVP)}</span>
                 </div>
               )}
@@ -2869,9 +2846,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     ? lang === 'zh'
                       ? '通过 WhatsApp 发送订货单'
                       : 'Enviar Pedido por WhatsApp'
-                    : lang === 'zh'
-                      ? '通过 WhatsApp 咨询样品清单'
-                      : 'Consultar Lista por WhatsApp'}
+                    : tr('通过 WhatsApp 咨询样品清单', 'Send Sample List via WhatsApp', 'Consultar Lista por WhatsApp')}
                 </span>
               </button>
 
@@ -2880,13 +2855,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   onClick={clearCart}
                   className="py-2 px-3 bg-white text-gray-600 hover:text-red-600 rounded-xl border-2 border-gray-300 text-xs font-bold"
                 >
-                  {lang === 'zh' ? '清空' : 'Vaciar'}
+                  {tr('清空', 'Clear', 'Vaciar')}
                 </button>
                 <button
                   onClick={() => setIsCartOpen(false)}
                   className="flex-1 py-2 bg-white text-[#222] hover:bg-gray-200 rounded-xl border-2 border-[#222] text-xs font-black"
                 >
-                  {lang === 'zh' ? '继续选品' : 'Seguir mirando'}
+                  {tr('继续选品', 'Keep Browsing', 'Seguir mirando')}
                 </button>
                 <button
                   onClick={exportCartToExcel}
@@ -2894,7 +2869,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   className="py-2 px-3 bg-white text-gray-400 hover:text-gray-700 rounded-xl border border-gray-300 text-xs font-mono flex items-center justify-center gap-1 cursor-pointer transition-colors"
                 >
                   <span>📊</span>
-                  <span>{lang === 'zh' ? '后台导出' : 'Excel'}</span>
+                  <span>{tr('后台导出', 'Excel', 'Excel')}</span>
                 </button>
               </div>
             </div>
@@ -2955,11 +2930,11 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   </span>
                   {selectedProduct.isTop500 ? (
                     <span className="bg-[#e52521] text-white text-xs font-black px-2.5 py-1 rounded-md border border-[#222]">
-                      🔥 {lang === 'zh' ? '年度权威畅销' : 'Superventas Oficial'}
+                      🔥 {tr('年度权威畅销', 'Official Best Seller', 'Superventas Oficial')}
                     </span>
                   ) : selectedProduct.isTop1000 ? (
                     <span className="bg-amber-500 text-white text-xs font-black px-2.5 py-1 rounded-md border border-[#222]">
-                      ⭐ {lang === 'zh' ? '官方推荐精选' : 'Selección Oficial'}
+                      ⭐ {tr('官方推荐精选', 'Official Selection', 'Selección Oficial')}
                     </span>
                   ) : null}
                   <span className="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-0.5 rounded">
@@ -2978,13 +2953,13 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   <div>
                     <span className="text-gray-500 block">Departamento:</span>
                     <span className="font-bold">
-                      {lang === 'zh' ? selectedProduct.deptZh : selectedProduct.deptEs}
+                      {(lang === 'zh' ? selectedProduct.deptZh : selectedProduct.deptEs)}
                     </span>
                   </div>
                   <div>
                     <span className="text-gray-500 block">Categoría:</span>
                     <span className="font-bold">
-                      {lang === 'zh' ? selectedProduct.subZh : selectedProduct.subEs}
+                      {(lang === 'zh' ? selectedProduct.subZh : selectedProduct.subEs)}
                     </span>
                   </div>
                   <div className="col-span-2">
@@ -3001,7 +2976,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     <div className="bg-[#f8d878] p-4 rounded-2xl border-3 border-[#222] flex items-center justify-between">
                       <div>
                         <span className="text-xs font-black text-gray-700 block">
-                          {lang === 'zh' ? '建议零售价' : 'PRECIO RECOMENDADO'}
+                          {tr('建议零售价', 'RECOMMENDED RETAIL', 'PRECIO RECOMENDADO')}
                         </span>
                         <div className="text-2xl font-black text-[#e52521]">
                           {selectedProduct.price > 0
@@ -3011,7 +2986,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                       </div>
                       {selectedProduct.price > 0 && selectedProduct.packet > 1 && (
                         <div className="text-right text-xs">
-                          <span className="text-gray-600 block">{lang === 'zh' ? '整包参考价:' : 'Por paquete:'}</span>
+                          <span className="text-gray-600 block">{tr('整包参考价:', 'Per pack:', 'Por paquete:')}</span>
                           <span className="font-black text-sm">
                             {formatEuro(calculatePVP(selectedProduct.price) * selectedProduct.packet)}
                           </span>
@@ -3022,27 +2997,27 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     <div className="bg-amber-50 p-4 rounded-2xl border-3 border-[#222] flex flex-col sm:flex-row items-center justify-between gap-3">
                       <div>
                         <span className="text-sm font-black text-amber-900 block">
-                          🔒 {lang === 'zh' ? '登录查看价格' : 'Inicia sesión para ver precios'}
+                          🔒 {tr('登录查看价格', 'Sign in to view prices', 'Inicia sesión para ver precios')}
                         </span>
                         <span className="text-xs text-gray-600 block mt-0.5">
-                          {lang === 'zh' ? '登录后可查看指导价格并加入采购清单' : 'Inicia sesión para ver precios y formalizar pedidos.'}
+                          {tr('登录后可查看指导价格并加入采购清单', 'Sign in to view wholesale prices and place orders.', 'Inicia sesión para ver precios y formalizar pedidos.')}
                         </span>
                       </div>
                       <button
                         onClick={() => setIsAuthModalOpen(true)}
                         className="px-4 py-2 bg-[#f8d878] hover:bg-yellow-400 text-[#222] font-black rounded-xl border-2 border-[#222] shadow-[2px_2px_0px_#222] text-xs shrink-0 cursor-pointer"
                       >
-                        🔑 {lang === 'zh' ? '登录 / 注册' : 'Acceder'}
+                        🔑 {tr('登录 / 注册', 'Sign In / Register', 'Acceder')}
                       </button>
                     </div>
                   )
                 ) : (
                   <div className="bg-[#5c94fc]/15 p-4 rounded-2xl border-3 border-[#5c94fc] text-center">
                     <span className="text-sm font-black text-[#5c94fc] block">
-                      🏛️ {lang === 'zh' ? '样品展厅' : 'Sala de Muestras'}
+                      🏛️ {tr('样品展厅', 'Sample Showroom', 'Sala de Muestras')}
                     </span>
                     <span className="text-xs text-gray-600 block mt-0.5">
-                      {lang === 'zh' ? '样品展示，支持添加至预定清单' : 'Exposición para selección y reserva de muestras.'}
+                      {tr('样品展示，支持添加至预定清单', 'Showroom display — add items to your sample reservation list.', 'Exposición para selección y reserva de muestras.')}
                     </span>
                   </div>
                 )}
@@ -3060,7 +3035,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                         className="flex-1 py-3.5 rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-base flex items-center justify-center gap-2 bg-[#e52521] text-white hover:bg-red-600 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
                       >
                         <span>🛒</span>
-                        <span>{lang === 'zh' ? '加入购物车' : 'Añadir al Carrito'}</span>
+                        <span>{tr('加入购物车', 'Add to Cart', 'Añadir al Carrito')}</span>
                       </button>
                     ) : (
                       <button
@@ -3068,7 +3043,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                         className="flex-1 py-3.5 rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-base flex items-center justify-center gap-2 bg-[#f8d878] hover:bg-yellow-400 text-[#222] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
                       >
                         <span>🔑</span>
-                        <span>{lang === 'zh' ? '登录商户账号后加购' : 'Inicia sesión para pedir'}</span>
+                        <span>{tr('登录商户账号后加购', 'Sign in to order', 'Inicia sesión para pedir')}</span>
                       </button>
                     )
                   ) : (
@@ -3081,7 +3056,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                       className="flex-1 py-3.5 rounded-2xl border-3 border-[#222] shadow-[3px_3px_0px_#222] font-black text-base flex items-center justify-center gap-2 bg-[#5c94fc] text-white hover:bg-blue-600 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
                     >
                       <span>📋</span>
-                      <span>{lang === 'zh' ? '加入样品预定车' : 'Añadir a Reserva'}</span>
+                      <span>{tr('加入样品预定车', 'Add to Reservation', 'Añadir a Reserva')}</span>
                     </button>
                   )}
                 </div>
@@ -3100,7 +3075,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
               <div className="flex items-center gap-2">
                 <span className="text-2xl">👤</span>
                 <span className="font-black text-lg md:text-xl">
-                  {lang === 'zh' ? '商户与采购客户中心' : 'Acceso Clientes y Empresas'}
+                  {tr('商户与采购客户中心', 'B2B Client & Buyer Portal', 'Acceso Clientes y Empresas')}
                 </span>
               </div>
               <button
@@ -3130,7 +3105,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 }`}
               >
                 <span>🔑</span>
-                <span>{lang === 'zh' ? '账号登录' : 'Iniciar Sesión'}</span>
+                <span>{tr('账号登录', 'Sign In', 'Iniciar Sesión')}</span>
               </button>
               <button
                 onClick={() => {
@@ -3145,7 +3120,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 }`}
               >
                 <span>✨</span>
-                <span>{lang === 'zh' ? '新商户注册' : 'Crear Cuenta'}</span>
+                <span>{tr('新商户注册', 'Create Account', 'Crear Cuenta')}</span>
               </button>
             </div>
 
@@ -3170,7 +3145,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   <form onSubmit={handleLogin} className="space-y-4">
                     <div>
                       <label className="block text-xs font-black text-gray-700 mb-1">
-                        {lang === 'zh' ? '用户名或邮箱' : 'Usuario o email'}
+                        {tr('用户名或邮箱', 'Username or email', 'Usuario o email')}
                       </label>
                       <input
                         type="text"
@@ -3183,7 +3158,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
 
                     <div>
                       <label className="block text-xs font-black text-gray-700 mb-1">
-                        {lang === 'zh' ? '密码' : 'Contraseña'}
+                        {tr('密码', 'Password', 'Contraseña')}
                       </label>
                       <input
                         type="password"
@@ -3199,7 +3174,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                       className="w-full py-3 bg-[#e52521] hover:bg-red-600 text-white rounded-xl border-3 border-[#222] shadow-[3px_3px_0px_#222] text-sm font-black transition-all active:translate-y-0.5 cursor-pointer flex items-center justify-center gap-2"
                     >
                       <span>🚀</span>
-                      <span>{lang === 'zh' ? '立即登录' : 'Entrar en la Tienda'}</span>
+                      <span>{tr('立即登录', 'Enter Store', 'Entrar en la Tienda')}</span>
                     </button>
                   </form>
                 </div>
@@ -3207,7 +3182,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                 <form onSubmit={handleRegister} className="space-y-3">
                   <div>
                     <label className="block text-xs font-black text-gray-700 mb-1">
-                      {lang === 'zh' ? '用户名 *' : 'Nombre de Usuario *'}
+                      {tr('用户名 *', 'Username *', 'Nombre de Usuario *')}
                     </label>
                     <input
                       type="text"
@@ -3221,7 +3196,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
 
                   <div>
                     <label className="block text-xs font-black text-gray-700 mb-1">
-                      {lang === 'zh' ? '商户邮箱 *' : 'Email de Contacto *'}
+                      {tr('商户邮箱 *', 'Contact Email *', 'Email de Contacto *')}
                     </label>
                     <input
                       type="email"
@@ -3236,7 +3211,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   <div className="grid grid-cols-2 gap-2">
                     <div>
                       <label className="block text-xs font-black text-gray-700 mb-1">
-                        {lang === 'zh' ? '密码 *' : 'Contraseña *'}
+                        {tr('密码 *', 'Password *', 'Contraseña *')}
                       </label>
                       <input
                         type="password"
@@ -3249,7 +3224,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     </div>
                     <div>
                       <label className="block text-xs font-black text-gray-700 mb-1">
-                        {lang === 'zh' ? '确认密码 *' : 'Confirmar *'}
+                        {tr('确认密码 *', 'Confirm *', 'Confirmar *')}
                       </label>
                       <input
                         type="password"
@@ -3265,7 +3240,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                   <div className="grid grid-cols-2 gap-2">
                     <div>
                       <label className="block text-xs font-black text-gray-700 mb-1">
-                        {lang === 'zh' ? '商户/店铺名称' : 'Nombre de Tienda'}
+                        {tr('商户/店铺名称', 'Store / Company Name', 'Nombre de Tienda')}
                       </label>
                       <input
                         type="text"
@@ -3277,7 +3252,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     </div>
                     <div>
                       <label className="block text-xs font-black text-gray-700 mb-1">
-                        {lang === 'zh' ? 'WhatsApp/电话' : 'WhatsApp/Tel'}
+                        {tr('WhatsApp/电话', 'WhatsApp / Phone', 'WhatsApp/Tel')}
                       </label>
                       <input
                         type="text"
@@ -3294,7 +3269,7 @@ export const ActionStore: React.FC<ActionStoreProps> = ({
                     className="w-full mt-2 py-3 bg-[#5c94fc] hover:bg-blue-600 text-white rounded-xl border-3 border-[#222] shadow-[3px_3px_0px_#222] text-sm font-black transition-all active:translate-y-0.5 cursor-pointer flex items-center justify-center gap-2"
                   >
                     <span>✨</span>
-                    <span>{lang === 'zh' ? '立即创建商户账号' : 'Completar Registro'}</span>
+                    <span>{tr('立即创建商户账号', 'Complete Registration', 'Completar Registro')}</span>
                   </button>
                 </form>
               )}

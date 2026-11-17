@@ -278,7 +278,7 @@ export const App: React.FC = () => {
             }
           >
             <ActionStore
-              lang={lang === 'zh' ? 'zh' : 'es'}
+              lang={lang}
               onNavigateHome={() => navigateTo('home')}
             />
           </Suspense>
