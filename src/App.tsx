@@ -19,10 +19,17 @@ type ViewMode = 'home' | 'tienda' | 'navidad' | 'map' | 'canje' | 'vitrina';
 export const App: React.FC = () => {
   // Auto-detect browser language per REBUILD_SOP §3
   const [lang, setLang] = useState<Lang>(() => {
-    if (typeof navigator !== 'undefined' && navigator.language?.toLowerCase().startsWith('zh')) {
-      return 'zh';
+    if (typeof window !== 'undefined') {
+      const qLang = new URLSearchParams(window.location.search).get('lang')?.toLowerCase();
+      if (qLang === 'zh' || qLang === 'en' || qLang === 'es') return qLang;
     }
-    return 'zh'; // Default to zh for B2B Chinese bazaar owners in Spain, with 1-click ES toggle
+    if (typeof navigator !== 'undefined') {
+      const devLang = (navigator.languages?.[0] || navigator.language || 'en').toLowerCase();
+      if (devLang.startsWith('zh')) return 'zh';
+      if (devLang.startsWith('es')) return 'es';
+      return 'en';
+    }
+    return 'en';
   });
 
   const [view, setView] = useState<ViewMode>(() => {
@@ -152,7 +159,7 @@ export const App: React.FC = () => {
             </div>
             <div>
               <div className="font-black text-white text-lg leading-none tracking-wide">
-                KYRMAX <span className="text-[#f8d878] text-xs">· {lang === 'zh' ? '文具贸易' : 'Papelería'}</span>
+                KYRMAX <span className="text-[#f8d878] text-xs">· {lang === 'zh' ? '文具贸易' : lang === 'en' ? 'Stationery' : 'Papelería'}</span>
               </div>
               <div className="text-[11px] text-gray-400 font-medium">{t.brandSub}</div>
             </div>
@@ -198,7 +205,7 @@ export const App: React.FC = () => {
                       : 'bg-amber-500 text-[#111827] border-[#222] hover:bg-amber-400'
                   }`}
                 >
-                  {lang === 'zh' ? '🔥 每日主推' : '🔥 Vitrina'}
+                  {lang === 'zh' ? '🔥 每日主推' : lang === 'en' ? '🔥 Daily Pick' : '🔥 Vitrina'}
                 </button>
 
                 <button
@@ -241,12 +248,12 @@ export const App: React.FC = () => {
                   className="px-3 py-1.5 rounded-xl font-black text-xs md:text-sm border-2 transition-all flex items-center gap-1.5 bg-[#f8d878] text-[#222] border-[#222] shadow-[2px_2px_0px_#e52521] hover:bg-yellow-300"
                 >
                   <span>🏪</span>
-                  <span>{lang === 'zh' ? '全品商城 ↗' : 'Tienda ↗'}</span>
+                  <span>{lang === 'zh' ? '全品商城 ↗' : lang === 'en' ? 'Shop ↗' : 'Tienda ↗'}</span>
                 </a>
               </>
             )}
 
-            {/* Bilingual Language Switcher (REBUILD_SOP §3) */}
+            {/* Trilingual Language Switcher */}
             <div className="flex items-center bg-slate-900 rounded-xl p-1 border-2 border-slate-700 ml-1">
               <button
                 onClick={() => setLang('zh')}
@@ -255,6 +262,14 @@ export const App: React.FC = () => {
                 }`}
               >
                 中文
+              </button>
+              <button
+                onClick={() => setLang('en')}
+                className={`px-2.5 py-1 rounded-lg text-xs font-black transition-all ${
+                  lang === 'en' ? 'bg-[#e52521] text-white' : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                EN
               </button>
               <button
                 onClick={() => setLang('es')}
@@ -289,7 +304,7 @@ export const App: React.FC = () => {
             }
           >
             <ActionStore
-              lang={lang}
+              lang={lang === 'zh' ? 'zh' : 'es'}
               onNavigateHome={() => navigateTo('home')}
               onNavigateToNavidad={() => navigateTo('navidad')}
             />
