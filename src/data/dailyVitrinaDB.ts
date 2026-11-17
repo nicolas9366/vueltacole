@@ -288,6 +288,200 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
       'Pack ahorro de 6 subrayadores pastel con punta biselada 1–3 mm.\n' +
       '👉 Mira las fotos y el vídeo aquí: https://vueltacole.com/vitrina.html',
   },
+  'PP631-01': {
+    id: 'pp631-01',
+    rank: 1,
+    sku: 'PP631-01',
+    ean: '8435250982110',
+    catKey: 'art',
+    packInfoZh: '75 ml 钛白丙烯颜料 ｜ 6 支/包 · 96 支/箱',
+    packInfoEn: '75 ml Titanium White Acrylic ｜ 6 tubes/pack · 96 tubes/carton',
+    packInfoEs: 'Pintura Acrílica Blanca 75 ml ｜ 6 uds/pack · 96 uds/caja',
+    titleZh: 'Artix 专业丙烯颜料 75 ml 钛白色',
+    titleEn: 'Artix Paints Titanium White Acrylic 75 ml',
+    titleEs: 'Pintura Acrílica Blanca Titanio 75 ml Artix',
+    taglineZh: 'TOP 1 冠军单品 · 高浓度奶油膏体 · 缎面哑光 · 干后防水耐晒',
+    taglineEn: '#1 Bestseller · Rich creamy body · Satin-matte finish · Waterproof once dry',
+    taglineEs: 'Top #1 en ventas · Textura cremosa cubriente · Acabado satinado · Impermeable',
+    highlightsZh: [
+      '西班牙畅销榜第 1 名单品，深色画布一笔高遮盖不发灰',
+      '奶油级厚涂质感，画笔平涂与刮刀肌理都能轻松驾驭',
+      '6支一包、96支一箱，美术生、画室与百元店高频复购常青款',
+    ],
+    highlightsEn: [
+      '#1 bestselling fine-arts SKU: high-opacity white over dark canvas',
+      'Thick creamy impasto body ideal for both brush and palette knife',
+      'Fast-drying waterproof satin finish; wholesale pack 6 / carton 96',
+    ],
+    highlightsEs: [
+      'Referencia #1 en ventas: blanco titanio de alta opacidad sobre fondos oscuros',
+      'Cuerpo cremoso ideal para pincel y textura con espátula',
+      'Secado rápido e impermeable al secar; 6 uds/pack · 96 uds/caja',
+    ],
+    heroImage: gdImg('1tWtiTQan2oLZRHurc6jeq4WIvIW2RsIr'),
+    images: [
+      {
+        src: gdImg('1tWtiTQan2oLZRHurc6jeq4WIvIW2RsIr'),
+        downloadUrl: gdDl('1tWtiTQan2oLZRHurc6jeq4WIvIW2RsIr'),
+        labelZh: '俯拍画室调色盘与75ml开盖场景',
+        labelEn: 'Studio flat-lay with wooden palette',
+        labelEs: 'Vista cenital con paleta de madera',
+      },
+      {
+        src: gdImg('1U-6EHUl5cqwNH8Mlcp0oUMi6MjhK16Wc'),
+        downloadUrl: gdDl('1U-6EHUl5cqwNH8Mlcp0oUMi6MjhK16Wc'),
+        labelZh: '手持挤出奶油膏体与深蓝画布上色',
+        labelEn: 'Squeezing creamy white onto palette',
+        labelEs: 'Aplicando blanco sobre lienzo oscuro',
+      },
+      {
+        src: gdImg('1X9Ctv-sn9AVx5dlqR8SnVmEflPUd-tEi'),
+        downloadUrl: gdDl('1X9Ctv-sn9AVx5dlqR8SnVmEflPUd-tEi'),
+        labelZh: '画架成品与陶罐画笔桌景陈列',
+        labelEn: 'Tabletop easel & studio setup',
+        labelEs: 'Caballete de estudio y acabado',
+      },
+      {
+        src: gdImg('1L-Xeonqmtzi-nmYBQCWNSYI0i7tCk_0e'),
+        downloadUrl: gdDl('1L-Xeonqmtzi-nmYBQCWNSYI0i7tCk_0e'),
+        labelZh: '黑底刮刀厚涂遮盖力微距',
+        labelEn: 'Palette knife opacity macro',
+        labelEs: 'Macro de opacidad con espátula',
+      },
+    ],
+    videos: [
+      {
+        embedUrl: gdVid('1OK3vXbDv-AuMZBt4MK04H_Bbr6w9nKz6'),
+        downloadUrl: gdDl('1OK3vXbDv-AuMZBt4MK04H_Bbr6w9nKz6'),
+        titleZh: '百元店选品短剧《第一名白色丙烯》',
+        titleEn: 'B2B Retail Short: #1 White Acrylic',
+        titleEs: 'Corto B2B: El blanco acrílico #1',
+        tagZh: 'B2B 百元店推销版',
+        tagEn: 'B2B Retail',
+        tagEs: 'B2B Bazares',
+      },
+      {
+        embedUrl: gdVid('1VNuoiIL1F3mY2cc8n1prZZ1H5irpT18A'),
+        downloadUrl: gdDl('1VNuoiIL1F3mY2cc8n1prZZ1H5irpT18A'),
+        titleZh: '西班牙语美术种草短剧《一笔高遮盖》',
+        titleEn: 'Consumer Spot: High Opacity White',
+        titleEs: 'Spot España: Blanco Titanio Artix',
+        tagZh: 'B2C 西语消费版',
+        tagEn: 'B2C Consumer',
+        tagEs: 'B2C España',
+      },
+    ],
+    shareTextZh:
+      '🔥【冠军爆款 #1｜Artix PP631-01 75ml 白色丙烯颜料】\n' +
+      '画室和学生消耗最快的基础色！深色画布一笔高遮盖，干后防水耐晒。\n' +
+      '📦 6支/包 · 96支/箱 · 欢迎查看全套效果图与短剧：\n' +
+      '👉 https://vueltacole.com/vitrina.html?sku=PP631-01',
+    shareTextEn:
+      '🎨 #1 Bestseller: Artix PP631-01 Titanium White Acrylic 75 ml!\n' +
+      '✨ Rich creamy body, high opacity over dark canvas & waterproof satin finish.\n' +
+      '👉 See gallery & videos: https://vueltacole.com/vitrina.html?sku=PP631-01',
+    shareTextEs:
+      '🎨 ¡Top #1 en ventas: Pintura Acrílica Blanca Titanio 75 ml Artix (PP631-01)!\n' +
+      '✨ Textura cremosa cubriente, ideal para pincel y espátula, resistente al agua.\n' +
+      '👉 Mira fotos y vídeos aquí: https://vueltacole.com/vitrina.html?sku=PP631-01',
+  },
+  'PE486-1': {
+    id: 'pe486-1',
+    rank: 2,
+    sku: 'PE486-1',
+    ean: '8435250993307',
+    catKey: 'writing',
+    packInfoZh: '单支吸塑永不干涸黑色记号笔 ｜ 12 支/包 · 480 支/箱',
+    packInfoEn: 'No-Dry Black Permanent Marker ｜ 12 pcs/pack · 480 pcs/carton',
+    packInfoEs: 'Marcador Permanente No Dry Negro ｜ 12 uds/pack · 480 uds/caja',
+    titleZh: 'MP* 永不干涸黑色永久记号笔',
+    titleEn: 'MP* No-Dry Black Permanent Marker',
+    titleEs: 'MP* Marcador Permanente Negro No Dry',
+    taglineZh: 'TOP 2 爆款 · 防干笔头配方 · 纸箱/塑料/金属/玻璃全通吃 · 速干防水',
+    taglineEn: 'Top #2 Bestseller · Cap-off No-Dry ink · Cardboard, plastic, metal & glass · Waterproof',
+    taglineEs: 'Top #2 en ventas · Tinta No Dry · Cartón, plástico, metal y vidrio · Resistente al agua',
+    highlightsZh: [
+      '西班牙畅销榜第 2 名，防干笔头久置开盖不易干涸',
+      '快递纸箱、塑料袋、玻璃瓶、金属盒都能清晰书写，遇水不晕染',
+      '12支/包、480支/箱，仓库打包、百元店与家庭日常刚需单品',
+    ],
+    highlightsEn: [
+      '#2 bestselling marker: No-Dry formula resists drying out if left uncapped',
+      'Writes bold crisp black on cardboard, plastic bags, glass & metal',
+      'Instant-dry waterproof ink; wholesale 12 pcs/pack, 480 pcs/carton',
+    ],
+    highlightsEs: [
+      'Top #2 en ventas: fórmula No Dry que aguanta destapado sin secarse',
+      'Escribe negro intenso sobre cartón, plástico, vidrio y metal',
+      'Secado rápido resistente al agua; 12 uds/pack · 480 uds/caja',
+    ],
+    heroImage: gdImg('1Lopdshh_l0oZPbQvIR0Bz3xJfiAdcJyn'),
+    images: [
+      {
+        src: gdImg('1Lopdshh_l0oZPbQvIR0Bz3xJfiAdcJyn'),
+        downloadUrl: gdDl('1Lopdshh_l0oZPbQvIR0Bz3xJfiAdcJyn'),
+        labelZh: '仓库桌面平铺与标签书写场景',
+        labelEn: 'Warehouse desk flat-lay & labels',
+        labelEs: 'Mesa de almacén y etiquetas',
+      },
+      {
+        src: gdImg('1g0rYFwA1NouMZp8Bj58bBKOV8SxrNfCw'),
+        downloadUrl: gdDl('1g0rYFwA1NouMZp8Bj58bBKOV8SxrNfCw'),
+        labelZh: '手持纸箱与塑料袋编号实写',
+        labelEn: 'Writing on cardboard & plastic pouch',
+        labelEs: 'Rotulando cajas y bolsas plásticas',
+      },
+      {
+        src: gdImg('1jKGY5HsSKQdr4gdzTZANyHqV0ckZTZtK'),
+        downloadUrl: gdDl('1jKGY5HsSKQdr4gdzTZANyHqV0ckZTZtK'),
+        labelZh: '玻璃瓶/铁盒/木牌/塑料多材质展示',
+        labelEn: 'Glass, metal tin, wood & plastic showcase',
+        labelEs: 'Vidrio, metal, madera y plástico',
+      },
+      {
+        src: gdImg('1BQKwgfVirnocfGwpyb774GfHhlePjPxf'),
+        downloadUrl: gdDl('1BQKwgfVirnocfGwpyb774GfHhlePjPxf'),
+        labelZh: '纤维笔头黑亮墨迹防水珠微距',
+        labelEn: 'Waterproof ink & tip macro',
+        labelEs: 'Macro punta resistente al agua',
+      },
+    ],
+    videos: [
+      {
+        embedUrl: gdVid('1awjj3wwexzwpALpQild5huJwAZSJEjJc'),
+        downloadUrl: gdDl('1awjj3wwexzwpALpQild5huJwAZSJEjJc'),
+        titleZh: '百元店选品短剧《永不干涸记号笔》',
+        titleEn: 'B2B Retail Short: No-Dry Marker',
+        titleEs: 'Corto B2B: Marcador No Dry PE486-1',
+        tagZh: 'B2B 百元店推销版',
+        tagEn: 'B2B Retail',
+        tagEs: 'B2B Bazares',
+      },
+      {
+        embedUrl: gdVid('1OTFXm7i-by1xmxjYTTdlZ59YxY5n3rLh'),
+        downloadUrl: gdDl('1OTFXm7i-by1xmxjYTTdlZ59YxY5n3rLh'),
+        titleZh: '西班牙语多材质短剧《一笔搞定包装》',
+        titleEn: 'Consumer Spot: Multi-Surface Marker',
+        titleEs: 'Spot España: Permanente No Dry PE486-1',
+        tagZh: 'B2C 西语消费版',
+        tagEn: 'B2C Consumer',
+        tagEs: 'B2C España',
+      },
+    ],
+    shareTextZh:
+      '🔥【畅销榜 #2｜MP* PE486-1 永不干涸黑色记号笔】\n' +
+      '仓库打包、门店贴标刚需！纸箱、塑料袋、玻璃、铁盒一笔黑亮快干不掉色。\n' +
+      '📦 12支/包 · 480支/箱 · 点击看全套效果图与短剧：\n' +
+      '👉 https://vueltacole.com/vitrina.html?sku=PE486-1',
+    shareTextEn:
+      '🖊️ #2 Bestseller: MP* PE486-1 No-Dry Black Permanent Marker!\n' +
+      '✅ Writes bold waterproof black on cardboard, plastic, metal & glass without drying out.\n' +
+      '👉 See gallery & videos: https://vueltacole.com/vitrina.html?sku=PE486-1',
+    shareTextEs:
+      '🖊️ ¡Top #2 en ventas: Marcador Permanente No Dry MP* PE486-1!\n' +
+      '✅ Negro intenso resistente al agua sobre cartón, plástico, vidrio y metal.\n' +
+      '👉 Mira fotos y vídeos aquí: https://vueltacole.com/vitrina.html?sku=PE486-1',
+  },
 };
 
 const generatedItems: DailyVitrinaEntry[] = (top100Raw.items || []).map((raw: any) => {
