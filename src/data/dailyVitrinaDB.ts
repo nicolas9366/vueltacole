@@ -34,6 +34,82 @@ export interface DailyVitrinaEntry {
 
 export const DAILY_VITRINA_ITEMS: DailyVitrinaEntry[] = [
   {
+    id: '2026-11-18-pe517',
+    date: '2026-11-18',
+    sku: 'PE517',
+    ean: '8435250904600',
+    packInfo: '6支吸塑超值装 ｜ 12 挂板/包 · 144 挂板/箱',
+    titleZh: 'MP* 马卡龙柔色荧光笔 6支超值装',
+    titleEs: 'MP* Marcador Pastel 6 Uds. Pack Ahorro',
+    taglineZh: '6种马卡龙柔色 · 1–3 mm 斜头可粗可细 · 水性不晕纸 · 13.5 cm 便携笔身',
+    taglineEs: '6 tonos pastel · Punta biselada 1–3 mm · Tinta base agua sin traspasar · 13,5 cm',
+    highlightsZh: [
+      '奶油黄、薄荷绿、天空蓝、香芋紫、樱花粉、蜜桃橘 6 色柔和护眼不刺眼',
+      '1–3 mm 耐磨斜头设计，横划重点、竖勾细线一本笔记全搞定',
+      '欧标挂孔吸塑超值 6 支装，西班牙学生党与办公族高复购爆款，陈列即走量',
+    ],
+    highlightsEs: [
+      '6 tonos pastel suaves que protegen la vista y dejan apuntes estéticos',
+      'Punta biselada de 1 a 3 mm para subrayar títulos o trazar líneas finas',
+      'Blíster Pack Ahorro de 6 uds con eurocolgador, top ventas escolar y oficina',
+    ],
+    heroImage: '/daily/2026-11-18/pe517_scene_01.jpg',
+    images: [
+      {
+        src: '/daily/2026-11-18/pe517_scene_01.jpg',
+        labelZh: '俯拍书桌笔记与6色平铺',
+        labelEs: 'Vista cenital apuntes y 6 tonos',
+      },
+      {
+        src: '/daily/2026-11-18/pe517_scene_02.jpg',
+        labelZh: '手持周计划本划重点场景',
+        labelEs: 'Subrayando en agenda semanal',
+      },
+      {
+        src: '/daily/2026-11-18/pe517_scene_03.jpg',
+        labelZh: '桌面陈列与学习便签搭配',
+        labelEs: 'Display de escritorio y notas',
+      },
+      {
+        src: '/daily/2026-11-18/pe517_detail_01.jpg',
+        labelZh: '1–3mm斜头粗细笔触微距',
+        labelEs: 'Detalle punta biselada 1–3 mm',
+      },
+    ],
+    videos: [
+      {
+        src: '/daily/2026-11-18/pe517_b2b_drama.mp4',
+        titleZh: '百元店老板选品短剧《柔色荧光笔破局》',
+        titleEs: 'Corto B2B: Por qué PE517 vuela del lineal',
+        tagZh: 'B2B 百元店推销版',
+        tagEs: 'B2B Bazares',
+        poster: '/daily/2026-11-18/pe517_scene_03.jpg',
+      },
+      {
+        src: '/daily/2026-11-18/pe517_b2c_drama.mp4',
+        titleZh: '西班牙语学习种草短剧《笔记大变身》',
+        titleEs: 'Spot España: Apuntes bonitos con PE517',
+        tagZh: 'B2C 西语消费版',
+        tagEs: 'B2C España',
+        poster: '/daily/2026-11-18/pe517_scene_02.jpg',
+      },
+    ],
+    shareTextB2B:
+      '🔥【明日主推预告｜MP* PE517 马卡龙柔色荧光笔 6支超值装】\n' +
+      '还在卖刺眼老荧光笔吗？西班牙学生和白领都在抢这款 6 色马卡龙：\n' +
+      '✅ 奶油黄/薄荷绿/香芋紫等 6 种高颜值柔色，久看笔记不刺眼\n' +
+      '✅ 1–3 mm 斜头可粗可细，水性配方不透纸背\n' +
+      '✅ 12挂板/包 · 144挂板/箱，自带欧标挂孔和 Pack Ahorro 醒目标识，文具店高周转单品\n' +
+      '👉 效果图、双语宣传短剧与详情：https://vueltacole.com/vitrina.html\n' +
+      '需要补货试销的老板直接私信我留货！',
+    shareTextB2C:
+      '✨ ¡Tus apuntes más bonitos y sin cansar la vista con MP* PE517!\n' +
+      'Pack ahorro de 6 subrayadores en tonos pastel súper suaves:\n' +
+      '🖍️ Punta biselada 1–3 mm para títulos anchos y subrayado fino\n' +
+      '📄 Tinta base agua que no traspasa el papel\n' +
+      '👉 Mira las fotos y el vídeo aquí: https://vueltacole.com/vitrina.html',
+  },
+  {
     id: '2026-11-17-pp948',
     date: '2026-11-17',
     sku: 'PP948-1 / PP948-2 / PP948-3',
