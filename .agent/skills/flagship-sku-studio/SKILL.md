@@ -1,9 +1,9 @@
 ---
 name: flagship-sku-studio
-description: "E-Commerce Flagship SKU Studio v2.0 — End-to-end production pipeline: retail packaging hero shot + full multi-color lineup + 4 humanized commercial/macro photos, strict side-by-side visual QA gate, dual-language edge_tts + FFmpeg 720p videos, Google Drive cloud hosting, zero local bloat, and trilingual storefront deployment."
+description: "E-Commerce Flagship SKU Studio v2.1 — 6-image e-commerce flagship standard (retail packaging hero + full multi-color lineup + category-matched European model ad + commercial/macro shots), strict visual QA gate, dual-language edge_tts + FFmpeg 720p videos, Google Drive hosting, and trilingual storefront deployment."
 ---
 
-# Flagship SKU Studio v2.0 — 电商级旗舰单品全案物料生产 SOP
+# Flagship SKU Studio v2.1 — 电商级旗舰单品全案物料生产 SOP
 
 本技能融合 `ai-studio-image` 自然实拍质感与 `ui-visual-validator` 零容忍视觉质检方法论，将 Top 畅销 SKU 逐款打造成符合**全球顶级电商首图与详情页标准**的全套商业物料包，并全自动托管至 Google Drive，不占用本地磁盘。
 
@@ -20,20 +20,25 @@ description: "E-Commerce Flagship SKU Studio v2.0 — End-to-end production pipe
 
 ---
 
-## 第二阶段：5 张 1:1 电商级无字商业图标准
+## 第二阶段：6 张 1:1 电商级无字商业图标准（适配详情页与六宫格）
 
-每款产品固定制作 **5 张 1:1 商业图**（**严禁图内出现任何 AI 叠加促销文字、价格标签或水印**）：
+每款产品固定制作 **6 张 1:1 商业图**（**严禁图内出现任何 AI 叠加促销文字、价格标签或水印**）：
 
 1. **`hero_pack` 电商产品首图（袋装/盒装标准首图）**
    - **必须展示产品原始零售包装（透明吊袋/吸塑卡/彩盒）与拆封单品同框**，干净纯白或极简浅灰棚拍背景，达到 Amazon / 品牌官网首图清晰标准。
    - 如有多色套装（如 12 色笔），首图必须清晰展示**整包/整盒内全部 12 支不同颜色**。
-2. **`scene_01` 全套阵容桌面俯拍**
+2. **`model_ad` 品牌固定模特使用广告图（按品类匹配固定人设）**
+   - 融入 `ai-studio-image` 自然实拍质感，人物面部与使用动作自然，严禁塑料感：
+     - **学生文具 / 开学类**：统一使用**阳光西班牙少女**（校园课桌/家庭书桌自然光使用场景，保持品牌家族识别度）。
+     - **办公产品 / 商务归档类**：统一使用**黑发商务女性**（现代明亮办公室桌面、笔记本与文件处理场景）。
+     - **美术画材 / 手工创作类**：统一使用**红发艺术女生**（采光通透的画室/工作台、画架与色彩创作场景）。
+3. **`scene_01` 全套阵容桌面俯拍**
    - 自然晨光下的木质或石材桌面场景。如果是多色套装（如 12 色），**所有颜色必须全部出镜**（扇形排开或全色试色笔触同框），绝不允许只展示少数几支。
-3. **`scene_02` 欧洲真实用户上手（融入 `ai-studio-image` 自然实拍法）**
-   - 欧洲学生、设计师或仓库/办公人员的真实使用抓拍，保留自然光影与微景深，避免塑料感。
-4. **`scene_03` 多材质与门店陈列组合**
+4. **`scene_02` 近景真实上手特写**
+   - 手部或桌面局部真实使用抓拍，展示流畅书写、涂抹或裁剪过程。
+5. **`scene_03` 多材质与门店陈列组合**
    - 展示产品在金属、玻璃、塑料、卡纸或文具架/笔筒中的真实应用与陈列效果。
-5. **`detail_01` 微距笔尖/压头与显色细节**
+6. **`detail_01` 微距笔尖/压头与显色细节**
    - 浅景深微距特写，突出 0.5mm 针管、油漆阀芯、滚轮压头或全套显色覆盖力。
 
 ### 功能性工具物理常识硬性约束
@@ -44,8 +49,9 @@ description: "E-Commerce Flagship SKU Studio v2.0 — End-to-end production pipe
 
 ## 第三阶段：零容忍视觉质检拦截门禁（借鉴 `ui-visual-validator`）
 
-默认所有图片**未通过验收**，直到通过以下 4 项逐张并排比对证据：
+默认所有图片**未通过验收**，直到通过以下 5 项逐张并排比对证据：
 - [ ] **首图包装标准**：`hero_pack` 是否清晰完整展示产品袋/盒零售包装？
+- [ ] **模特人设匹配**：`model_ad` 是否准确匹配对应品类模特（学生用西班牙少女、办公用黑发商务女性、美术用红发艺术女生）且手持/使用产品自然？
 - [ ] **多色全貌完整**：多色/套装产品是否在首图与场景图中展示全部颜色（如 12 色全部齐全）？
 - [ ] **外形保真度**：笔杆粗细、透明视窗、笔帽与夹子是否与官方原图 1:1 一致？
 - [ ] **物理合规性**：接触纸面的工具是否已取下保护盖？接触角度与手势是否自然无穿帮？
@@ -61,7 +67,7 @@ description: "E-Commerce Flagship SKU Studio v2.0 — End-to-end production pipe
      - **B2B 中文百元店选品版**（`zh-CN-YunxiNeural`，语速 `+6%`）：聚焦门店痛点、核心卖点、包装规格（包规/箱规）与复购率。
      - **B2C 西班牙语消费种草版**（`es-ES-ElviraNeural`，语速 `+4%`）：面向西班牙学生与日常消费者的轻快场景体验描述。
 2. **FFmpeg 合成 720p H.264 MP4**
-   - 将多段配音合并后按总时长均分切换 5 张无字商业图：
+   - 将多段配音合并后按总时长均分切换 6 张无字商业图：
      - 分辨率：`1280x720`（1:1 原图居中等比缩放填充深色背景 `#111111`）
      - 编码：`libx264`、`yuv420p`、`aac 128k`、`+faststart`
 
@@ -71,8 +77,8 @@ description: "E-Commerce Flagship SKU Studio v2.0 — End-to-end production pipe
 
 1. **上传与公开共享**
    - 在 Google Drive 根目录 `1CB7UzT725ohCBr5VWFKlzQLGo9T92HGq` 下创建或复用 `<SKU>` 子目录。
-   - 使用 `gdrive --ignore-sharing-checks --json mutate upload` 上传 5 张图片与 2 支 MP4。
-   - 对所有 7 个文件执行 `gdrive --ignore-sharing-checks mutate share <fileID> --type anyone --role reader`。
+   - 使用 `gdrive --ignore-sharing-checks --json mutate upload` 上传 6 张图片与 2 支 MP4。
+   - 对所有 8 个文件执行 `gdrive --ignore-sharing-checks mutate share <fileID> --type anyone --role reader`。
 2. **立即清理本地文件**
    - 上传确认成功后，**立即删除**本地参考原图、生成图片、音频文件夹与视频暂存目录，不占用本地硬盘空间。
 
