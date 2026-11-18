@@ -1,36 +1,40 @@
 ---
 name: flagship-sku-studio
-description: "End-to-end production pipeline for creating flagship B2B/B2C product promo kits (4 zero-text 1:1 commercial & macro photos with strict visual QA, dual-language edge_tts + FFmpeg 720p videos, Google Drive cloud hosting, zero local bloat, and trilingual storefront deployment)."
+description: "E-Commerce Flagship SKU Studio v2.0 — End-to-end production pipeline: retail packaging hero shot + full multi-color lineup + 4 humanized commercial/macro photos, strict side-by-side visual QA gate, dual-language edge_tts + FFmpeg 720p videos, Google Drive cloud hosting, zero local bloat, and trilingual storefront deployment."
 ---
 
-# Flagship SKU Studio — 旗舰单品全案物料生产 SOP
+# Flagship SKU Studio v2.0 — 电商级旗舰单品全案物料生产 SOP
 
-本技能规范用于将 Top 畅销 SKU 逐款打造成具备 **4 张无字商业实景与微距图 + 2 支中/西双语 720p 短剧视频 + 三语旗舰展厅详情** 的完整商业素材包，并全自动托管至 Google Drive，不占用本地磁盘。
+本技能融合 `ai-studio-image` 自然实拍质感与 `ui-visual-validator` 零容忍视觉质检方法论，将 Top 畅销 SKU 逐款打造成符合**全球顶级电商首图与详情页标准**的全套商业物料包，并全自动托管至 Google Drive，不占用本地磁盘。
 
 ---
 
-## 第一阶段：官方原图拆解与物理结构锁定（必做）
+## 第一阶段：官方原图拆解、包装识别与多色全貌锁定（必做）
 
 1. **先看原图，再写提示词**
-   - 从候选库下载官方 `imageUrl` 原图后，**必须先用看图工具亲自查看原图**。
-   - 拆解并记录以下硬件特征：
-     - 笔杆/机身轮廓比例（粗细、圆筒/六角、末端堵头）
-     - 材质与透明度（全透明墨水视窗、磨砂半透、金属拉丝或纯色塑料）
-     - 握持区纹理（导墨环、凹槽、防滑胶套）
-     - 笔帽与笔夹细节（金属夹、塑料一体夹、盖帽形状）
-2. **禁止概括性描述**
-   - 严禁只写“保持参考图外观”，必须在提示词中逐项锁定上述结构特征，防止扩散模型将特殊笔杆脑补成普通中性笔或白板笔。
+   - 从 `src/data/top100_candidates.json` 读取 SKU 并下载官方 `imageUrl` 原图后，**必须先用看图工具亲自查看原图**。
+   - 拆解并记录以下硬件与包装特征：
+     - **零售包装形态**：卡装吸塑、透明OPP吊袋、彩盒、展示盒或整盒包装细节。
+     - **完整颜色与支数**：如为 6 色、12 色、24 色套装或同款多色系列，必须逐一核对颜色清单与支数，**严禁只画 1-2 支代表全套**。
+     - **笔杆与机身结构**：粗细比例、透明墨水视窗、握持导墨环、笔帽与笔夹形状、末端堵头颜色。
 
 ---
 
-## 第二阶段：4 张 1:1 无字商业图生成规范
+## 第二阶段：5 张 1:1 电商级无字商业图标准
 
-每款产品固定制作 4 张 1:1 商业摄影图（**严禁图内出现任何叠加文字、促销标签或水印**）：
+每款产品固定制作 **5 张 1:1 商业图**（**严禁图内出现任何 AI 叠加促销文字、价格标签或水印**）：
 
-1. **`scene_01` 桌面平铺俯拍**：自然采光下的木质/石材工作台或书桌场景，搭配真实关联文具（笔记本、卡纸、包装箱等）。
-2. **`scene_02` 欧洲真实用户上手**：欧洲学生、设计师或仓库/办公人员的真实手部或局部使用抓拍。
-3. **`scene_03` 多材质/陈列组合**：展示产品在金属、玻璃、塑料、卡纸或笔筒陈列架上的实际表现。
-4. **`detail_01` 微距笔尖/压头细节**：浅景深微距特写，突出 0.5mm 针管、油漆阀芯、滚轮压头或白带覆盖效果。
+1. **`hero_pack` 电商产品首图（袋装/盒装标准首图）**
+   - **必须展示产品原始零售包装（透明吊袋/吸塑卡/彩盒）与拆封单品同框**，干净纯白或极简浅灰棚拍背景，达到 Amazon / 品牌官网首图清晰标准。
+   - 如有多色套装（如 12 色笔），首图必须清晰展示**整包/整盒内全部 12 支不同颜色**。
+2. **`scene_01` 全套阵容桌面俯拍**
+   - 自然晨光下的木质或石材桌面场景。如果是多色套装（如 12 色），**所有颜色必须全部出镜**（扇形排开或全色试色笔触同框），绝不允许只展示少数几支。
+3. **`scene_02` 欧洲真实用户上手（融入 `ai-studio-image` 自然实拍法）**
+   - 欧洲学生、设计师或仓库/办公人员的真实使用抓拍，保留自然光影与微景深，避免塑料感。
+4. **`scene_03` 多材质与门店陈列组合**
+   - 展示产品在金属、玻璃、塑料、卡纸或文具架/笔筒中的真实应用与陈列效果。
+5. **`detail_01` 微距笔尖/压头与显色细节**
+   - 浅景深微距特写，突出 0.5mm 针管、油漆阀芯、滚轮压头或全套显色覆盖力。
 
 ### 功能性工具物理常识硬性约束
 - **必须开盖才能接触纸面**：凡涉及写字、涂胶、涂改修正带的使用场景，提示词必须明确写出**保护盖已取下或掀开（放置在旁或扣于笔尾）**，绝不允许盖着盖子贴在纸面上。
@@ -38,12 +42,13 @@ description: "End-to-end production pipeline for creating flagship B2B/B2C produ
 
 ---
 
-## 第三阶段：强制视觉质检拦截门禁（QA Gate）
+## 第三阶段：零容忍视觉质检拦截门禁（借鉴 `ui-visual-validator`）
 
-每批图片生成后，**必须调用看图工具将每张成图与官方原图并排比对**：
-- [ ] **外形保真度**：笔杆粗细、透明视窗、笔帽与夹子是否与官方原图一致？
-- [ ] **物理合规性**：接触纸面的工具是否已取下保护盖？接触角度与手势是否自然？
-- [ ] **零瑕疵检查**：有无多余悬浮配件、错乱图形或图内文字？
+默认所有图片**未通过验收**，直到通过以下 4 项逐张并排比对证据：
+- [ ] **首图包装标准**：`hero_pack` 是否清晰完整展示产品袋/盒零售包装？
+- [ ] **多色全貌完整**：多色/套装产品是否在首图与场景图中展示全部颜色（如 12 色全部齐全）？
+- [ ] **外形保真度**：笔杆粗细、透明视窗、笔帽与夹子是否与官方原图 1:1 一致？
+- [ ] **物理合规性**：接触纸面的工具是否已取下保护盖？接触角度与手势是否自然无穿帮？
 
 **凡未通过任意一项，立即拦截并重生成，严禁将瑕疵图上传至云盘。**
 
@@ -56,7 +61,7 @@ description: "End-to-end production pipeline for creating flagship B2B/B2C produ
      - **B2B 中文百元店选品版**（`zh-CN-YunxiNeural`，语速 `+6%`）：聚焦门店痛点、核心卖点、包装规格（包规/箱规）与复购率。
      - **B2C 西班牙语消费种草版**（`es-ES-ElviraNeural`，语速 `+4%`）：面向西班牙学生与日常消费者的轻快场景体验描述。
 2. **FFmpeg 合成 720p H.264 MP4**
-   - 将多段配音合并后按总时长均分切换 4 张无字商业图：
+   - 将多段配音合并后按总时长均分切换 5 张无字商业图：
      - 分辨率：`1280x720`（1:1 原图居中等比缩放填充深色背景 `#111111`）
      - 编码：`libx264`、`yuv420p`、`aac 128k`、`+faststart`
 
@@ -66,8 +71,8 @@ description: "End-to-end production pipeline for creating flagship B2B/B2C produ
 
 1. **上传与公开共享**
    - 在 Google Drive 根目录 `1CB7UzT725ohCBr5VWFKlzQLGo9T92HGq` 下创建或复用 `<SKU>` 子目录。
-   - 使用 `gdrive --ignore-sharing-checks --json mutate upload` 上传 4 张图片与 2 支 MP4。
-   - 对所有 6 个文件执行 `gdrive --ignore-sharing-checks mutate share <fileID> --type anyone --role reader`。
+   - 使用 `gdrive --ignore-sharing-checks --json mutate upload` 上传 5 张图片与 2 支 MP4。
+   - 对所有 7 个文件执行 `gdrive --ignore-sharing-checks mutate share <fileID> --type anyone --role reader`。
 2. **立即清理本地文件**
    - 上传确认成功后，**立即删除**本地参考原图、生成图片、音频文件夹与视频暂存目录，不占用本地硬盘空间。
 
@@ -75,6 +80,6 @@ description: "End-to-end production pipeline for creating flagship B2B/B2C produ
 
 ## 第六阶段：三语旗舰展厅上线
 
-1. **写入数据库**：将产品 SKU、EAN、包规、三语标题/卖点、Google Drive 图片与视频 ID 写入 `src/data/dailyVitrinaDB.ts` 的 `FLAGSHIP_ITEMS`。
-2. **社媒分享文案去 AI 味规范**：写自然口语化的产品推荐短句，不加入“欢迎查看全套效果图”等模板化话术，也不在分享正文硬塞 `6支/包·96支/箱` 包装数据。
-3. **编译与发布**：在项目根目录执行 `npm run build` 验证 `tsc -b` 与 Vite 打包零报错后，提交并 `git push origin main` 自动同步上线至 `showcase.html` 与 `vitrina.html`。
+1. **写入数据库**：将产品 SKU、EAN、包规、三语标题/卖点、Google Drive 图片与视频 ID 写入 `src/data/dailyVitrinaDB.ts` 的 `FLAGSHIP_ITEMS`（将 `hero_pack` 设为 `heroImage` 与 `images[0]`）。
+2. **社媒分享文案去 AI 味规范**：写自然口语化的产品推荐短句，不加入模板化链接导语，也不在分享正文硬塞包装数字。
+3. **编译与发布**：先 `git pull --rebase origin main`，运行 `npm run build` 验证 `tsc -b` 与 Vite 打包零报错后，提交并 `git push origin main` 自动同步上线至 `showcase.html` 与 `vitrina.html`。
