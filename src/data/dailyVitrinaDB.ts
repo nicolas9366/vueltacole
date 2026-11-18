@@ -93,6 +93,267 @@ function detectCategory(cat: string, subcat: string, namees: string): VitrinaCat
 }
 
 const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
+  "PE224-1": {
+  "id": "pe224-1",
+  "rank": 23,
+  "sku": "PE224-1",
+  "ean": "8435250996988",
+  "catKey": "writing",
+  "heroImage": "https://lh3.googleusercontent.com/d/1QMotsIU6khZ-Wx9d4vH9A2I2pxz1FQTL=w1200",
+  "images": [
+    {
+      "src": "https://lh3.googleusercontent.com/d/1QMotsIU6khZ-Wx9d4vH9A2I2pxz1FQTL=w1200",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=1QMotsIU6khZ-Wx9d4vH9A2I2pxz1FQTL",
+      "labelZh": "桌面平铺",
+      "labelEn": "Desk flat-lay",
+      "labelEs": "Vista cenital"
+    },
+    {
+      "src": "https://lh3.googleusercontent.com/d/1JFZsBSwBka0hWzXuGizsHss-QtqnR2Q7=w1200",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=1JFZsBSwBka0hWzXuGizsHss-QtqnR2Q7",
+      "labelZh": "日常使用",
+      "labelEn": "In use",
+      "labelEs": "En uso"
+    },
+    {
+      "src": "https://lh3.googleusercontent.com/d/1cYM7Q56NOXaQsVRxFMmMGucZLVULYlk5=w1200",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=1cYM7Q56NOXaQsVRxFMmMGucZLVULYlk5",
+      "labelZh": "场景陈列",
+      "labelEn": "Product display",
+      "labelEs": "Presentación"
+    },
+    {
+      "src": "https://lh3.googleusercontent.com/d/10dTcfTD9KchxRqku1LhmRF_89BaWBlmF=w1200",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=10dTcfTD9KchxRqku1LhmRF_89BaWBlmF",
+      "labelZh": "结构微距",
+      "labelEn": "Detail macro",
+      "labelEs": "Detalle macro"
+    }
+  ],
+  "videos": [
+    {
+      "embedUrl": "https://drive.google.com/file/d/1LmNbJ91x1KY_uoPZWF0_6iDiCyGD1A2d/preview",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=1LmNbJ91x1KY_uoPZWF0_6iDiCyGD1A2d",
+      "titleZh": "中文门店选品介绍",
+      "titleEn": "Chinese retail product introduction",
+      "titleEs": "Presentación comercial en chino",
+      "tagZh": "B2B中文",
+      "tagEn": "B2B Chinese",
+      "tagEs": "B2B chino"
+    },
+    {
+      "embedUrl": "https://drive.google.com/file/d/161v1SfJOju8zyOwrUPWS5OyU-OQKRwna/preview",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=161v1SfJOju8zyOwrUPWS5OyU-OQKRwna",
+      "titleZh": "西语日常使用介绍",
+      "titleEn": "Spanish everyday use introduction",
+      "titleEs": "Presentación de uso en español",
+      "tagZh": "B2C西语",
+      "tagEn": "B2C Spanish",
+      "tagEs": "B2C español"
+    }
+  ],
+  "packInfoZh": "2支/份 · 12份/包 · 324份/箱",
+  "titleZh": "0.7mm蓝黑中性笔双支装",
+  "taglineZh": "透明笔杆 · 螺纹握区 · 按动结构",
+  "highlightsZh": [
+    "蓝、黑两色搭配，适合日常记事",
+    "0.7mm笔尖，按动伸缩",
+    "透明笔杆与螺纹握区"
+  ],
+  "shareTextZh": "0.7mm蓝黑中性笔双支装 · 透明笔杆 · 螺纹握区 · 按动结构",
+  "packInfoEn": "2 pens/set · 12 sets/pack · 324 sets/carton",
+  "titleEn": "0.7 mm Gel Pens · Blue & Black Pair",
+  "taglineEn": "Clear barrel · Ribbed grip · Retractable tip",
+  "highlightsEn": [
+    "Blue and black ink pair for daily notes",
+    "Retractable 0.7 mm ballpoint",
+    "Clear barrel with ribbed grip"
+  ],
+  "shareTextEn": "0.7 mm Gel Pens · Blue & Black Pair · Clear barrel · Ribbed grip · Retractable tip",
+  "packInfoEs": "2 bolígrafos/juego · 12 juegos/pack · 324 juegos/caja",
+  "titleEs": "Bolígrafos de gel 0,7 mm · azul y negro",
+  "taglineEs": "Cuerpo transparente · Agarre estriado · Punta retráctil",
+  "highlightsEs": [
+    "Juego de tinta azul y negra para notas diarias",
+    "Punta de 0,7 mm con mecanismo retráctil",
+    "Cuerpo transparente y agarre estriado"
+  ],
+  "shareTextEs": "Bolígrafos de gel 0,7 mm · azul y negro · Cuerpo transparente · Agarre estriado · Punta retráctil"
+},
+  "PE140A-12": {
+  "id": "pe140a-12",
+  "rank": 24,
+  "sku": "PE140A-12",
+  "ean": "8435464149750",
+  "catKey": "writing",
+  "heroImage": "https://lh3.googleusercontent.com/d/13rpYsqN_AZWEMu93KgBT2i_qoOjRPLTw=w1200",
+  "images": [
+    {
+      "src": "https://lh3.googleusercontent.com/d/13rpYsqN_AZWEMu93KgBT2i_qoOjRPLTw=w1200",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=13rpYsqN_AZWEMu93KgBT2i_qoOjRPLTw",
+      "labelZh": "桌面平铺",
+      "labelEn": "Desk flat-lay",
+      "labelEs": "Vista cenital"
+    },
+    {
+      "src": "https://lh3.googleusercontent.com/d/1HRiGQK_IsW4X2rLjOGsxESVUUeJLwWA2=w1200",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=1HRiGQK_IsW4X2rLjOGsxESVUUeJLwWA2",
+      "labelZh": "日常使用",
+      "labelEn": "In use",
+      "labelEs": "En uso"
+    },
+    {
+      "src": "https://lh3.googleusercontent.com/d/1kddd20dbpWX3Hkzl6DAoP0Zs_yQ_lC6u=w1200",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=1kddd20dbpWX3Hkzl6DAoP0Zs_yQ_lC6u",
+      "labelZh": "场景陈列",
+      "labelEn": "Product display",
+      "labelEs": "Presentación"
+    },
+    {
+      "src": "https://lh3.googleusercontent.com/d/1QhlMBWucx_HZRNiR30mVqsQ6ORPejCrF=w1200",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=1QhlMBWucx_HZRNiR30mVqsQ6ORPejCrF",
+      "labelZh": "结构微距",
+      "labelEn": "Detail macro",
+      "labelEs": "Detalle macro"
+    }
+  ],
+  "videos": [
+    {
+      "embedUrl": "https://drive.google.com/file/d/1MnxsDdCp9P6K28yumS9XEVm2uHwD9gu3/preview",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=1MnxsDdCp9P6K28yumS9XEVm2uHwD9gu3",
+      "titleZh": "中文门店选品介绍",
+      "titleEn": "Chinese retail product introduction",
+      "titleEs": "Presentación comercial en chino",
+      "tagZh": "B2B中文",
+      "tagEn": "B2B Chinese",
+      "tagEs": "B2B chino"
+    },
+    {
+      "embedUrl": "https://drive.google.com/file/d/1DO97twNQ1lf-NMaV8Rc1TCmiYisXX9kU/preview",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=1DO97twNQ1lf-NMaV8Rc1TCmiYisXX9kU",
+      "titleZh": "西语日常使用介绍",
+      "titleEn": "Spanish everyday use introduction",
+      "titleEs": "Presentación de uso en español",
+      "tagZh": "B2C西语",
+      "tagEn": "B2C Spanish",
+      "tagEs": "B2C español"
+    }
+  ],
+  "packInfoZh": "12支/份 · 12份/包 · 144份/箱",
+  "titleZh": "1.0mm蓝色圆珠笔12支装",
+  "taglineZh": "透明笔杆 · 深蓝握套 · 按动式",
+  "highlightsZh": [
+    "12支蓝色圆珠笔，供日常书写使用",
+    "1.0mm笔尖与按动结构",
+    "透明笔杆，深蓝握套和塑料笔夹"
+  ],
+  "shareTextZh": "1.0mm蓝色圆珠笔12支装 · 透明笔杆 · 深蓝握套 · 按动式",
+  "packInfoEn": "12 pens/set · 12 sets/pack · 144 sets/carton",
+  "titleEn": "1.0 mm Blue Ballpoint Pens · Set of 12",
+  "taglineEn": "Clear barrel · Navy grip · Retractable",
+  "highlightsEn": [
+    "Twelve blue ballpoints for daily writing",
+    "1.0 mm retractable tips",
+    "Clear barrel, navy grip and plastic clip"
+  ],
+  "shareTextEn": "1.0 mm Blue Ballpoint Pens · Set of 12 · Clear barrel · Navy grip · Retractable",
+  "packInfoEs": "12 bolígrafos/juego · 12 juegos/pack · 144 juegos/caja",
+  "titleEs": "Bolígrafos azules 1,0 mm · 12 unidades",
+  "taglineEs": "Cuerpo transparente · Agarre azul · Retráctil",
+  "highlightsEs": [
+    "Doce bolígrafos azules para escritura diaria",
+    "Puntas de 1,0 mm retráctiles",
+    "Cuerpo transparente, agarre azul y clip de plástico"
+  ],
+  "shareTextEs": "Bolígrafos azules 1,0 mm · 12 unidades · Cuerpo transparente · Agarre azul · Retráctil"
+},
+  "PP633-1": {
+  "id": "pp633-1",
+  "rank": 25,
+  "sku": "PP633-1",
+  "ean": "8435250985210",
+  "catKey": "art",
+  "heroImage": "https://lh3.googleusercontent.com/d/1M6M1SmM2k46qykABZTQLlxqgZQOJLpi-=w1200",
+  "images": [
+    {
+      "src": "https://lh3.googleusercontent.com/d/1M6M1SmM2k46qykABZTQLlxqgZQOJLpi-=w1200",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=1M6M1SmM2k46qykABZTQLlxqgZQOJLpi-",
+      "labelZh": "桌面平铺",
+      "labelEn": "Desk flat-lay",
+      "labelEs": "Vista cenital"
+    },
+    {
+      "src": "https://lh3.googleusercontent.com/d/1H8R12ExnSCUneuzzQNXacjXwzwXhyFSA=w1200",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=1H8R12ExnSCUneuzzQNXacjXwzwXhyFSA",
+      "labelZh": "日常使用",
+      "labelEn": "In use",
+      "labelEs": "En uso"
+    },
+    {
+      "src": "https://lh3.googleusercontent.com/d/1ZptB5iO0K3fOY04BPk2coYvx8WfF0qwh=w1200",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=1ZptB5iO0K3fOY04BPk2coYvx8WfF0qwh",
+      "labelZh": "场景陈列",
+      "labelEn": "Product display",
+      "labelEs": "Presentación"
+    },
+    {
+      "src": "https://lh3.googleusercontent.com/d/1frLtirTeSm6L2a2FaBM_Ac7rHkZP3Cvo=w1200",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=1frLtirTeSm6L2a2FaBM_Ac7rHkZP3Cvo",
+      "labelZh": "结构微距",
+      "labelEn": "Detail macro",
+      "labelEs": "Detalle macro"
+    }
+  ],
+  "videos": [
+    {
+      "embedUrl": "https://drive.google.com/file/d/1rnV30T1bFIByaBJ9mHG1TRjsSlEdbB1s/preview",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=1rnV30T1bFIByaBJ9mHG1TRjsSlEdbB1s",
+      "titleZh": "中文门店选品介绍",
+      "titleEn": "Chinese retail product introduction",
+      "titleEs": "Presentación comercial en chino",
+      "tagZh": "B2B中文",
+      "tagEn": "B2B Chinese",
+      "tagEs": "B2B chino"
+    },
+    {
+      "embedUrl": "https://drive.google.com/file/d/1JaUdWWWGKomNOLVwK6ILnP800Dqmmf14/preview",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=1JaUdWWWGKomNOLVwK6ILnP800Dqmmf14",
+      "titleZh": "西语日常使用介绍",
+      "titleEn": "Spanish everyday use introduction",
+      "titleEs": "Presentación de uso en español",
+      "tagZh": "B2C西语",
+      "tagEn": "B2C Spanish",
+      "tagEs": "B2C español"
+    }
+  ],
+  "packInfoZh": "75ml/支 · 6支/包 · 96支/箱",
+  "titleZh": "Artix金属金色丙烯颜料75ml",
+  "taglineZh": "金属金色 · 软管包装 · 画笔创作",
+  "highlightsZh": [
+    "金属金色丙烯颜料，适合绘画与手工创作",
+    "75ml软管，挤入调色盘后用画笔上色",
+    "黑金包装，带挂孔封口"
+  ],
+  "shareTextZh": "Artix金属金色丙烯颜料75ml · 金属金色 · 软管包装 · 画笔创作",
+  "packInfoEn": "75 ml/tube · 6 tubes/pack · 96 tubes/carton",
+  "titleEn": "Artix Metallic Gold Acrylic Paint · 75 ml",
+  "taglineEn": "Metallic gold · Squeeze tube · Brush painting",
+  "highlightsEn": [
+    "Metallic gold acrylic for painting and craft projects",
+    "75 ml tube; dispense onto a palette and use a brush",
+    "Black-and-gold packaging with hanging slot"
+  ],
+  "shareTextEn": "Artix Metallic Gold Acrylic Paint · 75 ml · Metallic gold · Squeeze tube · Brush painting",
+  "packInfoEs": "75 ml/tubo · 6 tubos/pack · 96 tubos/caja",
+  "titleEs": "Pintura acrílica Artix oro metalizado · 75 ml",
+  "taglineEs": "Oro metalizado · Tubo flexible · Pintura con pincel",
+  "highlightsEs": [
+    "Acrílico oro metalizado para pintura y manualidades",
+    "Tubo de 75 ml; aplica con pincel desde la paleta",
+    "Envase negro y dorado con orificio para colgar"
+  ],
+  "shareTextEs": "Pintura acrílica Artix oro metalizado · 75 ml · Oro metalizado · Tubo flexible · Pintura con pincel"
+},
   PP948: {
     id: 'pp948',
     rank: 0,

@@ -1,0 +1,336 @@
+{
+  "skus": [
+    "PE224-1",
+    "PE140A-12",
+    "PP633-1"
+  ],
+  "drive": {
+    "PE224-1": {
+      "folder": "1oQ7Ghp4wVL6tpZ4OOa5qb6aAbWu7tmfF",
+      "files": {
+        "PE224-1-0.png": {
+          "id": "1QMotsIU6khZ-Wx9d4vH9A2I2pxz1FQTL",
+          "public": true
+        },
+        "PE224-1-1.png": {
+          "id": "1JFZsBSwBka0hWzXuGizsHss-QtqnR2Q7",
+          "public": true
+        },
+        "PE224-1-2.png": {
+          "id": "1cYM7Q56NOXaQsVRxFMmMGucZLVULYlk5",
+          "public": true
+        },
+        "PE224-1-3.png": {
+          "id": "10dTcfTD9KchxRqku1LhmRF_89BaWBlmF",
+          "public": true
+        },
+        "PE224-1-zh.mp4": {
+          "id": "1LmNbJ91x1KY_uoPZWF0_6iDiCyGD1A2d",
+          "public": true
+        },
+        "PE224-1-es.mp4": {
+          "id": "161v1SfJOju8zyOwrUPWS5OyU-OQKRwna",
+          "public": true
+        }
+      }
+    },
+    "PE140A-12": {
+      "files": {
+        "PE140A-12-0.png": {
+          "id": "13rpYsqN_AZWEMu93KgBT2i_qoOjRPLTw",
+          "public": true
+        },
+        "PE140A-12-1.png": {
+          "id": "1HRiGQK_IsW4X2rLjOGsxESVUUeJLwWA2",
+          "public": true
+        },
+        "PE140A-12-2.png": {
+          "id": "1kddd20dbpWX3Hkzl6DAoP0Zs_yQ_lC6u",
+          "public": true
+        },
+        "PE140A-12-3.png": {
+          "id": "1QhlMBWucx_HZRNiR30mVqsQ6ORPejCrF",
+          "public": true
+        },
+        "PE140A-12-zh.mp4": {
+          "id": "1MnxsDdCp9P6K28yumS9XEVm2uHwD9gu3",
+          "public": true
+        },
+        "PE140A-12-es.mp4": {
+          "id": "1DO97twNQ1lf-NMaV8Rc1TCmiYisXX9kU",
+          "public": true
+        }
+      },
+      "folder": "1ZDP4FnBxZYf2ntPVpWPAW3Rn1fffEJQN"
+    },
+    "PP633-1": {
+      "files": {
+        "PP633-1-0.png": {
+          "id": "1M6M1SmM2k46qykABZTQLlxqgZQOJLpi-",
+          "public": true
+        },
+        "PP633-1-1.png": {
+          "id": "1H8R12ExnSCUneuzzQNXacjXwzwXhyFSA",
+          "public": true
+        },
+        "PP633-1-2.png": {
+          "id": "1ZptB5iO0K3fOY04BPk2coYvx8WfF0qwh",
+          "public": true
+        },
+        "PP633-1-3.png": {
+          "id": "1frLtirTeSm6L2a2FaBM_Ac7rHkZP3Cvo",
+          "public": true
+        },
+        "PP633-1-zh.mp4": {
+          "id": "1rnV30T1bFIByaBJ9mHG1TRjsSlEdbB1s",
+          "public": true
+        },
+        "PP633-1-es.mp4": {
+          "id": "1JaUdWWWGKomNOLVwK6ILnP800Dqmmf14",
+          "public": true
+        }
+      },
+      "folder": "1Y7JRGAxjKNASCjqaBAz4n_J9GOM4g3mQ"
+    }
+  },
+  "videoQA": [
+    {
+      "file": "PE140A-12-es.mp4",
+      "sha256": "86c729b27d74ba9a7b2cc55bf838d389b0892935ec29096228c88ffea28dd1c5",
+      "duration": "20.160000",
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1280,
+          "height": 720,
+          "pix_fmt": "yuv420p"
+        },
+        {
+          "codec_name": "aac",
+          "width": null,
+          "height": null,
+          "pix_fmt": null
+        }
+      ]
+    },
+    {
+      "file": "PE140A-12-zh.mp4",
+      "sha256": "2ae5a7a4eab21b34a2f0837a38b50f1e440063d5c2949b7a4d21954fa0e9c611",
+      "duration": "20.920000",
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1280,
+          "height": 720,
+          "pix_fmt": "yuv420p"
+        },
+        {
+          "codec_name": "aac",
+          "width": null,
+          "height": null,
+          "pix_fmt": null
+        }
+      ]
+    },
+    {
+      "file": "PE224-1-es.mp4",
+      "sha256": "c881caa293b10165f4f1a240b95ba3fd0cd86e618dd003781f5b628387fc662f",
+      "duration": "21.560000",
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1280,
+          "height": 720,
+          "pix_fmt": "yuv420p"
+        },
+        {
+          "codec_name": "aac",
+          "width": null,
+          "height": null,
+          "pix_fmt": null
+        }
+      ]
+    },
+    {
+      "file": "PE224-1-zh.mp4",
+      "sha256": "b06d9dd9bcb5197a3a58918b4c6c4734dcba1daa68d1da3f830c919d6d12ba0e",
+      "duration": "21.984000",
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1280,
+          "height": 720,
+          "pix_fmt": "yuv420p"
+        },
+        {
+          "codec_name": "aac",
+          "width": null,
+          "height": null,
+          "pix_fmt": null
+        }
+      ]
+    },
+    {
+      "file": "PP633-1-es.mp4",
+      "sha256": "794dfa8d4396a9dd576cce351b3e14101de7cdf50cf123b19e96c9bdb921fbee",
+      "duration": "19.360000",
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1280,
+          "height": 720,
+          "pix_fmt": "yuv420p"
+        },
+        {
+          "codec_name": "aac",
+          "width": null,
+          "height": null,
+          "pix_fmt": null
+        }
+      ]
+    },
+    {
+      "file": "PP633-1-zh.mp4",
+      "sha256": "05dfd4588024bcad7159e6d841205f36604d917186550f0a3af0f684d4e0e611",
+      "duration": "22.320000",
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1280,
+          "height": 720,
+          "pix_fmt": "yuv420p"
+        },
+        {
+          "codec_name": "aac",
+          "width": null,
+          "height": null,
+          "pix_fmt": null
+        }
+      ]
+    }
+  ],
+  "voices": {
+    "zh": [
+      "zh-CN-YunxiNeural",
+      "+6%"
+    ],
+    "es": [
+      "es-ES-ElviraNeural",
+      "+4%"
+    ]
+  },
+  "scripts": {
+    "PE224-1": {
+      "zh": "店里写单、办公室记事，顾客要的是拿起就能用的笔。这款中性笔两支装，蓝黑两色搭配，零点七毫米笔尖，透明笔杆配防滑握区。按出笔尖就能书写，收起后方便携带。批发包装为十二份一包，三百二十四份一箱，补货前核对型号 PE224杠一。",
+      "es": "¿Apuntes en clase o notas en la oficina? Este juego incluye dos bolígrafos de gel, uno azul y otro negro. La punta de cero coma siete milímetros acompaña la escritura diaria. El cuerpo transparente y la zona de agarre estriada permiten ver y sujetar el bolígrafo con comodidad. Pulsa para sacar la punta y empieza tu próxima página."
+    },
+    "PE140A-12": {
+      "zh": "文具货架上的日常补货，可以从蓝色圆珠笔做起。这个型号一份十二支，一毫米笔尖，透明笔杆配深蓝握区和按动结构。办公室、学生日常书写都能用得上。批发包装为十二份一包，一百四十四份一箱，订货时核对 PE140A杠十二。",
+      "es": "Cuando necesitas varios bolígrafos azules para tus apuntes, un juego de doce resulta práctico. Estos bolígrafos tienen punta de un milímetro, cuerpo transparente y zona de agarre azul oscuro. El mecanismo retráctil permite sacar la punta con una pulsación. Tenlos a mano para la clase, la oficina o tus notas de cada día."
+    },
+    "PP633-1": {
+      "zh": "手工作品想加一点金色，可以看看这支 Artix 金属色丙烯颜料。单支七十五毫升，金色软管装，打开底部保护盖后，把颜料挤到调色盘，再用画笔创作。适合搭配手工和绘画用品陈列。批发六支一包，九十六支一箱。补货核对 PP633杠一。",
+      "es": "Un toque de oro puede cambiar tu próxima idea creativa. Esta pintura acrílica Artix de color oro metalizado viene en un tubo de setenta y cinco mililitros. Abre el tapón, prepara un poco en la paleta y aplica el color con un pincel. Una opción para explorar detalles y acabados dorados en tus proyectos de pintura."
+    }
+  },
+  "generation": [
+    {
+      "sku": "PE224-1",
+      "index": 0,
+      "prompt": "ONE standalone square 1:1 commercial product photograph, photoreal. Reference is a product specification collage, extract the real product only. Exact reference blue retractable gel pen: slim clear cylindrical barrel showing dark refill, BLUE pushbutton and long integral BLUE plastic clip, deep BLUE ribbed curved rubber grip with diagonal grooves, transparent conical nose with extended metal 0.7 mm ballpoint, 14.5cm. Retractable, NO removable cap. Keep blue and black pair only if showing two. Do not redesign into needle pen. scene_01: Single product on oak studio desk, tasteful overhead flat lay with notebook or painting palette and restrained related props, natural window light. No added text, no headings, no watermark, no graphic labels, no specification infographic, no collage. Existing tiny physical product branding may remain, never add floating typography. Lock product structure faithfully. Warm neutral European creative workspace, high-quality soft natural light.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-7f5cc3a5-8654-484c-980c-fa072a5acc1f.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "sku": "PE224-1",
+      "index": 1,
+      "prompt": "ONE standalone square 1:1 commercial product photograph, photoreal. Reference is a product specification collage, extract the real product only. Exact reference blue retractable gel pen: slim clear cylindrical barrel showing dark refill, BLUE pushbutton and long integral BLUE plastic clip, deep BLUE ribbed curved rubber grip with diagonal grooves, transparent conical nose with extended metal 0.7 mm ballpoint, 14.5cm. Retractable, NO removable cap. Keep blue and black pair only if showing two. Do not redesign into needle pen. scene_02: Real adult European user's hand using product at desk. Writing pen pushbutton extended and metal ballpoint touching paper at natural 50 degrees, blue ink trail behind contact point; for paint show open tube beside brush being used to apply gold paint to paper, no painting with closed tube. Natural anatomically correct hand. No added text, no headings, no watermark, no graphic labels, no specification infographic, no collage. Existing tiny physical product branding may remain, never add floating typography. Lock product structure faithfully. Warm neutral European creative workspace, high-quality soft natural light.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-b5b303e3-b2dc-4fbe-bc4a-436588b5e70b.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "sku": "PE224-1",
+      "index": 2,
+      "prompt": "ONE standalone square 1:1 commercial product photograph, photoreal. Reference is a product specification collage, extract the real product only. Exact reference blue retractable gel pen: slim clear cylindrical barrel showing dark refill, BLUE pushbutton and long integral BLUE plastic clip, deep BLUE ribbed curved rubber grip with diagonal grooves, transparent conical nose with extended metal 0.7 mm ballpoint, 14.5cm. Retractable, NO removable cap. Keep blue and black pair only if showing two. Do not redesign into needle pen. scene_03: Product resting on desk beside finished paper work and simple retail tray, understated realistic composition. For paint gold brush strokes on card and wood alongside same tube. No unverified application claims. No added text, no headings, no watermark, no graphic labels, no specification infographic, no collage. Existing tiny physical product branding may remain, never add floating typography. Lock product structure faithfully. Warm neutral European creative workspace, high-quality soft natural light.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-6aa8a37b-4cf6-4ba4-b106-55bb6ed40faf.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "sku": "PE224-1",
+      "index": 3,
+      "prompt": "ONE standalone square 1:1 commercial product photograph, photoreal. Reference is a product specification collage, extract the real product only. Exact reference blue retractable gel pen: slim clear cylindrical barrel showing dark refill, BLUE pushbutton and long integral BLUE plastic clip, deep BLUE ribbed curved rubber grip with diagonal grooves, transparent conical nose with extended metal 0.7 mm ballpoint, 14.5cm. Retractable, NO removable cap. Keep blue and black pair only if showing two. Do not redesign into needle pen. detail_01: Macro product functional end, physically faithful material detail, shallow depth. Pen transparent cone and metal ballpoint contacting paper at 50 degrees with continuous blue line behind. Paint OPEN flip cap, small gold paint bead at nozzle above palette, realistic simple structure. No added text, no headings, no watermark, no graphic labels, no specification infographic, no collage. Existing tiny physical product branding may remain, never add floating typography. Lock product structure faithfully. Warm neutral European creative workspace, high-quality soft natural light.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-51b5d30b-5947-4b28-8787-00c9e5f3fda5.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "sku": "PE140A-12",
+      "index": 0,
+      "prompt": "ONE standalone square 1:1 commercial product photograph, photoreal. Reference is a product specification collage, extract the real product only. Exact reference retractable BLUE ballpoint: slim clear cylindrical barrel with visible dark refill, blue pushbutton and molded long blue plastic pocket clip, smooth deep navy cylindrical grip (NOT ribbed), transparent long conical tip housing extended metal 1mm ballpoint,14cm. Retractable NO removable cap. Blue ink only. scene_01: Single product on oak studio desk, tasteful overhead flat lay with notebook or painting palette and restrained related props, natural window light. No added text, no headings, no watermark, no graphic labels, no specification infographic, no collage. Existing tiny physical product branding may remain, never add floating typography. Lock product structure faithfully. Warm neutral European creative workspace, high-quality soft natural light.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-a4582815-a15c-4953-8f02-d628ea397754.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "sku": "PE140A-12",
+      "index": 1,
+      "prompt": "ONE standalone square 1:1 commercial product photograph, photoreal. Reference is a product specification collage, extract the real product only. Exact reference retractable BLUE ballpoint: slim clear cylindrical barrel with visible dark refill, blue pushbutton and molded long blue plastic pocket clip, smooth deep navy cylindrical grip (NOT ribbed), transparent long conical tip housing extended metal 1mm ballpoint,14cm. Retractable NO removable cap. Blue ink only. scene_02: Real adult European user's hand using product at desk. Writing pen pushbutton extended and metal ballpoint touching paper at natural 50 degrees, blue ink trail behind contact point; for paint show open tube beside brush being used to apply gold paint to paper, no painting with closed tube. Natural anatomically correct hand. No added text, no headings, no watermark, no graphic labels, no specification infographic, no collage. Existing tiny physical product branding may remain, never add floating typography. Lock product structure faithfully. Warm neutral European creative workspace, high-quality soft natural light.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-7ae562db-d250-4b8c-b520-9b4d6d7daf66.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "sku": "PE140A-12",
+      "index": 2,
+      "prompt": "ONE standalone square 1:1 commercial product photograph, photoreal. Reference is a product specification collage, extract the real product only. Exact reference retractable BLUE ballpoint: slim clear cylindrical barrel with visible dark refill, blue pushbutton and molded long blue plastic pocket clip, smooth deep navy cylindrical grip (NOT ribbed), transparent long conical tip housing extended metal 1mm ballpoint,14cm. Retractable NO removable cap. Blue ink only. scene_03: Product resting on desk beside finished paper work and simple retail tray, understated realistic composition. For paint gold brush strokes on card and wood alongside same tube. No unverified application claims. No added text, no headings, no watermark, no graphic labels, no specification infographic, no collage. Existing tiny physical product branding may remain, never add floating typography. Lock product structure faithfully. Warm neutral European creative workspace, high-quality soft natural light.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-952892c9-ad35-44a5-b0bf-5dbfb9936222.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "sku": "PE140A-12",
+      "index": 3,
+      "prompt": "ONE standalone square 1:1 commercial product photograph, photoreal. Reference is a product specification collage, extract the real product only. Exact reference retractable BLUE ballpoint: slim clear cylindrical barrel with visible dark refill, blue pushbutton and molded long blue plastic pocket clip, smooth deep navy cylindrical grip (NOT ribbed), transparent long conical tip housing extended metal 1mm ballpoint,14cm. Retractable NO removable cap. Blue ink only. detail_01: Macro product functional end, physically faithful material detail, shallow depth. Pen transparent cone and metal ballpoint contacting paper at 50 degrees with continuous blue line behind. Paint OPEN flip cap, small gold paint bead at nozzle above palette, realistic simple structure. No added text, no headings, no watermark, no graphic labels, no specification infographic, no collage. Existing tiny physical product branding may remain, never add floating typography. Lock product structure faithfully. Warm neutral European creative workspace, high-quality soft natural light.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-fa5b218d-2bb4-4419-ac0f-cc0eec714b7d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "sku": "PP633-1",
+      "index": 0,
+      "prompt": "ONE standalone square 1:1 commercial product photograph, photoreal. Reference is a product specification collage, extract the real product only. Exact reference Artix metallic GOLD acrylic 75ml squeeze tube: broad flat crimped BLACK hanging top with oval slot, tapered soft BLACK upper tube, metallic warm GOLD lower label, squat wide BLACK bottom flip-top cap. Same proportions. GOLD paint ONLY, not silver. For use have flip-top clearly OPEN beside nozzle. No invented package. scene_01: Single product on oak studio desk, tasteful overhead flat lay with notebook or painting palette and restrained related props, natural window light. No added text, no headings, no watermark, no graphic labels, no specification infographic, no collage. Existing tiny physical product branding may remain, never add floating typography. Lock product structure faithfully. Warm neutral European creative workspace, high-quality soft natural light.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-cd21f086-7e07-4f9c-9883-484cc7bba697.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "sku": "PP633-1",
+      "index": 1,
+      "prompt": "ONE standalone square 1:1 commercial product photograph, photoreal. Reference is a product specification collage, extract the real product only. Exact reference Artix metallic GOLD acrylic 75ml squeeze tube: broad flat crimped BLACK hanging top with oval slot, tapered soft BLACK upper tube, metallic warm GOLD lower label, squat wide BLACK bottom flip-top cap. Same proportions. GOLD paint ONLY, not silver. For use have flip-top clearly OPEN beside nozzle. No invented package. scene_02: Real adult European user's hand using product at desk. Writing pen pushbutton extended and metal ballpoint touching paper at natural 50 degrees, blue ink trail behind contact point; for paint show open tube beside brush being used to apply gold paint to paper, no painting with closed tube. Natural anatomically correct hand. No added text, no headings, no watermark, no graphic labels, no specification infographic, no collage. Existing tiny physical product branding may remain, never add floating typography. Lock product structure faithfully. Warm neutral European creative workspace, high-quality soft natural light.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-b4820778-1591-4ff7-8594-3f89c855e208.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "sku": "PP633-1",
+      "index": 2,
+      "prompt": "ONE standalone square 1:1 commercial product photograph, photoreal. Reference is a product specification collage, extract the real product only. Exact reference Artix metallic GOLD acrylic 75ml squeeze tube: broad flat crimped BLACK hanging top with oval slot, tapered soft BLACK upper tube, metallic warm GOLD lower label, squat wide BLACK bottom flip-top cap. Same proportions. GOLD paint ONLY, not silver. For use have flip-top clearly OPEN beside nozzle. No invented package. scene_03: Product resting on desk beside finished paper work and simple retail tray, understated realistic composition. For paint gold brush strokes on card and wood alongside same tube. No unverified application claims. No added text, no headings, no watermark, no graphic labels, no specification infographic, no collage. Existing tiny physical product branding may remain, never add floating typography. Lock product structure faithfully. Warm neutral European creative workspace, high-quality soft natural light.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-cdbcfaf0-4963-4a44-9b2f-3589422b0235.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "sku": "PP633-1",
+      "index": 3,
+      "prompt": "ONE standalone square 1:1 commercial product photograph, photoreal. Reference is a product specification collage, extract the real product only. Exact reference Artix metallic GOLD acrylic 75ml squeeze tube: broad flat crimped BLACK hanging top with oval slot, tapered soft BLACK upper tube, metallic warm GOLD lower label, squat wide BLACK bottom flip-top cap. Same proportions. GOLD paint ONLY, not silver. For use have flip-top clearly OPEN beside nozzle. No invented package. detail_01: Macro product functional end, physically faithful material detail, shallow depth. Pen transparent cone and metal ballpoint contacting paper at 50 degrees with continuous blue line behind. Paint OPEN flip cap, small gold paint bead at nozzle above palette, realistic simple structure. No added text, no headings, no watermark, no graphic labels, no specification infographic, no collage. Existing tiny physical product branding may remain, never add floating typography. Lock product structure faithfully. Warm neutral European creative workspace, high-quality soft natural light.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-6c492c15-c70a-4ca6-9076-510b8e58f69f.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "revision": "PE224-detail-retry",
+      "prompt": "ONE square macro photograph of ONLY the PE224-1 blue retractable gel pen in reference, a real human right hand gripping BLUE diagonally ribbed rubber grip. Clear slim cylindrical barrel, blue plastic clip and pushbutton, clear conical nose, extended metal 0.7mm ballpoint. Ballpoint contacting plain paper at 50 degrees with a short thin blue ink line immediately behind contact. Hand visible supporting pen, never floating. Background softly blurred plain desk, no paint, no paint tubes, no brushes, no palette, no other products. No added text or graphic overlays. Exact product structure from attached reference.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-75e0c41a-a221-4b8b-9f95-f794b583b6da.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "revision": "PE140-detail-retry",
+      "prompt": "Square macro close-up natural photograph of adult hand holding exact PE140A-12 retractable blue ballpoint from reference. Long smooth matte dark navy cylindrical grip, absolutely NO ribs. Clear slim cylindrical barrel, internal refill, blue long plastic clip and blue pushbutton. Clear conical nose with metal 1mm ballpoint extended, touching plain notebook at 50 degrees, short blue ink trail behind. Hand naturally supporting pen firmly at grip. Plain soft office background, NO paint tubes, NO brushes, NO paint, NO palette, no added typography. This is an office ballpoint not an art brush. Precisely preserve reference shape.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-7957d04a-1284-44b2-80e8-308e158435df.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "revision": "PP633-detail-retry",
+      "prompt": "ONE square extreme macro commercial photograph of ONLY reference Artix PP633-1 75ml gold metallic acrylic paint tube. Cropped real adult hand clearly visible gripping and supporting the black and gold soft tapered tube from upper right, holding it 50 degrees over palette. Broad BLACK hanging crimp with oval slot (may be cropped), black upper printed area, GOLD lower printed label and short wide BLACK flip-top bottom cap, cap visibly hinged OPEN. Tiny bead of gold acrylic paint on nozzle and small gold dollop immediately below on plain white palette. Main focus functional black nozzle and open cap, not full label. Absolutely NO pens, NO blue ink, NO ballpoint, no brushes. Tube must be physically held by hand, not levitating. No overlay text, no infographic, no watermarks. Natural soft light, true proportions and structure from reference.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-d25ddf33-e70c-4fd7-9ef7-7e8391d03c87.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "revision": "PP633-scene3-retry",
+      "prompt": "Single square real-looking commercial studio photograph: reference PP633-1 Artix GOLD metallic acrylic 75ml tube standing vertically on its CLOSED black cap, on an oak desk beside gold-painted thick paper swatches and wood panel. Preserve exact tube structure shown reference, CLOSED cylindrical low black cap as reference, broad black hanging top with diecut slot, black upper label and gold lower label. NO open cap, NO extra nozzle, NO extra port, no cap on side, no dispensing. Clear restrained room scene with subtle wood retail tray, no people, no pens. No added text, banner or graphic overlays. Reference tube proportions and printed label accurate. This image is a product still life, no tool is in use.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-45f25c87-e65f-4609-805f-bab23a2fafe8.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "revision": "PP633-scene2-retry",
+      "prompt": "One square lifestyle photo, adult European craftsperson hand using a normal wooden paintbrush at 50 degrees on thick paper making metallic GOLD strokes. Alongside on oak desk sits exact PP633-1 Artix 75ml GOLD tube with cap fully CLOSED, and a palette with a little dispensed gold paint. Preserve tube reference: black broad hanging top with slot, black upper label, gold lower label, low CLOSED round black bottom cap, no extra nozzle anywhere. Only brush is in use, tube rests nearby as reference packaging. Person cropped at torso, anatomically natural visible hand. NO pens or ink writing. No overlay text, no watermarks, plain studio background. Product fidelity, clean natural light.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-52e25fd3-1d40-418c-8392-9eda558bb888.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    }
+  ],
+  "qa": "Compared all 12 final images with 3 references individually and in a contact sheet. Five initial images rejected and replaced for unsupported floating products, unrelated pens or malformed cap nozzle. Existing physical package print retained; no overlay text. Reference does not show paint cap inner geometry, so open-nozzle images are illustrative reconstructions. Videos fully decoded with ffmpeg; audio not manually auditioned."
+}
