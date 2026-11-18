@@ -101,6 +101,13 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
   "catKey": "writing",
   "heroImage": "https://lh3.googleusercontent.com/d/1QMotsIU6khZ-Wx9d4vH9A2I2pxz1FQTL=w1200",
   "images": [
+{
+  "src": "https://lh3.googleusercontent.com/d/1pYsyOAVdUEF2lbFud7sOF_E6myl9Cx7F=w1200",
+  "downloadUrl": "https://drive.google.com/uc?export=download&id=1pYsyOAVdUEF2lbFud7sOF_E6myl9Cx7F",
+  "labelZh": "产品与包装展示",
+  "labelEn": "Product and packaging",
+  "labelEs": "Producto y envase"
+},
     {
       "src": "https://lh3.googleusercontent.com/d/1QMotsIU6khZ-Wx9d4vH9A2I2pxz1FQTL=w1200",
       "downloadUrl": "https://drive.google.com/uc?export=download&id=1QMotsIU6khZ-Wx9d4vH9A2I2pxz1FQTL",
@@ -188,6 +195,13 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
   "catKey": "writing",
   "heroImage": "https://lh3.googleusercontent.com/d/13rpYsqN_AZWEMu93KgBT2i_qoOjRPLTw=w1200",
   "images": [
+{
+  "src": "https://lh3.googleusercontent.com/d/13vvw8A0RfENnzsX9M5_sD00ZdplYwaJR=w1200",
+  "downloadUrl": "https://drive.google.com/uc?export=download&id=13vvw8A0RfENnzsX9M5_sD00ZdplYwaJR",
+  "labelZh": "原包装",
+  "labelEn": "Retail packaging",
+  "labelEs": "Envase original"
+},
     {
       "src": "https://lh3.googleusercontent.com/d/13rpYsqN_AZWEMu93KgBT2i_qoOjRPLTw=w1200",
       "downloadUrl": "https://drive.google.com/uc?export=download&id=13rpYsqN_AZWEMu93KgBT2i_qoOjRPLTw",
@@ -275,6 +289,13 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
   "catKey": "art",
   "heroImage": "https://lh3.googleusercontent.com/d/1M6M1SmM2k46qykABZTQLlxqgZQOJLpi-=w1200",
   "images": [
+{
+  "src": "https://lh3.googleusercontent.com/d/1I9MRNQYh-PuwGU-Fg1xYhNOW7i_edurk=w1200",
+  "downloadUrl": "https://drive.google.com/uc?export=download&id=1I9MRNQYh-PuwGU-Fg1xYhNOW7i_edurk",
+  "labelZh": "产品与包装展示",
+  "labelEn": "Product and packaging",
+  "labelEs": "Producto y envase"
+},
     {
       "src": "https://lh3.googleusercontent.com/d/1M6M1SmM2k46qykABZTQLlxqgZQOJLpi-=w1200",
       "downloadUrl": "https://drive.google.com/uc?export=download&id=1M6M1SmM2k46qykABZTQLlxqgZQOJLpi-",
@@ -384,8 +405,15 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
       'Máxima cobertura extra opaca sobre cartulina negra, cerámica, piedra, madera, tela y metal',
       'Resistente al agua y a la luz al secar; caja con eurocolgador lista para lineal',
     ],
-    heroImage: '/daily/2026-11-17/pp948_6grid_combo.jpg',
+    heroImage: "https://lh3.googleusercontent.com/d/13vvw8A0RfENnzsX9M5_sD00ZdplYwaJR=w1200",
     images: [
+{
+  "src": "https://lh3.googleusercontent.com/d/1T7JAd6snTKUVKnHQAbBdgmDhmjLereNS=w1200",
+  "downloadUrl": "https://drive.google.com/uc?export=download&id=1T7JAd6snTKUVKnHQAbBdgmDhmjLereNS",
+  "labelZh": "12色与原盒",
+  "labelEn": "12 colours and original box",
+  "labelEs": "12 colores y caja original"
+},
       {
         src: gdImg('1vHb77nyphoS6AAU_J-KEj6ELtU9_OTFD'),
         downloadUrl: gdDl('1vHb77nyphoS6AAU_J-KEj6ELtU9_OTFD'),

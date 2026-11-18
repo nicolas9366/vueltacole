@@ -1,0 +1,55 @@
+{
+  "uploads": {
+    "PE224-1": {
+      "id": "1pYsyOAVdUEF2lbFud7sOF_E6myl9Cx7F",
+      "public": true
+    },
+    "PP633-1": {
+      "id": "1I9MRNQYh-PuwGU-Fg1xYhNOW7i_edurk",
+      "public": true
+    },
+    "PP948": {
+      "id": "1T7JAd6snTKUVKnHQAbBdgmDhmjLereNS",
+      "public": true
+    },
+    "PE140A-12": {
+      "id": "13vvw8A0RfENnzsX9M5_sD00ZdplYwaJR",
+      "public": true
+    }
+  },
+  "generations": [
+    {
+      "sku": "PE224-1",
+      "prompt": "Square premium ecommerce main product photo on pure white. Display EXACT original retail hang blister package PE224-1 from reference at left, complete from red hanging header with MP star, euro slot, white blue card and TWO pens sealed inside (one black one blue), clear plastic blister. At right show unboxed contents as ONE black and ONE blue pen, matching originals: clear slim barrels, diagonally ribbed matching black/blue grips, matching long molded clips and pushbuttons, clear cone with metal 0.7mm ballpoint. This is TWO ink colors blue and black only. Show all components and package fully uncropped with subtle contact shadows. Product fills 85% square, no decorative props, no floating typography, no infographic or dimension lines, physical package print preserved. Package plus contents are arranged as catalog presentation, not a new bundle. Photography and packaging identity accurate.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-eaf22297-c83b-47e1-9d40-49faffbf972e.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "sku": "PE140A-12",
+      "prompt": "Square premium ecommerce main product photo on pure white. Show original PE140A-12 retail hang blister at left, complete red MP header, white blue card, printed 12 and 1.0 mm, transparent plastic containing original all-blue pen set, preserve package design exactly. At right arrange EXACTLY TWELVE loose identical blue retractable ballpoint pens in two tidy parallel rows of six, count six per row. ALL BLUE INK AND BLUE GRIPS, NOT assorted colors. Each pen has slim transparent barrel, smooth navy grip, blue plastic long pocket clip and blue pushbutton, clear conical nose and metal ballpoint, same reference shape. Full package and full set visible, no cropping, no props or background drawings, subtle studio contact shadow. No added lettering, infographic or watermark; preserve actual package print. Crisp realistic ecommerce packshot, visually accurate count.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-246bde4a-ed26-4de4-823d-0d82e1dbe87b.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "sku": "PP633-1",
+      "prompt": "Square ecommerce main product packshot on pure white, display reference Artix PP633-1 original six tube retail display carton at back-right AND one representative loose tube front-left. Preserve EXACT reference rectangular carton design red header, black bottom, mint-teal band framing long transparent window with SIX gold metallic 75ml tubes visible. Loose tube is same broad black hanging top with die-cut hole, tapered black upper and gold lower label, Artix star logo, PP633-1 and 75ml physical print, wide CLOSED black flip cap. Preserve package art, logo, structure and proportions. Gold paint only. Full carton and complete tube visible, balanced studio light and soft grounded shadows. No added text, no infographic, no loose accessories, no paintbrush, no price, no watermark. Image represents one unit plus wholesale display carton shown for packaging reference.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-9afe1ef6-7aeb-4d28-8cee-ecb1a43afcdf.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "sku": "PP948",
+      "prompt": "One square clean ecommerce catalog hero photo of EXACT MP PP948-1 twelve-color acrylic brush marker set in attached reference. Fully show original retail box left, with red hanging header and original printed colorful artwork, intact accurate original package design. On right display the COMPLETE set of TWELVE different color brush markers arranged neatly with exactly twelve visible pens. Black barrels, color-coded translucent grip reservoirs with direct ink feeder fins, color-matching brush tips and caps, same reference architecture. Colors white, yellow, orange, red, pink, purple, dark blue, cyan, light green, green, gray, black as shown on original package illustrations. All twelve fully in frame, make count legible through organized arrangement, not overlapping; do not invent extra colors or accessories. Caps posted securely on back or beside their own pens. Pure white background, soft contact shadows, no added headings or text or watermarks; physical packaging lettering retained. Avoid the original measurement infographic, right sample tiles or standalone floating logo. Focus package plus actual full twelve-color contents. Packaging is part of SAME set display.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-e08881ee-7229-4182-92b5-e3c838ee0eaf.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "sku": "PE140A-12",
+      "retry": true,
+      "prompt": "Create square ecommerce packshot on white. Use original attached PE140A-12 retail package EXACTLY as photographed, six visible front-facing blue pens with six hidden behind in the 12-unit blister. DO NOT change package shape or number of visible pens, exactly SIX visible in the package front, original red header, white-blue card, printed PE140A-12,12,1.0mm and yellow-red bag icon. Place this intact package at left. At right show twelve matching blue pens in two rows of exactly six each. Each has slim clear barrel, smooth deep-blue grip, blue integrated plastic clip/pushbutton. All blue. Keep package artwork/layout and proportions from reference without redesign. No added text or badges outside physical package. Accurate catalog photo, entire package and contents in frame. Distinguish original photographed sealed packaging and unpacked full 12 pens as same set presentation.",
+      "output_hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-eea425ca-f598-4d8b-80bb-a101d26741ea.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "sku": "PE140A-12",
+      "userCorrection": "Use only original retail package, no twelve loose pens",
+      "prompt": "Create a clean square ecommerce packshot of ONLY the ORIGINAL PE140A-12 retail blister pack in attached reference. Extract and center the original photographed sealed retail package from the left side of reference on pure white, package completely in frame, generous narrow white margins, fills about 85 percent image height, subtle real contact shadow. KEEP ORIGINAL packaging exactly: red hanging card, PE140A-12 at top right, MP star logo, white/blue card with printed 12 and 1.0mm, yellow/red icon in center, SIX front-facing identical blue pens visible inside package, original EASY GRIP icon. Preserve card and plastic geometry, print positioning, blue pushbuttons, transparent barrels, smooth navy grips. Only ONE sealed retail package. NO loose pens outside, NO exploded set, NO additional pen, NO large standalone pen, NO props, NO separate floating logo, NO infographic, NO added text. Real product catalog main image, faithful original retail package, no redesign.",
+      "hint": "Generated images are saved to /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412 as /Users/dengyu/.codex/generated_images/01a04e6f-5504-7f11-92f9-73ddcd524412/exec-e4281340-a4ce-4684-9d58-335dccb533ce.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    }
+  ],
+  "qa": "Packaging identities visually compared. PP948 shows all 12 colours. PE140 uses one original retail package only per user correction. Generated package lettering is reconstructed, not verified pixel-identical."
+}
