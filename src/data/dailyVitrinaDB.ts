@@ -996,9 +996,9 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
       {
         src: gdImg('1xyQDKvhQ4RvYrAqhe4MxnnmNLT7FdIT0'),
         downloadUrl: gdDl('1xyQDKvhQ4RvYrAqhe4MxnnmNLT7FdIT0'),
-        labelZh: '西班牙学生课桌开盖即涂实拍',
-        labelEn: 'Student Classroom Ergonomic Rewrite',
-        labelEs: 'Estudiante aplicando corrector en clase',
+        labelZh: '西班牙学生自习室开盖即涂实拍',
+        labelEn: 'Student Library Ergonomic Rewrite',
+        labelEs: 'Estudiante aplicando corrector en biblioteca',
       },
       {
         src: gdImg('1rtJgbtz2DZPjuw6qLjdyA-2g-2SYG7Xt'),
@@ -1010,9 +1010,9 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
       {
         src: gdImg('1F8yleq4BPHIEBS-XD3VjGTXvjHE_IVyo'),
         downloadUrl: gdDl('1F8yleq4BPHIEBS-XD3VjGTXvjHE_IVyo'),
-        labelZh: '上手50度倾角顺滑覆盖实测',
-        labelEn: 'Smooth 50-degree gliding application',
-        labelEs: 'Aplicación fluida en ángulo ergonómico',
+        labelZh: '低倾角出带与铰链翻折实测',
+        labelEn: 'Low-angle gliding & flipped hinge cap in-use',
+        labelEs: 'Aplicación en ángulo ergonómico con tapa abatible',
       },
       {
         src: gdImg('1rhdboJp-boS3ChzPm3Pt_VOo46hZBtF1'),
@@ -1024,9 +1024,9 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
       {
         src: gdImg('1tWI0XWD5KtawTIHavaj-maF2Fkxm5wVS'),
         downloadUrl: gdDl('1tWI0XWD5KtawTIHavaj-maF2Fkxm5wVS'),
-        labelZh: '双机械齿轮与滚轮压头微距特写',
-        labelEn: 'Dual drive gears & roller head macro',
-        labelEs: 'Macro de engranajes mecánicos y cabezal',
+        labelZh: '出带嘴机械铰链与合盖翻折微距特写',
+        labelEn: 'Applicator hinge mechanism & folded cap macro',
+        labelEs: 'Macro del cabezal con bisagra y tapa abatible',
       },
     ],
     videos: [
