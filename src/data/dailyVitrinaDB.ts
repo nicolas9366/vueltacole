@@ -1416,6 +1416,20 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
     heroImage: gdImg('14nvYCb8aCfK8fndCUkihw9KU2dAwjGPb'),
     images: [
       {
+        src: gdImg('1p7__SSYmksuDa_BLVGZI20Qg9_bRRNiF'),
+        downloadUrl: gdDl('1p7__SSYmksuDa_BLVGZI20Qg9_bRRNiF'),
+        labelZh: '产品与包装展示',
+        labelEn: 'Product and packaging',
+        labelEs: 'Producto y envase',
+      },
+      {
+        src: gdImg('1aZZuPK6W66DXW6Zz6Phpflh9mgtt98VI'),
+        downloadUrl: gdDl('1aZZuPK6W66DXW6Zz6Phpflh9mgtt98VI'),
+        labelZh: '品牌模特使用图',
+        labelEn: 'Brand model in use',
+        labelEs: 'Modelo de marca en uso',
+      },
+      {
         src: gdImg('14nvYCb8aCfK8fndCUkihw9KU2dAwjGPb'),
         downloadUrl: gdDl('14nvYCb8aCfK8fndCUkihw9KU2dAwjGPb'),
         labelZh: '桌面平铺俯拍',
@@ -1506,6 +1520,20 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
     heroImage: gdImg('1m-z-dozrvfMe1SSm1M2-fPNtLEeVSghC'),
     images: [
       {
+        src: gdImg('1PvDu5OLSsF7dQNBnsuEsc6IRBRJT3pM0'),
+        downloadUrl: gdDl('1PvDu5OLSsF7dQNBnsuEsc6IRBRJT3pM0'),
+        labelZh: '产品与包装展示',
+        labelEn: 'Product and packaging',
+        labelEs: 'Producto y envase',
+      },
+      {
+        src: gdImg('1tKrquEfOpz-4XQkjwnjD053VFdeS-In4'),
+        downloadUrl: gdDl('1tKrquEfOpz-4XQkjwnjD053VFdeS-In4'),
+        labelZh: '品牌模特使用图',
+        labelEn: 'Brand model in use',
+        labelEs: 'Modelo de marca en uso',
+      },
+      {
         src: gdImg('1m-z-dozrvfMe1SSm1M2-fPNtLEeVSghC'),
         downloadUrl: gdDl('1m-z-dozrvfMe1SSm1M2-fPNtLEeVSghC'),
         labelZh: '6 色成套桌面俯拍',
@@ -1595,6 +1623,20 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
     ],
     heroImage: gdImg('15OHzkI00Et2GhUUCz3kPrAIPYSkCBhQ5'),
     images: [
+      {
+        src: gdImg('1EZuJYrHdXaqfnackqtSGTpwqIaaZx-qi'),
+        downloadUrl: gdDl('1EZuJYrHdXaqfnackqtSGTpwqIaaZx-qi'),
+        labelZh: '产品与包装展示',
+        labelEn: 'Product and packaging',
+        labelEs: 'Producto y envase',
+      },
+      {
+        src: gdImg('1rC50QGvvJleFrh7nw0df5jsdSH66SHZp'),
+        downloadUrl: gdDl('1rC50QGvvJleFrh7nw0df5jsdSH66SHZp'),
+        labelZh: '品牌模特使用图',
+        labelEn: 'Brand model in use',
+        labelEs: 'Modelo de marca en uso',
+      },
       {
         src: gdImg('15OHzkI00Et2GhUUCz3kPrAIPYSkCBhQ5'),
         downloadUrl: gdDl('15OHzkI00Et2GhUUCz3kPrAIPYSkCBhQ5'),
