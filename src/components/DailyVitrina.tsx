@@ -279,7 +279,7 @@ export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome
     });
     showToast(
       lang === 'zh'
-        ? `✅ 正在为您保存全部 ${item.images.length} 张图片，可直接发朋友圈六宫格`
+        ? `✅ 正在为您保存全部 ${item.images.length} 张图片，可直接发朋友圈${item.images.length === 4 ? '四宫格' : '多宫格'}`
         : lang === 'en'
           ? `✅ Downloading all ${item.images.length} photos for your post`
           : `✅ Descargando las ${item.images.length} imágenes para publicar`
@@ -485,7 +485,7 @@ export const DailyVitrina: React.FC<DailyVitrinaProps> = ({ lang, onNavigateHome
               <span className="text-xs font-bold text-gray-500">{ui.galleryHint}</span>
             </div>
 
-            <div className={`grid gap-4 ${item.images.length === 1 ? 'grid-cols-1 max-w-md mx-auto' : item.images.length === 6 ? 'grid-cols-2 md:grid-cols-3' : 'grid-cols-2 md:grid-cols-4'}`}>
+            <div className={`grid gap-4 ${item.images.length === 1 ? 'grid-cols-1 max-w-md mx-auto' : item.images.length === 4 ? 'grid-cols-2 max-w-3xl mx-auto' : item.images.length === 6 ? 'grid-cols-2 md:grid-cols-3' : 'grid-cols-2 md:grid-cols-4'}`}>
               {item.images.map((img, i) => {
                 const label = lang === 'zh' ? img.labelZh : lang === 'en' ? img.labelEn : img.labelEs;
                 return (
