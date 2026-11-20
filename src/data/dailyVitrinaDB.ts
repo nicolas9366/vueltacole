@@ -1697,6 +1697,39 @@ const FLAGSHIP_ITEMS: Record<string, DailyVitrinaEntry> = {
   },
 };
 
+const LOCAL_4GRID_OVERRIDES: Record<string, DailyVitrinaImage[]> = {
+  'PN221-01': [
+    {
+      src: './daily/vitrina/PN221-01/hero_pack.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PN221-01/hero_pack.jpg?v=20261120',
+      labelZh: '原装黑卡挂袋与17克雪梨纸静物首图',
+      labelEn: 'Official Black-Header Pack & Folded Tissue',
+      labelEs: 'Bolsa original MP* y papel seda 17 gr/m²',
+    },
+    {
+      src: './daily/vitrina/PN221-01/model_ad.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PN221-01/model_ad.jpg?v=20261120',
+      labelZh: '手工工作室礼盒包装实拍人像',
+      labelEn: 'Craft Studio Gift Wrapping Lifestyle',
+      labelEs: 'Envoltorio artesanal de regalos en taller',
+    },
+    {
+      src: './daily/vitrina/PN221-01/scene_01.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PN221-01/scene_01.jpg?v=20261120',
+      labelZh: '橡木手工桌极简平铺与原装包陈列',
+      labelEn: 'Oak Craft Table Flat-Lay & Retail Pack',
+      labelEs: 'Composición cenital de manualidades y pack',
+    },
+    {
+      src: './daily/vitrina/PN221-01/detail_01.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PN221-01/detail_01.jpg?v=20261120',
+      labelZh: '17克柔韧半透雪梨纸纤维微距特写',
+      labelEn: '17 gr/m² Silky Translucent Fiber Macro',
+      labelEs: 'Macro de textura sedosa y translúcida',
+    },
+  ],
+};
+
 const generatedItems: DailyVitrinaEntry[] = (top100Raw.items || []).map((raw: any) => {
   if (FLAGSHIP_ITEMS[raw.sku]) {
     return { ...FLAGSHIP_ITEMS[raw.sku], rank: raw.rank };
@@ -1706,6 +1739,7 @@ const generatedItems: DailyVitrinaEntry[] = (top100Raw.items || []).map((raw: an
   const imgDl = gdDl(raw.imgId);
   const vidEmbed = gdVid(raw.vidId);
   const vidDl = gdDl(raw.vidId);
+  const local4Grid = LOCAL_4GRID_OVERRIDES[raw.sku];
 
   return {
     id: raw.sku.toLowerCase(),
@@ -1737,8 +1771,8 @@ const generatedItems: DailyVitrinaEntry[] = (top100Raw.items || []).map((raw: an
       `Formato mayorista: ${raw.packet} uds/pack · ${raw.box} uds/caja`,
       `Imagen promocional y vídeo 720p en la nube listos para compartir`,
     ],
-    heroImage: imgUrl,
-    images: [
+    heroImage: local4Grid ? local4Grid[0].src : imgUrl,
+    images: local4Grid || [
       {
         src: imgUrl,
         downloadUrl: imgDl,
