@@ -1788,6 +1788,36 @@ const LOCAL_4GRID_OVERRIDES: Record<string, DailyVitrinaImage[]> = {
       labelEs: 'Macro de capas neón amarillo, rosa, naranja y azul',
     },
   ],
+  'PA137M-3': [
+    {
+      src: './daily/vitrina/PA137M-3/hero_pack.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PA137M-3/hero_pack.jpg?v=20261120',
+      labelZh: '原装红卡三只装与蓝绿红迷你鼠静物首图',
+      labelEn: 'Official 3-Pack Blister & Blue/Green/Red Mini Mice',
+      labelEs: 'Blíster Pack Ahorro 3 uds y correctores mini',
+    },
+    {
+      src: './daily/vitrina/PA137M-3/model_ad.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PA137M-3/model_ad.jpg?v=20261120',
+      labelZh: '西班牙学生自习室迷你便携实拍',
+      labelEn: 'Student Library Pocket-Size Lifestyle Shot',
+      labelEs: 'Estudiante usando corrector mini en biblioteca',
+    },
+    {
+      src: './daily/vitrina/PA137M-3/scene_02.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PA137M-3/scene_02.jpg?v=20261120',
+      labelZh: '5.5厘米掌中迷你机身水平覆写实测',
+      labelEn: '5.5cm Pocket Dispenser Horizontal Glide Close-Up',
+      labelEs: 'Aplicación horizontal fluida tamaño bolsillo 5.5cm',
+    },
+    {
+      src: './daily/vitrina/PA137M-3/detail_01.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PA137M-3/detail_01.jpg?v=20261120',
+      labelZh: '蓝绿红半透壳体与精密白嘴微距特写',
+      labelEn: 'Blue/Green/Red Translucent Shells & Tip Macro',
+      labelEs: 'Macro trío translúcido azul, verde y rojo',
+    },
+  ],
 };
 
 const generatedItems: DailyVitrinaEntry[] = (top100Raw.items || []).map((raw: any) => {
