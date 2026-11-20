@@ -1818,6 +1818,36 @@ const LOCAL_4GRID_OVERRIDES: Record<string, DailyVitrinaImage[]> = {
       labelEs: 'Macro trío translúcido azul, verde y rojo',
     },
   ],
+  'PE487-1': [
+    {
+      src: './daily/vitrina/PE487-1/hero_pack.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PE487-1/hero_pack.jpg?v=20261120',
+      labelZh: '原装红卡吸塑与白杆黑头白板笔首图',
+      labelEn: 'Official Blister Card & Uncapped Whiteboard Marker',
+      labelEs: 'Blíster original MP* y marcador de pizarra destapado',
+    },
+    {
+      src: './daily/vitrina/PE487-1/model_ad.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PE487-1/model_ad.jpg?v=20261120',
+      labelZh: '西班牙高校课堂白板流畅板书实拍',
+      labelEn: 'University Classroom Whiteboard Lecture Lifestyle',
+      labelEs: 'Profesor escribiendo en pizarra blanca en aula',
+    },
+    {
+      src: './daily/vitrina/PE487-1/scene_01.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PE487-1/scene_01.jpg?v=20261120',
+      labelZh: '会议白板手写流程图与包装极简俯拍',
+      labelEn: 'Meeting Whiteboard Notes & Retail Pack Flat-Lay',
+      labelEs: 'Pizarra de reuniones, borrador y pack original',
+    },
+    {
+      src: './daily/vitrina/PE487-1/detail_01.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PE487-1/detail_01.jpg?v=20261120',
+      labelZh: '2/3毫米圆头浓黑纤维笔尖与防滑笔帽微距',
+      labelEn: '2/3mm Bullet Felt Nib & Ribbed Cap Studio Macro',
+      labelEs: 'Macro punta redonda 2/3mm y capuchón estriado',
+    },
+  ],
 };
 
 const generatedItems: DailyVitrinaEntry[] = (top100Raw.items || []).map((raw: any) => {
