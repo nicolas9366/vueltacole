@@ -1728,6 +1728,66 @@ const LOCAL_4GRID_OVERRIDES: Record<string, DailyVitrinaImage[]> = {
       labelEs: 'Macro de textura sedosa y translúcida',
     },
   ],
+  PN430: [
+    {
+      src: './daily/vitrina/PN430/hero_pack.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PN430/hero_pack.jpg?v=20261120',
+      labelZh: '200克50×70cm钻石白厚卡纸叠放首图',
+      labelEn: '200 gr/m² 50×70cm Diamond-White Cardstock Stack',
+      labelEs: 'Cartulina Blanco Diamante 200 gr/m² 50×70cm',
+    },
+    {
+      src: './daily/vitrina/PN430/model_ad.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PN430/model_ad.jpg?v=20261120',
+      labelZh: '西班牙建筑工作室大尺幅裁切实拍',
+      labelEn: 'Architecture Studio Precision Scoring & Cutting',
+      labelEs: 'Estudiante de arquitectura cortando cartulina',
+    },
+    {
+      src: './daily/vitrina/PN430/scene_01.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PN430/scene_01.jpg?v=20261120',
+      labelZh: '建筑模型折纸与绘图工具创意俯拍',
+      labelEn: 'Architectural Paper Models & Drafting Flat-Lay',
+      labelEs: 'Maquetas de papel y dibujo técnico cenital',
+    },
+    {
+      src: './daily/vitrina/PN430/detail_01.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PN430/detail_01.jpg?v=20261120',
+      labelZh: '200克加厚紧实纸缘与哑光绒面微距',
+      labelEn: '200 gr/m² Crisp Stacked Edges & Velvet Surface Macro',
+      labelEs: 'Macro de grosor 200 gr/m² y acabado mate fino',
+    },
+  ],
+  PN175: [
+    {
+      src: './daily/vitrina/PN175/hero_pack.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PN175/hero_pack.jpg?v=20261120',
+      labelZh: '原装红条挂袋与四色荧光便利贴首图',
+      labelEn: 'Official Red-Header Pack & 4-Color Neon Cube',
+      labelEs: 'Bolsa original MP* y taco neón 4 colores',
+    },
+    {
+      src: './daily/vitrina/PN175/model_ad.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PN175/model_ad.jpg?v=20261120',
+      labelZh: '西班牙大学生书桌复习贴标实拍',
+      labelEn: 'University Student Textbook Study Note Lifestyle',
+      labelEs: 'Estudiante pegando notas de repaso en libro',
+    },
+    {
+      src: './daily/vitrina/PN175/scene_01.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PN175/scene_01.jpg?v=20261120',
+      labelZh: '周计划本与四色荧光贴北欧俯拍',
+      labelEn: 'Weekly Planner & Neon Notes Desk Flat-Lay',
+      labelEs: 'Agenda semanal con notas adhesivas neón',
+    },
+    {
+      src: './daily/vitrina/PN175/detail_01.jpg?v=20261120',
+      downloadUrl: './daily/vitrina/PN175/detail_01.jpg?v=20261120',
+      labelZh: '黄粉橙蓝四层霓虹纸缘微距特写',
+      labelEn: '4-Layer Neon Yellow/Pink/Orange/Cyan Edge Macro',
+      labelEs: 'Macro de capas neón amarillo, rosa, naranja y azul',
+    },
+  ],
 };
 
 const generatedItems: DailyVitrinaEntry[] = (top100Raw.items || []).map((raw: any) => {
