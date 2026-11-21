@@ -1848,6 +1848,66 @@ const LOCAL_4GRID_OVERRIDES: Record<string, DailyVitrinaImage[]> = {
       labelEs: 'Macro punta redonda 2/3mm y capuchón estriado',
     },
   ],
+  PE415: [
+    {
+      src: './daily/vitrina/PE415/hero_pack.jpg?v=20261121',
+      downloadUrl: './daily/vitrina/PE415/hero_pack.jpg?v=20261121',
+      labelZh: '原装红卡吸塑与1.0mm黑色CD记号笔首图',
+      labelEn: 'Official Blister Card & 1.0mm Black CD Marker',
+      labelEs: 'Blíster original MP* y rotulador CD 1.0mm negro',
+    },
+    {
+      src: './daily/vitrina/PE415/model_ad.jpg?v=20261121',
+      downloadUrl: './daily/vitrina/PE415/model_ad.jpg?v=20261121',
+      labelZh: '西班牙音乐工作室光盘手写标号实拍',
+      labelEn: 'Music Studio CD-R Labeling Lifestyle Photo',
+      labelEs: 'Productor rotulando CD en estudio de audio',
+    },
+    {
+      src: './daily/vitrina/PE415/scene_01.jpg?v=20261121',
+      downloadUrl: './daily/vitrina/PE415/scene_01.jpg?v=20261121',
+      labelZh: '光盘归档标号与开盒单品极简俯拍',
+      labelEn: 'CD Archive Labeling & Retail Pack Flat-Lay',
+      labelEs: 'Composición cenital de discos CD y marcador',
+    },
+    {
+      src: './daily/vitrina/PE415/detail_01.jpg?v=20261121',
+      downloadUrl: './daily/vitrina/PE415/detail_01.jpg?v=20261121',
+      labelZh: '1.0mm中细圆头笔尖与光盘炫彩速干微距',
+      labelEn: '1.0mm Medium-Fine Tip on Iridescent CD Macro',
+      labelEs: 'Macro punta media 1.0mm sobre superficie de CD',
+    },
+  ],
+  'PE486-0': [
+    {
+      src: './daily/vitrina/PE486-0/hero_pack.jpg?v=20261121',
+      downloadUrl: './daily/vitrina/PE486-0/hero_pack.jpg?v=20261121',
+      labelZh: '原装白墨吸塑卡与黑杆白帽单品首图',
+      labelEn: 'Official White Permanent Blister & Uncapped Marker',
+      labelEs: 'Blíster original MP* y marcador permanente blanco',
+    },
+    {
+      src: './daily/vitrina/PE486-0/model_ad.jpg?v=20261121',
+      downloadUrl: './daily/vitrina/PE486-0/model_ad.jpg?v=20261121',
+      labelZh: '精品店黑礼盒手写亮白标语实拍',
+      labelEn: 'Boutique Craft Artist Writing White on Black Box',
+      labelEs: 'Rotulación blanca opaca sobre caja negra artesanal',
+    },
+    {
+      src: './daily/vitrina/PE486-0/scene_01.jpg?v=20261121',
+      downloadUrl: './daily/vitrina/PE486-0/scene_01.jpg?v=20261121',
+      labelZh: '黑石板礼盒与深色玻璃瓶白墨标识俯拍',
+      labelEn: 'Dark Box & Glass Jar White Ink Flat-Lay',
+      labelEs: 'Rotulación blanca sobre caja negra y frasco oscuro',
+    },
+    {
+      src: './daily/vitrina/PE486-0/detail_01.jpg?v=20261121',
+      downloadUrl: './daily/vitrina/PE486-0/detail_01.jpg?v=20261121',
+      labelZh: '2/3mm高遮盖白墨纤维笔尖划黑卡微距',
+      labelEn: '2/3mm Opaque White Nib on Black Cardstock Macro',
+      labelEs: 'Macro punta blanca 2/3mm de alta cobertura',
+    },
+  ],
 };
 
 const generatedItems: DailyVitrinaEntry[] = (top100Raw.items || []).map((raw: any) => {
