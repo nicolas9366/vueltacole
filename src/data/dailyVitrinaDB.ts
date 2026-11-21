@@ -1908,6 +1908,36 @@ const LOCAL_4GRID_OVERRIDES: Record<string, DailyVitrinaImage[]> = {
       labelEs: 'Macro punta blanca 2/3mm de alta cobertura',
     },
   ],
+  PP001: [
+    {
+      src: './daily/vitrina/PP001/hero_pack.jpg?v=20261121',
+      downloadUrl: './daily/vitrina/PP001/hero_pack.jpg?v=20261121',
+      labelZh: '21克红黑经典固体胶开盖静物首图',
+      labelEn: '21g Classic Red & Black Glue Stick Studio Hero',
+      labelEs: 'Pegamento de barra MP* 21g cerrado y abierto',
+    },
+    {
+      src: './daily/vitrina/PP001/model_ad.jpg?v=20261121',
+      downloadUrl: './daily/vitrina/PP001/model_ad.jpg?v=20261121',
+      labelZh: '西班牙亲子手工贴画温馨实拍',
+      labelEn: 'Mother & Child School Craft Gluing Lifestyle',
+      labelEs: 'Manualidades escolares en familia con MP* 21g',
+    },
+    {
+      src: './daily/vitrina/PP001/scene_01.jpg?v=20261121',
+      downloadUrl: './daily/vitrina/PP001/scene_01.jpg?v=20261121',
+      labelZh: '彩纸拼贴手工桌与双支胶棒俯拍',
+      labelEn: 'Paper Collage Craft Desk Flat-Lay',
+      labelEs: 'Composición cenital de collage y pegamento',
+    },
+    {
+      src: './daily/vitrina/PP001/detail_01.jpg?v=20261121',
+      downloadUrl: './daily/vitrina/PP001/detail_01.jpg?v=20261121',
+      labelZh: '无毒可水洗乳白固体胶芯微距特写',
+      labelEn: 'Solvent-Free Solid Adhesive Core Studio Macro',
+      labelEs: 'Macro de barra adhesiva sin disolventes 21g',
+    },
+  ],
 };
 
 const generatedItems: DailyVitrinaEntry[] = (top100Raw.items || []).map((raw: any) => {
