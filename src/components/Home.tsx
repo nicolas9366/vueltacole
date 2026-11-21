@@ -1,18 +1,159 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Lang } from '../data/christmas2026DB';
 
 export interface HomeProps {
   lang: Lang;
   onNavigateToTienda: () => void;
   onNavigateToMap?: () => void;
+  onNavigateToVitrina?: () => void;
   onNavigateToNavidad?: () => void;
   onNavigateToCanje?: () => void;
 }
+
+interface BestsellerItem {
+  sku: string;
+  rank: number;
+  cat: 'writing' | 'correction' | 'paper';
+  img: string;
+  nameZh: string;
+  nameEn: string;
+  nameEs: string;
+  packZh: string;
+  packEn: string;
+  packEs: string;
+  hookZh: string;
+  hookEn: string;
+  hookEs: string;
+}
+
+const TOP_BESTSELLERS: BestsellerItem[] = [
+  {
+    sku: 'PE486-1',
+    rank: 2,
+    cat: 'writing',
+    img: './daily/vitrina/PE486-1/hero_pack.jpg?v=20261120',
+    nameZh: 'MP* 永不干涸黑色记号笔',
+    nameEn: 'MP* No-Dry Black Permanent Marker',
+    nameEs: 'MP* Marcador Permanente Negro No Dry',
+    packZh: '12 支/包 · 480 支/箱',
+    packEn: '12/pack · 480/carton',
+    packEs: '12 uds/pack · 480/caja',
+    hookZh: '开盖一周不干，仓库与百元店常年走量冠军',
+    hookEn: '1-week cap-off life; #2 turnover staple',
+    hookEs: 'No se seca destapado; top #2 de rotación',
+  },
+  {
+    sku: 'PA457-04',
+    rank: 5,
+    cat: 'correction',
+    img: './daily/vitrina/PA457-04/hero_pack.jpg?v=20261120',
+    nameZh: 'MP* 5mm × 20m 超长容量修正带',
+    nameEn: 'MP* 5mm × 20m Extra-Long Correction Tape',
+    nameEs: 'MP* Corrector Cinta 5mm × 20m Extralargo',
+    packZh: '12 个/包 · 288 个/箱',
+    packEn: '12/pack · 288/carton',
+    packEs: '12 uds/pack · 288/caja',
+    hookZh: '20 米双倍容量加翻折防护盖，复购率极高',
+    hookEn: '20m double-life spool with hinged tip guard',
+    hookEs: '20 metros de duración con tapa abatible',
+  },
+  {
+    sku: 'PE415',
+    rank: 6,
+    cat: 'writing',
+    img: './daily/vitrina/PE415/hero_pack.jpg?v=20261121',
+    nameZh: 'MP* 1.0mm 中号黑色 CD 多材质笔',
+    nameEn: 'MP* 1.0mm Multi-Surface CD Marker Black',
+    nameEs: 'MP* Rotulador CD Multi-Superficie 1.0mm',
+    packZh: '18 支/包 · 432 支/箱',
+    packEn: '18/pack · 432/carton',
+    packEs: '18 uds/pack · 432/caja',
+    hookZh: '光盘塑料金属玻璃通写，1.0mm 精准不晕染',
+    hookEn: 'Writes crisp 1.0mm on CD, plastic & metal',
+    hookEs: 'Trazo preciso 1.0mm en CD, plástico y metal',
+  },
+  {
+    sku: 'PE240N',
+    rank: 8,
+    cat: 'writing',
+    img: './daily/vitrina/PE240N/hero_pack.jpg?v=20261120',
+    nameZh: 'MP* 0.5mm 黑色直液针管水性笔',
+    nameEn: 'MP* 0.5mm Needle-Point Liquid Rollerball',
+    nameEs: 'MP* Bolígrafo Tinta Líquida Punta Aguja 0.5',
+    packZh: '12 支/包 · 288 支/箱',
+    packEn: '12/pack · 288/carton',
+    packEs: '12 uds/pack · 288/caja',
+    hookZh: '直液可视储墨窗，西班牙中学生高频复购款',
+    hookEn: 'Visible liquid-ink window; student favorite',
+    hookEs: 'Visor de tinta líquida; líder en estudiantes',
+  },
+  {
+    sku: 'PE486-0',
+    rank: 15,
+    cat: 'writing',
+    img: './daily/vitrina/PE486-0/hero_pack.jpg?v=20261121',
+    nameZh: 'MP* 2/3mm 高遮盖白色永久记号笔',
+    nameEn: 'MP* 2/3mm Opaque White Permanent Marker',
+    nameEs: 'MP* Marcador Permanente Blanco 2/3mm',
+    packZh: '12 支/包 · 480 支/箱',
+    packEn: '12/pack · 480/carton',
+    packEs: '12 uds/pack · 480/caja',
+    hookZh: '深色礼盒、玻璃瓶与工业标号差异化高毛利款',
+    hookEn: 'High-margin opaque white for dark surfaces',
+    hookEs: 'Blanco opaco de alto margen en vidrio y cartón',
+  },
+  {
+    sku: 'PP001',
+    rank: 19,
+    cat: 'correction',
+    img: './daily/vitrina/PP001/hero_pack.jpg?v=20261121',
+    nameZh: 'MP* 21g 无毒可水洗固体胶棒',
+    nameEn: 'MP* 21g Solvent-Free Washable Glue Stick',
+    nameEs: 'MP* Pegamento de Barra 21g Sin Disolventes',
+    packZh: '24 支/包 · 480 支/箱',
+    packEn: '24/pack · 480/carton',
+    packEs: '24 uds/pack · 480/caja',
+    hookZh: '开学季与家庭手工硬通货，5 年质保不干裂',
+    hookEn: 'Back-to-school essential; 5-year formula',
+    hookEs: 'Básico escolar de alta rotación, sin disolventes',
+  },
+  {
+    sku: 'PN175',
+    rank: 24,
+    cat: 'paper',
+    img: './daily/vitrina/PN175/hero_pack.jpg?v=20261120',
+    nameZh: 'MP* 75×75mm 四色荧光便利贴 100 页',
+    nameEn: 'MP* 75×75mm 4-Color Neon Sticky Notes',
+    nameEs: 'MP* Notas Adhesivas Neón 75×75mm 100 Hojas',
+    packZh: '12 本/包 · 288 本/箱',
+    packEn: '12/pack · 288/carton',
+    packEs: '12 uds/pack · 288/caja',
+    hookZh: '黄粉橙蓝四层霓虹吸塑挂袋，货架吸睛引流款',
+    hookEn: '4-layer neon cube in retail hanging bag',
+    hookEs: 'Taco 4 colores neón en bolsa expositora',
+  },
+  {
+    sku: 'PA137M-3',
+    rank: 31,
+    cat: 'correction',
+    img: './daily/vitrina/PA137M-3/hero_pack.jpg?v=20261120',
+    nameZh: 'MP* 迷你修正带 5mm×6m 三只实惠装',
+    nameEn: 'MP* Mini Correction Tape 3-Pack Value Set',
+    nameEs: 'MP* Mini Corrector Cinta Pack Ahorro 3 Uds.',
+    packZh: '12 排/包 · 144 排/箱',
+    packEn: '12 packs/inner · 144/carton',
+    packEs: '12 packs · 144/caja',
+    hookZh: '三色组合高客单价挂卡，学生笔袋爆款走量装',
+    hookEn: '3-color pocket value pack drives basket size',
+    hookEs: 'Pack ahorro tricolor de gran salida escolar',
+  },
+];
 
 export const Home: React.FC<HomeProps> = ({
   lang,
   onNavigateToTienda,
   onNavigateToMap,
+  onNavigateToVitrina,
 }) => {
   const WHATSAPP_NUMBER = '604229098';
   const WHATSAPP_LINK = 'https://wa.me/34604229098';
@@ -21,6 +162,8 @@ export const Home: React.FC<HomeProps> = ({
   const t = (zh: string, en: string, es: string) =>
     lang === 'zh' ? zh : lang === 'en' ? en : es;
 
+  const [activeCat, setActiveCat] = useState<'all' | 'writing' | 'correction' | 'paper'>('all');
+  const [selectedSkus, setSelectedSkus] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     shopName: '',
     contactName: '',
@@ -30,16 +173,41 @@ export const Home: React.FC<HomeProps> = ({
     businessType: 'comercio',
     message: '',
   });
-
   const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const visibleProducts = useMemo(() => {
+    if (activeCat === 'all') return TOP_BESTSELLERS;
+    return TOP_BESTSELLERS.filter((item) => item.cat === activeCat);
+  }, [activeCat]);
+
+  const toggleSku = (sku: string) => {
+    setSelectedSkus((prev) =>
+      prev.includes(sku) ? prev.filter((s) => s !== sku) : [...prev, sku]
+    );
+  };
+
+  const openWhatsAppWithQuote = (customIntro?: string) => {
+    const picked = TOP_BESTSELLERS.filter((i) => selectedSkus.includes(i.sku));
+    let msg = customIntro
+      ? `${customIntro}\n`
+      : `${t('您好，我想索取以下西班牙现货文具的批发报价单：', 'Hello, please send wholesale pricing for these in-stock SKUs:', 'Hola, solicito tarifa mayorista para estas referencias en stock:')}\n`;
+
+    if (picked.length > 0) {
+      msg += `\n`;
+      picked.forEach((p, idx) => {
+        const name = t(p.nameZh, p.nameEn, p.nameEs);
+        const pack = t(p.packZh, p.packEn, p.packEs);
+        msg += `${idx + 1}. [${p.sku}] ${name} (${pack})\n`;
+      });
+    }
+    msg += `\nFuente: vueltacole.com`;
+    window.open(`${WHATSAPP_LINK}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -49,592 +217,614 @@ export const Home: React.FC<HomeProps> = ({
         ? t('企事业单位 / 大宗采购', 'Corporate / Bulk Order', 'Empresa / Compra Corporativa')
         : formData.businessType === 'colegio'
           ? t('学校机构 / 教育培训', 'School / Academy', 'Colegio / Centro Educativo')
-          : formData.businessType === 'comercio'
-            ? t('文具零售 / 百货门店', 'Retail / Stationery Store', 'Comercio / Papelería')
-            : t('其他咨询', 'Other Inquiry', 'Otros');
+          : t('百元店 / 传统文具书店', 'Retail / Stationery Store', 'Bazar / Papelería');
 
-    let msg = `${t('🤝 *文具贸易与采购咨询*', '🤝 *Stationery Wholesale Inquiry*', '🤝 *Consulta Comercial de Papelería*')}\n`;
-    msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
-    msg += `🏪 ${t('店铺/公司', 'Company/Store', 'Empresa/Tienda')}: ${formData.shopName || '-'}\n`;
-    msg += `👤 ${t('负责人', 'Contact', 'Contacto')}: ${formData.contactName || '-'}\n`;
-    msg += `📍 ${t('所在城市', 'City', 'Ciudad')}: ${formData.city || '-'}\n`;
-    msg += `📞 ${t('电话', 'Phone', 'Tel')}: ${formData.phone || '-'}\n`;
-    msg += `✉️ Email: ${formData.email || '-'}\n`;
-    msg += `📦 ${t('业务类型', 'Type', 'Tipo')}: ${typeLabel}\n`;
-    if (formData.message) {
-      msg += `💬 ${t('需求', 'Message', 'Mensaje')}: ${formData.message}\n`;
+    let msg = `${t('【vueltacole.com 批发询价单】', '[vueltacole.com Wholesale Quote Request]', '[vueltacole.com Solicitud de Tarifa Mayorista]')}\n`;
+    msg += `${t('店铺/公司', 'Store/Company', 'Tienda/Empresa')}: ${formData.shopName || '-'}\n`;
+    msg += `${t('联系人', 'Contact', 'Contacto')}: ${formData.contactName || '-'}\n`;
+    msg += `${t('城市', 'City', 'Ciudad')}: ${formData.city || '-'}\n`;
+    msg += `${t('电话', 'Phone', 'Tel')}: ${formData.phone || '-'}\n`;
+    msg += `Email: ${formData.email || '-'}\n`;
+    msg += `${t('渠道类型', 'Channel', 'Tipo')}: ${typeLabel}\n`;
+    if (selectedSkus.length > 0) {
+      msg += `${t('已选货号', 'Selected SKUs', 'Referencias')}: ${selectedSkus.join(', ')}\n`;
     }
-    msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
-    msg += `vueltacole.com`;
+    if (formData.message) {
+      msg += `${t('补充需求', 'Notes', 'Notas')}: ${formData.message}\n`;
+    }
 
-    window.open(`${WHATSAPP_LINK}?text=${encodeURIComponent(msg)}`, '_blank');
+    window.open(`${WHATSAPP_LINK}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
     setFormSubmitted(true);
   };
 
+  const heroPreview = TOP_BESTSELLERS.slice(0, 4);
+
   return (
-    <div className="min-h-screen bg-[#fcf8f2] text-[#222] font-['Fredoka',sans-serif] pb-16 overflow-x-hidden">
-      {/* 1. TOP HERO BANNER */}
-      <section className="bg-[#e52521] border-b-4 border-[#222] text-white px-4 py-10 md:py-16 relative overflow-hidden shadow-xl">
-        <div className="hidden sm:block absolute top-2 left-6 text-yellow-300 text-3xl animate-bounce">★</div>
-        <div className="absolute top-8 right-6 md:right-12 text-white/15 text-7xl md:text-9xl font-black select-none pointer-events-none">
-          ★
-        </div>
-
-        <div className="max-w-6xl mx-auto relative z-10 text-center">
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
-            <span className="bg-[#f8d878] text-[#222] text-[11px] sm:text-xs md:text-sm font-black px-3.5 py-1.5 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase tracking-wider">
-              {t(
-                '⭐ 文具精选零售 · 大客户集采服务',
-                '⭐ Commercial Stationery & Corporate Supply',
-                '⭐ Papelería Comercial & Grandes Cuentas'
-              )}
-            </span>
-            <span className="bg-[#5c94fc] text-white text-[11px] sm:text-xs md:text-sm font-black px-3.5 py-1.5 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222]">
-              {t(
-                '现货选品 · 专业采购对接',
-                'Full Stock · Direct Trade Support',
-                'Catálogo Extenso & Atención Directa'
-              )}
-            </span>
-          </div>
-
-          <h1 className="text-2xl sm:text-4xl md:text-6xl font-black tracking-tight text-white drop-shadow-[3px_3px_0px_#222] mb-4 leading-tight">
-            {t(
-              '文具精选商城 & 大客户采购',
-              'COMMERCIAL STATIONERY & WHOLESALE',
-              'PAPELERÍA COMERCIAL & GRANDES CUENTAS'
-            )}
-            <br />
-            <span className="text-[#f8d878]">
-              {t(
-                '全品类现货文具 · 机构大宗定制采购',
-                'In-Stock Catalog · Institutional Supply',
-                'Catálogo de Productos & Suministro Institucional'
-              )}
-            </span>
-          </h1>
-
-          <p className="text-sm sm:text-lg md:text-xl text-yellow-100 font-bold max-w-3xl mx-auto mb-7 leading-relaxed px-1">
-            {t(
-              '精选数千款现货文具产品，涵盖学生书写、办公桌面、收纳文件、本册纸品、美术画材与各大主流文具品牌。支持自主零售选品选购，并为学校机构、企业单位及大客户提供专业大宗采购对接服务。',
-              'Curated selection of thousands of in-stock stationery items covering school writing, office essentials, filing, notebooks, fine arts, and top brands—serving both retail selection and bulk institutional orders.',
-              'Amplia selección de material escolar, oficina, archivo, bellas artes y primeras marcas en stock. Atención comercial directa tanto para compras minoristas como para grandes pedidos institucionales.'
-            )}
-          </p>
-
-          {/* Fast Contact Callout Box */}
-          <div className="max-w-2xl mx-auto bg-white p-4 md:p-6 rounded-3xl border-4 border-[#222] shadow-[5px_5px_0px_#222] text-[#222] mb-7">
-            <div className="text-xs md:text-sm font-black text-gray-600 uppercase mb-3">
-              {t(
-                '⚡ 业务咨询与采购订货绿色通道',
-                '⚡ Direct Trade & Order Channels',
-                '⚡ Canales Directos de Consulta y Pedidos'
-              )}
+    <div className="min-h-screen bg-[#f8f6f1] text-[#111827] pb-28 overflow-x-hidden">
+      {/* 1. HIGH-CONVERSION COMMERCIAL SPLIT HERO (PRODUCTS ABOVE THE FOLD) */}
+      <section className="bg-[#111827] text-white border-b-4 border-[#e52521]">
+        <div className="max-w-6xl mx-auto px-4 py-10 md:py-14 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          {/* Left: Sales Pitch & Immediate Conversion CTAs */}
+          <div className="lg:col-span-6 space-y-6">
+            <div className="inline-flex items-center gap-2 bg-[#e52521] text-white text-xs font-bold px-3 py-1.5 rounded-md tracking-wide uppercase">
+              <span>{t('西班牙本土现货直供 · 24-48h 发货', 'SPAIN IN-STOCK WHOLESALE · 24-48H DISPATCH', 'STOCK EN ESPAÑA · ENVÍO 24-48H')}</span>
             </div>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a
-                href={`${WHATSAPP_LINK}?text=${encodeURIComponent(
-                  t(
-                    '您好，我想咨询文具贸易与批发订货合作！',
-                    'Hello, I would like to request your stationery wholesale catalog and pricing.',
-                    'Hola, me gustaría consultar tarifas y catálogo mayorista de papelería.'
-                  )
-                )}`}
-                target="_blank"
-                rel="noreferrer"
-                className="w-full sm:w-auto px-5 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl border-2 border-[#222] shadow-[3px_3px_0px_#222] font-black text-sm md:text-base flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span>📱</span>
-                <span>WhatsApp: {WHATSAPP_NUMBER}</span>
-              </a>
 
-              <a
-                href={`mailto:${EMAIL_ADDRESS}`}
-                className="w-full sm:w-auto px-5 py-3 bg-[#5c94fc] hover:bg-blue-600 text-white rounded-2xl border-2 border-[#222] shadow-[3px_3px_0px_#222] font-black text-sm md:text-base flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span>✉️</span>
-                <span>{EMAIL_ADDRESS}</span>
-              </a>
-            </div>
-            <p className="text-[11px] md:text-xs text-gray-500 font-bold mt-2.5">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black leading-[1.08] tracking-tight text-white">
               {t(
-                '💡 业务代表一对一专业对接，快速获取商品批发报价单、动销建议与样品展厅支持',
-                '💡 Dedicated 1-on-1 account support for wholesale price lists, product samples, and display advice.',
-                '💡 Atención personalizada 1 a 1 para facilitarte listas de precios, muestras y condiciones comerciales.'
+                '6,000+ 西班牙热销文具现货，',
+                '6,000+ Fast-Moving Stationery SKUs, ',
+                '6.000+ Referencias de Papelería en Stock, '
               )}
-            </p>
-          </div>
-
-          {/* Primary Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <button
-              onClick={onNavigateToTienda}
-              className="w-full sm:w-auto px-6 py-3.5 bg-[#f8d878] hover:bg-yellow-400 text-[#222] rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] font-black text-sm sm:text-base md:text-lg flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <span>🛒</span>
-              <span>
+              <span className="text-[#f8d878]">
                 {t(
-                  '浏览全景文具商城 & 选品订货',
-                  'Explore Online Catalog & Shop',
-                  'Explorar Catálogo & Tienda Online'
+                  '挑完货号 1 分钟拿批发底价',
+                  'Wholesale Quotes in 60 Seconds',
+                  'Tarifa Mayorista en 1 Minuto'
                 )}
               </span>
-            </button>
+            </h1>
 
-            {onNavigateToMap && (
-              <button
-                onClick={onNavigateToMap}
-                className="w-full sm:w-auto px-5 py-3.5 bg-white hover:bg-gray-100 text-[#222] rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] font-black text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer"
+            <p className="text-sm sm:text-base text-gray-300 leading-relaxed max-w-xl font-sans">
+              {t(
+                '专为西班牙百元店、传统书店与机构集采打造。所有爆款均带原装西语吸塑挂卡与 EAN 条码，上架即卖；免费附赠每款四宫格宣传图与短视频，帮你把货卖得更快。',
+                'Engineered for Spanish bazars, bookstores, and corporate buyers. Official Spanish EAN blister packaging ready for shelf display, plus free 4-grid promo photos & videos for every bestseller.',
+                'Diseñado para bazares, papelerías y grandes cuentas en España. Blíster original con código EAN listo para colgar en lineal, más kit gratuito de fotos y vídeos promocionales para vender más rápido.'
+              )}
+            </p>
+
+            {/* Primary & Secondary Sales Actions */}
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 pt-1">
+              <a
+                href="#bestsellers"
+                className="px-5 py-3.5 bg-[#e52521] hover:bg-[#c81e1a] text-white rounded-xl font-black text-sm sm:text-[15px] text-center whitespace-nowrap shadow-lg transition-colors"
               >
-                <span>🎒</span>
-                <span>
-                  {t('返校季周边学校地图', 'School Store Map', 'Mapa Escolar')}
-                </span>
+                {t('挑爆款加入询价单 ↓', 'Pick Bestsellers for Quote ↓', 'Elegir Top Ventas ↓')}
+              </a>
+              <button
+                type="button"
+                onClick={() => openWhatsAppWithQuote()}
+                className="px-5 py-3.5 bg-[#f8d878] hover:bg-yellow-300 text-[#111827] rounded-xl font-black text-sm sm:text-[15px] text-center whitespace-nowrap transition-colors cursor-pointer"
+              >
+                {t(`WhatsApp 拿价目表 · ${WHATSAPP_NUMBER}`, `WhatsApp Price List · ${WHATSAPP_NUMBER}`, `Tarifa WhatsApp · ${WHATSAPP_NUMBER}`)}
               </button>
-            )}
+            </div>
+
+            {/* Concrete B2B Proof Metrics */}
+            <div className="grid grid-cols-3 gap-4 pt-5 border-t border-white/15">
+              <div>
+                <div className="text-xl sm:text-2xl font-black text-[#f8d878] tabular-nums">6,000+</div>
+                <div className="text-xs text-gray-400 font-sans">
+                  {t('马德里现货 SKU', 'Madrid In-Stock SKUs', 'SKUs en Stock')}
+                </div>
+              </div>
+              <div>
+                <div className="text-xl sm:text-2xl font-black text-white tabular-nums">12 uds</div>
+                <div className="text-xs text-gray-400 font-sans">
+                  {t('小包起批灵活补货', 'Low Inner-Pack MOQ', 'Pedido desde 1 pack')}
+                </div>
+              </div>
+              <div>
+                <div className="text-xl sm:text-2xl font-black text-white tabular-nums">100%</div>
+                <div className="text-xs text-gray-400 font-sans">
+                  {t('配齐四宫格推广图', 'Free Promo Media Kit', 'Kit Promo Incluido')}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Real Studio Bestseller Product Mosaic (Immediate Visual Trust!) */}
+          <div className="lg:col-span-6">
+            <div className="grid grid-cols-2 gap-3.5">
+              {heroPreview.map((item) => {
+                const picked = selectedSkus.includes(item.sku);
+                return (
+                  <div
+                    key={item.sku}
+                    onClick={() => toggleSku(item.sku)}
+                    className={`group cursor-pointer rounded-2xl overflow-hidden bg-white text-[#111827] border-2 transition-all ${
+                      picked
+                        ? 'border-[#f8d878] ring-2 ring-[#f8d878]'
+                        : 'border-white/20 hover:border-[#f8d878]'
+                    }`}
+                  >
+                    <div className="relative aspect-square bg-[#f4f5f7] overflow-hidden">
+                      <img
+                        src={item.img}
+                        alt={t(item.nameZh, item.nameEn, item.nameEs)}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <span className="absolute top-2.5 left-2.5 bg-[#111827]/90 text-[#f8d878] text-[11px] font-black px-2 py-0.5 rounded">
+                        TOP #{item.rank}
+                      </span>
+                      <span
+                        className={`absolute top-2.5 right-2.5 text-[11px] font-black px-2 py-0.5 rounded ${
+                          picked ? 'bg-[#e52521] text-white' : 'bg-white/95 text-[#111827]'
+                        }`}
+                      >
+                        {picked ? t('✓ 已选', '✓ Added', '✓ Añadido') : '+ ' + item.sku}
+                      </span>
+                    </div>
+                    <div className="p-3">
+                      <div className="text-xs font-black truncate">
+                        {t(item.nameZh, item.nameEn, item.nameEs)}
+                      </div>
+                      <div className="text-[11px] text-gray-500 font-sans mt-0.5">
+                        {t(item.packZh, item.packEn, item.packEs)}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="mt-3 flex items-center justify-between text-xs text-gray-400 font-sans">
+              <span>{t('点击任意爆款卡片即可加入底部询价单', 'Tap any card to add to your instant quote list', 'Pulsa cualquier producto para añadirlo a tu pedido')}</span>
+              <button
+                type="button"
+                onClick={() => onNavigateToVitrina?.()}
+                className="text-[#f8d878] font-bold hover:underline cursor-pointer"
+              >
+                {t('进入完整 100 款爆款馆 →', 'Open Full TOP 100 Showcase →', 'Ver Vitrina TOP 100 →')}
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 2. CORE PERFORMANCE METRICS (Mobile-safe spacing: mt-6 on mobile, -mt-8 on desktop) */}
-      <section className="max-w-6xl mx-auto px-4 mt-6 md:-mt-8 relative z-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-          {[
-            {
-              num: '6,000+',
-              label: t('现货文具 SKU', 'In-Stock SKUs', 'Referencias en Stock'),
-              icon: '📦',
-            },
-            {
-              num: t('全系现货', 'Full Stock', 'Stock Completo'),
-              label: t('品类齐全常备库存', 'Permanent Availability', 'Stock Permanente'),
-              icon: '📦',
-            },
-            {
-              num: t('专业对接', 'Pro Support', 'Atención Directa'),
-              label: t('大客户采购专属服务', 'Key Accounts & B2B', 'Grandes Cuentas & Institucional'),
-              icon: '🤝',
-            },
-            {
-              num: t('多元品牌', 'Top Brands', 'Primeras Marcas'),
-              label: t('知名名牌与源头品质', 'Leading Brands & Quality', 'Primeras Marcas y Suministro'),
-              icon: '⭐',
-            },
-          ].map((m, i) => (
-            <div
-              key={i}
-              className="bg-white p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl border-4 border-[#222] shadow-[4px_4px_0px_#222] text-center flex flex-col items-center justify-center"
-            >
-              <div className="text-2xl sm:text-3xl mb-1">{m.icon}</div>
-              <div className="text-lg sm:text-2xl md:text-3xl font-black text-[#e52521] tracking-tight leading-tight">
-                {m.num}
-              </div>
-              <div className="text-[11px] sm:text-xs md:text-sm font-black text-gray-700 mt-1">
-                {m.label}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 3. SIX CORE COMPETITIVE ADVANTAGES */}
-      <section className="max-w-6xl mx-auto px-4 pt-12 md:pt-16">
-        <div className="text-center mb-8 md:mb-10">
-          <span className="bg-[#f8d878] text-[#222] text-xs font-black px-3.5 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase">
-            {t('⭐ 核心优势与服务', '⭐ Core Advantages', '⭐ Ventajas y Servicios')}
-          </span>
-          <h2 className="text-2xl md:text-4xl font-black text-[#222] mt-3 drop-shadow-[2px_2px_0px_#f8d878]">
-            {t(
-              '专业文具选品与大客户采购支持',
-              'Professional Stationery & Key Account Supply',
-              'Suministro Profesional de Papelería y Grandes Cuentas'
-            )}
-          </h2>
-          <p className="text-sm md:text-base text-gray-600 font-bold max-w-2xl mx-auto mt-1">
-            {t(
-              '专注自主文具零售选品与机构大客户采购，为您提供丰富齐全的现货文具与贴心服务',
-              'End-to-end stationery supply for retail stores, schools, and institutional buyers.',
-              'Suministro integral para proyectos educativos, compras institucionales y venta comercial con atención dedicada.'
-            )}
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-          {[
-            {
-              icon: '🏛️',
-              title: t('大客户与机构大宗采购', 'Corporate & Bulk Supply', 'Suministro para Grandes Cuentas'),
-              desc: t(
-                '为学校、教育机构、企业办公等大客户提供专属集采对接，支持根据需求制定批量采购方案与样品质检。',
-                'Dedicated account management for schools, academies, and corporate bulk purchasing.',
-                'Atención especializada para colegios, academias y empresas que requieren compras consolidadas.'
-              ),
-              tag: t('大宗采购', 'Bulk Orders', 'Grandes Cuentas'),
-            },
-            {
-              icon: '📦',
-              title: t('6,000+ SKU 全品类现货供应', '6,000+ In-Stock SKUs', '+6.000 Referencias en Stock'),
-              desc: t(
-                '涵盖学生书写用具、办公桌面、收纳文件夹、本册纸品、Artix 美术画材与高性价比基础系列，一站式购齐。',
-                'School writing, office supplies, filing, notebooks, Artix fine arts, and everyday bestsellers.',
-                'Material escolar, artículos de oficina, archivo, cuadernos, bellas artes y líneas de alta rotación.'
-              ),
-              tag: t('现货全系', 'Full Stock', 'Stock Completo'),
-            },
-            {
-              icon: '🏪',
-              title: t('自主精选零售选品', 'Curated Retail Catalog', 'Catálogo Minorista Seleccionado'),
-              desc: t(
-                '直观清晰的在线选品商城与样品展厅，随时随地挑选最新文具产品，快速加入选购清单。',
-                'Intuitive digital showroom to browse trending items and build your selection fast.',
-                'Exposición digital cómoda y visual para descubrir novedades y tramitar tu selección fácilmente.'
-              ),
-              tag: t('精选零售', 'Retail Pick', 'Catálogo'),
-            },
-            {
-              icon: '🏷️',
-              title: t('主流品牌与品质保障', 'Leading Brands & Quality', 'Gama Multimarca Líder'),
-              desc: t(
-                '联合供应 Bic、Milan、Pilot、Stabilo、Edding、Main Paper 等各大知名品牌，满足多样化使用与教学需求。',
-                'Consolidated supply of Bic, Milan, Pilot, Stabilo, Edding, and Main Paper lines.',
-                'Disponibilidad de marcas reconocidas del mercado escolar y de oficina en un único pedido.'
-              ),
-              tag: t('知名品牌', 'Top Brands', 'Primeras Marcas'),
-            },
-            {
-              icon: '🎁',
-              title: t('展架支持与样品陈列', 'Display Racks & Merchandising', 'Expositores y Soporte Comercial'),
-              desc: t(
-                '提供配套产品陈列展架、分类物料与宣传画册，全方位满足店面及机构展示需求。',
-                'In-store floor and counter displays, printed catalogs, and seasonal promotional materials.',
-                'Mobiliario comercial, expositores de suelo y sobremesa, catálogos y material promocional.'
-              ),
-              tag: t('展示支持', 'Merchandising', 'Expositores'),
-            },
-            {
-              icon: '💻',
-              title: t('便捷数字化清单管理', 'Fast Digital Order Lists', 'Gestión Digital Cómoda'),
-              desc: t(
-                '支持在线自主挑选加购、清单核对，并通过 WhatsApp 快速发送报单，沟通高效顺畅。',
-                'Select items online, review quantities, and send your order list directly via WhatsApp.',
-                'Selecciona cómodamente tus productos y tramita tus consultas directamente por WhatsApp.'
-              ),
-              tag: t('便捷选购', 'Digital Orders', 'Pedido Ágil'),
-            },
-          ].map((card, idx) => (
-            <div
-              key={idx}
-              className="bg-white p-5 md:p-6 rounded-3xl border-4 border-[#222] shadow-[5px_5px_0px_#222] flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-3xl md:text-4xl">{card.icon}</span>
-                  <span className="bg-yellow-100 text-[#222] text-[11px] font-black px-2.5 py-1 rounded-lg border-2 border-[#222]">
-                    {card.tag}
-                  </span>
-                </div>
-                <h3 className="text-lg md:text-xl font-black text-[#222] mb-2">{card.title}</h3>
-                <p className="text-xs md:text-sm text-gray-600 font-bold leading-relaxed">{card.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 4. FOUR PARTNERSHIP MODELS */}
-      <section className="max-w-6xl mx-auto px-4 pt-12 md:pt-16">
-        <div className="bg-[#5c94fc] p-5 md:p-10 rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] text-white">
-          <div className="text-center mb-8">
-            <span className="bg-[#f8d878] text-[#222] text-xs font-black px-3.5 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase">
-              {t('🤝 合作模式', '🤝 Partnerships', '🤝 Modalidades')}
-            </span>
-            <h2 className="text-2xl md:text-4xl font-black mt-3 drop-shadow-[2px_2px_0px_#222]">
-              {t('多元灵活的商业合作方式', 'Flexible Commercial Partnerships', 'Modalidades de Asociación Flexibles')}
+      {/* 2. INTERACTIVE TOP BESTSELLERS SHELF (CONVERSION CORE) */}
+      <section id="bestsellers" className="max-w-6xl mx-auto px-4 pt-14 pb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-black text-[#111827]">
+              {t('西班牙门店高频复购 · 本周必进爆款榜', 'High-Turnover Spanish Retail Bestsellers', 'Top Ventas de Alta Rotación en Tiendas')}
             </h2>
-            <p className="text-sm md:text-base text-blue-100 font-bold max-w-xl mx-auto mt-1">
+            <p className="text-sm text-gray-600 font-sans mt-1.5">
               {t(
-                '支持自主选品零售选购，并为各类大客户提供定制化集采服务',
-                'Tailored solutions for retail stores and high-volume institutional procurement.',
-                'Soluciones adaptadas para compras minoristas y suministros de gran volumen.'
+                '按西班牙真实出货榜精选。勾选中意货号，底部一键生成清单发 WhatsApp 秒拿批发价。',
+                'Curated from real Spanish retail dispatch volume. Select SKUs below and send a structured WhatsApp quote in one tap.',
+                'Seleccionados por volumen real de ventas en España. Marca tus referencias y solicita tarifa directa por WhatsApp.'
               )}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              {
-                icon: '🏛️',
-                title: t('大客户大宗集采', 'Key Corporate Accounts', 'Grandes Cuentas & Empresas'),
-                desc: t(
-                  '专为大型企事业单位提供按需选品与大宗订货方案，业务经理全程对接。',
-                  'Consolidated bulk procurement with dedicated account support.',
-                  'Suministro consolidado para empresas y entidades con asesoría directa.'
-                ),
-              },
-              {
-                icon: '🏫',
-                title: t('学校与教育机构', 'Schools & Academies', 'Colegios y Academias'),
-                desc: t(
-                  '提供学期常用文具、教学画材、倒数日历与活动物资选品支持。',
-                  'Term stationery, fine-arts kits, and educational supplies.',
-                  'Material escolar, manualidades y artículos didácticos para centros educativos.'
-                ),
-              },
-              {
-                icon: '🏪',
-                title: t('自主零售精品选购', 'Retail & Bazar Stores', 'Selección Minorista'),
-                desc: t(
-                  '精选高频实用文具现货，分类直观清晰，支持在线挑选与快速报单。',
-                  'High-turnover stationery organized cleanly for fast restocking.',
-                  'Catálogo de papelería seleccionada con tramitación ágil de pedidos.'
-                ),
-              },
-              {
-                icon: '🎁',
-                title: t('节庆与开学专场', 'Seasonal Campaigns', 'Campañas Especiales'),
-                desc: t(
-                  '返校季全套文具、圣诞季礼品贺卡与 2027 年历日历现货直供。',
-                  'Back-to-school sets, festive stationery, and 2027 calendars in stock.',
-                  'Campañas de vuelta al cole, Navidad y calendarios con stock garantizado.'
-                ),
-              },
-            ].map((item, idx) => (
-              <div
-                key={idx}
-                className="bg-white p-5 rounded-2xl border-2 border-[#222] shadow-[4px_4px_0px_#222] text-[#222]"
+          {/* Filter Tabs */}
+          <div className="flex flex-wrap gap-2 shrink-0">
+            {(
+              [
+                ['all', t('全部爆款', 'All Top SKUs', 'Todos')],
+                ['writing', t('书写记号', 'Markers & Pens', 'Escritura')],
+                ['correction', t('修正与胶粘', 'Correction & Glue', 'Corrección y Cola')],
+                ['paper', t('纸品便利贴', 'Paper & Notes', 'Papel y Notas')],
+              ] as const
+            ).map(([key, label]) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setActiveCat(key)}
+                className={`px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold border transition-colors cursor-pointer ${
+                  activeCat === key
+                    ? 'bg-[#111827] text-white border-[#111827]'
+                    : 'bg-white text-[#111827] border-gray-300 hover:border-[#111827]'
+                }`}
               >
-                <div className="text-3xl mb-2">{item.icon}</div>
-                <div className="text-lg font-black mb-1">{item.title}</div>
-                <div className="text-xs text-gray-600 font-bold leading-relaxed">{item.desc}</div>
-              </div>
+                {label}
+              </button>
             ))}
           </div>
         </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {visibleProducts.map((item) => {
+            const picked = selectedSkus.includes(item.sku);
+            return (
+              <article
+                key={item.sku}
+                className={`bg-white rounded-2xl border-2 overflow-hidden flex flex-col justify-between transition-all ${
+                  picked
+                    ? 'border-[#e52521] shadow-md'
+                    : 'border-gray-200 hover:border-[#111827] shadow-sm'
+                }`}
+              >
+                <div>
+                  <div className="relative aspect-square bg-[#f4f5f7] overflow-hidden">
+                    <img
+                      src={item.img}
+                      alt={t(item.nameZh, item.nameEn, item.nameEs)}
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                    />
+                    <span className="absolute top-3 left-3 bg-[#111827] text-[#f8d878] text-xs font-black px-2.5 py-1 rounded-md">
+                      TOP #{item.rank}
+                    </span>
+                    <span className="absolute top-3 right-3 bg-white/95 text-[#111827] text-xs font-mono font-bold px-2 py-1 rounded border border-gray-200">
+                      {item.sku}
+                    </span>
+                  </div>
+
+                  <div className="p-4">
+                    <h3 className="font-black text-base text-[#111827] leading-snug">
+                      {t(item.nameZh, item.nameEn, item.nameEs)}
+                    </h3>
+                    <div className="text-xs font-mono font-semibold text-[#e52521] mt-1">
+                      {t(item.packZh, item.packEn, item.packEs)}
+                    </div>
+                    <p className="text-xs text-gray-600 font-sans mt-2 leading-relaxed">
+                      {t(item.hookZh, item.hookEn, item.hookEs)}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-4 pt-0 flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => toggleSku(item.sku)}
+                    className={`flex-1 py-2.5 px-3 rounded-xl font-bold text-xs transition-colors cursor-pointer ${
+                      picked
+                        ? 'bg-[#e52521] text-white'
+                        : 'bg-[#111827] hover:bg-black text-white'
+                    }`}
+                  >
+                    {picked
+                      ? t('✓ 已入询价单', '✓ In Quote List', '✓ Añadido')
+                      : t('+ 加入询价单', '+ Add to Quote', '+ Pedir Tarifa')}
+                  </button>
+                  <a
+                    href={`./vitrina.html?sku=${encodeURIComponent(item.sku)}`}
+                    className="py-2.5 px-3 rounded-xl font-bold text-xs border border-gray-300 text-[#111827] hover:border-[#111827] bg-[#f8f6f1] whitespace-nowrap"
+                  >
+                    {t('4图素材 ↗', '4-Grid ↗', 'Fotos ↗')}
+                  </a>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <button
+            type="button"
+            onClick={onNavigateToTienda}
+            className="px-6 py-3.5 bg-white hover:bg-gray-50 text-[#111827] border-2 border-[#111827] rounded-xl font-black text-sm transition-colors cursor-pointer"
+          >
+            {t('浏览全部 6,000+ 现货目录 →', 'Browse All 6,000+ SKUs Catalog →', 'Explorar Catálogo de 6.000+ SKUs →')}
+          </button>
+          {onNavigateToMap && (
+            <button
+              type="button"
+              onClick={onNavigateToMap}
+              className="px-6 py-3.5 bg-white hover:bg-gray-50 text-[#111827] border border-gray-300 rounded-xl font-bold text-sm transition-colors cursor-pointer"
+            >
+              {t('查看合作门店地图', 'View Retail Store Map', 'Ver Mapa de Puntos de Venta')}
+            </button>
+          )}
+        </div>
       </section>
 
-      {/* 5. FAST INQUIRY REGISTRATION FORM */}
-      <section className="max-w-4xl mx-auto px-4 pt-12 md:pt-16">
-        <div className="bg-white p-5 md:p-10 rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222]">
-          <div className="text-center mb-6">
-            <span className="bg-[#f8d878] text-[#222] text-xs font-black px-3.5 py-1 rounded-full border-2 border-[#222] shadow-[2px_2px_0px_#222] uppercase">
-              {t('📝 业务咨询登记', '📝 Trade Inquiry', '📝 Contacto Comercial')}
-            </span>
-            <h2 className="text-2xl md:text-3xl font-black text-[#222] mt-3">
-              {t(
-                '提交采购意向 · 业务代表 1 对 1 服务',
-                'Request Catalog & Wholesale Pricing',
-                'Solicitar Catálogo y Contacto Comercial'
-              )}
+      {/* 3. THREE READY-MADE B2B STARTER PACKAGES (SEGMENTED FAST CLOSE) */}
+      <section className="bg-white border-y border-gray-200 py-14">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="max-w-2xl mb-9">
+            <h2 className="text-2xl sm:text-3xl font-black text-[#111827]">
+              {t('不想从 6,000 款里慢慢挑？按你的门店直接配好爆款包', 'Ready-to-Sell Assortments by Store Type', 'Surtidos Listos para Vender según tu Negocio')}
             </h2>
-            <p className="text-xs md:text-sm text-gray-500 font-bold mt-1">
+            <p className="text-sm text-gray-600 font-sans mt-1.5">
               {t(
-                '填写基本信息后将自动拉起 WhatsApp 业务对接，或直接联络电话 604229098',
-                'Fill out the quick form to start a WhatsApp inquiry or call +34 604 229 098.',
-                'Rellena el formulario y te contactaremos para facilitarte catálogo y condiciones comerciales.'
+                '根据西班牙实盘销售数据预配货架组合，零踩坑试单，最快 48 小时送达门店。',
+                'Pre-curated shelf assortments backed by real Spanish sales data—zero dead stock, dispatched within 48h.',
+                'Surtidos preseleccionados con datos reales de venta en España para maximizar tu rotación desde el primer día.'
               )}
             </p>
           </div>
 
-          {formSubmitted && (
-            <div className="mb-6 p-4 bg-emerald-100 border-2 border-emerald-500 rounded-2xl text-emerald-900 font-black text-center text-sm">
-              ✅{' '}
-              {t(
-                '已为您整理好咨询信息并打开 WhatsApp！如未弹出，请直接联系: 604229098',
-                'Inquiry ready! Send directly via WhatsApp to +34 604 229 098.',
-                '¡Solicitud preparada! Puedes enviarla directamente por WhatsApp al 604229098.'
-              )}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Tier 1 */}
+            <div className="rounded-2xl border-2 border-gray-200 p-6 flex flex-col justify-between bg-[#f8f6f1]">
+              <div>
+                <div className="text-xs font-mono font-bold text-[#e52521] uppercase">
+                  {t('方案 A · 百元店 / 社区超市', 'TIER A · BAZAR & CONVENIENCE', 'PACK A · BAZAR Y TIENDA LOCAL')}
+                </div>
+                <h3 className="text-xl font-black mt-2 text-[#111827]">
+                  {t('12 款高周转试单爆款包', 'Top 12 High-Turnover Starter', 'Pack Inicio Top 12 Rotación')}
+                </h3>
+                <p className="text-sm text-gray-600 font-sans mt-2">
+                  {t(
+                    '覆盖油性笔、修正带、固体胶、便利贴等最稳走量单品，按小包起批，现金回笼快。',
+                    'Covers permanent markers, correction tapes, glue sticks, and neon notes in low inner-pack quantities.',
+                    'Marcadores, correctores, pegamentos y notas neón en packs pequeños de salida garantizada.'
+                  )}
+                </p>
+                <ul className="mt-4 space-y-2 text-xs text-gray-700 font-sans border-t border-gray-300 pt-4">
+                  <li>• {t('每款 12-24 件小包起订，无压货风险', 'Low 12–24 pc inner-pack MOQ', 'Desde 12–24 uds por referencia')}</li>
+                  <li>• {t('全套西语吸塑挂卡 + EAN 条码直接上挂钩', 'Spanish EAN blister hooks ready', 'Blíster con código EAN listo para colgar')}</li>
+                  <li>• {t('附赠朋友圈与 WhatsApp 卖货四宫格图', 'Includes 4-grid social promo kit', 'Incluye kit de fotos para WhatsApp e IG')}</li>
+                </ul>
+              </div>
+              <button
+                type="button"
+                onClick={() =>
+                  openWhatsAppWithQuote(
+                    t(
+                      '您好，我想咨询【方案A · 百元店12款高周转试单爆款包】的报价与起订金额：',
+                      'Hello, please send pricing for Tier A: Top 12 High-Turnover Bazar Starter Pack:',
+                      'Hola, quiero solicitar precio para el Pack A: Top 12 Rotación para Bazar:'
+                    )
+                  )
+                }
+                className="mt-6 w-full py-3 rounded-xl bg-[#111827] hover:bg-black text-white font-bold text-sm transition-colors cursor-pointer"
+              >
+                {t('索取方案 A 报价单 →', 'Get Tier A Quote →', 'Solicitar Tarifa Pack A →')}
+              </button>
+            </div>
+
+            {/* Tier 2 Featured */}
+            <div className="rounded-2xl border-2 border-[#e52521] p-6 flex flex-col justify-between bg-[#111827] text-white shadow-xl">
+              <div>
+                <div className="inline-block text-xs font-mono font-bold bg-[#f8d878] text-[#111827] px-2.5 py-0.5 rounded uppercase">
+                  {t('最受欢迎 · 传统书店与文具店', 'MOST POPULAR · BOOKSTORES', 'MÁS VENDIDO · PAPELERÍAS')}
+                </div>
+                <h3 className="text-xl font-black mt-3 text-white">
+                  {t('30 款全品类开学季核心陈列包', 'Top 30 Full-Aisle Retail Assortment', 'Pack 30 Referencias Vuelta al Cole')}
+                </h3>
+                <p className="text-sm text-gray-300 font-sans mt-2">
+                  {t(
+                    '包含书写、修正、美术画本、200g 钻石白卡纸与荧光笔套装，直接撑起整面黄金文具货架。',
+                    'Full writing, correction, Artix drawing blocks, 200gsm cardstock, and pastel highlighter displays.',
+                    'Escritura, corrección, blocs Artix, cartulinas 200g y packs pastel para montar un lineal completo.'
+                  )}
+                </p>
+                <ul className="mt-4 space-y-2 text-xs text-gray-200 font-sans border-t border-white/15 pt-4">
+                  <li>• {t('享整箱阶梯批发折扣与优先配货权', 'Tiered carton wholesale discounts', 'Descuentos escalados por volumen')}</li>
+                  <li>• {t('1 对 1 中西双语客户经理跟进补货', 'Dedicated ES/ZH/EN account manager', 'Gestor comercial dedicado 1 a 1')}</li>
+                  <li>• {t('含全套每日主推馆高清图与 720p 短视频', 'Full HD photos + 720p promo videos', 'Incluye galería HD y vídeos 720p')}</li>
+                </ul>
+              </div>
+              <button
+                type="button"
+                onClick={() =>
+                  openWhatsAppWithQuote(
+                    t(
+                      '您好，我想咨询【方案B · 30款全品类核心陈列包】的阶梯批发报价：',
+                      'Hello, please send tiered wholesale pricing for Tier B: Top 30 Retail Assortment:',
+                      'Hola, solicito tarifa escalada para el Pack B: 30 Referencias Vuelta al Cole:'
+                    )
+                  )
+                }
+                className="mt-6 w-full py-3 rounded-xl bg-[#e52521] hover:bg-[#c81e1a] text-white font-black text-sm transition-colors cursor-pointer"
+              >
+                {t('索取方案 B 阶梯价 →', 'Get Tier B Pricing →', 'Solicitar Tarifa Pack B →')}
+              </button>
+            </div>
+
+            {/* Tier 3 */}
+            <div className="rounded-2xl border-2 border-gray-200 p-6 flex flex-col justify-between bg-[#f8f6f1]">
+              <div>
+                <div className="text-xs font-mono font-bold text-[#111827] uppercase">
+                  {t('方案 C · 学校 / 企业大宗集采', 'TIER C · SCHOOLS & CORPORATE', 'PACK C · COLEGIOS Y EMPRESAS')}
+                </div>
+                <h3 className="text-xl font-black mt-2 text-[#111827]">
+                  {t('按清单 24 小时精准集采报价', 'Custom List 24h Bulk Quotation', 'Presupuesto a Medida en 24h')}
+                </h3>
+                <p className="text-sm text-gray-600 font-sans mt-2">
+                  {t(
+                    '发送学校采购表或企业办公耗材清单，由大客户专员直接匹配最具性价比现货方案。',
+                    'Send your school supply list or corporate office tender for a tailored in-stock quotation within 24h.',
+                    'Envíanos tu listado escolar o de oficina y recibe presupuesto cerrado con stock real en 24 horas.'
+                  )}
+                </p>
+                <ul className="mt-4 space-y-2 text-xs text-gray-700 font-sans border-t border-gray-300 pt-4">
+                  <li>• {t('正规西班牙商业发票与合规资质文件', 'Full Spanish VAT invoicing', 'Facturación española oficial')}</li>
+                  <li>• {t('支持托盘整箱直发与预约时间送货', 'Palletized direct delivery across Spain', 'Envío paletizado a toda la península')}</li>
+                  <li>• {t('可提前寄送样品核验品质与规格', 'Pre-order physical samples available', 'Envío previo de muestras comerciales')}</li>
+                </ul>
+              </div>
+              <button
+                type="button"
+                onClick={() =>
+                  openWhatsAppWithQuote(
+                    t(
+                      '您好，我需要【方案C · 学校/企业大宗集采清单】24小时报价对接：',
+                      'Hello, I need a 24h bulk quotation under Tier C (School / Corporate):',
+                      'Hola, necesito presupuesto en 24h para pedido institucional (Pack C):'
+                    )
+                  )
+                }
+                className="mt-6 w-full py-3 rounded-xl bg-[#111827] hover:bg-black text-white font-bold text-sm transition-colors cursor-pointer"
+              >
+                {t('提交集采清单报价 →', 'Submit Bulk List →', 'Enviar Listado 24h →')}
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. FAST 30-SECOND WHOLESALE QUOTE FORM */}
+      <section id="quote-form" className="max-w-4xl mx-auto px-4 pt-14">
+        <div className="bg-white rounded-3xl border-2 border-[#111827] p-6 sm:p-10 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-gray-200 mb-6">
+            <div>
+              <h2 className="text-2xl font-black text-[#111827]">
+                {t('30 秒获取专属批发价单与样品', 'Get Your Wholesale Price List in 30 Seconds', 'Recibe tu Tarifa Mayorista en 30 Segundos')}
+              </h2>
+              <p className="text-xs sm:text-sm text-gray-600 font-sans mt-1">
+                {t(
+                  '填写后自动生成结构化询价单直连 WhatsApp 业务代表，无需反复打字沟通。',
+                  'Generates a structured inquiry directly to our WhatsApp trade desk for immediate pricing.',
+                  'Genera tu consulta estructurada directa a nuestro WhatsApp comercial para respuesta inmediata.'
+                )}
+              </p>
+            </div>
+            <a
+              href={`mailto:${EMAIL_ADDRESS}`}
+              className="text-xs font-mono font-bold text-[#111827] underline underline-offset-4 whitespace-nowrap"
+            >
+              {EMAIL_ADDRESS}
+            </a>
+          </div>
+
+          {selectedSkus.length > 0 && (
+            <div className="mb-5 p-3.5 rounded-xl bg-[#f8f6f1] border border-gray-300 flex flex-wrap items-center justify-between gap-2">
+              <div className="text-xs font-bold text-[#111827]">
+                {t('已附带选中的货号：', 'Attached selected SKUs: ', 'Referencias incluidas: ')}
+                <span className="font-mono text-[#e52521]">{selectedSkus.join(', ')}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedSkus([])}
+                className="text-xs text-gray-500 hover:text-[#111827] underline cursor-pointer"
+              >
+                {t('清空', 'Clear', 'Limpiar')}
+              </button>
             </div>
           )}
 
-          <form onSubmit={handleFormSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-black text-gray-700 mb-1">
-                  {t('店铺 / 公司名称 *', 'Store / Company Name *', 'Nombre de Tienda / Empresa *')}
-                </label>
-                <input
-                  type="text"
-                  required
-                  name="shopName"
-                  value={formData.shopName}
-                  onChange={handleInputChange}
-                  placeholder={t('例如: 马德里文具百货', 'e.g. Central Stationery Ltd.', 'Ej: Bazar Centro')}
-                  className="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#222] text-sm font-bold bg-[#fcf8f2] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-black text-gray-700 mb-1">
-                  {t('负责人姓名 *', 'Contact Name *', 'Persona de Contacto *')}
-                </label>
-                <input
-                  type="text"
-                  required
-                  name="contactName"
-                  value={formData.contactName}
-                  onChange={handleInputChange}
-                  placeholder={t('例如: 张先生', 'e.g. Alex Smith', 'Ej: Carlos García')}
-                  className="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#222] text-sm font-bold bg-[#fcf8f2] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <label className="block text-xs font-black text-gray-700 mb-1">
-                  {t('所在城市 / 省份 *', 'City / Region *', 'Ciudad / Provincia *')}
-                </label>
-                <input
-                  type="text"
-                  required
-                  name="city"
-                  value={formData.city}
-                  onChange={handleInputChange}
-                  placeholder="Madrid, Barcelona..."
-                  className="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#222] text-sm font-bold bg-[#fcf8f2] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-black text-gray-700 mb-1">
-                  {t('WhatsApp / 联络电话 *', 'WhatsApp / Phone *', 'WhatsApp / Teléfono *')}
-                </label>
-                <input
-                  type="text"
-                  required
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  placeholder="+34 600..."
-                  className="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#222] text-sm font-bold bg-[#fcf8f2] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-black text-gray-700 mb-1">
-                  {t('电子邮箱', 'Email', 'Email')}
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="name@company.com"
-                  className="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#222] text-sm font-bold bg-[#fcf8f2] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#5c94fc]"
-                />
-              </div>
+          <form onSubmit={handleFormSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-sans">
+            <div>
+              <label className="block text-xs font-bold text-gray-700 mb-1">
+                {t('店铺 / 公司名称 *', 'Store / Company Name *', 'Nombre de Tienda / Empresa *')}
+              </label>
+              <input
+                required
+                name="shopName"
+                value={formData.shopName}
+                onChange={handleInputChange}
+                placeholder={t('例如：马德里百元文具店', 'e.g. Papelería Centro Madrid', 'Ej. Papelería Centro Madrid')}
+                className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm focus:outline-none focus:border-[#111827]"
+              />
             </div>
 
             <div>
-              <label className="block text-xs font-black text-gray-700 mb-1">
-                {t('您的主营业务类型', 'Business Type', 'Tipo de Comercio / Actividad')}
+              <label className="block text-xs font-bold text-gray-700 mb-1">
+                {t('联系人姓名 *', 'Contact Name *', 'Persona de Contacto *')}
+              </label>
+              <input
+                required
+                name="contactName"
+                value={formData.contactName}
+                onChange={handleInputChange}
+                placeholder={t('您的称呼', 'Your name', 'Tu nombre')}
+                className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm focus:outline-none focus:border-[#111827]"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 mb-1">
+                {t('所在城市', 'City', 'Ciudad')}
+              </label>
+              <input
+                name="city"
+                value={formData.city}
+                onChange={handleInputChange}
+                placeholder="Madrid / Barcelona / Zaragoza / Valencia"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm focus:outline-none focus:border-[#111827]"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 mb-1">
+                {t('联系电话 / WhatsApp *', 'Phone / WhatsApp *', 'Teléfono / WhatsApp *')}
+              </label>
+              <input
+                required
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                placeholder="+34 6XX XXX XXX"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm focus:outline-none focus:border-[#111827]"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 mb-1">
+                {t('业务类型', 'Business Channel', 'Tipo de Negocio')}
               </label>
               <select
                 name="businessType"
                 value={formData.businessType}
                 onChange={handleInputChange}
-                className="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#222] text-sm font-bold bg-[#fcf8f2] focus:bg-white focus:outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm bg-white focus:outline-none focus:border-[#111827]"
               >
-                <option value="corporativo">
-                  {t('企事业单位 / 大客户大宗采购', 'Corporate / Bulk Purchase', 'Empresa / Compra Corporativa')}
-                </option>
-                <option value="colegio">
-                  {t('学校 / 家委会 / 教育培训', 'School / Educational Center', 'Colegio / Centro Educativo')}
-                </option>
-                <option value="comercio">
-                  {t('文具零售 / 精品店', 'Stationery / Retail Store', 'Comercio / Papelería')}
-                </option>
-                <option value="otro">{t('其他采购咨询', 'Other', 'Otros')}</option>
+                <option value="comercio">{t('百元店 / 传统文具书店', 'Bazar / Stationery Store', 'Bazar / Papelería')}</option>
+                <option value="colegio">{t('学校机构 / 培训中心', 'School / Academy', 'Colegio / Academia')}</option>
+                <option value="corporativo">{t('企业办公 / 大宗集采', 'Corporate / Bulk Buyer', 'Empresa / Grandes Cuentas')}</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-black text-gray-700 mb-1">
-                {t('意向需求或留言', 'Message / Notes', 'Mensaje / Observaciones')}
-              </label>
-              <textarea
-                name="message"
-                rows={3}
-                value={formData.message}
+              <label className="block text-xs font-bold text-gray-700 mb-1">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
                 onChange={handleInputChange}
-                placeholder={t(
-                  '例如：希望了解起订金额、畅销文具清单、展架配送政策或索取样品...',
-                  'e.g. Request PDF catalog, minimum order terms, or product samples.',
-                  'Ej: Solicitar catálogo en PDF y condiciones de primer pedido.'
-                )}
-                className="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#222] text-sm font-bold bg-[#fcf8f2] focus:bg-white focus:outline-none"
+                placeholder="compras@tienda.es"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm focus:outline-none focus:border-[#111827]"
               />
             </div>
 
-            <div className="pt-2 flex flex-col sm:flex-row gap-3">
+            <div className="sm:col-span-2">
+              <label className="block text-xs font-bold text-gray-700 mb-1">
+                {t('预计补货品类或货号说明', 'Order Notes or Target Categories', 'Notas o categorías de interés')}
+              </label>
+              <textarea
+                rows={3}
+                name="message"
+                value={formData.message}
+                onChange={handleInputChange}
+                placeholder={t(
+                  '例如：想试单 12 款热销记号笔与修正带，需要含税报价单',
+                  'e.g. Interested in starter pack of markers & correction tapes with VAT invoice',
+                  'Ej. Interesado en pack de inicio de marcadores y correctores con tarifa mayorista'
+                )}
+                className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm focus:outline-none focus:border-[#111827]"
+              />
+            </div>
+
+            <div className="sm:col-span-2 flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
               <button
                 type="submit"
-                className="flex-1 py-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] font-black text-base md:text-lg flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-8 py-3.5 bg-[#e52521] hover:bg-[#c81e1a] text-white rounded-xl font-black text-sm transition-colors cursor-pointer"
               >
-                <span>📱</span>
-                <span>
-                  {t('一键通过 WhatsApp 提交咨询', 'Send Inquiry via WhatsApp', 'Enviar Consulta por WhatsApp')}
-                </span>
+                {t('一键发送询价单至 WhatsApp →', 'Send Structured Quote via WhatsApp →', 'Enviar Solicitud por WhatsApp →')}
               </button>
-
-              <a
-                href={`mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent(
-                  `Commercial Inquiry - ${formData.shopName || 'KYRMAX'}`
-                )}`}
-                className="px-6 py-4 bg-[#5c94fc] hover:bg-blue-600 text-white rounded-2xl border-4 border-[#222] shadow-[4px_4px_0px_#222] font-black text-sm md:text-base flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span>✉️</span>
-                <span>{t('邮件直投', 'By Email', 'Por Email')}</span>
-              </a>
+              {formSubmitted && (
+                <span className="text-xs font-bold text-emerald-700">
+                  {t('已为您打开 WhatsApp 询价窗口', 'WhatsApp inquiry window opened', 'Ventana de WhatsApp abierta')}
+                </span>
+              )}
             </div>
           </form>
         </div>
       </section>
 
-      {/* 6. BOTTOM CONTACT & ADDRESS FOOTER */}
-      <footer className="max-w-6xl mx-auto px-4 pt-12 md:pt-16 text-center">
-        <div className="bg-[#f8d878] p-6 md:p-8 rounded-3xl border-4 border-[#222] shadow-[6px_6px_0px_#222] text-[#222] flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-center md:text-left">
-            <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
-              <span className="text-2xl">📦</span>
-              <span className="font-black text-lg md:text-xl">
-                {t(
-                  'KYRMAX · 文具精选与大客户采购服务',
-                  'KYRMAX · Stationery & Key Account Supply',
-                  'KYRMAX · Papelería y Suministro Comercial'
-                )}
-              </span>
+      {/* FLOATING STICKY QUOTE BASKET BAR (CONVERTS SELECTED SKUS IN 1 CLICK) */}
+      {selectedSkus.length > 0 && (
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-24px)] max-w-2xl bg-[#111827] text-white border-2 border-[#f8d878] rounded-2xl px-4 py-3 shadow-2xl flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <div className="text-xs font-black text-[#f8d878]">
+              {t(`已选 ${selectedSkus.length} 款西班牙爆款`, `${selectedSkus.length} Bestsellers Selected`, `${selectedSkus.length} Referencias Seleccionadas`)}
             </div>
-            <p className="text-xs md:text-sm font-bold text-gray-800">
-              {t(
-                '专注自主文具零售选品与学校机构大客户集采 · 专属客服 1 对 1 服务',
-                'Dedicated retail selection & institutional stationery supply in Spain.',
-                'Catálogo de papelería seleccionada y suministro institucional en España.'
-              )}
-            </p>
+            <div className="text-[11px] font-mono text-gray-300 truncate">
+              {selectedSkus.join(' · ')}
+            </div>
           </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-3 text-xs md:text-sm font-black">
-            <a
-              href={WHATSAPP_LINK}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-1.5 bg-white px-3.5 py-2 rounded-xl border-2 border-[#222] shadow-[2px_2px_0px_#222] hover:bg-emerald-50"
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={() => setSelectedSkus([])}
+              className="px-2.5 py-2 text-xs text-gray-400 hover:text-white cursor-pointer"
             >
-              <span>📱</span>
-              <span>WhatsApp: {WHATSAPP_NUMBER}</span>
-            </a>
-
-            <a
-              href={`mailto:${EMAIL_ADDRESS}`}
-              className="flex items-center gap-1.5 bg-white px-3.5 py-2 rounded-xl border-2 border-[#222] shadow-[2px_2px_0px_#222] hover:bg-blue-50"
+              {t('清空', 'Clear', 'Vaciar')}
+            </button>
+            <button
+              type="button"
+              onClick={() => openWhatsAppWithQuote()}
+              className="px-4 py-2.5 bg-[#e52521] hover:bg-[#c81e1a] text-white rounded-xl font-black text-xs sm:text-sm whitespace-nowrap cursor-pointer"
             >
-              <span>✉️</span>
-              <span>{EMAIL_ADDRESS}</span>
-            </a>
+              {t('一键发 WhatsApp 询价 →', 'WhatsApp Quote →', 'Pedir Tarifa →')}
+            </button>
           </div>
         </div>
-      </footer>
+      )}
     </div>
   );
 };

@@ -207,6 +207,17 @@ export const App: React.FC = () => {
                 </button>
 
                 <button
+                  onClick={() => navigateTo('vitrina')}
+                  className={`px-3.5 py-2 rounded-xl font-black text-xs md:text-sm border-2 transition-all ${
+                    view === 'vitrina'
+                      ? 'bg-[#e52521] text-white border-[#f8d878]'
+                      : 'bg-slate-800 text-gray-200 border-slate-700 hover:bg-slate-700'
+                  }`}
+                >
+                  {lang === 'zh' ? '爆款图库' : lang === 'en' ? 'Bestsellers' : 'Vitrina TOP'}
+                </button>
+
+                <button
                   onClick={() => navigateTo('map')}
                   className={`px-3.5 py-2 rounded-xl font-black text-xs md:text-sm border-2 transition-all ${
                     view === 'map'
@@ -267,6 +278,7 @@ export const App: React.FC = () => {
             lang={lang}
             onNavigateToTienda={() => navigateTo('tienda')}
             onNavigateToMap={() => navigateTo('map')}
+            onNavigateToVitrina={() => navigateTo('vitrina')}
           />
         )}
         {view === 'tienda' && (
